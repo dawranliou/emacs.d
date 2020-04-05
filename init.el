@@ -42,6 +42,7 @@
   (setq use-package-always-ensure t))
 
 (use-package which-key
+  :delight
   :config
   (which-key-mode t))
 
@@ -110,6 +111,7 @@
   (evil-mode t))
 
 (use-package ivy
+  :delight
   :hook (after-init . ivy-mode)
   :config
   (ivy-mode t)
@@ -121,6 +123,7 @@
   (tyrant-def "bm" 'ivy-switch-buffer))
 
 (use-package counsel
+  :delight
   :after (ivy)
   :config
   (counsel-mode t)
@@ -142,6 +145,7 @@
     "ss" 'swiper))
 
 (use-package company
+  :delight
   :config
   (global-company-mode t)
   (define-key company-active-map (kbd "ESC") 'company-abort)
@@ -180,20 +184,24 @@
   :hook (magit-mode . evil-magit-init))
 
 (use-package undo-tree
+  :delight
   :config
   (global-undo-tree-mode))
 
 (use-package beacon
+  :delight
   :config
   (beacon-mode t))
 
 (use-package hungry-delete
+  :delight
   :config
   (global-hungry-delete-mode t))
 
 (use-package iedit)
 
 (use-package projectile
+  :delight '(:eval (concat " [" (projectile-project-name) "]"))
   :config
   (projectile-mode t)
   (setq projectile-completion-system 'ivy))
@@ -210,13 +218,15 @@
     "pb" 'counsel-projectile-switch-to-buffer
     "bp" 'counsel-projectile-switch-to-buffer))
 
-(use-package smartparens)
+(use-package smartparens
+  :delight)
 
 (use-package ace-window
   :config
   (setq aw-scope 'global))
 
 (use-package idle-highlight-mode
+  :delight hi-lock-mode
   :hook
   (prog-mode . idle-highlight-mode))
 
@@ -252,17 +262,19 @@
   :hook (prog-mode . smartparens-mode))
 
 (use-package lispy
+  :delight
   :hook (generic-lisp-mode . lispy-mode))
 
 (use-package lispyville
+  :delight
   :init
   (general-add-hook 'generic-lisp-mode-hook #'lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators
-			      mark-toggle
 			      c-w
-			      slurp/barf-lispy
-			      additional-movement)))
+			      additional
+			      additional-movement
+			      slurp/barf-cp)))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
