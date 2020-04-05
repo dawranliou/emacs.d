@@ -82,8 +82,10 @@
     :non-normal-prefix "C-SPC")
 
   (tyrant-def
-
     "" nil
+
+    "TAB" 'mode-line-other-buffer
+
     "c" (general-simulate-key "C-c")
     "h" (general-simulate-key "C-h")
     "u" (general-simulate-key "C-u")
@@ -94,7 +96,7 @@
     "qz" 'delete-frame
 
     "b" '(:ignore t :which-key "buffer")
-    "bb" 'mode-line-other-buffer
+    "bb" 'counsel-buffer-or-recentf
     "bd" 'kill-this-buffer
 
     "f" '(:ignore t :which-key "file")
@@ -112,7 +114,7 @@
   (evil-mode t))
 
 (use-package ivy
-  :diminish (ivy-mode)
+  :hook (after-init . ivy-mode)
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t)
@@ -224,6 +226,20 @@
 (use-package paren-face
   :hook
   (prog-mode . paren-face-mode))
+
+;; shell
+
+(use-package eshell
+  :commands 'eshell)
+
+(use-package shell-pop
+  :commands (shell-pop)
+  :config
+  (shell-pop--set-shell-type
+   'shell-pop-shell-type
+   '("eshell" "*eshell*" (lambda nil (eshell))))
+  :general
+  (tyrant-def "'" 'shell-pop))
 
 ;; theme
 
