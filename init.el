@@ -4,18 +4,7 @@
 
 ;;; Code:
 
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
-
-(package-initialize)
-
-;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
+(fset 'yes-or-no-p 'y-or-n-p)
 (setq inhibit-splash-screen t
       inhibit-startup-message t
       inhibit-startup-echo-area-message t)
@@ -26,67 +15,211 @@
 (show-paren-mode 1)
 (setq visible-bell t)
 
+(setq mac-command-modifier 'super)
+(setq mac-option-modifier 'meta)
+
 (defvar backup-dir "~/.emacs.d/backups/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
 (setq make-backup-files nil)
 
-;; Don't litter my init file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-(use-package try
-  :ensure t)
+(eval-when-compile
+  (require 'package)
+  (setq package-archives
+	'(("org" . "http://orgmode.org/elpa/")
+	  ("gnu" . "http://elpa.gnu.org/packages/")
+	  ("melpa" . "https://melpa.org/packages/")))
+  
+  (package-initialize)
+  
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+  
+  (require 'use-package)
+  (setq use-package-always-ensure t))
 
 (use-package which-key
-  :ensure t
   :config
-  (which-key-mode))
+  (which-key-mode t))
+
+(use-package general
+  :after which-key
+  :commands (general-override-mode
+	     general-auto-unbind-keys
+	     general-simulate-key)
+  :config
+  (general-override-mode t)
+  (general-auto-unbind-keys t)
+  
+  (defun find-user-init-file ()
+    "Edit the `user-init-file', in same window."
+    (interactive)
+    (find-file user-init-file))
+
+  (defun load-user-init-file ()
+    "Load the `user-init-file', in same window."
+    (interactive)
+    (load-file user-init-file))
+
+  (general-define-key
+   "s-=" 'text-scale-adjust
+   "s-v" 'yank
+   "s-c" 'evil-yank
+   "s-a" 'mark-whole-buffer
+   "s-x" 'kill-region
+   "s-w" 'delete-window
+   "s-n" 'make-frame
+   "s-s" (general-simulate-key "C-x C-s")
+   "s-z" 'undo-tree-undo
+   "s-Z" 'undo-tree-redo)
+
+  (general-create-definer tyrant-def
+    :states '(normal visual insert motion emacs)
+    :prefix "SPC"
+    :non-normal-prefix "C-SPC")
+
+  (tyrant-def
+
+    "" nil
+    "c" (general-simulate-key "C-c")
+    "h" (general-simulate-key "C-h")
+    "u" (general-simulate-key "C-u")
+    "x" (general-simulate-key "C-x")
+
+    "q" '(:ignore t :which-key "quit")
+    "qq" 'kill-emacs
+    "qz" 'delete-frame
+
+    "b" '(:ignore t :which-key "buffer")
+    "bb" 'mode-line-other-buffer
+    "bd" 'kill-this-buffer
+
+    "f" '(:ignore t :which-key "file")
+    "fed" 'find-user-init-file
+    "feR" 'load-user-init-file
+    "fs" 'save-buffer
+
+    "t" '(:ignore t :which-key "toggle")
+    "tw" 'whitespace-mode
+
+   ))
 
 (use-package evil
-  :ensure t
-  :custom
-  (evil-move-beyond-eol t)
   :config
   (evil-mode t))
 
-(use-package counsel
-  :ensure t
+(use-package ivy
+  :diminish (ivy-mode)
   :config
-  (counsel-mode t))
+  (ivy-mode t)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "%d/%d ")
+  (setq ivy-display-style 'fancy)
+  :commands (ivy-switch-buffer)
+  :general
+  (tyrant-def "bm" 'ivy-switch-buffer))
+
+(use-package counsel
+  :after (ivy)
+  :config
+  (counsel-mode t)
+  :general
+  (tyrant-def
+    "SPC" 'counsel-M-x
+    "ff" 'counsel-find-file
+    "fr" 'counsel-recentf
+    "fL" 'counsel-locate))
 
 (use-package swiper
-  :ensure t
   :commands swiper
-  :bind (("C-s" . counsel-grep-or-swiper)
-	 :map evil-motion-state-map
-	      ("/" . swiper)
-	      ("?" . swiper-backward)))
-
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :commands helm-mode
-  :config
-  (helm-mode t))
+  :general
+  (tyrant-def
+    "s" '(:ignore t :which-key "swiper")
+    "ss" 'swiper))
 
 (use-package company
-  :ensure t
   :config
-  (global-company-mode t))
+  (global-company-mode t)
+  (define-key company-active-map (kbd "ESC") 'company-abort)
+  (define-key company-active-map [tab] 'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
 (use-package flycheck
-  :ensure t
   :config
-  (global-flycheck-mode t))
+  (global-flycheck-mode t)
+  :general
+  (tyrant-def
+    "e" '(:ignore t :which-key "errors")
+    "eb" 'flycheck-buffer
+    "ec" 'flycheck-clear
+    "en" 'flycheck-next-error
+    "ep" 'flycheck-previous-error
+    "el" 'flycheck-list-errors))
 
 (use-package rg
-  :ensure t
-  :commands rg)
+  :commands rg
+  :config
+  (rg-enable-default-bindings)
+  :general
+  (tyrant-def
+    "/" 'rg-project))
 
 (use-package magit
-  :ensure t
-  :defer t
-  :bind
-  ("C-c g s" . magit-status))
+  :general
+  (tyrant-def
+    "g" '(:ignore t :which-key "git")
+    "gs" 'magit-status
+    "gb" 'magit-blame))
 
+(use-package evil-magit
+  :hook (magit-mode . evil-magit-init))
+
+(use-package undo-tree
+  :config
+  (global-undo-tree-mode))
+
+(use-package beacon
+  :config
+  (beacon-mode t))
+
+(use-package hungry-delete
+  :config
+  (global-hungry-delete-mode t))
+
+(use-package iedit)
+
+(use-package projectile
+  :config
+  (projectile-mode t)
+  (setq projectile-completion-system 'ivy))
+
+(use-package counsel-projectile
+  :after (projectile ivy)
+  :general
+  (tyrant-def
+    "p" '(:ignore t :which-key "projectile")
+    "pd" 'counsel-projectile-dired-find-dir
+    "po" 'counsel-projectile-find-other-file
+    "pf" 'counsel-projectile-find-file
+    "fp" 'counsel-projectile-find-file
+    "pb" 'counsel-projectile-switch-to-buffer
+    "bp" 'counsel-projectile-switch-to-buffer))
+
+(use-package smartparens)
+
+(use-package ace-window
+  :config
+  (setq aw-scope 'global))
+
+;; theme
+
+(set-face-attribute 'default nil
+		    :family "Monolisa"
+                    :height 120)
+
+(provide 'init)
 ;;; Init.el ends here
