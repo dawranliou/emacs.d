@@ -14,23 +14,21 @@
   (scroll-bar-mode -1))
 (show-paren-mode 1)
 (setq visible-bell t)
-
+(setq-default indent-tabs-mode nil)
 (setq mac-command-modifier 'super)
 (setq mac-option-modifier 'meta)
-
 (defvar backup-dir "~/.emacs.d/backups/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
 (setq make-backup-files nil)
-
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
 (eval-when-compile
   (require 'package)
   (setq package-archives
-	'(("org" . "http://orgmode.org/elpa/")
-	  ("gnu" . "http://elpa.gnu.org/packages/")
-	  ("melpa" . "https://melpa.org/packages/")))
+        '(("org" . "http://orgmode.org/elpa/")
+          ("gnu" . "http://elpa.gnu.org/packages/")
+          ("melpa" . "https://melpa.org/packages/")))
 
   (package-initialize)
 
@@ -49,8 +47,8 @@
 (use-package general
   :after which-key
   :commands (general-override-mode
-	     general-auto-unbind-keys
-	     general-simulate-key)
+             general-auto-unbind-keys
+             general-simulate-key)
   :config
   (defun find-user-init-file ()
     "Edit the `user-init-file', in same window."
@@ -102,9 +100,7 @@
     "fs" 'save-buffer
 
     "t" '(:ignore t :which-key "toggle")
-    "tw" 'whitespace-mode
-
-   ))
+    "tw" 'whitespace-mode))
 
 (use-package evil
   :config
@@ -271,10 +267,11 @@
   (general-add-hook 'generic-lisp-mode-hook #'lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators
-			      c-w
-			      additional
-			      additional-movement
-			      slurp/barf-cp)))
+                              c-w
+                              additional
+                              additional-movement
+                              slurp/barf-cp
+                              prettify)))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
@@ -285,15 +282,15 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
   (setq web-mode-ac-sources-alist
-	'(("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
-	  ("css" . (ac-source-css-property ac-source-emmet-css-snippets)))))
+        '(("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+          ("css" . (ac-source-css-property ac-source-emmet-css-snippets)))))
 
 ;; theme
 
 (use-package eink-theme)
 
 (set-face-attribute 'default nil
-		    :family "Monolisa"
+                    :family "Monolisa"
                     :height 120)
 
 (custom-theme-set-faces
