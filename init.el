@@ -136,6 +136,8 @@
 (use-package swiper
   :commands swiper
   :general
+  (general-define-key
+   "C-s" 'swiper)
   (tyrant-def
     "s" '(:ignore t :which-key "swiper")
     "ss" 'swiper))
@@ -215,7 +217,17 @@
   :config
   (setq aw-scope 'global))
 
+(use-package idle-highlight-mode
+  :hook
+  (prog-mode . idle-highlight-mode))
+
+(use-package paren-face
+  :hook
+  (prog-mode . paren-face-mode))
+
 ;; theme
+
+(use-package eink-theme)
 
 (set-face-attribute 'default nil
 		    :family "Monolisa"
