@@ -284,5 +284,22 @@
 		    :family "Monolisa"
                     :height 120)
 
+(custom-theme-set-faces
+ 'eink
+
+ ;; global font lock
+ '(font-lock-string-face ((t (:foreground "#00449E"))))
+ '(font-lock-comment-face ((t (:foreground "#a0a0a0"))))
+ '(font-lock-doc-face ((t (:foreground "#a0a0a0"))))
+
+ ;; mode line
+ '(mode-line ((t (:inverse-video t))))
+ '(mode-line-inactive ((t (:underline t))))
+
+ ;; hl-line
+ '(hl-line ((t (:background "#FFE0E0")))))
+
+(use-package delight)
+
 (provide 'init)
 ;;; Init.el ends here
