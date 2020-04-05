@@ -31,13 +31,13 @@
 	'(("org" . "http://orgmode.org/elpa/")
 	  ("gnu" . "http://elpa.gnu.org/packages/")
 	  ("melpa" . "https://melpa.org/packages/")))
-  
+
   (package-initialize)
-  
+
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
     (package-install 'use-package))
-  
+
   (require 'use-package)
   (setq use-package-always-ensure t))
 
@@ -237,6 +237,44 @@
    '("eshell" "*eshell*" (lambda nil (eshell))))
   :general
   (tyrant-def "'" 'shell-pop))
+
+;; programming
+
+(defvar generic-lisp-mode-hook nil)
+(add-hook 'emacs-lisp-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
+
+(use-package clojure-mode)
+
+(add-hook 'clojure-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
+(add-hook 'clojurescript-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
+
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
+
+(use-package lispy
+  :hook (generic-lisp-mode . lispy-mode))
+
+(use-package lispyville
+  :init
+  (general-add-hook 'generic-lisp-mode-hook #'lispyville-mode)
+  :config
+  (lispyville-set-key-theme '(operators
+			      mark-toggle
+			      c-w
+			      slurp/barf-lispy
+			      additional-movement)))
+
+(use-package clj-refactor
+  :hook (clojure-mode . clj-refactor-mode))
+
+(use-package cider)
+
+(use-package web-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  (setq web-mode-ac-sources-alist
+	'(("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+	  ("css" . (ac-source-css-property ac-source-emmet-css-snippets)))))
 
 ;; theme
 
