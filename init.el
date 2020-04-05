@@ -51,9 +51,6 @@
 	     general-auto-unbind-keys
 	     general-simulate-key)
   :config
-  (general-override-mode t)
-  (general-auto-unbind-keys t)
-  
   (defun find-user-init-file ()
     "Edit the `user-init-file', in same window."
     (interactive)
@@ -96,7 +93,6 @@
     "qz" 'delete-frame
 
     "b" '(:ignore t :which-key "buffer")
-    "bb" 'counsel-buffer-or-recentf
     "bd" 'kill-this-buffer
 
     "f" '(:ignore t :which-key "file")
@@ -131,6 +127,7 @@
   :general
   (tyrant-def
     "SPC" 'counsel-M-x
+    "bb" 'counsel-ibuffer
     "ff" 'counsel-find-file
     "fr" 'counsel-recentf
     "fL" 'counsel-locate))
