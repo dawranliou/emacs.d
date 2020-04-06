@@ -179,6 +179,15 @@
 (use-package evil-magit
   :hook (magit-mode . evil-magit-init))
 
+(use-package git-gutter-fringe+
+  :general
+  (tyrant-def
+    "tg" 'global-git-gutter+-mode)
+  :config
+  (global-git-gutter+-mode t)
+  (git-gutter+-toggle-fringe)
+  (setq git-gutter-fr+-side 'right-fringe))
+
 (use-package undo-tree
   :delight
   :config
