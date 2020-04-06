@@ -312,27 +312,21 @@
 
 (custom-theme-set-faces
  'eink
-
- ;; global font lock
  '(font-lock-string-face ((t (:foreground "#00449E"))))
  '(font-lock-comment-face ((t (:foreground "#a0a0a0"))))
  '(font-lock-doc-face ((t (:foreground "#a0a0a0"))))
-
- ;; mode line
  '(mode-line ((t (:inverse-video t))))
  '(mode-line-inactive ((t (:underline t))))
-
- ;; hl-line
  '(hl-line ((t (:background "#FFE0E0")))))
 
-(setq mode-line-format
-      (list
-       '(:eval (substring vc-mode 5))
-       '(:eval (propertize " %b"
-                           'help-echo (buffer-file-name)))
-       " (%02l,%02c)" ;; '%02' to set to 2 chars at least; prevents flickering
-       " [%p/%I]"
-       " %m"))
+(setq-default mode-line-format
+              (list
+               '(:eval (substring vc-mode 5))
+               '(:eval (propertize " %b"
+                                   'help-echo (buffer-file-name)))
+               " (%02l,%02c)"
+               " [%p/%I]"
+               " %m"))
 
 (provide 'init)
 ;;; Init.el ends here
