@@ -87,7 +87,7 @@
     "x" (general-simulate-key "C-x")
 
     "q" '(:ignore t :which-key "quit")
-    "qq" 'kill-emacs
+    "qq" 'save-buffers-kill-terminal
     "qz" 'delete-frame
 
     "b" '(:ignore t :which-key "buffer")
