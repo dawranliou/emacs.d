@@ -214,9 +214,6 @@
     "pb" 'counsel-projectile-switch-to-buffer
     "bp" 'counsel-projectile-switch-to-buffer))
 
-(use-package smartparens
-  :delight)
-
 (use-package ace-window
   :config
   (setq aw-scope 'global))
@@ -255,6 +252,7 @@
 (add-hook 'clojurescript-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
 
 (use-package smartparens
+  :delight
   :hook (prog-mode . smartparens-mode))
 
 (use-package lispy
