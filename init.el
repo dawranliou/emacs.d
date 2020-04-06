@@ -40,7 +40,6 @@
   (setq use-package-always-ensure t))
 
 (use-package which-key
-  :delight
   :config
   (which-key-mode t))
 
@@ -107,7 +106,6 @@
   (evil-mode t))
 
 (use-package ivy
-  :delight
   :hook (after-init . ivy-mode)
   :config
   (ivy-mode t)
@@ -119,7 +117,6 @@
   (tyrant-def "bm" 'ivy-switch-buffer))
 
 (use-package counsel
-  :delight
   :after (ivy)
   :config
   (counsel-mode t)
@@ -141,7 +138,6 @@
     "ss" 'swiper))
 
 (use-package company
-  :delight
   :config
   (global-company-mode t)
   (define-key company-active-map (kbd "ESC") 'company-abort)
@@ -189,24 +185,16 @@
   (setq git-gutter-fr+-side 'right-fringe))
 
 (use-package undo-tree
-  :delight
   :config
   (global-undo-tree-mode))
 
-(use-package beacon
-  :delight
-  :config
-  (beacon-mode t))
-
 (use-package hungry-delete
-  :delight
   :config
   (global-hungry-delete-mode t))
 
 (use-package iedit)
 
 (use-package projectile
-  :delight '(:eval (concat " [" (projectile-project-name) "]"))
   :config
   (projectile-mode t)
   (setq projectile-completion-system 'ivy))
@@ -228,7 +216,6 @@
   (setq aw-scope 'global))
 
 (use-package idle-highlight-mode
-  :delight hi-lock-mode
   :hook
   (prog-mode . idle-highlight-mode))
 
@@ -261,15 +248,12 @@
 (add-hook 'clojurescript-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
 
 (use-package smartparens
-  :delight
   :hook (prog-mode . smartparens-mode))
 
 (use-package lispy
-  :delight
   :hook (generic-lisp-mode . lispy-mode))
 
 (use-package lispyville
-  :delight
   :init
   (general-add-hook 'generic-lisp-mode-hook #'lispyville-mode)
   :config
@@ -319,7 +303,14 @@
  ;; hl-line
  '(hl-line ((t (:background "#FFE0E0")))))
 
-(use-package delight)
+(setq mode-line-format
+      (list
+       '(:eval (substring vc-mode 5))
+       '(:eval (propertize " %b"
+                           'help-echo (buffer-file-name)))
+       " (%02l,%02c)" ;; '%02' to set to 2 chars at least; prevents flickering
+       " [%p/%I]"
+       " %m"))
 
 (provide 'init)
 ;;; Init.el ends here
