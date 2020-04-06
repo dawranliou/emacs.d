@@ -102,6 +102,8 @@
     "tw" 'whitespace-mode))
 
 (use-package evil
+  :custom
+  (evil-move-beyond-eol t)
   :config
   (evil-mode t))
 
