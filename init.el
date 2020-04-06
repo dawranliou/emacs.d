@@ -244,13 +244,22 @@
 (defvar generic-lisp-mode-hook nil)
 (add-hook 'emacs-lisp-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
 
-(use-package clojure-mode)
+(use-package flycheck-clj-kondo)
+
+(use-package clojure-mode
+  :custom
+  (clojure-indent-style 'align-arguments)
+  (clojure-align-forms-automatically t)
+  :config
+  (require 'flycheck-clj-kondo))
 
 (add-hook 'clojure-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
 (add-hook 'clojurescript-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
 
 (use-package smartparens
-  :hook (prog-mode . smartparens-mode))
+  :hook (prog-mode . smartparens-mode)
+  :config
+  (require 'smartparens-config))
 
 (use-package lispy
   :hook (generic-lisp-mode . lispy-mode))
@@ -269,7 +278,18 @@
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
 
-(use-package cider)
+(use-package cider
+  :general
+  (general-nmap
+   :keymaps 'cider-mode-map
+   :prefix ","
+   "" '(:ignore t :which-key "cider")
+   "g" '(:ignore t :which-key "goto")
+   "gg" 'cider-find-var)
+  :config
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'company-mode)
+  (setq cider-repl-use-pretty-printing t))
 
 (use-package web-mode
   :config
