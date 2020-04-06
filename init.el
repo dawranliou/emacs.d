@@ -102,9 +102,8 @@
     "tw" 'whitespace-mode))
 
 (use-package evil
-  :custom
-  (evil-move-beyond-eol t)
   :config
+  (setq evil-move-beyond-eol t)
   (evil-mode t))
 
 (use-package ivy
@@ -247,10 +246,9 @@
 (use-package flycheck-clj-kondo)
 
 (use-package clojure-mode
-  :custom
-  (clojure-indent-style 'align-arguments)
-  (clojure-align-forms-automatically t)
   :config
+  (setq clojure-indent-style 'align-arguments)
+  (setq clojure-align-forms-automatically t)
   (require 'flycheck-clj-kondo))
 
 (add-hook 'clojure-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
