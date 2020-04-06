@@ -300,6 +300,10 @@
                     :family "Monolisa"
                     :height 120)
 
+(use-package hl-line
+  :init
+  (global-hl-line-mode))
+
 (custom-theme-set-faces
  'eink
 
