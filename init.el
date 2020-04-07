@@ -287,6 +287,13 @@
   :hook
   (prog-mode . paren-face-mode))
 
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-items '((recents . 5)
+                          (projects . 5))))
+
 ;; shell
 
 (use-package eshell
@@ -357,6 +364,7 @@
           ("css" . (ac-source-css-property ac-source-emmet-css-snippets)))))
 
 ;; functions
+
 (defun kill-other-buffers (&optional arg)
   "Kill all other buffers.
 If the universal prefix argument is used then will the windows too."
