@@ -340,16 +340,13 @@
   :hook (clojure-mode . clj-refactor-mode))
 
 (use-package cider
-  :general
-  (general-nmap
-   :keymaps 'cider-mode-map
-   :prefix ","
-   "" '(:ignore t :which-key "cider")
-   "g" '(:ignore t :which-key "goto")
-   "gg" 'cider-find-var)
   :config
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode)
+  (evil-define-key '(normal visual) 'cider-mode-map
+    "gd" 'cider-find-var)
+  (setq cider-repl-display-in-current-window t)
+  (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t))
 
 (use-package web-mode
