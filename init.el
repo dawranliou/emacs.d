@@ -69,7 +69,7 @@
  '(fringe ((t (:foreground "#808080"))))
  '(mode-line ((t (:inverse-video t))))
  '(mode-line-inactive ((t (:underline t))))
- '(hl-line ((t (:background "#FFE0E0")))))
+ '(hl-line ((t (:background "#ffdfdf")))))
 
 (setq-default mode-line-format
               (list
