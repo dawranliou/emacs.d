@@ -64,9 +64,9 @@
 (custom-theme-set-faces
  'eink
  '(font-lock-string-face ((t (:foreground "#00449E"))))
- '(font-lock-comment-face ((t (:foreground "#a0a0a0"))))
- '(font-lock-doc-face ((t (:foreground "#a0a0a0"))))
- '(fringe ((t (:foreground "#A0A0A0"))))
+ '(font-lock-comment-face ((t (:foreground "#808080"))))
+ '(font-lock-doc-face ((t (:foreground "#808080"))))
+ '(fringe ((t (:foreground "#808080"))))
  '(mode-line ((t (:inverse-video t))))
  '(mode-line-inactive ((t (:underline t))))
  '(hl-line ((t (:background "#FFE0E0")))))
