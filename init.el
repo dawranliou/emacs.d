@@ -224,7 +224,9 @@
     "g" '(:ignore t :which-key "git")
     "gs" 'magit-status
     "gb" 'magit-blame
-    "gl" 'magit-log-all))
+    "gl" 'magit-log-all)
+  :config
+  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
 
 (use-package evil-magit
   :hook (magit-mode . evil-magit-init))
