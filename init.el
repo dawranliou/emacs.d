@@ -129,7 +129,7 @@
 
     "b" '(:ignore t :which-key "buffer")
     "bd" 'kill-this-buffer
-    "bD" 'kill-other-buffers
+    "b C-d" 'kill-other-buffers
 
     "f" '(:ignore t :which-key "file")
     "fe" '(:ignore t :which-key "emacs")
@@ -162,8 +162,7 @@
 (use-package ivy
   :general
   (set-leader-keys
-    "rl" 'ivy-resume
-    "bb" 'ivy-switch-buffer)
+    "rl" 'ivy-resume)
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t)
@@ -176,6 +175,7 @@
   :general
   (set-leader-keys
     "SPC" 'counsel-M-x
+    "bb" 'counsel-ibuffer
     "ff" 'counsel-find-file
     "fr" 'counsel-recentf
     "fL" 'counsel-locate
