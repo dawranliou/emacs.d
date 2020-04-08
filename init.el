@@ -38,7 +38,7 @@
 
 (setq initial-frame-alist
       '((width . 102)
-        (height . 60)))
+        (height . 54)))
 
 (setq mac-command-modifier 'super)
 (setq mac-option-modifier 'meta)
