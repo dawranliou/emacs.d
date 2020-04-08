@@ -110,11 +110,6 @@
   (general-create-definer set-leader-keys
     :states '(normal visual motion emacs)
     :prefix "SPC")
-
-  (general-create-definer set-local-leader-keys
-    :states '(normal visual)
-    :keymaps 'local
-    :prefix ",")
   
   (set-leader-keys
     "" nil
@@ -355,7 +350,11 @@
 
 (use-package cider
   :general
-  (set-local-leader-keys
+  (general-define-key
+   :states '(normal visual)
+   :keymaps '(clojure-mode-map clojurescript-mode-map cider-mode-map)
+   :prefix ","
+
    "'" 'sesman-start
 
    "e" '(:ignore t :which-key "evaluation")
