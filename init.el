@@ -408,6 +408,11 @@
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t))
 
+(use-package aggressive-indent
+  :config
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
+
 (use-package web-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
