@@ -307,6 +307,15 @@
   :config
   (setq dumb-jump-selector 'ivy))
 
+(use-package fill-column-indicator
+  :hook
+  (git-commit-mode . fci-mode)
+  :init
+  (setq-default fci-rule-column 80)
+  :general
+  (set-leader-keys
+    "tf" 'fci-mode))
+
 ;; shell
 
 (use-package eshell
