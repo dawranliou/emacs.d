@@ -333,7 +333,8 @@
   (require 'smartparens-config))
 
 (use-package lispy
-  :hook (generic-lisp-mode . lispy-mode))
+  :hook ((clojure-mode . lispy-mode)
+         (clojurescript-mode . lispy-mode)))
 
 (use-package lispyville
   :hook (lispy-mode . lispyville-mode)
@@ -389,6 +390,7 @@
   :config
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode)
+  (add-hook 'cider-repl-mode-hook #'smartparens-strict-mode)
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t))
