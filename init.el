@@ -420,6 +420,11 @@
         '(("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
           ("css" . (ac-source-css-property ac-source-emmet-css-snippets)))))
 
+(use-package markdown-mode
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode)))
+
 ;; functions
 
 (defun my/kill-other-buffers (&optional arg)
