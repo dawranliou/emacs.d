@@ -131,19 +131,19 @@
 
     "b" '(:ignore t :which-key "buffer")
     "bd" 'kill-this-buffer
-    "b C-d" 'kill-other-buffers
+    "b C-d" 'my/kill-other-buffers
 
     "f" '(:ignore t :which-key "file")
     "fe" '(:ignore t :which-key "emacs")
-    "fed" 'find-user-init-file
-    "feR" 'load-user-init-file
+    "fed" 'my/find-user-init-file
+    "feR" 'my/load-user-init-file
     "fs" 'save-buffer
 
     "p" '(:ignore t :which-key "project")
 
     "P" '(:ignore t :which-key "Packages")
     "Pr" 'package-autoremove
-    "Pu" 'package-upgrade-all
+    "Pu" 'my/package-upgrade-all
 
     "q" '(:ignore t :which-key "quit")
     "qq" 'save-buffers-kill-terminal
@@ -393,7 +393,7 @@
 
 ;; functions
 
-(defun kill-other-buffers (&optional arg)
+(defun my/kill-other-buffers (&optional arg)
   "Kill all other buffers.
 If the universal prefix argument is used then will the windows too."
   (interactive "P")
@@ -403,18 +403,18 @@ If the universal prefix argument is used then will the windows too."
     (when (equal '(4) arg) (delete-other-windows))
     (message "Buffers deleted!")))
 
-(defun find-user-init-file ()
+(defun my/find-user-init-file ()
   "Edit the `user-init-file' in same window."
   (interactive)
   (find-file user-init-file))
 
-(defun load-user-init-file ()
+(defun my/load-user-init-file ()
   "Load the `user-init-file' in same window."
   (interactive)
   (load-file user-init-file))
 
 ;; https://emacs.stackexchange.com/questions/16398/noninteractively-upgrade-all-packages
-(defun package-upgrade-all ()
+(defun my/package-upgrade-all ()
   "Upgrade all packages automatically without showing *Packages* buffer."
   (interactive)
   (package-refresh-contents)
