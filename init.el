@@ -111,8 +111,9 @@
     :states '(normal visual motion emacs)
     :prefix "SPC")
 
-  (general-create-definer set-leader-keys-for-major-mode
-    :states '(normal emacs)
+  (general-create-definer set-local-leader-keys
+    :states '(normal visual)
+    :keymaps 'local
     :prefix ",")
   
   (set-leader-keys
@@ -313,9 +314,6 @@
 
 ;; programming
 
-(defvar generic-lisp-mode-hook nil)
-(add-hook 'emacs-lisp-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
-
 (use-package flycheck-clj-kondo)
 
 (use-package clojure-mode
@@ -323,9 +321,6 @@
   (setq clojure-indent-style 'align-arguments)
   (setq clojure-align-forms-automatically t)
   (require 'flycheck-clj-kondo))
-
-(add-hook 'clojure-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
-(add-hook 'clojurescript-mode-hook (lambda () (run-hooks 'generic-lisp-mode-hook)))
 
 (use-package smartparens
   :hook (prog-mode . smartparens-mode)
@@ -336,8 +331,7 @@
   :hook (generic-lisp-mode . lispy-mode))
 
 (use-package lispyville
-  :init
-  (general-add-hook 'generic-lisp-mode-hook #'lispyville-mode)
+  :hook (lispy-mode . lispyville-mode)
   :config
   (lispyville-set-key-theme '(operators
                               c-w
@@ -350,11 +344,42 @@
   :hook (clojure-mode . clj-refactor-mode))
 
 (use-package cider
+  :general
+  (set-local-leader-keys
+   "'" 'sesman-start
+
+   "e" '(:ignore t :which-key "evaluation")
+   "eb" 'cider-eval-buffer
+   "ee" 'cider-eval-last-sexp
+   "ef" 'cider-eval-defun-at-point
+
+   "=" '(:ignore t :which-key "format")
+   "==" 'cider-format-buffer
+   "=f" 'cider-format-defun
+   "=r" 'cider-format-region
+
+   "h" '(:ignore t :which-key "help")
+   "ha" 'cider-apropos
+   "hc" 'cider-cheatsheet
+   "hh" 'cider-doc
+   "hn" 'cider-browse-ns
+   "hN" 'cider-browse-ns-all
+   "hs" 'cider-browse-spec
+   "hS" 'cider-browse-spec-all
+
+   "g" '(:ignore t :which-key "goto")
+   "gb" 'cider-pop-back
+   "gg" 'cider-find-var
+   "gn" 'cider-find-ns
+   "gr" 'cider-find-resource
+
+   "m" '(:ignore t :which-key "manage repls")
+   "mq" 'sesman-quit
+   "mr" 'sesman-restart
+   )
   :config
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode)
-  (evil-define-key '(normal visual) 'cider-mode-map
-    "gd" 'cider-find-var)
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t))
