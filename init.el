@@ -298,6 +298,16 @@
   (setq dashboard-items '((recents . 5)
                           (projects . 5))))
 
+(use-package dumb-jump
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g b" . dumb-jump-back)
+         ("M-g i" . dumb-jump-go-prompt)
+         ("M-g x" . dumb-jump-go-prefer-external)
+         ("M-g z" . dumb-jump-go-prefer-external-other-window))
+  :config
+  (setq dumb-jump-selector 'ivy))
+
 ;; shell
 
 (use-package eshell
@@ -369,7 +379,7 @@
 
    "g" '(:ignore t :which-key "goto")
    "gb" 'cider-pop-back
-   "gg" 'cider-find-var
+   "gg" 'my/clj-find-var
    "gn" 'cider-find-ns
    "gr" 'cider-find-resource
 
@@ -443,6 +453,16 @@ If the universal prefix argument is used then will the windows too."
                 (package-install package-desc)
                 (package-delete  old-package)))))
       (message "All packages are up to date"))))
+
+(defun my/clj-find-var (sym-name &optional arg)
+  "Attempts to jump-to-definition of the symbol-at-point.
+
+If CIDER fails, or not available, falls back to dumb-jump."
+  (interactive (list (cider-symbol-at-point)))
+  (if (and (cider-connected-p) (cider-var-info sym-name))
+      (unless (eq 'symbol (type-of (cider-find-var nil sym-name)))
+        (dumb-jump-go))
+    (dumb-jump-go)))
 
 (provide 'init)
 ;;; Init.el ends here
