@@ -36,6 +36,10 @@
 (setq ring-bell-function 'ignore)
 (setq-default indent-tabs-mode nil)
 
+(setq initial-frame-alist
+      '((width . 102)
+        (height . 60)))
+
 (setq mac-command-modifier 'super)
 (setq mac-option-modifier 'meta)
 (mac-auto-operator-composition-mode)
