@@ -156,6 +156,7 @@
   :config
   (evil-mode t)
   (setq evil-move-beyond-eol t)
+  (setq evil-move-cursor-back nil)
   (set-leader-keys
     "bN" 'evil-buffer-new
     "fd" 'evil-save-and-close))
