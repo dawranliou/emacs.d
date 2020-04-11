@@ -97,13 +97,12 @@
   :config
   (general-define-key
    ;; mac
-   "s-=" 'text-scale-adjust
    "s-v" 'yank
    "s-c" 'evil-yank
    "s-a" 'mark-whole-buffer
    "s-x" 'kill-region
    "s-w" 'delete-window
-   "s-n" 'make-frame
+   "s-n" 'split-window-vertically
    "s-s" (general-simulate-key "C-x C-s")
    "s-z" 'undo-tree-undo
    "s-Z" 'undo-tree-redo
