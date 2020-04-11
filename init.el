@@ -317,6 +317,10 @@
   (set-leader-keys
     "tf" 'fci-mode))
 
+(use-package expand-region
+  :config
+  (global-set-key (kbd "C-=") 'er/expand-region))
+
 ;; shell
 
 (use-package eshell
