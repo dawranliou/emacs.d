@@ -51,8 +51,8 @@
  '(font-lock-doc-face ((t (:foreground "#808080"))))
  '(fringe ((t (:foreground "#808080"))))
  '(mode-line ((t (:inverse-video t))))
- '(mode-line-inactive ((t (:underline t))))
- '(hl-line ((t (:background "#ffdfdf")))))
+ '(mode-line-inactive ((t (:inverse-video nil))))
+ '(hl-line ((t (:background "#FFE0E0")))))
 
 (setq-default mode-line-format
               (list
@@ -160,7 +160,12 @@
   :config
   (evil-mode t)
   (setq evil-move-beyond-eol t)
-  (setq evil-move-cursor-back nil))
+  (setq evil-move-cursor-back nil)
+  (setq evil-insert-state-cursor '((hbar . 2) "black"))
+  (setq evil-normal-state-cursor '(box "black"))
+  (setq evil-motion-state-cursor '(box "black"))
+  (setq evil-visual-state-cursor '(box "#F86155"))
+  (setq evil-emacs-state-cursor '(box "#f40")))
 
 (define-key evil-normal-state-map (kbd "SPC") my/leader-map)
 (define-key my/leader-map (kbd "b C-d") 'my/kill-other-buffers)
@@ -268,7 +273,8 @@
   (global-set-key (kbd "s-y") 'counsel-yank-pop)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
   (global-set-key (kbd "s-F") 'counsel-rg)
-  (global-set-key (kbd "s-p") 'counsel-git))
+  (global-set-key (kbd "s-p") 'counsel-git)
+  (define-key my/leader-map "fr" 'counsel-recentf))
 
 (use-package swiper
   :config
