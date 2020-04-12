@@ -269,8 +269,10 @@
   :config
   (counsel-mode t)
   (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "s-y") 'counsel-yank-pop)
+  (global-set-key (kbd "s-P") 'counsel-M-x)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "s-o") 'counsel-find-file)
+  (global-set-key (kbd "s-y") 'counsel-yank-pop)
   (global-set-key (kbd "s-F") 'counsel-rg)
   (global-set-key (kbd "s-p") 'counsel-git)
   (define-key my/leader-map "fr" 'counsel-recentf))
@@ -321,14 +323,15 @@
   :config
   (projectile-mode t)
   (setq projectile-completion-system 'ivy)
-  (setq projectile-enable-caching t))
+  (setq projectile-enable-caching t)
+  (global-set-key (kbd "C-s-p") 'projectile-command-map))
 
 (use-package counsel-projectile
   :after (projectile ivy)
   :config
   (counsel-projectile-mode t)
   (global-set-key (kbd "s-F") 'counsel-projectile-rg)
-  (global-set-key (kbd "s-p") 'counsel-projectile))
+  (global-set-key (kbd "s-p") 'counsel-projectile-find-file))
 
 ;; ========
 ;; Auto completion
