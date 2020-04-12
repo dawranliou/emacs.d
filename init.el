@@ -29,12 +29,21 @@
 ;; =============
 ;; Visuals
 
-(use-package eink-theme)
+(set-face-attribute 'default nil :font "Monolisa 12")
+(setq-default line-spacing 1)
 
-(set-face-attribute 'default nil
-                    :family "Monolisa"
-                    :height 120)
-(setq-default line-spacing 0)
+(add-to-list 'default-frame-alist '(ns-transparent-title-bar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . light))
+
+(use-package eink-theme)
+(set-face-foreground font-lock-string-face "#00449E")
+(set-face-foreground font-lock-comment-face "#808080")
+(set-face-foreground font-lock-doc-face "#808080")
+(set-face-foreground font-lock-doc-face "#808080")
+(set-face-attribute 'fringe nil :foreground "#808080")
+(set-face-attribute 'hl-line nil :background "#FFE0E0")
+(set-face-attribute 'mode-line nil :height 1.0 :inverse-video t)
+(set-face-attribute 'mode-line-inactive nil :height 1.0)
 
 (setq initial-frame-alist
       '((width . 100)
@@ -43,16 +52,6 @@
 (use-package hl-line
   :init
   (global-hl-line-mode))
-
-(custom-theme-set-faces
- 'eink
- '(font-lock-string-face ((t (:foreground "#00449E"))))
- '(font-lock-comment-face ((t (:foreground "#808080"))))
- '(font-lock-doc-face ((t (:foreground "#808080"))))
- '(fringe ((t (:foreground "#808080"))))
- '(mode-line ((t (:inverse-video t))))
- '(mode-line-inactive ((t (:inverse-video nil))))
- '(hl-line ((t (:background "#FFE0E0")))))
 
 (setq-default mode-line-format
               (list
