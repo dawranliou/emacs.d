@@ -3,6 +3,9 @@
 ;;; Commentary:
 
 ;;; Code:
+;;; -*- lexical-binding: t -*-
+(setq gc-cons-threshold (* 50 1000 1000))
+
 (package-initialize)
 (setq package-archives
       '(("org" . "http://orgmode.org/elpa/")
@@ -141,6 +144,15 @@
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
+;; ============
+;; Keymaps
+
+(defvar my/leader-map (make-sparse-keymap)
+  "Keymap for \"leader key\" shortcuts.")
+
+(defvar my/clojure-leader-map (make-sparse-keymap)
+  "Keymap for \"leader key\" shortcuts in Clojure mode.")
+
 ;; ========
 ;; Evil
 
@@ -149,9 +161,6 @@
   (evil-mode t)
   (setq evil-move-beyond-eol t)
   (setq evil-move-cursor-back nil))
-
-(defvar my/leader-map (make-sparse-keymap)
-  "Keymap for \"leader key\" shortcuts.")
 
 (define-key evil-normal-state-map (kbd "SPC") my/leader-map)
 (define-key my/leader-map (kbd "b C-d") 'my/kill-other-buffers)
@@ -164,6 +173,14 @@
 (define-key my/leader-map (kbd "Pu") 'my/package-upgrade-all)
 (define-key my/leader-map (kbd "qq") 'save-buffers-kill-emacs)
 (define-key my/leader-map (kbd "tw") 'whitespace-mode)
+
+(use-package fill-column-indicator
+  :hook
+  (git-commit-mode . fci-mode)
+  :init
+  (setq-default fci-rule-column 80)
+  :config
+  (define-key my/leader-map "tf" 'fci-mode))
 
 ;; ========
 ;; Navigation and editing
@@ -199,6 +216,30 @@
 (global-set-key (kbd "s-n") 'split-window-vertically)
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
+(use-package hungry-delete
+  :config
+  (global-hungry-delete-mode t))
+
+(use-package iedit)
+
+(use-package rg
+  :config
+  (rg-enable-default-bindings))
+
+(use-package ace-window
+  :config
+  (setq aw-scope 'global))
+
+(use-package dumb-jump
+  :bind (("M-g o" . dumb-jump-go-other-window)
+         ("M-g j" . dumb-jump-go)
+         ("M-g b" . dumb-jump-back)
+         ("M-g i" . dumb-jump-go-prompt)
+         ("M-g x" . dumb-jump-go-prefer-external)
+         ("M-g z" . dumb-jump-go-prefer-external-other-window))
+  :config
+  (setq dumb-jump-selector 'ivy))
 
 ;; ========
 ;; Windows
@@ -250,7 +291,7 @@
 ;; ========
 ;; Spell checking
 
-;;(setq ispell-program-name "aspell")
+(setq ispell-program-name "aspell")
 (add-hook 'text-mode-hook 'flyspell-mode)
 (global-set-key (kbd "s-\\") 'ispell-word)
 
@@ -267,10 +308,6 @@
   (smartparens-global-strict-mode t)
   (show-smartparens-global-mode t)
   (setq sp-show-pair-delay 0))
-
-;; ========
-;; Programming
-;; TODO
 
 ;; ========
 ;; Projectile
@@ -302,20 +339,6 @@
   (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
 ;; ========
-;; Flycheck
-
-(use-package flycheck
-  :config
-  (global-flycheck-mode t)
-  (define-key my/leader-map "eb" 'flycheck-buffer)
-  (define-key my/leader-map "ec" 'flycheck-clear)
-  (define-key my/leader-map "en" 'flycheck-next-error)
-  (define-key my/leader-map "ep" 'flycheck-previous-error)
-  (define-key my/leader-map "el" 'flycheck-list-errors))
-
-(use-package rg
-  :config
-  (rg-enable-default-bindings))
 
 (use-package restart-emacs
   :config
@@ -326,23 +349,6 @@
   (define-key my/leader-map "qr" 'restart-emacs)
   (define-key my/leader-map "qd" 'restart-emacs-debug-init))
 
-(use-package hungry-delete
-  :config
-  (global-hungry-delete-mode t))
-
-(use-package iedit)
-
-(use-package ace-window
-  :config
-  (setq aw-scope 'global))
-
-(use-package idle-highlight-mode
-  :hook
-  (prog-mode . idle-highlight-mode))
-
-(use-package paren-face
-  :hook
-  (prog-mode . paren-face-mode))
 
 (use-package dashboard
   :config
@@ -351,24 +357,7 @@
   (setq dashboard-items '((recents . 5)
                           (projects . 5))))
 
-(use-package dumb-jump
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g b" . dumb-jump-back)
-         ("M-g i" . dumb-jump-go-prompt)
-         ("M-g x" . dumb-jump-go-prefer-external)
-         ("M-g z" . dumb-jump-go-prefer-external-other-window))
-  :config
-  (setq dumb-jump-selector 'ivy))
-
-(use-package fill-column-indicator
-  :hook
-  (git-commit-mode . fci-mode)
-  :init
-  (setq-default fci-rule-column 80)
-  :config
-  (define-key my/leader-map "tf" 'fci-mode))
-
+;; ========
 ;; shell
 
 (use-package eshell
@@ -382,7 +371,26 @@
    '("eshell" "*eshell*" (lambda nil (eshell))))
   (define-key my/leader-map "'" 'shell-pop))
 
-;; programming
+
+;; ========
+;; Programming
+
+(use-package idle-highlight-mode
+  :hook
+  (prog-mode . idle-highlight-mode))
+
+(use-package paren-face
+  :hook
+  (prog-mode . paren-face-mode))
+
+(use-package flycheck
+  :config
+  (global-flycheck-mode t)
+  (define-key my/leader-map "eb" 'flycheck-buffer)
+  (define-key my/leader-map "ec" 'flycheck-clear)
+  (define-key my/leader-map "en" 'flycheck-next-error)
+  (define-key my/leader-map "ep" 'flycheck-previous-error)
+  (define-key my/leader-map "el" 'flycheck-list-errors))
 
 (use-package flycheck-clj-kondo)
 
@@ -391,6 +399,9 @@
   (setq clojure-indent-style 'align-arguments)
   (setq clojure-align-forms-automatically t)
   (require 'flycheck-clj-kondo))
+
+(evil-define-key 'normal clojure-mode-map
+  (kbd "s-,") my/clojure-leader-map)
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
@@ -411,50 +422,34 @@
   :hook (clojure-mode . clj-refactor-mode))
 
 (use-package cider
-  ;; :general
-  ;; (general-define-key
-  ;;  :states '(normal visual)
-  ;;  :keymaps '(clojure-mode-map clojurescript-mode-map cider-mode-map)
-  ;;  :prefix ","
-
-  ;;  "'" 'sesman-start
-
-  ;;  "e" '(:ignore t :which-key "evaluation")
-  ;;  "eb" 'cider-eval-buffer
-  ;;  "ee" 'cider-eval-last-sexp
-  ;;  "ef" 'cider-eval-defun-at-point
-
-  ;;  "=" '(:ignore t :which-key "format")
-  ;;  "==" 'cider-format-buffer
-  ;;  "=f" 'cider-format-defun
-  ;;  "=r" 'cider-format-region
-
-  ;;  "h" '(:ignore t :which-key "help")
-  ;;  "ha" 'cider-apropos
-  ;;  "hc" 'cider-cheatsheet
-  ;;  "hh" 'cider-doc
-  ;;  "hn" 'cider-browse-ns
-  ;;  "hN" 'cider-browse-ns-all
-  ;;  "hs" 'cider-browse-spec
-  ;;  "hS" 'cider-browse-spec-all
-
-  ;;  "g" '(:ignore t :which-key "goto")
-  ;;  "gb" 'cider-pop-back
-  ;;  "gg" 'my/clj-find-var
-  ;;  "gn" 'cider-find-ns
-  ;;  "gr" 'cider-find-resource
-
-  ;;  "m" '(:ignore t :which-key "manage repls")
-  ;;  "mq" 'sesman-quit
-  ;;  "mr" 'sesman-restart
-  ;;  )
   :config
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode)
   (add-hook 'cider-repl-mode-hook #'smartparens-strict-mode)
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
-  (setq cider-repl-use-pretty-printing t))
+  (setq cider-repl-use-pretty-printing t)
+  (define-key my/clojure-leader-map "'" 'sesman-start)
+  (define-key my/clojure-leader-map "eb" 'cider-eval-buffer)
+  (define-key my/clojure-leader-map "ee" 'cider-eval-last-sexp)
+  (define-key my/clojure-leader-map "ef" 'cider-eval-defun-at-point)
+  (define-key my/clojure-leader-map "==" 'cider-format-buffer)
+  (define-key my/clojure-leader-map "=f" 'cider-format-defun)
+  (define-key my/clojure-leader-map "=r" 'cider-format-region)
+  (define-key my/clojure-leader-map "ha" 'cider-apropos)
+  (define-key my/clojure-leader-map "hc" 'cider-cheatsheet)
+  (define-key my/clojure-leader-map "hh" 'cider-doc)
+  (define-key my/clojure-leader-map "hn" 'cider-browse-ns)
+  (define-key my/clojure-leader-map "hN" 'cider-browse-ns-all)
+  (define-key my/clojure-leader-map "hs" 'cider-browse-spec)
+  (define-key my/clojure-leader-map "hS" 'cider-browse-spec-all)
+  (define-key my/clojure-leader-map "gb" 'cider-pop-back)
+  (define-key my/clojure-leader-map "gg" 'my/clj-find-var)
+  (define-key my/clojure-leader-map "gn" 'cider-find-ns)
+  (define-key my/clojure-leader-map "gr" 'cider-find-resource)
+  (define-key my/clojure-leader-map "mq" 'sesman-quit)
+  (define-key my/clojure-leader-map "mr" 'sesman-restart)
+  )
 
 (use-package aggressive-indent
   :config
