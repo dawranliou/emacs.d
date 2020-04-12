@@ -373,9 +373,9 @@
   :config
   (shell-pop--set-shell-type
    'shell-pop-shell-type
-   '("eshell" "*eshell*" (lambda nil (eshell))))
-  (define-key my/leader-map "'" 'shell-pop))
+   '("eshell" "*eshell*" (lambda nil (eshell)))))
 
+(global-set-key (kbd "s-=") 'shell-pop)
 
 ;; ========
 ;; Programming
