@@ -41,7 +41,6 @@
 (set-face-foreground font-lock-doc-face "#808080")
 (set-face-foreground font-lock-doc-face "#808080")
 (set-face-attribute 'fringe nil :foreground "#808080")
-(set-face-attribute 'hl-line nil :background "#FFE0E0")
 (set-face-attribute 'mode-line nil :height 1.0 :inverse-video t)
 (set-face-attribute 'mode-line-inactive nil :height 1.0)
 
@@ -52,6 +51,8 @@
 (use-package hl-line
   :init
   (global-hl-line-mode))
+
+(set-face-attribute 'hl-line nil :background "#FFE0E0")
 
 (setq-default mode-line-format
               (list
@@ -146,10 +147,10 @@
 ;; ============
 ;; Keymaps
 
-(defvar my/leader-map (make-sparse-keymap)
+(defvar my/space-map (make-sparse-keymap)
   "Keymap for \"leader key\" shortcuts.")
 
-(defvar my/clojure-leader-map (make-sparse-keymap)
+(defvar my/clojure-map (make-sparse-keymap)
   "Keymap for \"leader key\" shortcuts in Clojure mode.")
 
 ;; ========
@@ -164,19 +165,19 @@
   (setq evil-normal-state-cursor '(box "black"))
   (setq evil-motion-state-cursor '(box "black"))
   (setq evil-visual-state-cursor '(box "#F86155"))
-  (setq evil-emacs-state-cursor '(box "#f40")))
+  (setq evil-emacs-state-cursor '(box "#357edd")))
 
-(define-key evil-normal-state-map (kbd "SPC") my/leader-map)
-(define-key my/leader-map (kbd "b C-d") 'my/kill-other-buffers)
-(define-key my/leader-map (kbd "b C-d") 'my/kill-other-buffers)
-(define-key my/leader-map (kbd "fed") 'my/find-user-init-file)
-(define-key my/leader-map (kbd "feR") 'my/load-user-init-file)
-(define-key my/leader-map (kbd "TAB") 'mode-line-other-buffer)
-(define-key my/leader-map (kbd "bd") 'kill-this-buffer)
-(define-key my/leader-map (kbd "Pr") 'package-autoremove)
-(define-key my/leader-map (kbd "Pu") 'my/package-upgrade-all)
-(define-key my/leader-map (kbd "qq") 'save-buffers-kill-emacs)
-(define-key my/leader-map (kbd "tw") 'whitespace-mode)
+(define-key evil-normal-state-map (kbd "SPC") my/space-map)
+(define-key my/space-map (kbd "b C-d") 'my/kill-other-buffers)
+(define-key my/space-map (kbd "b C-d") 'my/kill-other-buffers)
+(define-key my/space-map (kbd "fed") 'my/find-user-init-file)
+(define-key my/space-map (kbd "feR") 'my/load-user-init-file)
+(define-key my/space-map (kbd "TAB") 'mode-line-other-buffer)
+(define-key my/space-map (kbd "bd") 'kill-this-buffer)
+(define-key my/space-map (kbd "Pr") 'package-autoremove)
+(define-key my/space-map (kbd "Pu") 'my/package-upgrade-all)
+(define-key my/space-map (kbd "qq") 'save-buffers-kill-emacs)
+(define-key my/space-map (kbd "tw") 'whitespace-mode)
 
 (use-package fill-column-indicator
   :hook
@@ -184,7 +185,7 @@
   :init
   (setq-default fci-rule-column 80)
   :config
-  (define-key my/leader-map "tf" 'fci-mode))
+  (define-key my/space-map "tf" 'fci-mode))
 
 ;; ========
 ;; Navigation and editing
@@ -221,12 +222,6 @@
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
-(use-package hungry-delete
-  :config
-  (global-hungry-delete-mode t))
-
-(use-package iedit)
-
 (use-package rg
   :config
   (rg-enable-default-bindings))
@@ -244,6 +239,12 @@
          ("M-g z" . dumb-jump-go-prefer-external-other-window))
   :config
   (setq dumb-jump-selector 'ivy))
+
+(use-package hungry-delete
+  :config
+  (global-hungry-delete-mode t))
+
+(use-package iedit)
 
 ;; ========
 ;; Windows
@@ -275,12 +276,12 @@
   (global-set-key (kbd "s-y") 'counsel-yank-pop)
   (global-set-key (kbd "s-F") 'counsel-rg)
   (global-set-key (kbd "s-p") 'counsel-git)
-  (define-key my/leader-map "fr" 'counsel-recentf))
+  (define-key my/space-map "fr" 'counsel-recentf))
 
 (use-package swiper
   :config
-  (global-set-key (kbd "s-f") 'swiper-isearch)
-  (global-set-key (kbd "C-s") 'swiper-isearch))
+  (global-set-key (kbd "s-f") 'swiper)
+  (global-set-key (kbd "C-s") 'swiper))
 
 ;; ========
 ;; Git
@@ -361,8 +362,8 @@
     "Restart emacs and enable debug-init."
     (interactive)
     (restart-emacs (cons "--debug-init" args)))
-  (define-key my/leader-map "qr" 'restart-emacs)
-  (define-key my/leader-map "qd" 'restart-emacs-debug-init))
+  (define-key my/space-map "qr" 'restart-emacs)
+  (define-key my/space-map "qd" 'restart-emacs-debug-init))
 
 (use-package dashboard
   :config
@@ -392,11 +393,11 @@
 (use-package flycheck
   :config
   (global-flycheck-mode t)
-  (define-key my/leader-map "eb" 'flycheck-buffer)
-  (define-key my/leader-map "ec" 'flycheck-clear)
-  (define-key my/leader-map "en" 'flycheck-next-error)
-  (define-key my/leader-map "ep" 'flycheck-previous-error)
-  (define-key my/leader-map "el" 'flycheck-list-errors))
+  (define-key my/space-map "eb" 'flycheck-buffer)
+  (define-key my/space-map "ec" 'flycheck-clear)
+  (define-key my/space-map "en" 'flycheck-next-error)
+  (define-key my/space-map "ep" 'flycheck-previous-error)
+  (define-key my/space-map "el" 'flycheck-list-errors))
 
 (use-package flycheck-clj-kondo)
 
@@ -407,7 +408,7 @@
   (require 'flycheck-clj-kondo))
 
 (evil-define-key 'normal clojure-mode-map
-  (kbd "s-,") my/clojure-leader-map)
+  (kbd "s-,") my/clojure-map)
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
@@ -434,26 +435,26 @@
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t)
-  (define-key my/clojure-leader-map "'" 'sesman-start)
-  (define-key my/clojure-leader-map "eb" 'cider-eval-buffer)
-  (define-key my/clojure-leader-map "ee" 'cider-eval-last-sexp)
-  (define-key my/clojure-leader-map "ef" 'cider-eval-defun-at-point)
-  (define-key my/clojure-leader-map "==" 'cider-format-buffer)
-  (define-key my/clojure-leader-map "=f" 'cider-format-defun)
-  (define-key my/clojure-leader-map "=r" 'cider-format-region)
-  (define-key my/clojure-leader-map "ha" 'cider-apropos)
-  (define-key my/clojure-leader-map "hc" 'cider-cheatsheet)
-  (define-key my/clojure-leader-map "hh" 'cider-doc)
-  (define-key my/clojure-leader-map "hn" 'cider-browse-ns)
-  (define-key my/clojure-leader-map "hN" 'cider-browse-ns-all)
-  (define-key my/clojure-leader-map "hs" 'cider-browse-spec)
-  (define-key my/clojure-leader-map "hS" 'cider-browse-spec-all)
-  (define-key my/clojure-leader-map "gb" 'cider-pop-back)
-  (define-key my/clojure-leader-map "gg" 'my/clj-find-var)
-  (define-key my/clojure-leader-map "gn" 'cider-find-ns)
-  (define-key my/clojure-leader-map "gr" 'cider-find-resource)
-  (define-key my/clojure-leader-map "mq" 'sesman-quit)
-  (define-key my/clojure-leader-map "mr" 'sesman-restart)
+  (define-key my/clojure-map "'" 'sesman-start)
+  (define-key my/clojure-map "eb" 'cider-eval-buffer)
+  (define-key my/clojure-map "ee" 'cider-eval-last-sexp)
+  (define-key my/clojure-map "ef" 'cider-eval-defun-at-point)
+  (define-key my/clojure-map "==" 'cider-format-buffer)
+  (define-key my/clojure-map "=f" 'cider-format-defun)
+  (define-key my/clojure-map "=r" 'cider-format-region)
+  (define-key my/clojure-map "ha" 'cider-apropos)
+  (define-key my/clojure-map "hc" 'cider-cheatsheet)
+  (define-key my/clojure-map "hh" 'cider-doc)
+  (define-key my/clojure-map "hn" 'cider-browse-ns)
+  (define-key my/clojure-map "hN" 'cider-browse-ns-all)
+  (define-key my/clojure-map "hs" 'cider-browse-spec)
+  (define-key my/clojure-map "hS" 'cider-browse-spec-all)
+  (define-key my/clojure-map "gb" 'cider-pop-back)
+  (define-key my/clojure-map "gg" 'my/clj-find-var)
+  (define-key my/clojure-map "gn" 'cider-find-ns)
+  (define-key my/clojure-map "gr" 'cider-find-resource)
+  (define-key my/clojure-map "mq" 'sesman-quit)
+  (define-key my/clojure-map "mr" 'sesman-restart)
   )
 
 (use-package web-mode
