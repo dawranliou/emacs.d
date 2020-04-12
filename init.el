@@ -12,54 +12,30 @@
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-(require 'use-package)
+(eval-when-compile (require 'use-package))
 (setq use-package-always-ensure t)
 
-;; Core settings
-
-(set-charset-priority 'unicode)
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
-(set-language-environment "UTF-8")
-
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq inhibit-startup-screen t)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(when (boundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-(show-paren-mode 1)
-(setq ring-bell-function 'ignore)
-(setq-default indent-tabs-mode nil)
-
-(setq initial-frame-alist
-      '((width . 102)
-        (height . 54)))
+;; =============
+;; Mac OSX
 
 (setq mac-command-modifier 'super)
 (setq mac-option-modifier 'meta)
+
 (mac-auto-operator-composition-mode)
 
-(defvar backup-dir "~/.emacs.d/backups/")
-(setq backup-directory-alist (list (cons "." backup-dir)))
-(setq make-backup-files nil)
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
-(setq fringes-outside-margins t)
-(setq select-enable-clipboard t)
-(blink-cursor-mode 0)
-
-;; theme
+;; =============
+;; Visuals
 
 (use-package eink-theme)
 
 (set-face-attribute 'default nil
                     :family "Monolisa"
                     :height 120)
+(setq-default line-spacing 0)
+
+(setq initial-frame-alist
+      '((width . 100)
+        (height . 50)))
 
 (use-package hl-line
   :init
@@ -83,27 +59,212 @@
                " [%p/%I]"
                " %m"))
 
-;; Packages
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(when (boundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+(setq ring-bell-function 'ignore)
+
+(setq-default frame-title-format "%b (%f)")
+
+(setq-default indent-tabs-mode nil)
+
+(blink-cursor-mode 0)
+
+;;(global-visual-line-mode t)
+
+;; =============
+;; Sane defaults
+
+(setq make-backup-files nil) ; stop creating backup~ files
+(setq auto-save-default nil) ; stop creating #autosave# files
+(setq create-lockfiles nil)  ; stop creating .# files
+
+(global-auto-revert-mode t)
+
+(setq
+ inhibit-startup-message t         ; Don't show the startup message
+ inhibit-startup-screen t          ; or screen
+ cursor-in-non-selected-windows t  ; Hide the cursor in inactive windows
+
+ echo-keystrokes 0.1               ; Show keystrokes right away, don't show the message in the scratch buffer
+ initial-scratch-message nil       ; Empty scratch buffer
+ sentence-end-double-space nil     ; Sentences should end in one space, come on!
+ confirm-kill-emacs 'y-or-n-p      ; y and n instead of yes and no when quitting
+ help-window-select t              ; Select help window so it's easy to quit it with 'q'
+)
+
+(fset 'yes-or-no-p 'y-or-n-p)      ; y and n instead of yes and no everywhere else
+(global-unset-key (kbd "s-p"))
+
+(use-package simpleclip
+  :init
+  (simpleclip-mode 1))
+
+(set-charset-priority 'unicode)
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+(set-language-environment "UTF-8")
+
+(use-package undo-tree
+  :init
+  (progn
+    (global-undo-tree-mode)))
 
 (use-package auto-compile
   :config
   (auto-compile-on-load-mode))
 
+;; ========
+;; Customizations
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
+
+;; ========
+;; Which key
+
 (use-package which-key
   :config
-  (which-key-mode t))
+  (which-key-mode t)
+  (setq which-key-idle-delay 0.5))
+
+;; ========
+;; OS integration
+
+(use-package exec-path-from-shell
+  :config
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)))
+
+;; ========
+;; Navigation and editing
+
+(global-set-key (kbd "s-a") 'mark-whole-buffer)
+(global-set-key (kbd "s-s") 'save-buffer)
+(global-set-key (kbd "s-S") 'write-file)
+(global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
+
+(use-package avy
+  :config
+  (global-set-key (kbd "s-;") 'avy-goto-char-timer))
+
+(global-set-key (kbd "s-w") (kbd "C-x 0"))
+(global-set-key (kbd "s-W") (kbd "C-x 1"))
+
+(global-set-key (kbd "s-k") 'kill-this-buffer)
+
+(use-package expand-region
+  :config
+  (global-set-key (kbd "s-'") 'er/expand-region)
+  (global-set-key (kbd "s-\"") 'er/contract-region))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq require-final-newline t)
+
+(global-set-key (kbd "s-/") 'comment-line)
+
+;; ========
+;; Windows
+
+;; always split on the bottom
+(setq split-height-threshold 0)
+(setq split-width-threshold nil)
+
+(winner-mode 1)
+;; ========
+;; Ivy, Counsel, and Swiper
+
+(use-package ivy
+  :config
+  (ivy-mode t)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "%d/%d ")
+  (setq ivy-display-style 'fancy)
+  (global-set-key (kbd "s-b") 'ivy-switch-buffer))
+
+(use-package counsel
+  :config
+  (counsel-mode t)
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "s-y") 'counsel-yank-pop)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "s-F") 'counsel-rg)
+  (global-set-key (kbd "s-p") 'counsel-git))
+
+(use-package swiper
+  :config
+  (global-set-key (kbd "s-f") 'swiper-isearch)
+  (global-set-key (kbd "C-s") 'swiper-isearch))
+
+;; ========
+;; Git
+
+(use-package magit
+  :config
+  (global-set-key (kbd "s-g s") 'magit-status)
+  (global-set-key (kbd "s-g b") 'magit-blame)
+  (global-set-key (kbd "s-g l") 'magit-log-all)
+  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
+
+;; ========
+;; Spell checking
+
+;;(setq ispell-program-name "aspell")
+(add-hook 'text-mode-hook 'flyspell-mode)
+(global-set-key (kbd "s-\\") 'ispell-word)
+
+;; ========
+;; Parens
+
+(require 'paren)
+(setq show-paren-delay 0)
+(show-paren-mode 1)
+
+(use-package smartparens
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode t)
+  (show-smartparens-global-mode t)
+  (setq sp-show-pair-delay 0))
+
+;; ========
+;; Programming
+;; TODO
+
+;; ========
+;; Projectile
+
+(use-package projectile
+  :config
+  (projectile-mode t)
+  (setq projectile-completion-system 'ivy)
+  (setq projectile-enable-caching t))
+
+(use-package counsel-projectile
+  :after (projectile ivy)
+  :config
+  (counsel-projectile-mode t)
+  (global-set-key (kbd "s-F") 'counsel-projectile-rg)
+  (global-set-key (kbd "s-p") 'counsel-projectile))
+
+;; ========
+;; General
+;; TODO clean everything below here
 
 (use-package general
   :config
   (general-define-key
    ;; mac
-   "s-v" 'yank
-   "s-c" 'evil-yank
    "s-a" 'mark-whole-buffer
-   "s-x" 'kill-region
    "s-w" 'delete-window
    "s-n" 'split-window-vertically
-   "s-s" (general-simulate-key "C-x C-s")
+   "s-s" 'save-buffer
+   "s-S" 'write-file
    "s-z" 'undo-tree-undo
    "s-Z" 'undo-tree-redo
 
@@ -113,7 +274,7 @@
   (general-create-definer set-leader-keys
     :states '(normal visual motion emacs)
     :prefix "SPC")
-  
+
   (set-leader-keys
     "" nil
 
@@ -151,6 +312,11 @@
     "t" '(:ignore t :which-key "toggle")
     "tw" 'whitespace-mode))
 
+
+;; ========
+
+
+
 (use-package evil
   :config
   (evil-mode t)
@@ -159,37 +325,6 @@
   (set-leader-keys
     "bN" 'evil-buffer-new
     "fd" 'evil-save-and-close))
-
-(use-package ivy
-  :general
-  (set-leader-keys
-    "rl" 'ivy-resume)
-  :config
-  (ivy-mode t)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "%d/%d ")
-  (setq ivy-display-style 'fancy))
-
-(use-package counsel
-  :config
-  (counsel-mode t)
-  :general
-  (set-leader-keys
-    "SPC" 'counsel-M-x
-    "bb" 'counsel-ibuffer
-    "ff" 'counsel-find-file
-    "fr" 'counsel-recentf
-    "fL" 'counsel-locate
-    "?" 'counsel-descbinds
-    "iu" 'counsel-unicode-char
-    "sj" 'counsel-imenu))
-
-(use-package swiper
-  :general
-  (general-define-key
-   "C-s" 'swiper)
-  (set-leader-keys
-    "ss" 'swiper))
 
 (use-package company
   :config
@@ -214,20 +349,7 @@
 (use-package rg
   :commands rg
   :config
-  (rg-enable-default-bindings)
-  :general
-  (set-leader-keys
-    "/" 'rg-project))
-
-(use-package magit
-  :general
-  (set-leader-keys
-    "g" '(:ignore t :which-key "git")
-    "gs" 'magit-status
-    "gb" 'magit-blame
-    "gl" 'magit-log-all)
-  :config
-  (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
+  (rg-enable-default-bindings))
 
 (use-package evil-magit
   :hook (magit-mode . evil-magit-init))
@@ -252,31 +374,11 @@
     "qr" 'restart-emacs
     "qd" '(restart-emacs-debug-init :which-key "quit with debug-init")))
 
-(use-package undo-tree
-  :config
-  (global-undo-tree-mode))
-
 (use-package hungry-delete
   :config
   (global-hungry-delete-mode t))
 
 (use-package iedit)
-
-(use-package projectile
-  :config
-  (projectile-mode t)
-  (setq projectile-completion-system 'ivy))
-
-(use-package counsel-projectile
-  :after (projectile ivy)
-  :general
-  (set-leader-keys
-    "pd" 'counsel-projectile-dired-find-dir
-    "po" 'counsel-projectile-find-other-file
-    "pf" 'counsel-projectile-find-file
-    "fp" 'counsel-projectile-find-file
-    "pb" 'counsel-projectile-switch-to-buffer
-    "bp" 'counsel-projectile-switch-to-buffer))
 
 (use-package ace-window
   :config
@@ -316,10 +418,6 @@
   (set-leader-keys
     "tf" 'fci-mode))
 
-(use-package expand-region
-  :config
-  (global-set-key (kbd "C-=") 'er/expand-region))
-
 ;; shell
 
 (use-package eshell
@@ -343,11 +441,6 @@
   (setq clojure-indent-style 'align-arguments)
   (setq clojure-align-forms-automatically t)
   (require 'flycheck-clj-kondo))
-
-(use-package smartparens
-  :hook (prog-mode . smartparens-mode)
-  :config
-  (require 'smartparens-config))
 
 (use-package lispy
   :hook ((clojure-mode . lispy-mode)
