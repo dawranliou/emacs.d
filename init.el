@@ -142,6 +142,30 @@
     (exec-path-from-shell-initialize)))
 
 ;; ========
+;; Evil
+
+(use-package evil
+  :config
+  (evil-mode t)
+  (setq evil-move-beyond-eol t)
+  (setq evil-move-cursor-back nil))
+
+(defvar my/leader-map (make-sparse-keymap)
+  "Keymap for \"leader key\" shortcuts.")
+
+(define-key evil-normal-state-map (kbd "SPC") my/leader-map)
+(define-key my/leader-map (kbd "b C-d") 'my/kill-other-buffers)
+(define-key my/leader-map (kbd "b C-d") 'my/kill-other-buffers)
+(define-key my/leader-map (kbd "fed") 'my/find-user-init-file)
+(define-key my/leader-map (kbd "feR") 'my/load-user-init-file)
+(define-key my/leader-map (kbd "TAB") 'mode-line-other-buffer)
+(define-key my/leader-map (kbd "bd") 'kill-this-buffer)
+(define-key my/leader-map (kbd "Pr") 'package-autoremove)
+(define-key my/leader-map (kbd "Pu") 'my/package-upgrade-all)
+(define-key my/leader-map (kbd "qq") 'save-buffers-kill-emacs)
+(define-key my/leader-map (kbd "tw") 'whitespace-mode)
+
+;; ========
 ;; Navigation and editing
 
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
@@ -168,6 +192,14 @@
 
 (global-set-key (kbd "s-/") 'comment-line)
 
+(global-set-key (kbd "s-z") 'undo-tree-undo)
+(global-set-key (kbd "s-Z") 'undo-tree-redo)
+
+(global-set-key (kbd "s-w") 'delete-window)
+(global-set-key (kbd "s-n") 'split-window-vertically)
+
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
 ;; ========
 ;; Windows
 
@@ -176,6 +208,7 @@
 (setq split-width-threshold nil)
 
 (winner-mode 1)
+
 ;; ========
 ;; Ivy, Counsel, and Swiper
 
@@ -211,6 +244,9 @@
   (global-set-key (kbd "s-g l") 'magit-log-all)
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
 
+(use-package evil-magit
+  :hook (magit-mode . evil-magit-init))
+
 ;; ========
 ;; Spell checking
 
@@ -228,7 +264,7 @@
 (use-package smartparens
   :config
   (require 'smartparens-config)
-  (smartparens-global-mode t)
+  (smartparens-global-strict-mode t)
   (show-smartparens-global-mode t)
   (setq sp-show-pair-delay 0))
 
@@ -253,115 +289,33 @@
   (global-set-key (kbd "s-p") 'counsel-projectile))
 
 ;; ========
-;; General
-;; TODO clean everything below here
-
-(use-package general
-  :config
-  (general-define-key
-   ;; mac
-   "s-a" 'mark-whole-buffer
-   "s-w" 'delete-window
-   "s-n" 'split-window-vertically
-   "s-s" 'save-buffer
-   "s-S" 'write-file
-   "s-z" 'undo-tree-undo
-   "s-Z" 'undo-tree-redo
-
-   :keymaps 'key-translation-map
-   "ESC" (kbd "C-g"))
-
-  (general-create-definer set-leader-keys
-    :states '(normal visual motion emacs)
-    :prefix "SPC")
-
-  (set-leader-keys
-    "" nil
-
-    "TAB" '(mode-line-other-buffer :wk "last buffer")
-
-    "c" (general-simulate-key "C-c")
-    "h" (general-simulate-key "C-h" :which-key "help")
-    "u" (general-simulate-key "C-u" :which-key "universal")
-    "x" (general-simulate-key "C-x")
-
-    "a" '(:ignore t :which-key "app")
-    "ad" 'dired
-
-    "b" '(:ignore t :which-key "buffer")
-    "bd" 'kill-this-buffer
-    "b C-d" 'my/kill-other-buffers
-
-    "f" '(:ignore t :which-key "file")
-    "fe" '(:ignore t :which-key "emacs")
-    "fed" 'my/find-user-init-file
-    "feR" 'my/load-user-init-file
-    "fs" 'save-buffer
-
-    "p" '(:ignore t :which-key "project")
-
-    "P" '(:ignore t :which-key "Packages")
-    "Pr" 'package-autoremove
-    "Pu" 'my/package-upgrade-all
-
-    "q" '(:ignore t :which-key "quit")
-    "qq" 'save-buffers-kill-terminal
-
-    "s" '(:ignore t :which-key "search")
-
-    "t" '(:ignore t :which-key "toggle")
-    "tw" 'whitespace-mode))
-
-
-;; ========
-
-
-
-(use-package evil
-  :config
-  (evil-mode t)
-  (setq evil-move-beyond-eol t)
-  (setq evil-move-cursor-back nil)
-  (set-leader-keys
-    "bN" 'evil-buffer-new
-    "fd" 'evil-save-and-close))
+;; Auto completion
 
 (use-package company
   :config
   (global-company-mode t)
+  (setq company-idle-delay 0.1)
+  (setq company-minimum-prefix-length 1)
   (define-key company-active-map (kbd "ESC") 'company-abort)
   (define-key company-active-map [tab] 'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous))
 
+;; ========
+;; Flycheck
+
 (use-package flycheck
   :config
   (global-flycheck-mode t)
-  :general
-  (set-leader-keys
-    "e" '(:ignore t :which-key "errors")
-    "eb" 'flycheck-buffer
-    "ec" 'flycheck-clear
-    "en" 'flycheck-next-error
-    "ep" 'flycheck-previous-error
-    "el" 'flycheck-list-errors))
+  (define-key my/leader-map "eb" 'flycheck-buffer)
+  (define-key my/leader-map "ec" 'flycheck-clear)
+  (define-key my/leader-map "en" 'flycheck-next-error)
+  (define-key my/leader-map "ep" 'flycheck-previous-error)
+  (define-key my/leader-map "el" 'flycheck-list-errors))
 
 (use-package rg
-  :commands rg
   :config
   (rg-enable-default-bindings))
-
-(use-package evil-magit
-  :hook (magit-mode . evil-magit-init))
-
-(use-package git-gutter-fringe+
-  :general
-  (set-leader-keys
-    "tg" 'global-git-gutter+-mode)
-  :config
-  (global-git-gutter+-mode t)
-  (git-gutter+-toggle-fringe)
-  (setq git-gutter-fr+-side 'right-fringe))
 
 (use-package restart-emacs
   :config
@@ -369,10 +323,8 @@
     "Restart emacs and enable debug-init."
     (interactive)
     (restart-emacs (cons "--debug-init" args)))
-  :general
-  (set-leader-keys
-    "qr" 'restart-emacs
-    "qd" '(restart-emacs-debug-init :which-key "quit with debug-init")))
+  (define-key my/leader-map "qr" 'restart-emacs)
+  (define-key my/leader-map "qd" 'restart-emacs-debug-init))
 
 (use-package hungry-delete
   :config
@@ -414,9 +366,8 @@
   (git-commit-mode . fci-mode)
   :init
   (setq-default fci-rule-column 80)
-  :general
-  (set-leader-keys
-    "tf" 'fci-mode))
+  :config
+  (define-key my/leader-map "tf" 'fci-mode))
 
 ;; shell
 
@@ -429,8 +380,7 @@
   (shell-pop--set-shell-type
    'shell-pop-shell-type
    '("eshell" "*eshell*" (lambda nil (eshell))))
-  :general
-  (set-leader-keys "'" 'shell-pop))
+  (define-key my/leader-map "'" 'shell-pop))
 
 ;; programming
 
@@ -443,7 +393,8 @@
   (require 'flycheck-clj-kondo))
 
 (use-package lispy
-  :hook ((clojure-mode . lispy-mode)
+  :hook ((emacs-lisp-mode . lispy-mode)
+         (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)))
 
 (use-package lispyville
@@ -460,43 +411,43 @@
   :hook (clojure-mode . clj-refactor-mode))
 
 (use-package cider
-  :general
-  (general-define-key
-   :states '(normal visual)
-   :keymaps '(clojure-mode-map clojurescript-mode-map cider-mode-map)
-   :prefix ","
+  ;; :general
+  ;; (general-define-key
+  ;;  :states '(normal visual)
+  ;;  :keymaps '(clojure-mode-map clojurescript-mode-map cider-mode-map)
+  ;;  :prefix ","
 
-   "'" 'sesman-start
+  ;;  "'" 'sesman-start
 
-   "e" '(:ignore t :which-key "evaluation")
-   "eb" 'cider-eval-buffer
-   "ee" 'cider-eval-last-sexp
-   "ef" 'cider-eval-defun-at-point
+  ;;  "e" '(:ignore t :which-key "evaluation")
+  ;;  "eb" 'cider-eval-buffer
+  ;;  "ee" 'cider-eval-last-sexp
+  ;;  "ef" 'cider-eval-defun-at-point
 
-   "=" '(:ignore t :which-key "format")
-   "==" 'cider-format-buffer
-   "=f" 'cider-format-defun
-   "=r" 'cider-format-region
+  ;;  "=" '(:ignore t :which-key "format")
+  ;;  "==" 'cider-format-buffer
+  ;;  "=f" 'cider-format-defun
+  ;;  "=r" 'cider-format-region
 
-   "h" '(:ignore t :which-key "help")
-   "ha" 'cider-apropos
-   "hc" 'cider-cheatsheet
-   "hh" 'cider-doc
-   "hn" 'cider-browse-ns
-   "hN" 'cider-browse-ns-all
-   "hs" 'cider-browse-spec
-   "hS" 'cider-browse-spec-all
+  ;;  "h" '(:ignore t :which-key "help")
+  ;;  "ha" 'cider-apropos
+  ;;  "hc" 'cider-cheatsheet
+  ;;  "hh" 'cider-doc
+  ;;  "hn" 'cider-browse-ns
+  ;;  "hN" 'cider-browse-ns-all
+  ;;  "hs" 'cider-browse-spec
+  ;;  "hS" 'cider-browse-spec-all
 
-   "g" '(:ignore t :which-key "goto")
-   "gb" 'cider-pop-back
-   "gg" 'my/clj-find-var
-   "gn" 'cider-find-ns
-   "gr" 'cider-find-resource
+  ;;  "g" '(:ignore t :which-key "goto")
+  ;;  "gb" 'cider-pop-back
+  ;;  "gg" 'my/clj-find-var
+  ;;  "gn" 'cider-find-ns
+  ;;  "gr" 'cider-find-resource
 
-   "m" '(:ignore t :which-key "manage repls")
-   "mq" 'sesman-quit
-   "mr" 'sesman-restart
-   )
+  ;;  "m" '(:ignore t :which-key "manage repls")
+  ;;  "mq" 'sesman-quit
+  ;;  "mr" 'sesman-restart
+  ;;  )
   :config
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode)
