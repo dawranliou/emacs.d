@@ -316,6 +316,14 @@
   (show-smartparens-global-mode t)
   (setq sp-show-pair-delay 0))
 
+(use-package idle-highlight-mode
+  :hook
+  (prog-mode . idle-highlight-mode))
+
+(use-package paren-face
+  :hook
+  (prog-mode . paren-face-mode))
+
 ;; ========
 ;; Projectile
 
@@ -323,8 +331,7 @@
   :config
   (projectile-mode t)
   (setq projectile-completion-system 'ivy)
-  (setq projectile-enable-caching t)
-  (global-set-key (kbd "C-s-p") 'projectile-command-map))
+  (setq projectile-enable-caching t))
 
 (use-package counsel-projectile
   :after (projectile ivy)
@@ -357,7 +364,6 @@
   (define-key my/leader-map "qr" 'restart-emacs)
   (define-key my/leader-map "qd" 'restart-emacs-debug-init))
 
-
 (use-package dashboard
   :config
   (dashboard-setup-startup-hook)
@@ -382,14 +388,6 @@
 
 ;; ========
 ;; Programming
-
-(use-package idle-highlight-mode
-  :hook
-  (prog-mode . idle-highlight-mode))
-
-(use-package paren-face
-  :hook
-  (prog-mode . paren-face-mode))
 
 (use-package flycheck
   :config
@@ -433,7 +431,6 @@
   :config
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-mode-hook #'company-mode)
-  (add-hook 'cider-repl-mode-hook #'smartparens-strict-mode)
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t)
@@ -458,11 +455,6 @@
   (define-key my/clojure-leader-map "mq" 'sesman-quit)
   (define-key my/clojure-leader-map "mr" 'sesman-restart)
   )
-
-(use-package aggressive-indent
-  :config
-  (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
-  (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode))
 
 (use-package web-mode
   :config
