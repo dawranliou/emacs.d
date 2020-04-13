@@ -1,6 +1,6 @@
 ;;; thirdstream-theme.el --- Theme Thirdstream
 
-;; Copyright (C) 2020 ,
+;; Copyright (C) 2020 Daw-Ran Liou
 
 ;; Author: Daw-Ran Liou
 ;; Version: 0.1
