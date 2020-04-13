@@ -349,7 +349,6 @@
 (use-package company
   :config
   (global-company-mode t)
-  (setq company-minimum-prefix-length 1)
   (define-key company-active-map (kbd "ESC") 'company-abort)
   (define-key company-active-map [tab] 'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
@@ -431,8 +430,6 @@
 
 (use-package cider
   :config
-  (add-hook 'cider-repl-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'company-mode)
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t)
