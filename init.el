@@ -35,14 +35,17 @@
 (add-to-list 'default-frame-alist '(ns-transparent-title-bar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . light))
 
-(use-package eink-theme)
-(set-face-foreground font-lock-string-face "#00449E")
-(set-face-foreground font-lock-comment-face "#808080")
-(set-face-foreground font-lock-doc-face "#808080")
-(set-face-foreground font-lock-doc-face "#808080")
-(set-face-attribute 'fringe nil :foreground "#808080")
-(set-face-attribute 'mode-line nil :height 1.0 :inverse-video t)
-(set-face-attribute 'mode-line-inactive nil :height 1.0)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/")
+
+(load-theme 'thirdstream t)
+;; (use-package eink-theme)
+;; (set-face-foreground font-lock-string-face "#00449E")
+;; (set-face-foreground font-lock-comment-face "#808080")
+;; (set-face-foreground font-lock-doc-face "#808080")
+;; (set-face-foreground font-lock-doc-face "#808080")
+;; (set-face-attribute 'fringe nil :foreground "#808080")
+;; (set-face-attribute 'mode-line nil :height 1.0 :inverse-video t)
+;; (set-face-attribute 'mode-line-inactive nil :height 1.0)
 
 (setq initial-frame-alist
       '((width . 100)
@@ -52,7 +55,7 @@
   :init
   (global-hl-line-mode))
 
-(set-face-attribute 'hl-line nil :background "#FFE0E0")
+;; (set-face-attribute 'hl-line nil :background "#FFE0E0")
 
 (setq-default mode-line-format
               (list
