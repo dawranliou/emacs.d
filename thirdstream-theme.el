@@ -65,7 +65,7 @@
         `(region ((,class (:foreground ,fg :background ,highlight-yellow))))
         `(highlight ((,class (:foreground ,fg :background ,highlight-yellow))))
 	`(hl-line ((,class (:background  ,highlight-gray))))
-	`(fringe ((,class (:background ,highlight-gray :foreground ,fg))))
+	`(fringe ((,class (:background ,bg :foreground ,comment))))
 	`(cursor ((,class (:background ,fg :foreground ,bg))))
         `(show-paren-match ((,class (:background ,highlight-yellow :bold t))))
         `(isearch ((,class (:bold t :foreground ,warning :background ,highlight-gray))))
