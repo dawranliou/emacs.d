@@ -280,8 +280,18 @@
 
 (use-package swiper
   :config
-  (global-set-key (kbd "s-f") 'swiper)
-  (global-set-key (kbd "C-s") 'swiper))
+  (global-set-key (kbd "s-f") 'swiper-isearch)
+  (global-set-key (kbd "C-s") 'swiper-isearch)
+  (setq swiper-faces
+        '(ivy-minibuffer-match-face-1
+          ivy-minibuffer-match-face-2
+          ivy-minibuffer-match-face-3
+          ivy-minibuffer-match-face-4))
+  (setq swiper-background-faces
+        '(ivy-minibuffer-match-face-1
+          ivy-minibuffer-match-face-2
+          ivy-minibuffer-match-face-3
+          ivy-minibuffer-match-face-4)))
 
 ;; ========
 ;; Git
