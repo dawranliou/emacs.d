@@ -121,6 +121,9 @@
   :config
   (auto-compile-on-load-mode))
 
+;; Count hyphens as word characters
+(modify-syntax-entry ?- "w")
+
 ;; ========
 ;; Customizations
 
