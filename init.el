@@ -71,9 +71,7 @@
 
 (blink-cursor-mode 0)
 
-(use-package rainbow-mode
-  :hook
-  (prog-mode . rainbow-mode))
+(use-package rainbow-mode)
 
 ;; =============
 ;; Sane defaults
@@ -135,8 +133,7 @@
 
 (use-package which-key
   :config
-  (which-key-mode t)
-  (setq which-key-idle-delay 0.5))
+  (which-key-mode t))
 
 ;; ========
 ;; OS integration
@@ -314,15 +311,13 @@
 ;; Parens
 
 (require 'paren)
-(setq show-paren-delay 0)
 (show-paren-mode 1)
 
 (use-package smartparens
   :config
   (require 'smartparens-config)
   (smartparens-global-strict-mode t)
-  (show-smartparens-global-mode t)
-  (setq sp-show-pair-delay 0))
+  (show-smartparens-global-mode t))
 
 (use-package idle-highlight-mode
   :hook
@@ -354,7 +349,6 @@
 (use-package company
   :config
   (global-company-mode t)
-  (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 1)
   (define-key company-active-map (kbd "ESC") 'company-abort)
   (define-key company-active-map [tab] 'company-complete-common-or-cycle)
