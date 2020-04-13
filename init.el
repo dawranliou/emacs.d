@@ -51,12 +51,6 @@
       '((width . 100)
         (height . 50)))
 
-(use-package hl-line
-  :init
-  (global-hl-line-mode))
-
-;; (set-face-attribute 'hl-line nil :background "#FFE0E0")
-
 (setq-default mode-line-format
               (list
                '(:eval (propertize " %b"
@@ -77,7 +71,9 @@
 
 (blink-cursor-mode 0)
 
-;;(global-visual-line-mode t)
+(use-package rainbow-mode
+  :hook
+  (prog-mode . rainbow-mode))
 
 ;; =============
 ;; Sane defaults
@@ -163,12 +159,7 @@
   :config
   (evil-mode t)
   (setq evil-move-beyond-eol t)
-  (setq evil-move-cursor-back nil)
-  (setq evil-insert-state-cursor '((hbar . 2) "black"))
-  (setq evil-normal-state-cursor '(box "black"))
-  (setq evil-motion-state-cursor '(box "black"))
-  (setq evil-visual-state-cursor '(box "#F86155"))
-  (setq evil-emacs-state-cursor '(box "#357edd")))
+  (setq evil-move-cursor-back nil))
 
 (define-key evil-normal-state-map (kbd "SPC") my/space-map)
 (define-key my/space-map (kbd "b C-d") 'my/kill-other-buffers)
