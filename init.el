@@ -287,6 +287,7 @@
           ivy-minibuffer-match-face-3
           ivy-minibuffer-match-face-4)))
 
+(use-package smex)
 ;; ========
 ;; Git
 
