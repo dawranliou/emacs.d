@@ -338,7 +338,8 @@
   :config
   (projectile-mode t)
   (setq projectile-completion-system 'ivy)
-  (setq projectile-enable-caching t))
+  (setq projectile-enable-caching t)
+  (define-key projectile-mode-map (kbd "C-s-p") 'projectile-switch-project))
 
 (use-package counsel-projectile
   :after (projectile ivy)
