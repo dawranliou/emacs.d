@@ -289,11 +289,6 @@
 
 (use-package smex)
 
-(use-package ivy-rich
-  :config
-  (ivy-rich-mode 1)
-  (setq ivy-rich-path-style 'abbrev))
-
 ;; ========
 ;; Git
 
