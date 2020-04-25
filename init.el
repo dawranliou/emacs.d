@@ -256,9 +256,11 @@
   :config
   (ivy-mode t)
   (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
   (setq ivy-count-format "%d/%d ")
   (setq ivy-display-style 'fancy)
-  (global-set-key (kbd "s-b") 'ivy-switch-buffer))
+  (global-set-key (kbd "s-b") 'ivy-switch-buffer)
+  (global-set-key (kbd "M-s-b") 'ivy-resume))
 
 (use-package counsel
   :config
