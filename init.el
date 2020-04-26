@@ -211,7 +211,7 @@
 (global-set-key (kbd "s-z") 'undo-tree-undo)
 (global-set-key (kbd "s-Z") 'undo-tree-redo)
 
-(global-set-key (kbd "s-w") 'delete-window)
+(global-set-key (kbd "s-w") 'my/close-window)
 (global-set-key (kbd "s-n") 'split-window-vertically)
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
@@ -550,6 +550,13 @@ If CIDER fails, or not available, falls back to dumb-jump."
       (unless (eq 'symbol (type-of (cider-find-var nil sym-name)))
         (dumb-jump-go))
     (dumb-jump-go)))
+
+(defun my/close-window ()
+  "Close window or buffer."
+  (interactive)
+  (if (= 1 (count-windows))
+      (kill-current-buffer)
+    (delete-window)))
 
 (provide 'init)
 ;;; Init.el ends here
