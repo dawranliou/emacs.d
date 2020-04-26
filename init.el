@@ -174,12 +174,15 @@
 (define-key my/space-map (kbd "tw") 'whitespace-mode)
 
 (use-package fill-column-indicator
-  :hook
-  (git-commit-mode . fci-mode)
+  :commands (global-fci-mode)
   :init
   (setq-default fci-rule-column 80)
   :config
-  (define-key my/space-map "tf" 'fci-mode))
+  (define-globalized-minor-mode global-fci-mode fci-mode
+    (lambda ()
+      (if buffer-file-name (fci-mode 1)))))
+
+(global-fci-mode)
 
 ;; ========
 ;; Navigation and editing
