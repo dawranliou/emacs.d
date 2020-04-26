@@ -472,6 +472,13 @@
         '(("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
           ("css" . (ac-source-css-property ac-source-emmet-css-snippets)))))
 
+(use-package js2-mode
+  :commands 'js2-mode
+  :config
+  (setq js2-basic-offset 2))
+
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
 (use-package markdown-mode
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
