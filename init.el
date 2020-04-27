@@ -164,14 +164,8 @@
 (define-key evil-normal-state-map (kbd "SPC") my/space-map)
 (define-key my/space-map (kbd "b C-d") 'my/kill-other-buffers)
 (define-key my/space-map (kbd "b C-d") 'my/kill-other-buffers)
-(define-key my/space-map (kbd "fed") 'my/find-user-init-file)
-(define-key my/space-map (kbd "feR") 'my/load-user-init-file)
 (define-key my/space-map (kbd "TAB") 'mode-line-other-buffer)
-(define-key my/space-map (kbd "bd") 'kill-this-buffer)
-(define-key my/space-map (kbd "Pr") 'package-autoremove)
-(define-key my/space-map (kbd "Pu") 'my/package-upgrade-all)
 (define-key my/space-map (kbd "qq") 'save-buffers-kill-emacs)
-(define-key my/space-map (kbd "tw") 'whitespace-mode)
 
 (use-package fill-column-indicator
   :commands (global-fci-mode)
@@ -186,6 +180,9 @@
 
 ;; ========
 ;; Navigation and editing
+
+(global-set-key (kbd "C-x c") 'my/find-user-init-file)
+(global-set-key (kbd "C-x R") 'my/load-user-init-file)
 
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
 (global-set-key (kbd "s-s") 'save-buffer)
