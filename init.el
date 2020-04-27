@@ -214,6 +214,8 @@
 (global-set-key (kbd "s-w") 'my/close-window)
 (global-set-key (kbd "s-n") 'split-window-vertically)
 
+(global-set-key (kbd "C-<tab>") 'mode-line-other-buffer)
+
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
 (use-package rg
