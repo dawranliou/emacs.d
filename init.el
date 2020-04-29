@@ -45,11 +45,20 @@
 
 (setq-default mode-line-format
               (list
+               '(:eval (format-time-string " %b %d %H:%M "))
+               '(:eval (substring vc-mode 5))
                '(:eval (propertize " %b"
                                    'help-echo (buffer-file-name)))
-               " (%02l,%02c)"
-               " [%p/%I]"
-               " %m"))
+                " (%02l,%02c)"
+                " [%p/%I]"
+               ;; spaces to align right
+               '(:eval (propertize
+                " " 'display
+                `((space :align-to (- (+ right right-fringe right-margin)
+                                      ,(+ 3 (string-width mode-name))
+                                      )))))
+               " %m"
+               ))
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
