@@ -237,6 +237,8 @@
   :config
   (setq dumb-jump-selector 'ivy))
 
+(define-key evil-normal-state-map [remap evil-goto-definition] 'dumb-jump-go)
+
 (use-package hungry-delete
   :config
   (global-hungry-delete-mode t))
@@ -456,7 +458,7 @@
   (define-key my/clojure-map "hs" 'cider-browse-spec)
   (define-key my/clojure-map "hS" 'cider-browse-spec-all)
   (define-key my/clojure-map "gb" 'cider-pop-back)
-  (define-key my/clojure-map "gg" 'my/clj-find-var)
+  (define-key clojure-mode-map [remap evil-goto-definition] 'my/clj-find-var)
   (define-key my/clojure-map "gn" 'cider-find-ns)
   (define-key my/clojure-map "gr" 'cider-find-resource)
   (define-key my/clojure-map "mq" 'sesman-quit)
