@@ -46,7 +46,7 @@
 (setq-default mode-line-format
               (list
                '(:eval (format-time-string " %b %d %H:%M "))
-               '(:eval (substring vc-mode 5))
+               ;; '(:eval (substring vc-mode 5))
                '(:eval (propertize " %b"
                                    'help-echo (buffer-file-name)))
                 " (%02l,%02c)"
