@@ -38,14 +38,6 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/")
 
 (load-theme 'thirdstream t)
-;; (use-package eink-theme)
-;; (set-face-foreground font-lock-string-face "#00449E")
-;; (set-face-foreground font-lock-comment-face "#808080")
-;; (set-face-foreground font-lock-doc-face "#808080")
-;; (set-face-foreground font-lock-doc-face "#808080")
-;; (set-face-attribute 'fringe nil :foreground "#808080")
-;; (set-face-attribute 'mode-line nil :height 1.0 :inverse-video t)
-;; (set-face-attribute 'mode-line-inactive nil :height 1.0)
 
 (setq initial-frame-alist
       '((width . 100)
@@ -487,8 +479,8 @@
          ("\\.markdown\\'" . markdown-mode)))
 
 ;; Lisp
-(load (expand-file-name "~/.quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
+;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+;; (setq inferior-lisp-program "sbcl")
 
 ;; functions
 
