@@ -179,7 +179,7 @@
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
 (global-set-key (kbd "s-s") 'save-buffer)
 (global-set-key (kbd "s-S") 'write-file)
-(global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
+(global-set-key (kbd "s-q q") 'save-buffers-kill-emacs)
 
 (use-package avy
   :config
@@ -361,8 +361,8 @@
     "Restart emacs and enable debug-init."
     (interactive)
     (restart-emacs (cons "--debug-init" args)))
-  (define-key my/space-map "qr" 'restart-emacs)
-  (define-key my/space-map "qd" 'restart-emacs-debug-init))
+  (global-set-key (kbd "s-q r") 'restart-emacs)
+  (global-set-key (kbd "s-q d") 'restart-emacs-debug-init))
 
 (use-package dashboard
   :config
