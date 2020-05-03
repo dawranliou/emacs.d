@@ -4,7 +4,15 @@
 
 ;;; Code:
 ;;; -*- lexical-binding: t -*-
-(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Avoid garbage collection at startup
+;; https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#avoid-garbage-collection-at-startup
+(setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
+      gc-cons-percentage 0.6)
+(add-hook 'emacs-startup-hook
+  (lambda ()
+    (setq gc-cons-threshold 16777216 ; 16mb
+          gc-cons-percentage 0.1)))
 
 (package-initialize)
 (setq package-archives
