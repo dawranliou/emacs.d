@@ -220,7 +220,7 @@
         `(company-tooltip-common ((,class ( :foreground ,fg))))
         `(company-tooltip-common-selection ((,class (:foreground ,str))))
         `(company-tooltip-mouse ((,class (:inherit highlight))))
-        `(company-tooltip-selection ((,class (:background ,highlight-gray :foreground ,fg))))
+        `(company-tooltip-selection ((,class (:background ,highlight-yellow :foreground ,fg))))
         `(company-template-field ((,class (:inherit region))))
         `(web-mode-builtin-face ((,class (:inherit ,font-lock-builtin-face))))
         `(web-mode-comment-face ((,class (:inherit ,font-lock-comment-face))))
