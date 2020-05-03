@@ -495,12 +495,14 @@
   (define-key my/clojure-map "hN" 'cider-browse-ns-all)
   (define-key my/clojure-map "hs" 'cider-browse-spec)
   (define-key my/clojure-map "hS" 'cider-browse-spec-all)
-  (define-key my/clojure-map "gb" 'cider-pop-back)
-  (define-key clojure-mode-map [remap evil-goto-definition] 'my/clj-find-var)
-  (define-key my/clojure-map "gn" 'cider-find-ns)
-  (define-key my/clojure-map "gr" 'cider-find-resource)
   (define-key my/clojure-map "mq" 'sesman-quit)
   (define-key my/clojure-map "mr" 'sesman-restart)
+  (evil-define-key '(normal visual) 'cider-mode-map
+    "gd" 'cider-find-var
+    "gb" 'cider-pop-back
+    (kbd "C-t") 'cider-pop-back
+    "gn" 'cider-find-ns
+    "gf" 'cider-find-resource)
   )
 
 (use-package web-mode
@@ -560,9 +562,9 @@ If the universal prefix argument is used then will the windows too."
   (package-refresh-contents)
   (let (upgrades)
     (cl-flet ((get-version (name where)
-			   (let ((pkg (cadr (assq name where))))
-			     (when pkg
-			       (package-desc-version pkg)))))
+                           (let ((pkg (cadr (assq name where))))
+                             (when pkg
+                               (package-desc-version pkg)))))
       (dolist (package (mapcar #'car package-alist))
         (let ((in-archive (get-version package package-archive-contents)))
           (when (and in-archive
@@ -583,16 +585,6 @@ If the universal prefix argument is used then will the windows too."
                 (package-install package-desc)
                 (package-delete  old-package)))))
       (message "All packages are up to date"))))
-
-(defun my/clj-find-var (sym-name &optional arg)
-  "Attempts to jump-to-definition of the symbol-at-point.
-
-If CIDER fails, or not available, falls back to dumb-jump."
-  (interactive (list (cider-symbol-at-point)))
-  (if (and (cider-connected-p) (cider-var-info sym-name))
-      (unless (eq 'symbol (type-of (cider-find-var nil sym-name)))
-        (dumb-jump-go))
-    (dumb-jump-go)))
 
 (defun my/close-window ()
   "Close window or buffer."
