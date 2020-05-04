@@ -139,9 +139,6 @@
   :config
   (auto-compile-on-load-mode))
 
-;; Count hyphens as word characters
-(modify-syntax-entry ?- "w")
-
 ;; ========
 ;; Customizations
 
@@ -453,7 +450,10 @@
   :config
   (setq clojure-indent-style 'align-arguments)
   (setq clojure-align-forms-automatically t)
-  (require 'flycheck-clj-kondo))
+  (require 'flycheck-clj-kondo)
+  ;; Count hyphens as word characters
+  (modify-syntax-entry ?- "w")
+  )
 
 (evil-define-key 'normal clojure-mode-map
   (kbd "s-,") my/clojure-map)
