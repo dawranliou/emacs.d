@@ -324,6 +324,15 @@
 (winner-mode 1)
 
 ;; ========
+;; Dired
+(setq-default dired-auto-revert-buffer t
+              dired-dwim-target t
+              dired-recursive-copies 'always
+              dired-recursive-deletes 'top)
+
+(global-set-key (kbd "C-x D") 'dired-jump)
+
+;; ========
 ;; Ivy, Counsel, and Swiper
 
 (use-package ivy
