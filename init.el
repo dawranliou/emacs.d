@@ -485,8 +485,6 @@
   (setq clojure-indent-style 'align-arguments)
   (setq clojure-align-forms-automatically t)
   (require 'flycheck-clj-kondo)
-  ;; Count hyphens as word characters
-  (modify-syntax-entry ?- "w")
   )
 
 (evil-define-key 'normal clojure-mode-map
@@ -500,12 +498,14 @@
 (use-package lispyville
   :hook (lispy-mode . lispyville-mode)
   :config
-  (lispyville-set-key-theme '(operators
+  (lispyville-set-key-theme '((operators normal)
                               c-w
+                              prettify
+                              (atom-movement normal visual)
                               additional
                               additional-movement
-                              slurp/barf-cp
-                              prettify)))
+                              additional-insert
+                              slurp/barf-lispy)))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
