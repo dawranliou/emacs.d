@@ -76,8 +76,6 @@
 
 (setq-default frame-title-format "%b (%f)")
 
-(setq-default indent-tabs-mode nil)
-
 (blink-cursor-mode 0)
 
 (use-package rainbow-mode)
@@ -93,26 +91,40 @@
 
 (global-fci-mode)
 
+;; ============
+;; Better defaults
+;; https://github.com/technomancy/better-defaults
+
+(setq save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t
+      require-final-newline t
+      load-prefer-newer t
+      ediff-window-setup-function 'ediff-setup-windows-plain
+      backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                               "backups"))))
+
+(global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "M-z") 'zap-up-to-char)
+
 ;; =============
 ;; Sane defaults
 
-(setq make-backup-files nil) ; stop creating backup~ files
-(setq auto-save-default nil) ; stop creating #autosave# files
-(setq create-lockfiles nil)  ; stop creating .# files
-
 (global-auto-revert-mode t)
 
-(setq
- inhibit-startup-message t         ; Don't show the startup message
- inhibit-startup-screen t          ; or screen
- cursor-in-non-selected-windows t  ; Hide the cursor in inactive windows
+(setq inhibit-startup-message t         ; Don't show the startup message
+      inhibit-startup-screen t          ; or screen
+      cursor-in-non-selected-windows t  ; Hide the cursor in inactive windows
 
- echo-keystrokes 0.1               ; Show keystrokes right away, don't show the message in the scratch buffer
- initial-scratch-message nil       ; Empty scratch buffer
- sentence-end-double-space nil     ; Sentences should end in one space, come on!
- confirm-kill-emacs 'y-or-n-p      ; y and n instead of yes and no when quitting
- help-window-select t              ; Select help window so it's easy to quit it with 'q'
-)
+      echo-keystrokes 0.1               ; Show keystrokes right away, don't show the message in the scratch buffer
+      initial-scratch-message nil       ; Empty scratch buffer
+      sentence-end-double-space nil     ; Sentences should end in one space, come on!
+      confirm-kill-emacs 'y-or-n-p      ; y and n instead of yes and no when quitting
+      help-window-select t              ; Select help window so it's easy to quit it with 'q'
+      )
+
+(setq-default indent-tabs-mode nil)
 
 (fset 'yes-or-no-p 'y-or-n-p)      ; y and n instead of yes and no everywhere else
 (global-unset-key (kbd "s-p"))
@@ -240,7 +252,6 @@
   (global-set-key (kbd "s-\"") 'er/contract-region))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(setq require-final-newline t)
 
 (global-set-key (kbd "s-/") 'comment-line)
 
