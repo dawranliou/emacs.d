@@ -336,10 +336,14 @@
 
 ;; ========
 ;; Dired
-(setq-default dired-auto-revert-buffer t
-              dired-dwim-target t
-              dired-recursive-copies 'always
-              dired-recursive-deletes 'top)
+(use-package dired
+  :ensure nil
+  :commands 'dired-jump
+  :init
+  (setq dired-auto-revert-buffer t
+        dired-dwim-target t
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'top))
 
 (global-set-key (kbd "C-x D") 'dired-jump)
 
