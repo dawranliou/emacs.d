@@ -415,12 +415,6 @@
 (require 'paren)
 (show-paren-mode 1)
 
-(use-package smartparens
-  :config
-  (require 'smartparens-config)
-  (smartparens-global-strict-mode t)
-  (show-smartparens-global-mode t))
-
 (use-package idle-highlight-mode
   :hook
   (prog-mode . idle-highlight-mode))
@@ -517,7 +511,9 @@
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
-         (clojurescript-mode . lispy-mode)))
+         (clojurescript-mode . lispy-mode))
+  :config
+  (setq lispy-close-quotes-at-end-p t))
 
 (use-package lispyville
   :hook (lispy-mode . lispyville-mode)
