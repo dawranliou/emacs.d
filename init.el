@@ -446,10 +446,13 @@
 (use-package company
   :config
   (global-company-mode t)
+  (evil-global-set-key 'insert (kbd "C-SPC") 'company-manual-begin)
   (define-key company-active-map (kbd "ESC") 'company-abort)
   (define-key company-active-map [tab] 'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
-  (define-key company-active-map (kbd "C-p") 'company-select-previous))
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
+  (define-key company-active-map (kbd "C-S") 'counsel-company))
 
 ;; ========
 
