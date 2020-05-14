@@ -435,6 +435,17 @@
 ;; Auto completion
 
 (use-package company
+  :init
+  (setq company-idle-delay nil
+        company-tooltip-align-annotations t
+        company-require-match 'never
+        company-frontends '(company-pseudo-tooltip-frontend
+                            company-echo-metadata-frontend)
+        company-backends '(company-capf)
+        company-auto-complete-chars nil
+        company-dabbrev-other-buffers nil
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil)
   :config
   (global-company-mode t)
   (evil-global-set-key 'insert (kbd "C-SPC") 'company-manual-begin)
