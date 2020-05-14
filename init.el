@@ -279,16 +279,12 @@
   (setq aw-scope 'global))
 
 (use-package dumb-jump
-  :bind (("M-g o" . dumb-jump-go-other-window)
-         ("M-g j" . dumb-jump-go)
-         ("M-g b" . dumb-jump-back)
-         ("M-g i" . dumb-jump-go-prompt)
-         ("M-g x" . dumb-jump-go-prefer-external)
-         ("M-g z" . dumb-jump-go-prefer-external-other-window))
+  :commands 'dumb-jump-go
   :config
   (setq dumb-jump-selector 'ivy))
 
 (define-key evil-normal-state-map [remap evil-goto-definition] 'dumb-jump-go)
+(advice-add 'dumb-jump-go :before (lambda (&rest r) (evil-set-jump)))
 
 (use-package hungry-delete
   :config
