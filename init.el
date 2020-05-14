@@ -504,6 +504,7 @@
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
+         (cider-repl-mode . lispy-mode)
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode))
   :config
@@ -514,7 +515,6 @@
   :config
   (lispyville-set-key-theme '((operators normal)
                               c-w
-                              prettify
                               (atom-movement normal visual)
                               additional
                               additional-movement
@@ -529,23 +529,7 @@
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t)
-  (define-key my/clojure-map "'" 'sesman-start)
-  (define-key my/clojure-map "eb" 'cider-eval-buffer)
-  (define-key my/clojure-map "ee" 'cider-eval-last-sexp)
-  (define-key my/clojure-map "ef" 'cider-eval-defun-at-point)
-  (define-key my/clojure-map "==" 'cider-format-buffer)
-  (define-key my/clojure-map "=f" 'cider-format-defun)
-  (define-key my/clojure-map "=r" 'cider-format-region)
-  (define-key my/clojure-map "ha" 'cider-apropos)
-  (define-key my/clojure-map "hc" 'cider-cheatsheet)
-  (define-key my/clojure-map "hh" 'cider-doc)
-  (define-key my/clojure-map "hn" 'cider-browse-ns)
-  (define-key my/clojure-map "hN" 'cider-browse-ns-all)
-  (define-key my/clojure-map "hs" 'cider-browse-spec)
-  (define-key my/clojure-map "hS" 'cider-browse-spec-all)
-  (define-key my/clojure-map "mq" 'sesman-quit)
-  (define-key my/clojure-map "mr" 'sesman-restart)
-  (evil-define-key '(normal visual) 'cider-mode-map
+  (evil-define-key '(normal visual) cider-mode-map
     "gd" 'cider-find-var
     "gb" 'cider-pop-back
     (kbd "C-t") 'cider-pop-back
