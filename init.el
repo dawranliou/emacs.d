@@ -143,9 +143,14 @@
 (set-language-environment "UTF-8")
 
 (use-package undo-tree
-  :init
-  (progn
-    (global-undo-tree-mode)))
+  :config
+  (setq undo-tree-visualizer-diff t
+        undo-tree-auto-save-history t
+        undo-tree-enable-undo-in-region t
+        undo-limit 800000
+        undo-strong-limit 12000000
+        undo-outer-limit 120000000)
+  (global-undo-tree-mode))
 
 (use-package auto-compile
   :config
