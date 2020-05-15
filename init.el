@@ -520,6 +520,7 @@
   (setq cider-repl-display-in-current-window t)
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t)
+  (add-hook 'cider-repl-mode-hook 'evil-insert-state)
   (evil-define-key '(normal visual) cider-mode-map
     "gd" 'cider-find-var
     "gb" 'cider-pop-back
