@@ -183,9 +183,6 @@
 (defvar my/space-map (make-sparse-keymap)
   "Keymap for \"leader key\" shortcuts.")
 
-(defvar my/clojure-map (make-sparse-keymap)
-  "Keymap for \"leader key\" shortcuts in Clojure mode.")
-
 ;; ========
 ;; Evil
 
@@ -197,7 +194,6 @@
 
 (define-key evil-normal-state-map (kbd "SPC") my/space-map)
 (define-key my/space-map (kbd "b C-d") 'my/kill-other-buffers)
-(define-key my/space-map (kbd "b C-d") 'my/kill-other-buffers)
 (define-key my/space-map (kbd "TAB") 'mode-line-other-buffer)
 (define-key my/space-map (kbd "qq") 'save-buffers-kill-emacs)
 
@@ -206,24 +202,10 @@
 (define-key evil-insert-state-map "\C-e" 'end-of-line)
 (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
 (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
-(define-key evil-normal-state-map "\C-f" 'evil-forward-char)
 (define-key evil-insert-state-map "\C-f" 'evil-forward-char)
-(define-key evil-insert-state-map "\C-f" 'evil-forward-char)
-(define-key evil-normal-state-map "\C-b" 'evil-backward-char)
 (define-key evil-insert-state-map "\C-b" 'evil-backward-char)
-(define-key evil-visual-state-map "\C-b" 'evil-backward-char)
-(define-key evil-normal-state-map "\C-d" 'evil-delete-char)
 (define-key evil-insert-state-map "\C-d" 'evil-delete-char)
-(define-key evil-visual-state-map "\C-d" 'evil-delete-char)
-(define-key evil-normal-state-map "\C-n" 'evil-next-line)
-(define-key evil-insert-state-map "\C-n" 'evil-next-line)
-(define-key evil-visual-state-map "\C-n" 'evil-next-line)
-(define-key evil-normal-state-map "\C-p" 'evil-previous-line)
-(define-key evil-insert-state-map "\C-p" 'evil-previous-line)
-(define-key evil-visual-state-map "\C-p" 'evil-previous-line)
-(define-key evil-normal-state-map "\C-w" 'evil-delete)
 (define-key evil-insert-state-map "\C-w" 'evil-delete)
-(define-key evil-visual-state-map "\C-w" 'evil-delete)
 (define-key evil-normal-state-map "\C-y" 'yank)
 (define-key evil-insert-state-map "\C-y" 'yank)
 (define-key evil-visual-state-map "\C-y" 'yank)
@@ -510,9 +492,6 @@
   (require 'flycheck-clj-kondo)
   )
 
-(evil-define-key 'normal clojure-mode-map
-  (kbd "s-,") my/clojure-map)
-
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
          (cider-repl-mode . lispy-mode)
@@ -571,10 +550,6 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)))
-
-;; Lisp
-;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
-;; (setq inferior-lisp-program "sbcl")
 
 ;; functions
 
