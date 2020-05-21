@@ -68,17 +68,16 @@
                " %m"
                ))
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(when (boundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars . nil) default-frame-alist)
 (setq ring-bell-function 'ignore)
 
-(setq-default frame-title-format "%b (%f)")
+;; (setq-default frame-title-format "%b (%f)")
 
 (blink-cursor-mode 0)
 
-(use-package rainbow-mode)
+;; (use-package rainbow-mode)
 
 (use-package fill-column-indicator
   :commands (global-fci-mode)
@@ -130,7 +129,7 @@
 (global-unset-key (kbd "s-p"))
 
 (use-package simpleclip
-  :init
+  :config
   (simpleclip-mode 1))
 
 (set-charset-priority 'unicode)
@@ -152,9 +151,9 @@
         undo-outer-limit 120000000)
   (global-undo-tree-mode))
 
-(use-package auto-compile
-  :config
-  (auto-compile-on-load-mode))
+;; (use-package auto-compile
+;;   :config
+;;   (auto-compile-on-load-mode))
 
 ;; ========
 ;; Customizations
@@ -166,7 +165,8 @@
 ;; Which key
 
 (use-package which-key
-  :config
+  :commands 'which-key-mode
+  :init
   (which-key-mode t))
 
 ;; ========
@@ -228,9 +228,6 @@
   :config
   (global-set-key (kbd "s-;") 'avy-goto-char-timer))
 
-(global-set-key (kbd "s-w") (kbd "C-x 0"))
-(global-set-key (kbd "s-W") (kbd "C-x 1"))
-
 (global-set-key (kbd "s-k") 'kill-this-buffer)
 
 (use-package expand-region
@@ -240,15 +237,8 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(global-set-key (kbd "s-/") 'comment-line)
-
-(global-set-key (kbd "s-z") 'undo-tree-undo)
-(global-set-key (kbd "s-Z") 'undo-tree-redo)
-
 (global-set-key (kbd "s-w") 'my/close-window)
 (global-set-key (kbd "s-n") 'split-window-vertically)
-
-(global-set-key (kbd "C-<tab>") 'mode-line-other-buffer)
 
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
@@ -342,7 +332,6 @@
   (global-set-key (kbd "s-o") 'counsel-find-file)
   (global-set-key (kbd "s-y") 'counsel-yank-pop)
   (global-set-key (kbd "s-F") 'counsel-rg)
-  (global-set-key (kbd "s-p") 'counsel-git)
   (define-key my/space-map "fr" 'counsel-recentf))
 
 (use-package swiper
@@ -367,9 +356,7 @@
 
 (use-package magit
   :config
-  (global-set-key (kbd "s-g s") 'magit-status)
-  (global-set-key (kbd "s-g b") 'magit-blame)
-  (global-set-key (kbd "s-g l") 'magit-log-all)
+  (global-set-key (kbd "s-g") 'magit-status)
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
 
 (use-package evil-magit
