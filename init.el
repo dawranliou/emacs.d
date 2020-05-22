@@ -486,6 +486,7 @@
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode))
   :config
+  (lispy-set-key-theme '(lispy c-digits))
   (setq lispy-close-quotes-at-end-p t))
 
 (use-package lispyville
