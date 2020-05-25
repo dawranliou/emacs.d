@@ -123,6 +123,18 @@
       help-window-select t              ; Select help window so it's easy to quit it with 'q'
       )
 
+;; Don't autosave files or create lock/history/backup files. We don't want
+;; copies of potentially sensitive material floating around or polluting our
+;; filesystem. We rely on git and our own good fortune instead. Fingers crossed!
+(setq auto-save-default nil
+      create-lockfiles nil
+      make-backup-files nil
+      ;; But have a place to store them in case we do use them...
+      ;; auto-save-list-file-name (concat doom-cache-dir "autosave")
+      auto-save-list-file-prefix (concat user-emacs-directory "autosave/")
+      auto-save-file-name-transforms `((".*" ,auto-save-list-file-prefix t))
+      backup-directory-alist `((".*" . ,(concat user-emacs-directory "backup/"))))
+
 (setq-default indent-tabs-mode nil)
 
 (fset 'yes-or-no-p 'y-or-n-p)      ; y and n instead of yes and no everywhere else
@@ -148,7 +160,9 @@
         undo-tree-enable-undo-in-region t
         undo-limit 800000
         undo-strong-limit 12000000
-        undo-outer-limit 120000000)
+        undo-outer-limit 120000000
+        undo-tree-history-directory-alist
+        `(("." . ,(concat user-emacs-directory "undo-tree-hist/"))))
   (global-undo-tree-mode))
 
 ;; (use-package auto-compile
