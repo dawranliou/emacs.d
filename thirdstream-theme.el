@@ -67,6 +67,7 @@
         `(highlight ((,class (:foreground ,fg :background ,highlight-yellow))))
         `(idle-highlight ((,class (:foreground ,fg :background ,highlight-gray))))
 	`(hl-line ((,class (:background  ,highlight-gray))))
+        `(hl-fill-column-face ((,class (:background ,highlight-gray))))
 	`(fringe ((,class (:background ,bg :foreground ,comment))))
 	`(cursor ((,class (:background ,fg :foreground ,bg))))
         `(show-paren-match ((,class (:background ,highlight-yellow :bold t))))

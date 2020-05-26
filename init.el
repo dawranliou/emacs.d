@@ -79,16 +79,12 @@
 
 ;; (use-package rainbow-mode)
 
-(use-package fill-column-indicator
-  :commands (global-fci-mode)
-  :init
-  (setq-default fci-rule-column 80)
-  :config
-  (define-globalized-minor-mode global-fci-mode fci-mode
-    (lambda ()
-      (if buffer-file-name (fci-mode 1)))))
+;; Wrap lines at 80 characters
+(setq-default fill-column 80)
 
-(global-fci-mode)
+(use-package hl-fill-column
+  :config
+  (global-hl-fill-column-mode))
 
 ;; ============
 ;; Better defaults
