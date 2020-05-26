@@ -57,14 +57,14 @@
                ;; '(:eval (substring vc-mode 5))
                '(:eval (propertize " %b"
                                    'help-echo (buffer-file-name)))
-                " (%02l,%02c)"
-                " [%p/%I]"
+               " (%02l,%02c)"
+               " [%p/%I]"
                ;; spaces to align right
                '(:eval (propertize
-                " " 'display
-                `((space :align-to (- (+ right right-fringe right-margin)
-                                      ,(+ 3 (string-width mode-name))
-                                      )))))
+                        " " 'display
+                        `((space :align-to (- (+ right right-fringe right-margin)
+                                              ,(+ 3 (string-width mode-name))
+                                              )))))
                " %m"
                ))
 
