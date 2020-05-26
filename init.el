@@ -372,6 +372,8 @@
 (use-package evil-magit
   :hook (magit-mode . evil-magit-init))
 
+(use-package git-gutter-fringe)
+
 ;; ========
 ;; Spell checking
 
