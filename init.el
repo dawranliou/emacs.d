@@ -30,6 +30,16 @@
 
 (load-theme 'wombat)
 
+(column-number-mode)
+(global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                shell-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 (set-face-attribute 'default nil :font "Monolisa" :height 140)
 
 (defun dawran/org-babel-tangle-config ()
