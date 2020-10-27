@@ -115,3 +115,11 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 #+END_SRC
+* Development
+** Rainbow Delimiters
+#+BEGIN_SRC emacs-lisp
+
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+#+END_SRC
