@@ -52,6 +52,9 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
+(use-package doom-themes
+  :init (load-theme 'doom-dracula t))
+
 (use-package all-the-icons)
 
 (use-package doom-modeline

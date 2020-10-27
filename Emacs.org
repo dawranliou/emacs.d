@@ -76,6 +76,14 @@
 #+end_src
 
 * UI Configuration
+** Color Theme
+#+BEGIN_SRC emacs-lisp
+
+(use-package doom-themes
+  :init (load-theme 'doom-dracula t))
+
+#+END_SRC
+
 ** Modeline
 
 NOTE: The first time you load your configuration on a new machine, you’ll need
