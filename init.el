@@ -57,6 +57,12 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 1))
+
 (use-package ivy
   :diminish
   :bind (("C-s" . swiper)
@@ -74,6 +80,10 @@
          ("C-d" . ivy-reverse-i-search-kill))
   :config
   (ivy-mode 1))
+
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
