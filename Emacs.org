@@ -1,3 +1,9 @@
+#+TITLE: Daw-Ran Liou's Emacs Configuration
+#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+
+* Package System Setup
+#+begin_src emacs-lisp
+
 ;; Initialize package sources
 (require 'package)
 
@@ -16,6 +22,11 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+#+end_src
+
+* Basic UI Configuration
+#+begin_src emacs-lisp
+
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
@@ -30,7 +41,18 @@
 
 (load-theme 'wombat)
 
+#+end_src
+
+** Font configuration
+#+begin_src emacs-lisp
+
 (set-face-attribute 'default nil :font "Monolisa" :height 140)
+
+#+end_src
+
+* Org Mode
+** Auto-tangle Configuration Files
+#+begin_src emacs-lisp
 
 (defun dawran/org-babel-tangle-config ()
   "Automatically tangle our Emacs.org config file when we save it."
@@ -42,10 +64,20 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
+#+end_src
+
+* UI Configuration
+** Modeline
+#+BEGIN_SRC emacs-lisp
+
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
+
+#+END_SRC
+** Ivy
+#+BEGIN_SRC emacs-lisp
 
 (use-package ivy
   :diminish
@@ -65,5 +97,12 @@
   :config
   (ivy-mode 1))
 
+#+END_SRC
+
+* Keybinding Configuration
+#+BEGIN_SRC emacs-lisp
+
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+#+END_SRC
