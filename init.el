@@ -62,8 +62,9 @@
 
 (menu-bar-mode -1)            ; Disable the menu bar
 
-;; Set up the visible bell
-(setq visible-bell t)
+;; No beeping nor visible bell
+(setq ring-bell-function #'ignore
+      visible-bell nil)
 
 (load-theme 'wombat)
 
