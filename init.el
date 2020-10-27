@@ -42,16 +42,6 @@
 
 (set-face-attribute 'default nil :font "Monolisa" :height 140)
 
-(defun dawran/org-babel-tangle-config ()
-  "Automatically tangle our Emacs.org config file when we save it."
-  (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/projects/emacs.d/Emacs.org"))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
-
 (use-package doom-themes
   :init (load-theme 'doom-dracula t))
 
@@ -109,6 +99,21 @@
   ([remap describe-command] . helpful-command)
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
+
+(defun dawran/org-babel-tangle-config ()
+  "Automatically tangle our Emacs.org config file when we save it."
+  (when (string-equal (buffer-file-name)
+                      (expand-file-name "~/projects/emacs.d/Emacs.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
+
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)

@@ -59,22 +59,6 @@
 
 #+end_src
 
-* Org Mode
-** Auto-tangle Configuration Files
-#+begin_src emacs-lisp
-
-(defun dawran/org-babel-tangle-config ()
-  "Automatically tangle our Emacs.org config file when we save it."
-  (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/projects/emacs.d/Emacs.org"))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
-
-#+end_src
-
 * UI Configuration
 ** Color Theme
 #+BEGIN_SRC emacs-lisp
@@ -160,6 +144,31 @@ correctly.
 
 #+END_SRC
 
+* Org Mode
+** Auto-tangle Configuration Files
+#+begin_src emacs-lisp
+
+(defun dawran/org-babel-tangle-config ()
+  "Automatically tangle our Emacs.org config file when we save it."
+  (when (string-equal (buffer-file-name)
+                      (expand-file-name "~/projects/emacs.d/Emacs.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
+
+#+end_src
+
+** Structure Templates
+#+BEGIN_SRC emacs-lisp
+
+(require 'org-tempo)
+
+(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+
+#+END_SRC
 * Keybinding Configuration
 #+BEGIN_SRC emacs-lisp
 
