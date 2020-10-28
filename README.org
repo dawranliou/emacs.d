@@ -43,6 +43,7 @@
   - [[#magit][Magit]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#smart-parens][Smart Parens]]
+  - [[#ripgrep][Ripgrep]]
   - [[#languages][Languages]]
     - [[#meta-lisp][Meta Lisp]]
     - [[#clojure][Clojure]]
@@ -534,6 +535,13 @@ correctly.
 #+begin_src emacs-lisp
 (use-package smartparens
   :hook (prog-mode . smartparens-mode))
+#+end_src
+
+** Ripgrep
+#+begin_src emacs-lisp
+(use-package rg
+  :config
+  (rg-enable-default-bindings))
 #+end_src
 
 ** Languages

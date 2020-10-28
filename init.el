@@ -400,6 +400,10 @@
 (use-package smartparens
   :hook (prog-mode . smartparens-mode))
 
+(use-package rg
+  :config
+  (rg-enable-default-bindings))
+
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
