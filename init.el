@@ -47,6 +47,16 @@
   :config
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-insert-state-map "\C-e" 'end-of-line)
+  (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-normal-state-map "\C-y" 'yank)
+  (define-key evil-insert-state-map "\C-y" 'yank)
+  (define-key evil-visual-state-map "\C-y" 'yank)
+  (define-key evil-normal-state-map "\C-k" 'kill-line)
+  (define-key evil-insert-state-map "\C-k" 'kill-line)
+  (define-key evil-visual-state-map "\C-k" 'kill-line)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
