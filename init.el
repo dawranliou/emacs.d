@@ -161,6 +161,8 @@
   :config
   (counsel-mode 1))
 
+(use-package amx)
+
 (dawran/leader-keys
   "r"   '(ivy-resume :which-key "ivy resume")
   "f"   '(:ignore t :which-key "files")
