@@ -29,13 +29,20 @@
 (use-package general
   :config
   (general-create-definer dawran/leader-keys
-    :keymaps '(normal insert visual emacs)
+    :states '(normal insert visual emacs)
     :prefix "SPC"
-    :global-prefix "C-SPC")
+    :global-prefix "M-SPC")
+
+  (general-create-definer dawran/localleader-keys
+    :states '(normal insert visual emacs)
+    :major-modes t
+    :prefix ","
+    :non-normal-prefix "M-,")
 
   (dawran/leader-keys
     "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")))
+    "tt" '(counsel-load-theme :which-key "choose theme")
+    "tw" 'whitespace-mode))
 
 (use-package evil
   :init
@@ -153,6 +160,14 @@
          ("C-r" . 'counsel-minibuffer-history))
   :config
   (counsel-mode 1))
+
+(dawran/leader-keys
+  "r"   '(ivy-resume :which-key "ivy resume")
+  "f"   '(:ignore t :which-key "files")
+  "ff"  '(counsel-find-file :which-key "open file")
+  "C-f" 'counsel-find-file
+  "fr"  '(counsel-recentf :which-key "recent files")
+  "fj"  '(counsel-file-jump :which-key "jump to file"))
 
 (use-package helpful
   :custom
@@ -385,7 +400,17 @@
   (setq projectile-switch-project-action #'projectile-dired))
 
 (use-package counsel-projectile
-  :config (counsel-projectile-mode))
+  :config
+  (counsel-projectile-mode)
+  (global-set-key (kbd "s-F") 'counsel-projectile-rg)
+  (global-set-key (kbd "s-p") 'counsel-projectile-find-file))
+
+(dawran/leader-keys
+  "pf"  'counsel-projectile-find-file
+  "ps"  'counsel-projectile-switch-project
+  "pF"  'counsel-projectile-rg
+  "pp"  'counsel-projectile
+  "pd"  'projectile-dired)
 
 (use-package magit
   :custom
@@ -393,6 +418,14 @@
 
 (use-package evil-magit
   :after magit)
+
+(dawran/leader-keys
+  "g"   '(:ignore t :which-key "git")
+  "gg"  'magit-status
+  "gd"  'magit-diff-unstaged
+  "gl"   '(:ignore t :which-key "log")
+  "glc" 'magit-log-current
+  "glf" 'magit-log-buffer-file)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
