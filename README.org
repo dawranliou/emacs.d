@@ -42,6 +42,7 @@
   - [[#projectile][Projectile]]
   - [[#magit][Magit]]
   - [[#rainbow-delimiters][Rainbow Delimiters]]
+  - [[#smart-parens][Smart Parens]]
   - [[#languages][Languages]]
     - [[#meta-lisp][Meta Lisp]]
     - [[#clojure][Clojure]]
@@ -518,6 +519,12 @@ correctly.
   :hook (prog-mode . rainbow-delimiters-mode))
 
 #+END_SRC
+
+** Smart Parens
+#+begin_src emacs-lisp
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
+#+end_src
 
 ** Languages
 *** Meta Lisp
