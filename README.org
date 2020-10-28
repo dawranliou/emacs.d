@@ -27,6 +27,8 @@
   - [[#ivy][Ivy]]
   - [[#helpful-help-commands][Helpful Help Commands]]
   - [[#text-scaling][Text Scaling]]
+  - [[#highlight-matching-parens][Highlight Matching Parens]]
+  - [[#paren-face][Paren Face]]
 - [[#org-mode][Org Mode]]
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
@@ -251,6 +253,18 @@ correctly.
   "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 #+END_SRC
+** Highlight Matching Parens
+#+begin_src emacs-lisp
+(use-package paren
+  :config
+  (show-paren-mode 1))
+#+end_src
+** Paren Face
+#+begin_src emacs-lisp
+(use-package paren-face
+  :hook
+  (lispy-mode . paren-face-mode))
+#+end_src
 * Org Mode
 ** Better Font Faces
    #+begin_src emacs-lisp

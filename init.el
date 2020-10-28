@@ -165,6 +165,14 @@
 (dawran/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
 
+(use-package paren
+  :config
+  (show-paren-mode 1))
+
+(use-package paren-face
+  :hook
+  (lispy-mode . paren-face-mode))
+
 (defun dawran/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
