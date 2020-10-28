@@ -397,3 +397,14 @@
   :hook ((lispy-mode . lispyville-mode))
   :config
   (lispyville-set-key-theme '(operators c-w additional)))
+
+(use-package cider
+  :config
+  (setq cider-repl-display-in-current-window t)
+  (setq cider-repl-pop-to-buffer-on-connect nil)
+  (setq cider-repl-use-pretty-printing t)
+  (add-hook 'cider-repl-mode-hook 'evil-insert-state)
+  (evil-collection-cider-setup))
+
+(use-package clj-refactor
+  :hook (clojure-mode . clj-refactor-mode))
