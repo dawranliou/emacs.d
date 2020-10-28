@@ -141,7 +141,13 @@
 ** Font configuration
 #+begin_src emacs-lisp
 
-(set-face-attribute 'default nil :font "Monolisa" :height 140)
+(set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
+
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height dawran/default-font-size)
+
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
 #+end_src
 
@@ -279,7 +285,7 @@ correctly.
    #+begin_src emacs-lisp
    (defun dawran/org-mode-setup ()
      (org-indent-mode)
-     ;(variable-pitch-mode 1)
+     (variable-pitch-mode 1)
      (visual-line-mode 1))
 
    (use-package org

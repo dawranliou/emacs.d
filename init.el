@@ -1,3 +1,10 @@
+;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
+;;       in Emacs and init.el will be generated automatically!
+
+;; You will most likely need to adjust this font size for your system!
+(defvar dawran/default-font-size 140)
+(defvar dawran/default-variable-font-size 160)
+
 ;; Initialize package sources
 (require 'package)
 
@@ -81,7 +88,13 @@
 
 (blink-cursor-mode 0)
 
-(set-face-attribute 'default nil :font "Monolisa" :height 140)
+(set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
+
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height dawran/default-font-size)
+
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
 (use-package doom-themes
   :init (load-theme 'doom-dracula t))
@@ -180,7 +193,7 @@
 
 (defun dawran/org-mode-setup ()
   (org-indent-mode)
-  ;(variable-pitch-mode 1)
+  (variable-pitch-mode 1)
   (visual-line-mode 1))
 
 (use-package org
