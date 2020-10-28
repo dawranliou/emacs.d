@@ -347,7 +347,7 @@
 (defun dawran/org-babel-tangle-config ()
   "Automatically tangle our Emacs.org config file when we save it."
   (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/.emacs.d/Emacs.org"))
+                      (expand-file-name "./README.org"))
     ;; Dynamic scoping to the rescue
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
