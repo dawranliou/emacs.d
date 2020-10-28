@@ -1,6 +1,47 @@
 #+TITLE: Daw-Ran Liou's Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
+#+BEGIN_SRC emacs-lisp
+;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
+;;       in Emacs and init.el will be generated automatically!
+
+;; You will most likely need to adjust this font size for your system!
+(defvar dawran/default-font-size 140)
+(defvar dawran/default-variable-font-size 160)
+#+END_SRC
+
+* Table of Contents
+:PROPERTIES:
+:TOC:      :include all
+:END:
+:CONTENTS:
+- [[#table-of-contents][Table of Contents]]
+- [[#package-system-setup][Package System Setup]]
+- [[#keybinding-configuration][Keybinding Configuration]]
+- [[#basic-ui-configuration][Basic UI Configuration]]
+  - [[#font-configuration][Font configuration]]
+- [[#ui-configuration][UI Configuration]]
+  - [[#color-theme][Color Theme]]
+  - [[#modeline][Modeline]]
+  - [[#which-key][Which Key]]
+  - [[#ivy][Ivy]]
+  - [[#helpful-help-commands][Helpful Help Commands]]
+  - [[#text-scaling][Text Scaling]]
+- [[#org-mode][Org Mode]]
+  - [[#better-font-faces][Better Font Faces]]
+  - [[#basic-config][Basic Config]]
+  - [[#nicer-heading-bullets][Nicer Heading Bullets]]
+  - [[#center-org-buffers][Center Org Buffers]]
+  - [[#configure-babel-languages][Configure Babel Languages]]
+  - [[#structure-templates][Structure Templates]]
+  - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
+  - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
+- [[#development][Development]]
+  - [[#projectile][Projectile]]
+  - [[#magit][Magit]]
+  - [[#rainbow-delimiters][Rainbow Delimiters]]
+:END:
+
 * Package System Setup
 #+begin_src emacs-lisp
 
@@ -414,6 +455,11 @@ correctly.
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
+#+end_src
+** Update Table of Contents on Save
+#+begin_src emacs-lisp
+(use-package org-make-toc
+  :hook (org-mode . org-make-toc-mode))
 #+end_src
 
 * Development

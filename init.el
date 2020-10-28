@@ -341,6 +341,9 @@
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
+(use-package org-make-toc
+  :hook (org-mode . org-make-toc-mode))
+
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)
