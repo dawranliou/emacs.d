@@ -161,7 +161,9 @@
          ("C-x b" . counsel-ibuffer)
          ("C-x C-f" . counsel-find-file)
          ("C-M-j" . counsel-switch-buffer)
+         ("s-b" . counsel-switch-buffer)
          ("s-y" . counsel-yank-pop)
+         ("s-P" . counsel-M-x)
          :map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history))
   :config
@@ -173,10 +175,13 @@
 (use-package amx)
 
 (dawran/leader-keys
-  "r"   '(ivy-resume :which-key "ivy resume")
+  "b"   '(:ignore t :which-key "buffers")
+  "bb"  '(counsel-ibuffer :which-key "switch buffer")
+  "bd"  '(bury-buffer :which-key "bury buffer")
+  "bk"  '(kill-this-buffer :which-key "kill buffer")
+  "'"   '(ivy-resume :which-key "ivy resume")
   "f"   '(:ignore t :which-key "files")
   "ff"  '(counsel-find-file :which-key "open file")
-  "C-f" 'counsel-find-file
   "fr"  '(counsel-recentf :which-key "recent files")
   "fj"  '(counsel-file-jump :which-key "jump to file"))
 
