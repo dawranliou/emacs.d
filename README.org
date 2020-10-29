@@ -567,7 +567,14 @@ correctly.
   (setq cider-repl-pop-to-buffer-on-connect nil)
   (setq cider-repl-use-pretty-printing t)
   (add-hook 'cider-repl-mode-hook 'evil-insert-state)
-  (evil-collection-cider-setup))
+  (evil-collection-cider-setup)
+  (dawran/localleader-keys
+    :keymaps '(clojure-mode-map clojurescript-mode-map)
+    "," 'cider
+    "e" '(:ignore t :which-key "eval")
+    "eb" 'cider-eval-buffer
+    "ef" 'cider-eval-defun-at-point
+    "ee" 'cider-eval-last-sexp))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
