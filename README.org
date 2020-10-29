@@ -45,6 +45,7 @@
   - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#smart-parens][Smart Parens]]
   - [[#ripgrep][Ripgrep]]
+  - [[#expand-region][Expand Region]]
   - [[#languages][Languages]]
     - [[#meta-lisp][Meta Lisp]]
     - [[#clojure][Clojure]]
@@ -535,6 +536,12 @@ correctly.
 (use-package rg
   :config
   (rg-enable-default-bindings))
+#+end_src
+
+** Expand Region
+#+begin_src emacs-lisp
+(use-package expand-region
+  :bind ("s-'" .  er/mark-outside-pairs))
 #+end_src
 
 ** Languages

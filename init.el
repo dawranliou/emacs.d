@@ -394,6 +394,9 @@
   :config
   (rg-enable-default-bindings))
 
+(use-package expand-region
+  :bind ("s-'" .  er/mark-outside-pairs))
+
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
