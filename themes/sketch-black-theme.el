@@ -45,19 +45,21 @@
    ;; default
    `(default ((,class (:background ,bg :foreground ,fg))))
    `(fringe ((,class (:background ,bg))))
+   `(shadow ((,class (:background ,weakest))))
    `(highlight ((,class (:foreground ,fg :background ,highlight))))
    `(region ((,class (:foreground ,fg :background ,highlight))))
-   `(show-paren-match ((,class (:background ,bg :foreground ,success :bold t))))
-   `(show-paren-mismatch ((,class (:background ,bg :foreground ,warning :bold t))))
+   `(show-paren-match ((,class (:foreground ,success :bold t))))
+   `(show-paren-mismatch ((,class (:foreground ,warning :bold t))))
    `(minibuffer-prompt ((,class (:bold t :foreground ,fg))))
    `(isearch ((,class (:bold t :foreground ,fg :background ,weak :bold t))))
    `(lazy-highlight ((,class (:foreground ,fg :background ,weaker))))
    `(link ((,class (:underline t))))
-   `(parenthesis ((,class (:background ,bg :foreground ,weak))))
+   `(parenthesis ((,class (:foreground ,weak))))
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
    `(cursor ((,class (:background ,fg :foreground ,bg))))
    `(vertical-border ((,class (:foreground ,weaker))))
    `(default-italic ((,class (:italic t))))
+   `(line-number ((,class (:background ,bg :foreground ,weaker))))
 
    ;; mode line
    `(mode-line ((,class (:foreground ,fg :background ,weakest :height 0.9))))
@@ -95,6 +97,9 @@
    `(git-gutter:modified ((,class (:background ,highlight :foreground ,highlight))))
    `(git-gutter:added ((,class (:background ,success :foreground ,success))))
    `(git-gutter:deleted ((,class (:background ,warning :foreground ,warning))))
+
+   ;; org mode
+   `(org-block ((,class (:extend t :background ,weakest))))
 
    ))
 
