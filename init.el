@@ -30,11 +30,13 @@
   :config
   (general-create-definer dawran/leader-keys
     :states '(normal insert visual emacs)
+    :keymaps 'override
     :prefix "SPC"
     :global-prefix "M-SPC")
 
   (general-create-definer dawran/localleader-keys
     :states '(normal insert visual emacs)
+    :keymaps 'override
     :major-modes t
     :prefix ","
     :non-normal-prefix "M-,")
