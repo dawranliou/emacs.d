@@ -101,6 +101,7 @@
 
    ;; org mode
    `(org-block ((,class (:extend t :background ,weakest))))
+   `(org-hide ((,class (:foreground ,bg))))
 
    ))
 
