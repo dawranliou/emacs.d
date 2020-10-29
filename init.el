@@ -105,6 +105,8 @@
 
 (blink-cursor-mode 0)
 
+(hl-line-mode 1)
+
 (set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
 
 ;; Set the fixed pitch face

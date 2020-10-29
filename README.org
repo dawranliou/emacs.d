@@ -161,6 +161,8 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (blink-cursor-mode 0)
+
+(hl-line-mode 1)
 #+end_src
 
 ** Font configuration
