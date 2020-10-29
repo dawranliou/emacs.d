@@ -160,11 +160,15 @@
   :bind (("M-x" . counsel-M-x)
          ("C-x b" . counsel-ibuffer)
          ("C-x C-f" . counsel-find-file)
-         ("C-M-j" . 'counsel-switch-buffer)
+         ("C-M-j" . counsel-switch-buffer)
+         ("s-y" . counsel-yank-pop)
          :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history))
+         ("C-r" . counsel-minibuffer-history))
   :config
   (counsel-mode 1))
+
+(use-package swiper
+  :bind ("s-f" . swiper-isearch))
 
 (use-package amx)
 
@@ -348,15 +352,16 @@
   :config (projectile-mode)
   :custom ((projectile-completion-system 'ivy))
   :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  (setq projectile-switch-project-action #'projectile-dired))
+  ("C-c p" . projectile-command-map))
 
 (use-package counsel-projectile
+  :bind (("s-F" . counsel-projectile-rg)
+         ("s-p" . counsel-projectile))
   :config
   (counsel-projectile-mode)
-  (global-set-key (kbd "s-F") 'counsel-projectile-rg)
-  (global-set-key (kbd "s-p") 'counsel-projectile-find-file))
+  (counsel-projectile-modify-action
+   'counsel-projectile-switch-project-action
+   '((default counsel-projectile-switch-project-action-vc))))
 
 (dawran/leader-keys
   "pf"  'counsel-projectile-find-file
