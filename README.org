@@ -42,7 +42,6 @@
   - [[#projectile][Projectile]]
   - [[#undo-fu][Undo-fu]]
   - [[#magit][Magit]]
-  - [[#rainbow-delimiters][Rainbow Delimiters]]
   - [[#smart-parens][Smart Parens]]
   - [[#ripgrep][Ripgrep]]
   - [[#expand-region][Expand Region]]
@@ -516,14 +515,6 @@ correctly.
      "glc" 'magit-log-current
      "glf" 'magit-log-buffer-file)
    #+end_src
-
-** Rainbow Delimiters
-#+BEGIN_SRC emacs-lisp
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-#+END_SRC
 
 ** Smart Parens
 #+begin_src emacs-lisp
