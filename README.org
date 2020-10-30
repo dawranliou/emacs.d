@@ -38,6 +38,7 @@
   - [[#structure-templates][Structure Templates]]
   - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
+  - [[#journal][Journal]]
 - [[#development][Development]]
   - [[#company][Company]]
   - [[#projectile][Projectile]]
@@ -479,6 +480,19 @@ correctly.
 #+begin_src emacs-lisp
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
+#+end_src
+** Journal
+#+begin_src emacs-lisp
+(use-package org-journal
+  :custom
+  (org-journal-date-prefix "* ")
+  (org-journal-file-format "%F.org")
+  (org-journal-dir "~/org/journal/")
+  (org-journal-file-type 'weekly)
+  :config
+  (dawran/leader-keys
+    "n" '(:ignore t :which-key "notes")
+    "nj" '(org-journal-open-current-journal-file :which-key "journal")))
 #+end_src
 
 * Development

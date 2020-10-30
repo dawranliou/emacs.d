@@ -354,6 +354,17 @@
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
 
+(use-package org-journal
+  :custom
+  (org-journal-date-prefix "* ")
+  (org-journal-file-format "%F.org")
+  (org-journal-dir "~/org/journal/")
+  (org-journal-file-type 'weekly)
+  :config
+  (dawran/leader-keys
+    "n" '(:ignore t :which-key "notes")
+    "nj" '(org-journal-open-current-journal-file :which-key "journal")))
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
