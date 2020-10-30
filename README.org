@@ -50,6 +50,7 @@
   - [[#languages][Languages]]
     - [[#meta-lisp][Meta Lisp]]
     - [[#clojure][Clojure]]
+  - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
 :END:
 
 * Package System Setup
@@ -628,3 +629,11 @@ correctly.
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
 #+end_src
+** Syntax Checking with Flycheck
+#+begin_src emacs-lisp
+(use-package flycheck
+  :defer t
+  :hook (lsp-mode . flycheck-mode))
+#+end_src
+
+

@@ -473,3 +473,7 @@
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
+
+(use-package flycheck
+  :defer t
+  :hook (lsp-mode . flycheck-mode))
