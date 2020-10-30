@@ -48,6 +48,7 @@
   - [[#expand-region][Expand Region]]
   - [[#evil-multiedit][Evil Multiedit]]
   - [[#languages][Languages]]
+    - [[#lsp][LSP]]
     - [[#meta-lisp][Meta Lisp]]
     - [[#clojure][Clojure]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
@@ -205,7 +206,9 @@ correctly.
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+  :custom
+  (doom-modeline-height 15)
+  (doom-modeline-lsp t))
 
 #+END_SRC
 ** Which Key
@@ -595,6 +598,25 @@ correctly.
 #+end_src
 
 ** Languages
+*** LSP
+#+begin_src emacs-lisp
+(use-package lsp-mode
+  :commands lsp
+  :hook ((clojure-mode . lsp)
+         (clojurec-mode . lsp)
+         (clojurescript-mode . lsp))
+  :init
+  (setq lsp-keymap-prefix "s-l")
+  :config
+  (lsp-enable-which-key-integration t)
+  (dolist (m '(clojure-mode
+               clojurec-mode
+               clojurescript-mode
+               clojurex-mode))
+     (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
+
+(use-package lsp-ivy)
+#+end_src
 *** Meta Lisp
 #+begin_src emacs-lisp
 (use-package lispy

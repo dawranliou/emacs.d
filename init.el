@@ -126,7 +126,9 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+  :custom
+  (doom-modeline-height 15)
+  (doom-modeline-lsp t))
 
 (use-package which-key
   :init (which-key-mode)
@@ -444,6 +446,23 @@
   (define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
   (define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
   (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
+
+(use-package lsp-mode
+  :commands lsp
+  :hook ((clojure-mode . lsp)
+         (clojurec-mode . lsp)
+         (clojurescript-mode . lsp))
+  :init
+  (setq lsp-keymap-prefix "s-l")
+  :config
+  (lsp-enable-which-key-integration t)
+  (dolist (m '(clojure-mode
+               clojurec-mode
+               clojurescript-mode
+               clojurex-mode))
+     (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
+
+(use-package lsp-ivy)
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
