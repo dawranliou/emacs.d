@@ -42,6 +42,7 @@
     :non-normal-prefix "M-,")
 
   (dawran/leader-keys
+    "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
     "tw" 'whitespace-mode))
