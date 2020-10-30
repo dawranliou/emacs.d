@@ -42,6 +42,7 @@
   - [[#journal][Journal]]
   - [[#roam][Roam]]
 - [[#development][Development]]
+  - [[#exec-path][Exec-path]]
   - [[#company][Company]]
   - [[#projectile][Projectile]]
   - [[#undo-fu][Undo-fu]]
@@ -517,6 +518,13 @@ correctly.
 #+end_src
 
 * Development
+** Exec-path
+#+begin_src emacs-lisp
+
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
+#+end_src
+
 ** Company
 #+begin_src emacs-lisp
 (use-package company

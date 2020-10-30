@@ -379,6 +379,8 @@
 
 ;; TODO add org-roam
 
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
