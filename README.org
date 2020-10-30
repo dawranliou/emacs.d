@@ -276,7 +276,9 @@ correctly.
 (use-package swiper
   :bind ("s-f" . swiper-isearch))
 
-(use-package amx)
+(use-package smex ;; Adds M-x recent command sorting for counsel-M-x
+  :defer 1
+  :after counsel)
 
 (dawran/leader-keys
   "b"   '(:ignore t :which-key "buffers")
