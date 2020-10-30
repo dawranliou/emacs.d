@@ -404,6 +404,9 @@
   ;; Truncate buffer for performance
   (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
 
+  ;; Use Ivy to provide completions in eshell
+  (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
+
   ;; Bind some useful keys for evil-mode
   (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
   (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
@@ -415,6 +418,9 @@
 
 (use-package eshell
   :hook (eshell-first-time-mode . dawran/configure-eshell))
+
+(dawran/leader-keys
+  "SPC" 'eshell)
 
 (use-package company
   :after lsp-mode
