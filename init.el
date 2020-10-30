@@ -90,6 +90,16 @@
   :config
   (evil-collection-init))
 
+;; Allows you to use the selection for * and #
+(use-package evil-visualstar
+  :commands (evil-visualstar/begin-search
+             evil-visualstar/begin-search-forward
+             evil-visualstar/begin-search-backward)
+  :init
+  (evil-define-key 'visual 'global
+    "*" #'evil-visualstar/begin-search-forward
+    "#" #'evil-visualstar/begin-search-backward))
+
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
@@ -498,7 +508,9 @@
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
-         (cider-repl-mode . lispy-mode)))
+         (cider-repl-mode . lispy-mode))
+  :config
+  (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
 
 (use-package lispyville
   :hook ((lispy-mode . lispyville-mode))
@@ -508,6 +520,7 @@
                               additional
                               additional-insert
                               additional-movement
+                              (atom-movement normal visual)
                               slurp/barf-cp)))
 
 (use-package cider
