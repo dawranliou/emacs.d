@@ -39,6 +39,7 @@
   - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
   - [[#journal][Journal]]
+  - [[#roam][Roam]]
 - [[#development][Development]]
   - [[#company][Company]]
   - [[#projectile][Projectile]]
@@ -493,6 +494,10 @@ correctly.
   (dawran/leader-keys
     "n" '(:ignore t :which-key "notes")
     "nj" '(org-journal-open-current-journal-file :which-key "journal")))
+#+end_src
+** Roam
+#+begin_src emacs-lisp
+;; TODO add org-roam
 #+end_src
 
 * Development

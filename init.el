@@ -365,6 +365,8 @@
     "n" '(:ignore t :which-key "notes")
     "nj" '(org-journal-open-current-journal-file :which-key "journal")))
 
+;; TODO add org-roam
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
