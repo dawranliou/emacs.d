@@ -1,14 +1,16 @@
 #+TITLE: Daw-Ran Liou's Emacs Configuration
 #+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
+
 ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
 ;;       in Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
 (defvar dawran/default-font-size 140)
 (defvar dawran/default-variable-font-size 160)
-#+END_SRC
+
+#+end_src
 
 * Table of Contents
 :PROPERTIES:
@@ -59,16 +61,20 @@
 :END:
 
 * Keep .emacs.d Clean
+
 #+begin_src emacs-lisp
+
 ;; Keep customization settings in a temporary file (thanks Ambrevar!)
 (setq custom-file
       (if (boundp 'server-socket-dir)
           (expand-file-name "custom.el" server-socket-dir)
         (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
 (load custom-file t)
+
 #+end_src
 
 * Package System Setup
+
 #+begin_src emacs-lisp
 
 ;; Initialize package sources
@@ -89,10 +95,12 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
+
 #+end_src
 
 * Keybinding Configuration
-#+BEGIN_SRC emacs-lisp
+
+#+begin_src emacs-lisp
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -163,8 +171,11 @@
   (evil-define-key 'visual 'global
     "*" #'evil-visualstar/begin-search-forward
     "#" #'evil-visualstar/begin-search-backward))
-#+END_SRC
+
+#+end_src
+
 * Basic UI Configuration
+
 #+begin_src emacs-lisp
 
 (setq inhibit-startup-message t)
@@ -196,9 +207,11 @@
 (blink-cursor-mode 0)
 
 (hl-line-mode 1)
+
 #+end_src
 
 ** Font configuration
+
 #+begin_src emacs-lisp
 
 (set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
@@ -209,23 +222,27 @@
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
+
 #+end_src
 
 * UI Configuration
 ** Color Theme
-#+BEGIN_SRC emacs-lisp
+
+#+begin_src emacs-lisp
 
 (use-package doom-themes
   :init (load-theme 'doom-palenight t))
 
-#+END_SRC
+
+#+end_src
 
 ** Modeline
 
 NOTE: The first time you load your configuration on a new machine, you’ll need
 to run =M-x all-the-icons-install-fonts= so that mode line icons display
 correctly.
-#+BEGIN_SRC emacs-lisp
+
+#+begin_src emacs-lisp
 
 (use-package all-the-icons)
 
@@ -236,8 +253,11 @@ correctly.
   (doom-modeline-height 15)
   (doom-modeline-lsp t))
 
-#+END_SRC
+
+#+end_src
+
 ** Which Key
+
 #+begin_src emacs-lisp
 
 (use-package which-key
@@ -246,9 +266,12 @@ correctly.
   :config
   (setq which-key-idle-delay 1))
 
+
 #+end_src
+
 ** Ivy
-#+BEGIN_SRC emacs-lisp
+
+#+begin_src emacs-lisp
 
 (use-package ivy
   :diminish
@@ -302,10 +325,12 @@ correctly.
   "ff"  '(counsel-find-file :which-key "open file")
   "fr"  '(counsel-recentf :which-key "recent files")
   "fj"  '(counsel-file-jump :which-key "jump to file"))
-#+END_SRC
+
+#+end_src
 
 ** Helpful Help Commands
-#+BEGIN_SRC emacs-lisp
+
+#+begin_src emacs-lisp
 
 (use-package helpful
   :custom
@@ -318,10 +343,12 @@ correctly.
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-#+END_SRC
+
+#+end_src
 
 ** Text Scaling
-#+BEGIN_SRC emacs-lisp
+
+#+begin_src emacs-lisp
 
 (use-package hydra)
 
@@ -334,22 +361,33 @@ correctly.
 (dawran/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
 
-#+END_SRC
+
+#+end_src
+
 ** Highlight Matching Parens
+
 #+begin_src emacs-lisp
+
 (use-package paren
   :config
   (show-paren-mode 1))
+
 #+end_src
+
 ** Paren Face
+
 #+begin_src emacs-lisp
+
 (use-package paren-face
   :hook
   (lispy-mode . paren-face-mode))
+
 #+end_src
+
 * Org Mode
 ** Better Font Faces
    #+begin_src emacs-lisp
+
    (defun dawran/org-font-setup ()
      ;; Replace list hyphen with dot
      (font-lock-add-keywords 'org-mode
@@ -375,10 +413,12 @@ correctly.
      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
      (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
-   #+end_src
+
+#+end_src
 
 ** Basic Config
    #+begin_src emacs-lisp
+
    (defun dawran/org-mode-setup ()
      (org-indent-mode)
      (variable-pitch-mode 1)
@@ -450,19 +490,23 @@ correctly.
 
      (define-key global-map (kbd "C-c j")
        (lambda () (interactive) (org-capture nil "jj"))))
-   #+end_src
+
+#+end_src
 
 ** Nicer Heading Bullets
    #+begin_src emacs-lisp
+
    (use-package org-bullets
      :after org
      :hook (org-mode . org-bullets-mode)
      :custom
      (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-   #+end_src
+
+#+end_src
 
 ** Center Org Buffers
    #+begin_src emacs-lisp
+
    (defun dawran/org-mode-visual-fill ()
      (setq visual-fill-column-width 100
            visual-fill-column-center-text t)
@@ -470,26 +514,35 @@ correctly.
 
    (use-package visual-fill-column
      :hook (org-mode . dawran/org-mode-visual-fill))
-   #+end_src
+
+#+end_src
+
 ** Configure Babel Languages
    #+begin_src emacs-lisp
+
    (org-babel-do-load-languages
      'org-babel-load-languages
      '((emacs-lisp . t)
        (python . t)))
 
    (push '("conf-unix" . conf-unix) org-src-lang-modes)
-   #+end_src
+
+#+end_src
+
 ** Structure Templates
-#+BEGIN_SRC emacs-lisp
+
+#+begin_src emacs-lisp
 
 (require 'org-tempo)
 
 (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 
-#+END_SRC
+
+#+end_src
+
 ** Auto-tangle Configuration Files
+
 #+begin_src emacs-lisp
 
 (defun dawran/org-babel-tangle-config ()
@@ -502,14 +555,22 @@ correctly.
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
+
 #+end_src
+
 ** Update Table of Contents on Save
+
 #+begin_src emacs-lisp
+
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
+
 #+end_src
+
 ** Journal
+
 #+begin_src emacs-lisp
+
 (use-package org-journal
   :custom
   (org-journal-date-prefix "* ")
@@ -520,22 +581,31 @@ correctly.
   (dawran/leader-keys
     "n" '(:ignore t :which-key "notes")
     "nj" '(org-journal-open-current-journal-file :which-key "journal")))
+
 #+end_src
+
 ** Roam
+
 #+begin_src emacs-lisp
+
 ;; TODO add org-roam
+
 #+end_src
 
 * Development
 ** Exec-path
+
 #+begin_src emacs-lisp
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
+
 #+end_src
 
 ** Company
+
 #+begin_src emacs-lisp
+
 (use-package company
   :after lsp-mode
   :hook (lsp-mode . company-mode)
@@ -549,9 +619,12 @@ correctly.
 
 (use-package company-box
   :hook (company-mode . company-box-mode))
+
 #+end_src
+
 ** Projectile
    #+begin_src emacs-lisp
+
    (use-package projectile
      :diminish projectile-mode
      :config (projectile-mode)
@@ -574,17 +647,23 @@ correctly.
      "pF"  'counsel-projectile-rg
      "pp"  'counsel-projectile
      "pd"  'projectile-dired)
-   #+end_src
+
+#+end_src
+
 ** Undo-fu
+
 #+begin_src emacs-lisp
+
 (use-package undo-fu
   :config
   (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
   (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo))
+
 #+end_src
 
 ** Magit
    #+begin_src emacs-lisp
+
    (use-package magit
      :custom
      (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
@@ -599,29 +678,41 @@ correctly.
      "gl"   '(:ignore t :which-key "log")
      "glc" 'magit-log-current
      "glf" 'magit-log-buffer-file)
-   #+end_src
+
+#+end_src
 
 ** Smart Parens
+
 #+begin_src emacs-lisp
+
 (use-package smartparens
   :hook (prog-mode . smartparens-mode))
+
 #+end_src
 
 ** Ripgrep
+
 #+begin_src emacs-lisp
+
 (use-package rg
   :config
   (rg-enable-default-bindings))
+
 #+end_src
 
 ** Expand Region
+
 #+begin_src emacs-lisp
+
 (use-package expand-region
   :bind ("s-'" .  er/mark-outside-pairs))
+
 #+end_src
 
 ** Evil Multiedit
+
 #+begin_src emacs-lisp
+
 (use-package evil-multiedit
   :config
   (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
@@ -646,11 +737,14 @@ correctly.
   (define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
   (define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
   (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
+
 #+end_src
 
 ** Languages
 *** LSP
+
 #+begin_src emacs-lisp
+
 (use-package lsp-mode
   :commands lsp
   :hook ((clojure-mode . lsp)
@@ -671,9 +765,13 @@ correctly.
      (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
   (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp") ;; Optional: In case `clojure-lsp` is not in your PATH
         lsp-enable-indentation nil))
+
 #+end_src
+
 *** Meta Lisp
+
 #+begin_src emacs-lisp
+
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
@@ -692,10 +790,13 @@ correctly.
                               additional-movement
                               (atom-movement normal visual)
                               slurp/barf-cp)))
+
 #+end_src
 
 *** Clojure
+
 #+begin_src emacs-lisp
+
 (use-package cider
   :config
   (setq cider-repl-display-in-current-window t)
@@ -713,10 +814,15 @@ correctly.
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
+
 #+end_src
+
 ** Syntax Checking with Flycheck
+
 #+begin_src emacs-lisp
+
 (use-package flycheck
   :defer t
   :hook (lsp-mode . flycheck-mode))
+
 #+end_src
