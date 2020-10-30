@@ -6,3 +6,4 @@
 /transient/
 /backups/
 /.lsp-session-*
+/eshell/
