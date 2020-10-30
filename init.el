@@ -486,7 +486,9 @@
                clojurec-mode
                clojurescript-mode
                clojurex-mode))
-     (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
+     (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+  (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp") ;; Optional: In case `clojure-lsp` is not in your PATH
+        lsp-enable-indentation nil))
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
