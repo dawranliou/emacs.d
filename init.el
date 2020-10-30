@@ -114,7 +114,7 @@
       visible-bell nil)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;;(load-theme 'sketch-black t)
+(load-theme 'sketch-white t)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -139,7 +139,8 @@
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
 (use-package doom-themes
-  :init (load-theme 'doom-palenight t))
+  ;:init (load-theme 'doom-palenight t)
+)
 
 (use-package all-the-icons)
 

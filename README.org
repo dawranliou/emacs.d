@@ -194,7 +194,7 @@
       visible-bell nil)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;;(load-theme 'sketch-black t)
+(load-theme 'sketch-white t)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -233,7 +233,8 @@
 #+begin_src emacs-lisp
 
 (use-package doom-themes
-  :init (load-theme 'doom-palenight t))
+  ;:init (load-theme 'doom-palenight t)
+)
 
 
 #+end_src
