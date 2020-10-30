@@ -5,6 +5,13 @@
 (defvar dawran/default-font-size 140)
 (defvar dawran/default-variable-font-size 160)
 
+;; Keep customization settings in a temporary file (thanks Ambrevar!)
+(setq custom-file
+      (if (boundp 'server-socket-dir)
+          (expand-file-name "custom.el" server-socket-dir)
+        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+(load custom-file t)
+
 ;; Initialize package sources
 (require 'package)
 
@@ -469,6 +476,10 @@
   (setq lsp-keymap-prefix "s-l")
   :config
   (lsp-enable-which-key-integration t)
+  ;; add paths to your local installation of project mgmt tools, like lein
+  (setenv "PATH" (concat
+                   "/usr/local/bin" path-separator
+                   (getenv "PATH")))
   (dolist (m '(clojure-mode
                clojurec-mode
                clojurescript-mode

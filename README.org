@@ -16,6 +16,7 @@
 :END:
 :CONTENTS:
 - [[#table-of-contents][Table of Contents]]
+- [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
 - [[#keybinding-configuration][Keybinding Configuration]]
 - [[#basic-ui-configuration][Basic UI Configuration]]
@@ -55,6 +56,16 @@
     - [[#clojure][Clojure]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
 :END:
+
+* Keep .emacs.d Clean
+#+begin_src emacs-lisp
+;; Keep customization settings in a temporary file (thanks Ambrevar!)
+(setq custom-file
+      (if (boundp 'server-socket-dir)
+          (expand-file-name "custom.el" server-socket-dir)
+        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
+(load custom-file t)
+#+end_src
 
 * Package System Setup
 #+begin_src emacs-lisp
@@ -628,6 +639,10 @@ correctly.
   (setq lsp-keymap-prefix "s-l")
   :config
   (lsp-enable-which-key-integration t)
+  ;; add paths to your local installation of project mgmt tools, like lein
+  (setenv "PATH" (concat
+                   "/usr/local/bin" path-separator
+                   (getenv "PATH")))
   (dolist (m '(clojure-mode
                clojurec-mode
                clojurescript-mode
