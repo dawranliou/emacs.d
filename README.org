@@ -664,7 +664,12 @@ correctly.
 (use-package lispyville
   :hook ((lispy-mode . lispyville-mode))
   :config
-  (lispyville-set-key-theme '(operators c-w additional)))
+  (lispyville-set-key-theme '(operators
+                              c-w
+                              additional
+                              additional-insert
+                              additional-movement
+                              slurp/barf-cp)))
 #+end_src
 
 *** Clojure
@@ -693,5 +698,3 @@ correctly.
   :defer t
   :hook (lsp-mode . flycheck-mode))
 #+end_src
-
-

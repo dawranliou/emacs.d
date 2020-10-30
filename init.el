@@ -499,7 +499,12 @@
 (use-package lispyville
   :hook ((lispy-mode . lispyville-mode))
   :config
-  (lispyville-set-key-theme '(operators c-w additional)))
+  (lispyville-set-key-theme '(operators
+                              c-w
+                              additional
+                              additional-insert
+                              additional-movement
+                              slurp/barf-cp)))
 
 (use-package cider
   :config
