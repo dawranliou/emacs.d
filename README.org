@@ -633,8 +633,6 @@ correctly.
                clojurescript-mode
                clojurex-mode))
      (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
-
-(use-package lsp-ivy)
 #+end_src
 *** Meta Lisp
 #+begin_src emacs-lisp
