@@ -243,6 +243,30 @@
   :hook
   (lispy-mode . paren-face-mode))
 
+(use-package darkroom
+  :commands darkroom-mode
+  :config
+  (setq darkroom-text-scale-increase 0))
+
+(defun dawran/enter-focus-mode ()
+  (interactive)
+  (darkroom-mode 1)
+  (display-line-numbers-mode 0))
+
+(defun dawran/leave-focus-mode ()
+  (interactive)
+  (darkroom-mode 0)
+  (display-line-numbers-mode 1))
+
+(defun dawran/toggle-focus-mode ()
+  (interactive)
+  (if (symbol-value darkroom-mode)
+    (dawran/leave-focus-mode)
+    (dawran/enter-focus-mode)))
+
+(dawran/leader-keys
+  "tf" '(dawran/toggle-focus-mode :which-key "focus mode"))
+
 (defun dawran/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
