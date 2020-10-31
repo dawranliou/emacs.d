@@ -122,6 +122,7 @@
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
                 term-mode-hook
+                vterm-mode-hook
                 shell-mode-hook
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
@@ -419,8 +420,18 @@
 (use-package eshell
   :hook (eshell-first-time-mode . dawran/configure-eshell))
 
+(use-package exec-path-from-shell
+  :init
+  (setq exec-path-from-shell-check-startup-files nil)
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+
 (dawran/leader-keys
   "SPC" 'eshell)
+
+(with-eval-after-load 'esh-opt
+  (setq eshell-destroy-buffer-when-process-dies t))
 
 (use-package company
   :after lsp-mode
