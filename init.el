@@ -52,7 +52,9 @@
     "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(counsel-load-theme :which-key "choose theme")
-    "tw" 'whitespace-mode))
+    "tw" 'whitespace-mode
+    "tm" 'toggle-frame-maximized
+    "tM" 'toggle-frame-fullscreen))
 
 (use-package evil
   :init
