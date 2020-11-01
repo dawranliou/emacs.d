@@ -224,12 +224,18 @@
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
+(use-package default-text-scale
+  :defer 1
+  :config
+  (default-text-scale-mode))
+
 (use-package hydra)
 
 (defhydra hydra-text-scale (:timeout 4)
   "scale text"
-  ("j" text-scale-increase "+")
-  ("k" text-scale-decrease "-")
+  ("j" default-text-scale-increase "+")
+  ("k" default-text-scale-decrease "-")
+  ("r" default-text-scale-reset "reset")
   ("f" nil "finished" :exit t))
 
 (dawran/leader-keys
