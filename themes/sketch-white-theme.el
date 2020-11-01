@@ -71,16 +71,19 @@
    `(font-lock-comment-face ((,class (:inherit font-lock-string-face))))
    `(font-lock-negation-char-face ((,class (:foreground ,fg))))
    `(font-lock-reference-face ((,class (:foreground ,fg))))
-   `(font-lock-constant-face ((,class (:foreground ,fg))))
+   `(font-lock-constant-face ((,class (:foreground ,fg :bold t))))
    `(font-lock-doc-face ((,class (:inherit font-lock-comment-face))))
-   `(font-lock-function-name-face ((,class (:foreground ,fg))))
+   `(font-lock-function-name-face ((,class (:foreground ,fg :bold t))))
    `(font-lock-keyword-face ((,class (:foreground ,fg))))
    `(font-lock-string-face ((,class (:foreground ,weak))))
    `(font-lock-type-face ((,class (:foreground ,fg))))
-   `(font-lock-variable-name-face ((,class (:foreground ,fg))))
+   `(font-lock-variable-name-face ((,class (:foreground ,fg :bold t))))
    `(font-lock-warning-face ((,class (:foreground ,fg :underline (:color ,warning :style wave)))))
    `(hl-fill-column-face ((,class (:background ,weakest))))
    `(fill-column-indicator ((,class (:foreground ,weakest))))
+
+   ;; clojure mode
+   `(clojure-keyword-face ((,class (:foreground ,weak))))
 
    ;; hl line
    `(hl-line ((,class (:background ,weakest))))
