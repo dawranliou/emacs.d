@@ -33,6 +33,7 @@
   - [[#highlight-matching-parens][Highlight Matching Parens]]
   - [[#paren-face][Paren Face]]
   - [[#darkroom-for-distraction-free-writing][Darkroom for Distraction-free Writing]]
+  - [[#window-management][Window Management]]
 - [[#org-mode][Org Mode]]
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
@@ -424,6 +425,19 @@ correctly.
 
 (dawran/leader-keys
   "tf" '(dawran/toggle-focus-mode :which-key "focus mode"))
+
+#+end_src
+
+** Window Management
+#+begin_src emacs-lisp
+
+(use-package ace-window
+  :bind (("M-o" . ace-window))
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+
+(winner-mode)
+(define-key evil-window-map "u" 'winner-undo)
 
 #+end_src
 

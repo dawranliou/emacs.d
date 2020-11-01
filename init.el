@@ -273,6 +273,14 @@
 (dawran/leader-keys
   "tf" '(dawran/toggle-focus-mode :which-key "focus mode"))
 
+(use-package ace-window
+  :bind (("M-o" . ace-window))
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+
+(winner-mode)
+(define-key evil-window-map "u" 'winner-undo)
+
 (defun dawran/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
