@@ -87,6 +87,9 @@
    ;; hl line
    `(hl-line ((,class (:background ,weakest))))
 
+   ;; hl fill column
+   `(hl-fill-column-face ((,class (:background ,weakest))))
+
    ;; company
    `(company-tooltip ((,class (:foreground ,fg :background ,weakest))))
    `(company-tooltip-selection ((,class (:background ,weaker :foreground ,fg))))

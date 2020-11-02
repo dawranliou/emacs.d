@@ -34,6 +34,7 @@
   - [[#paren-face][Paren Face]]
   - [[#darkroom-for-distraction-free-writing][Darkroom for Distraction-free Writing]]
   - [[#window-management][Window Management]]
+  - [[#highlight-fill-column][Highlight Fill Column]]
 - [[#org-mode][Org Mode]]
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
@@ -214,6 +215,8 @@
 (blink-cursor-mode 0)
 
 (global-hl-line-mode 1)
+
+(setq-default fill-column 80)
 
 #+end_src
 
@@ -440,6 +443,15 @@ correctly.
 (define-key evil-window-map "u" 'winner-undo)
 
 (dawran/leader-keys "w" 'evil-window-map)
+
+#+end_src
+
+** Highlight Fill Column
+
+#+begin_src emacs-lisp
+
+(use-package hl-fill-column
+  :init (global-hl-fill-column-mode))
 
 #+end_src
 
@@ -888,6 +900,8 @@ correctly.
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
          (cider-repl-mode . lispy-mode))
+  :custom
+  (lispy-close-quotes-at-end-p t)
   :config
   (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
 

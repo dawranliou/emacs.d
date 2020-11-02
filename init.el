@@ -133,6 +133,8 @@
 
 (global-hl-line-mode 1)
 
+(setq-default fill-column 80)
+
 (set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
 
 ;; Set the fixed pitch face
@@ -282,6 +284,9 @@
 (define-key evil-window-map "u" 'winner-undo)
 
 (dawran/leader-keys "w" 'evil-window-map)
+
+(use-package hl-fill-column
+  :init (global-hl-fill-column-mode))
 
 (defun dawran/org-font-setup ()
   ;; Replace list hyphen with dot
@@ -593,6 +598,8 @@
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
          (cider-repl-mode . lispy-mode))
+  :custom
+  (lispy-close-quotes-at-end-p t)
   :config
   (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
 
