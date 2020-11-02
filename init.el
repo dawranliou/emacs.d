@@ -281,6 +281,8 @@
 (winner-mode)
 (define-key evil-window-map "u" 'winner-undo)
 
+(dawran/leader-keys "w" 'evil-window-map)
+
 (defun dawran/org-font-setup ()
   ;; Replace list hyphen with dot
   (font-lock-add-keywords 'org-mode
@@ -521,6 +523,8 @@
 
 (use-package evil-magit
   :after magit)
+
+(global-set-key (kbd "s-g") 'magit-status)
 
 (dawran/leader-keys
   "g"   '(:ignore t :which-key "git")

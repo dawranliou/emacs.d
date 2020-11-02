@@ -439,6 +439,8 @@ correctly.
 (winner-mode)
 (define-key evil-window-map "u" 'winner-undo)
 
+(dawran/leader-keys "w" 'evil-window-map)
+
 #+end_src
 
 * Org Mode
@@ -779,6 +781,8 @@ correctly.
 
    (use-package evil-magit
      :after magit)
+
+   (global-set-key (kbd "s-g") 'magit-status)
 
    (dawran/leader-keys
      "g"   '(:ignore t :which-key "git")
