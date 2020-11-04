@@ -459,7 +459,7 @@
 (use-package org-roam
   :hook (after-init . org-roam-mode)
   :commands (org-roam org-roam-insert org-roam-switch-to-buffer
-             org-roam-find-file org-roam-show-graph org-roam-capture)
+             org-roam-find-file org-roam-graph-show org-roam-capture)
   :custom
   (org-roam-directory "~/org/roam/"))
 
@@ -468,7 +468,7 @@
   "ni" 'org-roam-insert
   "nb" 'org-roam-switch-to-buffer
   "nf" 'org-roam-find-file
-  "ng" 'org-roam-show-graph
+  "ng" 'org-roam-graph-show
   "nc" 'org-roam-capture)
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
