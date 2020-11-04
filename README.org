@@ -456,7 +456,7 @@ correctly.
 #+begin_src emacs-lisp
 
 (use-package hl-fill-column
-  :init (global-hl-fill-column-mode))
+  :hook (prog-mode . hl-fill-column-mode))
 
 #+end_src
 

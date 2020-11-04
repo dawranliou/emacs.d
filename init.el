@@ -287,7 +287,7 @@
 (dawran/leader-keys "w" 'evil-window-map)
 
 (use-package hl-fill-column
-  :init (global-hl-fill-column-mode))
+  :hook (prog-mode . hl-fill-column-mode))
 
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
