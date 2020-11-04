@@ -396,6 +396,16 @@
   (dawran/leader-keys
     "j" '(org-capture :which-key "capture")))
 
+(use-package evil-org
+  :after org
+  :hook ((org-mode . evil-org-mode)
+         (evil-org-mode . (lambda ()
+                            (evil-org-set-key-theme '(navigation todo insert
+                                                      textobjects
+                                                      additional)))))
+  :config
+  (evil-org-set-key-theme))
+
 (use-package org-bullets
   :after org
   :hook (org-mode . org-bullets-mode)
