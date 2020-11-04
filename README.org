@@ -35,6 +35,10 @@
   - [[#darkroom-for-distraction-free-writing][Darkroom for Distraction-free Writing]]
   - [[#window-management][Window Management]]
   - [[#highlight-fill-column][Highlight Fill Column]]
+- [[#editing-configuration][Editing Configuration]]
+  - [[#tabs][Tabs]]
+  - [[#commenting-lines][Commenting Lines]]
+  - [[#automatically-clean-whitespace][Automatically Clean Whitespace]]
 - [[#org-mode][Org Mode]]
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
@@ -453,6 +457,37 @@ correctly.
 
 (use-package hl-fill-column
   :init (global-hl-fill-column-mode))
+
+#+end_src
+
+* Editing Configuration
+
+** Tabs
+
+#+begin_src emacs-lisp
+
+(setq-default tab-width 2)
+(setq-default evil-shift-width tab-width)
+(setq-default indent-tabs-mode nil)
+
+#+end_src
+
+** Commenting Lines
+
+#+begin_src emacs-lisp
+
+  (use-package evil-nerd-commenter
+    :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+
+#+end_src
+
+** Automatically Clean Whitespace
+
+#+begin_src emacs-lisp
+
+(use-package ws-butler
+  :hook ((text-mode . ws-butler-mode)
+         (prog-mode . ws-butler-mode)))
 
 #+end_src
 
