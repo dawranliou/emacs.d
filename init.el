@@ -544,6 +544,7 @@
 (dawran/leader-keys
   "g"   '(:ignore t :which-key "git")
   "gg"  'magit-status
+  "gb"  'magit-blame-addition
   "gd"  'magit-diff-unstaged
   "gl"   '(:ignore t :which-key "log")
   "glc" 'magit-log-current
