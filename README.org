@@ -703,7 +703,20 @@ correctly.
 
 #+begin_src emacs-lisp
 
-;; TODO add org-roam
+(use-package org-roam
+  :hook (after-init . org-roam-mode)
+  :commands (org-roam org-roam-insert org-roam-switch-to-buffer
+             org-roam-find-file org-roam-show-graph org-roam-capture)
+  :custom
+  (org-roam-directory "~/org/roam/"))
+
+(dawran/leader-keys
+  "nl" 'org-roam
+  "ni" 'org-roam-insert
+  "nb" 'org-roam-switch-to-buffer
+  "nf" 'org-roam-find-file
+  "ng" 'org-roam-show-graph
+  "nc" 'org-roam-capture)
 
 #+end_src
 

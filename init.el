@@ -456,7 +456,20 @@
     "n" '(:ignore t :which-key "notes")
     "nj" '(org-journal-open-current-journal-file :which-key "journal")))
 
-;; TODO add org-roam
+(use-package org-roam
+  :hook (after-init . org-roam-mode)
+  :commands (org-roam org-roam-insert org-roam-switch-to-buffer
+             org-roam-find-file org-roam-show-graph org-roam-capture)
+  :custom
+  (org-roam-directory "~/org/roam/"))
+
+(dawran/leader-keys
+  "nl" 'org-roam
+  "ni" 'org-roam-insert
+  "nb" 'org-roam-switch-to-buffer
+  "nf" 'org-roam-find-file
+  "ng" 'org-roam-show-graph
+  "nc" 'org-roam-capture)
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
