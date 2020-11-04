@@ -168,6 +168,7 @@
   (ivy-mode 1)
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
+         ("C-SPC" . ivy-call-and-recenter)
          ("TAB" . ivy-alt-done)
          ("C-l" . ivy-alt-done)
          ("C-j" . ivy-next-line)
