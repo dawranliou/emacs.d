@@ -6,6 +6,7 @@
 /transient/
 /backups/
 /.lsp-session-*
-/eshell/
 /bookmarks
 /org-roam.db
+/eshell/history
+/eshell/lastdir

@@ -1,0 +1,7 @@
+alias e find-file $1
+alias edit find-file $1
+alias vi find-file $1
+alias vim find-file $1
+alias d dired $1
+alias ffo find-file-other-window $1
+alias la ls -al
