@@ -35,6 +35,7 @@
   - [[#darkroom-for-distraction-free-writing][Darkroom for Distraction-free Writing]]
   - [[#window-management][Window Management]]
   - [[#highlight-fill-column][Highlight Fill Column]]
+  - [[#center-buffers][Center Buffers]]
 - [[#editing-configuration][Editing Configuration]]
   - [[#tabs][Tabs]]
   - [[#commenting-lines][Commenting Lines]]
@@ -43,7 +44,6 @@
   - [[#better-font-faces][Better Font Faces]]
   - [[#basic-config][Basic Config]]
   - [[#nicer-heading-bullets][Nicer Heading Bullets]]
-  - [[#center-org-buffers][Center Org Buffers]]
   - [[#configure-babel-languages][Configure Babel Languages]]
   - [[#structure-templates][Structure Templates]]
   - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
@@ -66,6 +66,7 @@
     - [[#lsp][LSP]]
     - [[#meta-lisp][Meta Lisp]]
     - [[#clojure][Clojure]]
+    - [[#markdown][Markdown]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
 :END:
 
@@ -213,6 +214,7 @@
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
+                markdown-mode-hook
                 term-mode-hook
                 vterm-mode-hook
                 shell-mode-hook
@@ -463,6 +465,18 @@ correctly.
 
 #+end_src
 
+** Center Buffers
+   #+begin_src emacs-lisp
+
+   (defun dawran/visual-fill ()
+     (setq visual-fill-column-width 100
+           visual-fill-column-center-text t)
+     (visual-fill-column-mode 1))
+
+   (use-package visual-fill-column)
+
+#+end_src
+
 * Editing Configuration
 
 ** Tabs
@@ -533,7 +547,8 @@ correctly.
      (org-indent-mode)
      (variable-pitch-mode 1)
      (visual-line-mode 1)
-     (dawran/org-font-setup))
+     (dawran/org-font-setup)
+     (dawran/visual-fill))
 
    (use-package org
      :hook (org-mode . dawran/org-mode-setup)
@@ -585,19 +600,6 @@ correctly.
      :hook (org-mode . org-bullets-mode)
      :custom
      (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-#+end_src
-
-** Center Org Buffers
-   #+begin_src emacs-lisp
-
-   (defun dawran/org-mode-visual-fill ()
-     (setq visual-fill-column-width 100
-           visual-fill-column-center-text t)
-     (visual-fill-column-mode 1))
-
-   (use-package visual-fill-column
-     :hook (org-mode . dawran/org-mode-visual-fill))
 
 #+end_src
 
@@ -968,6 +970,30 @@ correctly.
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
+
+#+end_src
+
+*** Markdown
+
+#+begin_src emacs-lisp
+
+(use-package markdown-mode
+  :mode "\\.md\\'"
+  :hook (markdown-mode . dawran/visual-fill)
+  :config
+  (setq markdown-command "marked")
+  (defun dawran/set-markdown-header-font-sizes ()
+    (dolist (face '((markdown-header-face-1 . 1.2)
+                    (markdown-header-face-2 . 1.1)
+                    (markdown-header-face-3 . 1.0)
+                    (markdown-header-face-4 . 1.0)
+                    (markdown-header-face-5 . 1.0)))
+      (set-face-attribute (car face) nil :weight 'normal :height (cdr face)))
+
+  (defun dawran/markdown-mode-hook ()
+    (dawran/set-markdown-header-font-sizes))
+
+  (add-hook 'markdown-mode-hook 'dw/markdown-mode-hook)))
 
 #+end_src
 

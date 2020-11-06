@@ -126,6 +126,7 @@
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
+                markdown-mode-hook
                 term-mode-hook
                 vterm-mode-hook
                 shell-mode-hook
@@ -292,6 +293,13 @@
 (use-package hl-fill-column
   :hook (prog-mode . hl-fill-column-mode))
 
+(defun dawran/visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column)
+
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)
@@ -333,7 +341,8 @@
   (org-indent-mode)
   (variable-pitch-mode 1)
   (visual-line-mode 1)
-  (dawran/org-font-setup))
+  (dawran/org-font-setup)
+  (dawran/visual-fill))
 
 (use-package org
   :hook (org-mode . dawran/org-mode-setup)
@@ -380,14 +389,6 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-(defun dawran/org-mode-visual-fill ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
-
-(use-package visual-fill-column
-  :hook (org-mode . dawran/org-mode-visual-fill))
 
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -636,6 +637,24 @@
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
+
+(use-package markdown-mode
+  :mode "\\.md\\'"
+  :hook (markdown-mode . dawran/visual-fill)
+  :config
+  (setq markdown-command "marked")
+  (defun dawran/set-markdown-header-font-sizes ()
+    (dolist (face '((markdown-header-face-1 . 1.2)
+                    (markdown-header-face-2 . 1.1)
+                    (markdown-header-face-3 . 1.0)
+                    (markdown-header-face-4 . 1.0)
+                    (markdown-header-face-5 . 1.0)))
+      (set-face-attribute (car face) nil :weight 'normal :height (cdr face)))
+
+  (defun dawran/markdown-mode-hook ()
+    (dawran/set-markdown-header-font-sizes))
+
+  (add-hook 'markdown-mode-hook 'dw/markdown-mode-hook)))
 
 (use-package flycheck
   :defer t
