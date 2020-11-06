@@ -5,6 +5,9 @@
 (defvar dawran/default-font-size 140)
 (defvar dawran/default-variable-font-size 160)
 
+;; Keep transient cruft out of ~/.emacs.d/
+(setq backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory))))
+
 ;; Keep customization settings in a temporary file (thanks Ambrevar!)
 (setq custom-file
       (if (boundp 'server-socket-dir)
