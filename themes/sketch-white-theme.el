@@ -63,8 +63,8 @@
    `(line-number ((,class (:background ,bg :foreground ,weaker))))
 
    ;; mode line
-   `(mode-line ((,class (:foreground ,fg :background ,weakest :height 0.9))))
-   `(mode-line-inactive ((,class (:foreground ,weaker :background ,bg :height 0.9))))
+   `(mode-line ((,class (:foreground ,fg :background ,weakest))))
+   `(mode-line-inactive ((,class (:foreground ,weaker :background ,bg))))
 
    ;; font lock
    `(font-lock-builtin-face ((,class (:foreground ,fg))))
@@ -83,7 +83,7 @@
    `(fill-column-indicator ((,class (:foreground ,weakest))))
 
    ;; clojure mode
-   `(clojure-keyword-face ((,class (:foreground ,weak))))
+   `(clojure-keyword-face ((,class (:foreground ,fg))))
 
    ;; hl line
    `(hl-line ((,class (:background ,weakest))))
