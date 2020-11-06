@@ -344,30 +344,12 @@
   (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
 
-  (setq org-todo-keywords
-    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-      (sequence "BACKLOG(b)" "PLAN(p)" "READY(r)" "ACTIVE(a)" "REVIEW(v)" "WAIT(w@/!)" "HOLD(h)" "|" "COMPLETED(c)" "CANC(k@)")))
-
   (setq org-refile-targets
     '(("Archive.org" :maxlevel . 1)
       ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
-  (setq org-tag-alist
-    '((:startgroup)
-       ; Put mutually exclusive tags here
-       (:endgroup)
-       ("@errand" . ?E)
-       ("@home" . ?H)
-       ("@work" . ?W)
-       ("agenda" . ?a)
-       ("planning" . ?p)
-       ("publish" . ?P)
-       ("batch" . ?b)
-       ("note" . ?n)
-       ("idea" . ?i)))
 
   (defun org-journal-find-location ()
     ;; Open today's journal, but specify a non-nil prefix argument in order to
@@ -377,24 +359,8 @@
       (org-narrow-to-subtree))
     (goto-char (point-max)))
 
-  (setq org-capture-templates
-    `(("j" "Journal" plain
-           (function org-journal-find-location)
-           "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-           :jump-to-captured t
-           :immediate-finish t)
-      ("m" "Meeting" plain
-           (function org-journal-find-location)
-           "** %<%I:%M %p> - %a :meetings:\n\n%?\n\n"
-           :clock-in :clock-resume
-           :empty-lines 1)
-      ("t" "Todo" plain
-           (function org-journal-find-location)
-           "** TODO %?\n  %U\n  %a\n  %i"
-           :empty-lines 1)))
-
   (dawran/leader-keys
-    "j" '(org-capture :which-key "capture")))
+    "j" '(org-journal-new-entry :which-key "journal")))
 
 (use-package evil-org
   :after org
