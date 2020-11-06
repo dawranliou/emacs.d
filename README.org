@@ -226,6 +226,7 @@
 (global-hl-line-mode 1)
 
 (setq-default fill-column 80)
+(setq-default line-spacing 0.1)
 
 #+end_src
 

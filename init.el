@@ -138,6 +138,7 @@
 (global-hl-line-mode 1)
 
 (setq-default fill-column 80)
+(setq-default line-spacing 0.1)
 
 (set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
 
