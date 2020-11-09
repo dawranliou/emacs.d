@@ -710,17 +710,22 @@ correctly.
 
 (use-package dired
   :ensure nil
-  :commands (dired dired-jump)
+  :commands (dired)
+  :bind ("C-x C-j" . dired-jump)
   :init
   (setq dired-auto-revert-buffer t
         dired-dwim-target t)
   :config
-  (require 'dired-x)
-  ;; To make group-directories-first work we need to use gls
-  ;(setq insert-directory-program (executable-find "gls")
-  ;      dired-use-ls-dired nil
-  ;      dired-listing-switches "-agho --group-directories-first")
-  )
+  (setq ls-lisp-dirs-first t
+        insert-directory-program "gls"
+        dired-listing-switches "-agho --group-directories-first"))
+
+(use-package dired-x
+  :after dired
+  :ensure nil
+  :init (setq-default dired-omit-files-p t)
+  :config
+  (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 (use-package dired-single
   :config
