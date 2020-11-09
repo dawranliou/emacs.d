@@ -722,6 +722,9 @@ correctly.
   (evil-collection-define-key 'normal 'dired-mode-map
     (kbd "C-c C-e") 'wdired-change-to-wdired-mode))
 
+(dawran/leader-keys
+  "d" '(dired-jump :which-key "dired"))
+
 (use-package dired-x
   :after dired
   :ensure nil
