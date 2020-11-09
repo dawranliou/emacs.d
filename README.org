@@ -474,7 +474,11 @@ correctly.
 #+begin_src emacs-lisp
 
 (use-package hl-fill-column
-  :hook (prog-mode . hl-fill-column-mode))
+  :hook (prog-mode . hl-fill-column-mode)
+  :config
+  (set-face-attribute 'hl-fill-column-face nil
+   :background (face-attribute 'shadow :background)
+   :inverse-video nil))
 
 #+end_src
 

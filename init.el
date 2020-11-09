@@ -295,7 +295,11 @@
 (dawran/leader-keys "w" 'evil-window-map)
 
 (use-package hl-fill-column
-  :hook (prog-mode . hl-fill-column-mode))
+  :hook (prog-mode . hl-fill-column-mode)
+  :config
+  (set-face-attribute 'hl-fill-column-face nil
+   :background (face-attribute 'shadow :background)
+   :inverse-video nil))
 
 (defun dawran/visual-fill ()
   (setq visual-fill-column-width 100
