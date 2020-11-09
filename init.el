@@ -171,6 +171,7 @@
 
 (use-package ivy
   :diminish
+  :custom (ivy-initial-inputs-alist nil)
   :init
   (ivy-mode 1)
   :bind (("C-s" . swiper)
