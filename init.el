@@ -654,6 +654,7 @@
   :custom
   (lispy-close-quotes-at-end-p t)
   :config
+  (lispy-set-key-theme '(lispy c-digits))
   (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
 
 (use-package lispyville
@@ -661,11 +662,17 @@
   :config
   (lispyville-set-key-theme '(operators
                               c-w
+                              (prettify insert)
                               additional
                               additional-insert
                               additional-movement
                               (atom-movement normal visual)
                               slurp/barf-cp)))
+
+(use-package clojure-mode
+  :config
+  (setq clojure-indent-style 'align-arguments
+        clojure-align-forms-automatically t))
 
 (use-package cider
   :config
