@@ -448,12 +448,16 @@
 (use-package dired
   :ensure nil
   :commands (dired dired-jump)
-  :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :init
+  (setq dired-auto-revert-buffer t
+        dired-dwim-target t)
   :config
   (require 'dired-x)
   ;; To make group-directories-first work we need to use gls
-  (setq insert-directory-program (executable-find "gls")
-        dired-use-ls-dired nil))
+  ;(setq insert-directory-program (executable-find "gls")
+  ;      dired-use-ls-dired nil
+  ;      dired-listing-switches "-agho --group-directories-first")
+  )
 
 (use-package dired-single
   :config
