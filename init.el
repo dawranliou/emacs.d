@@ -507,9 +507,6 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
-(dawran/leader-keys
-  "SPC" 'eshell)
-
 (with-eval-after-load 'esh-opt
   (setq eshell-destroy-buffer-when-process-dies t))
 
@@ -548,7 +545,8 @@
   "ps"  'counsel-projectile-switch-project
   "pF"  'counsel-projectile-rg
   "pp"  'counsel-projectile
-  "pd"  'projectile-dired)
+  "pd"  'projectile-dired
+  "SPC" 'counsel-projectile)
 
 (use-package undo-fu
   :config
