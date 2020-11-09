@@ -148,6 +148,8 @@
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
+(setq delete-by-moving-to-trash t)
+
 (use-package doom-themes
   ;:init (load-theme 'doom-palenight t)
 )
@@ -441,6 +443,28 @@
   "nf" 'org-roam-find-file
   "ng" 'org-roam-graph-show
   "nc" 'org-roam-capture)
+
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :config
+  (require 'dired-x)
+  ;; To make group-directories-first work we need to use gls
+  (setq insert-directory-program (executable-find "gls")
+        dired-use-ls-dired nil))
+
+(use-package dired-single
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "l" 'dired-single-buffer))
+
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
 

@@ -23,6 +23,7 @@
 - [[#keybinding-configuration][Keybinding Configuration]]
 - [[#basic-ui-configuration][Basic UI Configuration]]
   - [[#font-configuration][Font configuration]]
+- [[#macos][MacOS]]
 - [[#ui-configuration][UI Configuration]]
   - [[#color-theme][Color Theme]]
   - [[#modeline][Modeline]]
@@ -50,6 +51,8 @@
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
   - [[#journal][Journal]]
   - [[#roam][Roam]]
+- [[#file-management][File Management]]
+  - [[#dired][Dired]]
 - [[#development][Development]]
   - [[#exec-path][Exec-path]]
   - [[#vterm][Vterm]]
@@ -242,6 +245,14 @@
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
+
+#+end_src
+
+* MacOS
+
+#+begin_src emacs-lisp
+
+(setq delete-by-moving-to-trash t)
 
 #+end_src
 
@@ -690,6 +701,34 @@ correctly.
   "ng" 'org-roam-graph-show
   "nc" 'org-roam-capture)
 
+#+end_src
+
+* File Management
+
+** Dired
+#+begin_src emacs-lisp
+
+(use-package dired
+  :ensure nil
+  :commands (dired dired-jump)
+  :custom ((dired-listing-switches "-agho --group-directories-first"))
+  :config
+  (require 'dired-x)
+  ;; To make group-directories-first work we need to use gls
+  (setq insert-directory-program (executable-find "gls")
+        dired-use-ls-dired nil))
+
+(use-package dired-single
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "l" 'dired-single-buffer))
+
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))
 #+end_src
 
 * Development
