@@ -455,7 +455,9 @@
   :config
   (setq ls-lisp-dirs-first t
         insert-directory-program "gls"
-        dired-listing-switches "-agho --group-directories-first"))
+        dired-listing-switches "-agho --group-directories-first")
+  (evil-collection-define-key 'normal 'dired-mode-map
+    (kbd "C-c C-e") 'wdired-change-to-wdired-mode))
 
 (use-package dired-x
   :after dired
