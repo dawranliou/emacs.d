@@ -505,6 +505,7 @@
   (setq eshell-history-size          10000
         eshell-buffer-maximum-lines  10000
         eshell-hist-ignoredups           t
+        eshell-highlight-prompt          t
         eshell-scroll-to-bottom-on-input t))
 
 (use-package eshell
@@ -519,6 +520,9 @@
 
 (with-eval-after-load 'esh-opt
   (setq eshell-destroy-buffer-when-process-dies t))
+
+(dawran/leader-keys
+  "e" 'eshell)
 
 (use-package company
   :after lsp-mode
@@ -554,6 +558,7 @@
   "pf"  'counsel-projectile-find-file
   "ps"  'counsel-projectile-switch-project
   "pF"  'counsel-projectile-rg
+  "pe"  'projectile-run-eshell
   "pp"  'counsel-projectile
   "pd"  'projectile-dired
   "SPC" 'counsel-projectile)
