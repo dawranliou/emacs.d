@@ -570,7 +570,7 @@
   "pe"  'projectile-run-eshell
   "pp"  'counsel-projectile
   "pd"  'projectile-dired
-  "SPC" 'counsel-projectile)
+  "SPC" 'counsel-projectile-find-file)
 
 (use-package undo-fu
   :config
