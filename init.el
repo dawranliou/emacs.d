@@ -174,6 +174,11 @@
   :custom (ivy-initial-inputs-alist nil)
   :init
   (ivy-mode 1)
+  (setq ivy-re-builders-alist
+        '((counsel-rg     . ivy--regex-plus)
+          (swiper         . ivy--regex-plus)
+          (swiper-isearch . ivy--regex-plus)
+          (t              . ivy--regex-ignore-order)))
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
          ("C-SPC" . ivy-call-and-recenter)
