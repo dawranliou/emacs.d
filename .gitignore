@@ -10,3 +10,5 @@
 /org-roam.db
 /eshell/history
 /eshell/lastdir
+/projectile.cache
+/projects
