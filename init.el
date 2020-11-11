@@ -609,9 +609,7 @@
   "gg"  'magit-status
   "gb"  'magit-blame-addition
   "gd"  'magit-diff-unstaged
-  "gl"   '(:ignore t :which-key "log")
-  "glc" 'magit-log-current
-  "glf" 'magit-log-buffer-file)
+  "gl"  'magit-log-buffer-file)
 
 (use-package smartparens
   :hook (prog-mode . smartparens-mode))
