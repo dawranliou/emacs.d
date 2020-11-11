@@ -490,6 +490,13 @@
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
+(use-package dired-ranger
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "y" 'dired-ranger-copy
+    "X" 'dired-ranger-move
+    "p" 'dired-ranger-paste))
+
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
 (use-package vterm
