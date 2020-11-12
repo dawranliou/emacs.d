@@ -672,7 +672,12 @@
                clojurex-mode))
      (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
   (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp") ;; Optional: In case `clojure-lsp` is not in your PATH
-        lsp-enable-indentation nil))
+        lsp-enable-indentation nil)
+
+  (dawran/localleader-keys
+    :keymaps '(clojure-mode-map clojurescript-mode-map)
+    "d" 'lsp-find-definition
+    "r" 'lsp-find-references))
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
@@ -712,10 +717,9 @@
   (dawran/localleader-keys
     :keymaps '(clojure-mode-map clojurescript-mode-map)
     "," 'cider
-    "e" '(:ignore t :which-key "eval")
-    "eb" 'cider-eval-buffer
-    "ef" 'cider-eval-defun-at-point
-    "ee" 'cider-eval-last-sexp))
+    "b" 'cider-eval-buffer
+    "f" 'cider-eval-defun-at-point
+    "e" 'cider-eval-last-sexp))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
