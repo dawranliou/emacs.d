@@ -590,10 +590,10 @@
 
 (dawran/leader-keys
   "pf"  'counsel-projectile-find-file
-  "ps"  'counsel-projectile-switch-project
+  "pp"  'counsel-projectile-switch-project
   "pF"  'counsel-projectile-rg
   "pe"  'projectile-run-eshell
-  "pp"  'counsel-projectile
+  "pv"  'projectile-run-vterm
   "pd"  'projectile-dired
   "SPC" 'counsel-projectile-find-file)
 
