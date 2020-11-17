@@ -717,9 +717,13 @@
   (dawran/localleader-keys
     :keymaps '(clojure-mode-map clojurescript-mode-map)
     "," 'cider
-    "b" 'cider-eval-buffer
-    "f" 'cider-eval-defun-at-point
-    "e" 'cider-eval-last-sexp))
+    "e" '(:ignore t :which-key "eval")
+    "eb" 'cider-eval-buffer
+    "ef" 'cider-eval-defun-at-point
+    "ee" 'cider-eval-last-sexp
+    "t" '(:ignore t :which-key "test")
+    "tt" 'cider-test-run-test
+    "tn" 'cider-test-run-ns-tests))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
