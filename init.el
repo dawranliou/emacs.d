@@ -161,7 +161,8 @@
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-height 15)
-  (doom-modeline-lsp t))
+  (doom-modeline-lsp t)
+  (doom-modeline-icon nil))
 
 (use-package which-key
   :init (which-key-mode)

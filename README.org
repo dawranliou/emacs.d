@@ -285,8 +285,8 @@ correctly.
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-height 15)
-  (doom-modeline-lsp t))
-
+  (doom-modeline-lsp t)
+  (doom-modeline-icon nil))
 
 #+end_src
 

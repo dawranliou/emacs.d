@@ -62,8 +62,10 @@
    `(line-number ((,class (:background ,bg :foreground ,weaker))))
 
    ;; mode line
-   `(mode-line ((,class (:foreground ,fg :background ,weakest))))
-   `(mode-line-inactive ((,class (:foreground ,weaker :background ,bg))))
+   `(mode-line ((,class (:foreground ,fg :background ,bg :overline ,weak))))
+   `(mode-line-inactive ((,class (:foreground ,weaker :background ,bg :overline ,weakest))))
+   `(doom-modeline-bar ((,class (:background ,bg)))) ; Hide the bar
+   `(doom-modeline-info ((,class (:inherit bold))))
 
    ;; font lock
    `(font-lock-builtin-face ((,class (:foreground ,fg))))
