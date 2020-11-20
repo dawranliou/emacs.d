@@ -454,6 +454,15 @@
   "ng" 'org-roam-graph-show
   "nc" 'org-roam-capture)
 
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil)
+  (org-tree-slide-slide-in-effect nil)
+  (org-tree-slide-activate-message "Presentation started.")
+  (org-tree-slide-deactivate-message "Presentation ended.")
+  (org-tree-slide-breadcrumbs " > ")
+  (org-tree-slide-header t))
+
 (use-package dired
   :ensure nil
   :commands (dired)

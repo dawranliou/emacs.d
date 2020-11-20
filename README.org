@@ -51,6 +51,7 @@
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
   - [[#journal][Journal]]
   - [[#roam][Roam]]
+  - [[#presentation][Presentation]]
 - [[#file-management][File Management]]
   - [[#dired][Dired]]
 - [[#development][Development]]
@@ -710,6 +711,21 @@ correctly.
   "nf" 'org-roam-find-file
   "ng" 'org-roam-graph-show
   "nc" 'org-roam-capture)
+
+#+end_src
+
+** Presentation
+
+#+begin_src emacs-lisp
+
+(use-package org-tree-slide
+  :custom
+  (org-image-actual-width nil)
+  (org-tree-slide-slide-in-effect nil)
+  (org-tree-slide-activate-message "Presentation started.")
+  (org-tree-slide-deactivate-message "Presentation ended.")
+  (org-tree-slide-breadcrumbs " > ")
+  (org-tree-slide-header t))
 
 #+end_src
 
