@@ -313,6 +313,13 @@
 
 (use-package visual-fill-column)
 
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+
+(use-package unicode-fonts
+  :config
+  (unicode-fonts-setup))
+
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)

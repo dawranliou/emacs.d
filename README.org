@@ -37,6 +37,7 @@
   - [[#window-management][Window Management]]
   - [[#highlight-fill-column][Highlight Fill Column]]
   - [[#center-buffers][Center Buffers]]
+  - [[#emoji-and-unicode][Emoji and Unicode]]
 - [[#editing-configuration][Editing Configuration]]
   - [[#tabs][Tabs]]
   - [[#commenting-lines][Commenting Lines]]
@@ -497,6 +498,19 @@ correctly.
      (visual-fill-column-mode 1))
 
    (use-package visual-fill-column)
+
+#+end_src
+
+** Emoji and Unicode
+
+#+begin_src emacs-lisp
+
+(use-package emojify
+  :hook (after-init . global-emojify-mode))
+
+(use-package unicode-fonts
+  :config
+  (unicode-fonts-setup))
 
 #+end_src
 
