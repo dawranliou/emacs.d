@@ -595,6 +595,7 @@
   "pe"  'projectile-run-eshell
   "pv"  'projectile-run-vterm
   "pd"  'projectile-dired
+  "pc"  'projectile-run-async-shell-command-in-root
   "SPC" 'counsel-projectile-find-file)
 
 (use-package undo-fu
