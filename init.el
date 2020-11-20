@@ -330,7 +330,13 @@
 
 (use-package ws-butler
   :hook ((text-mode . ws-butler-mode)
-         (prog-mode . ws-butler-mode)))
+         (prog-mode . ws-butler-mode))
+  :custom
+  ;; ws-butler normally preserves whitespace in the buffer (but strips it from
+  ;; the written file). While sometimes convenient, this behavior is not
+  ;; intuitive. To the average user it looks like whitespace cleanup is failing,
+  ;; which causes folks to redundantly install their own.
+  (ws-butler-keep-whitespace-before-point nil))
 
 (defun dawran/org-font-setup ()
   ;; Replace list hyphen with dot
