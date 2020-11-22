@@ -652,6 +652,7 @@
   (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
 
 (use-package lsp-mode
+  :disabled
   :commands lsp
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
@@ -676,6 +677,11 @@
     :keymaps '(clojure-mode-map clojurescript-mode-map)
     "d" 'lsp-find-definition
     "r" 'lsp-find-references))
+
+(use-package eglot
+  :config
+  (add-to-list 'eglot-server-programs
+               '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp"))))
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
@@ -746,7 +752,7 @@
 
 (use-package company
   :hook (;(lsp-mode . company-mode)
-         (eglot-mode . company-mode))
+         (eglot-managed-mode . company-mode))
   :bind (:map company-active-map
          ("<tab>" . company-complete-selection))
         (:map eglot-mode-map
