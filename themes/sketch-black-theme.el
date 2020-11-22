@@ -64,8 +64,9 @@
    ;; mode line
    `(mode-line ((,class (:foreground ,fg :background ,bg :overline ,weak))))
    `(mode-line-inactive ((,class (:foreground ,weaker :background ,bg :overline ,weakest))))
-   `(doom-modeline-bar ((,class (:background ,bg)))) ; Hide the bar
    `(doom-modeline-info ((,class (:inherit bold))))
+   `(doom-modeline-repl-success ((,class (:inherit doom-modeline-info))))
+   `(doom-modeline-lsp-success ((,class (:inherit doom-modeline-info))))
 
    ;; font lock
    `(font-lock-builtin-face ((,class (:foreground ,fg))))
