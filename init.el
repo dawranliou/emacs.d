@@ -681,7 +681,11 @@
 (use-package eglot
   :config
   (add-to-list 'eglot-server-programs
-               '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp"))))
+               '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp")))
+  (dawran/localleader-keys
+    :keymaps '(clojure-mode-map clojurescript-mode-map)
+    "d" 'xref-find-definitions
+    "r" 'xref-find-references))
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
