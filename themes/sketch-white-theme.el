@@ -69,7 +69,6 @@
    `(doom-modeline-repl-success ((,class (:inherit doom-modeline-info))))
    `(doom-modeline-lsp-success ((,class (:inherit doom-modeline-info))))
 
-
    ;; font lock
    `(font-lock-builtin-face ((,class (:foreground ,fg))))
    `(font-lock-comment-face ((,class (:inherit font-lock-string-face))))
@@ -112,6 +111,10 @@
    ;; org mode
    `(org-block ((,class (:extend t :background ,weakest))))
    `(org-hide ((,class (:foreground ,bg))))
+
+   ;; flymake mode
+   `(flymake-warning ((,class (:underline (:style wave :color ,weaker)))))
+   `(flymake-error ((,class (:underline (:style wave :color ,warning)))))
 
    ))
 
