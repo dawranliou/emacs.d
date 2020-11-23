@@ -679,6 +679,9 @@
     "r" 'lsp-find-references))
 
 (use-package eglot
+  :hook ((clojure-mode . eglot-ensure)
+         (clojurec-mode . eglot-ensure)
+         (clojurescript-mode . eglot-ensure))
   :config
   (add-to-list 'eglot-server-programs
                '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp")))
