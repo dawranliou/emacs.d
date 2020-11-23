@@ -111,6 +111,10 @@
    `(org-block ((,class (:extend t :background ,weakest))))
    `(org-hide ((,class (:foreground ,bg))))
 
+   ;; flymake mode
+   `(flymake-warning ((,class (:underline (:style wave :color ,weaker)))))
+   `(flymake-error ((,class (:underline (:style wave :color ,warning)))))
+
    ))
 
 ;;;###autoload
