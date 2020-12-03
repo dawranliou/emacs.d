@@ -178,12 +178,6 @@
 (setq-default fill-column 80)
 (setq-default line-spacing 0.1)
 
-;; Remove titlebar for mac
-;; https://emacs.stackexchange.com/a/40777
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(setq ns-use-proxy-icon nil)
-(setq frame-title-format nil)
-
 (set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
 
 ;; Set the fixed pitch face
@@ -191,6 +185,9 @@
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
+
+(use-package ns-auto-titlebar
+  :hook (after-init . ns-auto-titlebar-mode))
 
 (setq delete-by-moving-to-trash t)
 

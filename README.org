@@ -320,12 +320,6 @@ modes with Vi-like keybindings for evil-mode.
   (setq-default fill-column 80)
   (setq-default line-spacing 0.1)
 
-  ;; Remove titlebar for mac
-  ;; https://emacs.stackexchange.com/a/40777
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (setq ns-use-proxy-icon nil)
-  (setq frame-title-format nil)
-
 #+end_src
 
 ** Font configuration
@@ -345,6 +339,9 @@ modes with Vi-like keybindings for evil-mode.
 * MacOS
 
 #+begin_src emacs-lisp
+
+  (use-package ns-auto-titlebar
+    :hook (after-init . ns-auto-titlebar-mode))
 
   (setq delete-by-moving-to-trash t)
 
