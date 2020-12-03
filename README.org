@@ -255,6 +255,9 @@ modes with Vi-like keybindings for evil-mode.
     (define-key evil-insert-state-map "\C-k" 'kill-line)
     (define-key evil-visual-state-map "\C-k" 'kill-line)
 
+    ;; Get around faster
+    (define-key evil-motion-state-map "gs" 'evil-avy-goto-char-timer)
+
     ;; Use visual line motions even outside of visual-line-mode buffers
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
     (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
