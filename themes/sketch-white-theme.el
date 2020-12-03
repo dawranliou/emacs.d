@@ -118,14 +118,14 @@
    `(org-checkbox ((,class (:inherit fixed-pitch))))
    `(org-hide ((,class (:foreground ,bg))))
    ;; use :overline to give headings more top margin
-   `(org-level-1 ((,class (:height 1.3))))
-   `(org-level-2 ((,class (:height 1.2 :overline ,bg))))
-   `(org-level-3 ((,class (:height 1.1 :overline ,bg))))
-   `(org-level-4 ((,class (:height 1.1 :overline ,bg))))
-   `(org-level-5 ((,class (:height 1.1 :overline ,bg))))
-   `(org-level-6 ((,class (:height 1.1 :overline ,bg))))
-   `(org-level-7 ((,class (:height 1.1 :overline ,bg))))
-   `(org-level-8 ((,class (:height 1.1 :overline ,bg))))
+   `(org-level-1 ((,class (:weight semi-bold :height 1.3))))
+   `(org-level-2 ((,class (:weight semi-bold :height 1.2 :overline ,bg))))
+   `(org-level-3 ((,class (:weight semi-bold :height 1.1 :overline ,bg))))
+   `(org-level-4 ((,class (:weight semi-bold :height 1.1 :overline ,bg))))
+   `(org-level-5 ((,class (:weight semi-bold :height 1.1 :overline ,bg))))
+   `(org-level-6 ((,class (:weight semi-bold :height 1.1 :overline ,bg))))
+   `(org-level-7 ((,class (:weight semi-bold :height 1.1 :overline ,bg))))
+   `(org-level-8 ((,class (:weight semi-bold :height 1.1 :overline ,bg))))
 
    ;; flymake mode
    `(flymake-warning ((,class (:underline (:style wave :color ,weaker)))))
