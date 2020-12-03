@@ -15,7 +15,7 @@ by a bunch of resources I’ve found online:
 :CONTENTS:
 - [[#table-of-contents][Table of Contents]]
 - [[#variables][Variables]]
-- [[#startup-performance][Startup Performance]]
+- [[#gc-performance][GC Performance]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
 - [[#keybinding-configuration][Keybinding Configuration]]
@@ -75,7 +75,7 @@ by a bunch of resources I’ve found online:
 * Variables
 
 #+begin_src emacs-lisp
-
+  ;; -*- lexical-binding: t; -*-
   ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
   ;;       Emacs and init.el will be generated automatically!
 
@@ -85,14 +85,57 @@ by a bunch of resources I’ve found online:
 
 #+end_src
 
-* Startup Performance
+* GC Performance
 
-Make startup faster by reducing the frequency of garbage collection and then use
-a hook to measure Emacs startup time.
+Source: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]
+
+The GC can easily double startup time, so we suppress it at startup by turning
+up =gc-cons-threshold= (and perhaps =gc-cons-percentage=) temporarily:
 
 #+begin_src emacs-lisp
-  ;; The default is 800 kilobytes.  Measured in bytes.
-  (setq gc-cons-threshold (* 50 1000 1000))
+
+  (setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
+        gc-cons-percentage 0.6)
+
+#+end_src
+
+However, it is important to reset it eventually. Not doing so will cause garbage
+collection freezes during long-term interactive use. Conversely, a
+=gc-cons-threshold= that is too small will cause stuttering. We use 16mb as our
+default.
+
+#+begin_src emacs-lisp
+
+  (add-hook 'emacs-startup-hook
+    (lambda ()
+      (setq gc-cons-threshold 16777216 ; 16mb
+            gc-cons-percentage 0.1)))
+
+#+end_src
+
+It may also be wise to raise =gc-cons-threshold= while the minibuffer is active,
+so the GC doesn’t slow down expensive commands (or completion frameworks, like
+helm and ivy). Here is how Doom does it:
+
+#+begin_src emacs-lisp
+
+  (defun doom-defer-garbage-collection-h ()
+    (setq gc-cons-threshold most-positive-fixnum))
+
+  (defun doom-restore-garbage-collection-h ()
+    ;; Defer it so that commands launched immediately after will enjoy the
+    ;; benefits.
+    (run-at-time
+     1 nil (lambda () (setq gc-cons-threshold doom-gc-cons-threshold))))
+
+  (add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
+  (add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
+
+#+end_src
+
+Measure the startup time:
+
+#+begin_src emacs-lisp
 
   ;; Profile emacs startup
   (add-hook 'emacs-startup-hook
@@ -102,6 +145,7 @@ a hook to measure Emacs startup time.
                                (float-time
                                 (time-subtract after-init-time before-init-time)))
                        gcs-done)))
+
 #+end_src
 
 * Keep .emacs.d Clean
