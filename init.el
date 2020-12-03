@@ -21,7 +21,7 @@
   ;; Defer it so that commands launched immediately after will enjoy the
   ;; benefits.
   (run-at-time
-   1 nil (lambda () (setq gc-cons-threshold doom-gc-cons-threshold))))
+   1 nil (lambda () (setq gc-cons-threshold 16777216)))) ; 16mb
 
 (add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
 (add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
