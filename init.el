@@ -193,14 +193,14 @@
 (use-package all-the-icons)
 
 (use-package doom-modeline
-  :ensure t
-  :init
-  (doom-modeline-mode 1)
+  :hook (after-init . doom-modeline-mode)
   :config
   (doom-modeline-def-modeline 'dawran-modeline
     '(modals matches buffer-info buffer-position word-count)
     '(repl lsp input-method buffer-encoding major-mode process vcs checker))
-  (doom-modeline-set-modeline 'dawran-modeline 'default)
+  (defun setup-custom-doom-modeline ()
+    (doom-modeline-set-modeline 'dawran-modeline 'default))
+  (add-hook 'doom-modeline-mode-hook 'setup-custom-doom-modeline)
   :custom
   (doom-modeline-height 15)
   (doom-modeline-lsp t)
