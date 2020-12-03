@@ -35,8 +35,11 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-;; Keep transient cruft out of ~/.emacs.d/
-(setq backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory))))
+;; Keep backup files and auto-save files in the backups directory
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
+      auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "backups/" user-emacs-directory) t)))
 
 ;; Keep customization settings in a temporary file (thanks Ambrevar!)
 (setq custom-file
