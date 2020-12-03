@@ -112,7 +112,6 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-
 #+end_src
 
 * Keybinding Configuration
@@ -246,7 +245,6 @@
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
-
 #+end_src
 
 * MacOS
@@ -265,7 +263,6 @@
 (use-package doom-themes
   ;:init (load-theme 'doom-palenight t)
 )
-
 
 #+end_src
 
@@ -304,7 +301,6 @@ correctly.
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 1))
-
 
 #+end_src
 
@@ -389,7 +385,6 @@ correctly.
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
 
-
 #+end_src
 
 ** Text Scaling
@@ -412,7 +407,6 @@ correctly.
 
 (dawran/leader-keys
   "ts" '(hydra-text-scale/body :which-key "scale text"))
-
 
 #+end_src
 
@@ -640,7 +634,6 @@ correctly.
 (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 
-
 #+end_src
 
 ** Auto-tangle Configuration Files
@@ -656,7 +649,6 @@ correctly.
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
-
 
 #+end_src
 
@@ -777,7 +769,6 @@ correctly.
 #+begin_src emacs-lisp
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
-
 
 #+end_src
 
