@@ -167,9 +167,7 @@
 
 (setq delete-by-moving-to-trash t)
 
-(use-package doom-themes
-  ;:init (load-theme 'doom-palenight t)
-)
+(use-package doom-themes)
 
 (use-package all-the-icons)
 
@@ -413,10 +411,9 @@
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
-(org-babel-do-load-languages
-  'org-babel-load-languages
-  '((emacs-lisp . t)
-    (python . t)))
+(org-babel-do-load-languages 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)))
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
 
