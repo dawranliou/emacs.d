@@ -334,6 +334,13 @@ correctly.
 
 ** Which Key
 
+[[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key
+binding in Emacs to offer you all possible completions for the prefix.  For
+example, if you press =C-c= (hold control and press the letter =c=), a panel
+will appear at the bottom of the frame displaying all of the bindings under that
+prefix and which command they run.  This is very useful for learning the
+possible key bindings in the mode of your current buffer.
+
 #+begin_src emacs-lisp
 
   (use-package which-key
@@ -345,6 +352,12 @@ correctly.
 #+end_src
 
 ** Ivy
+
+[[https://oremacs.com/swiper/][Ivy]] is an excellent completion framework for Emacs.  It provides a minimal yet
+powerful selection menu that appears when you open files, switch buffers, and
+for many other tasks in Emacs.  Counsel is a customized set of commands to
+replace `find-file` with `counsel-find-file`, etc which provide useful commands
+for each of the default completion commands.
 
 #+begin_src emacs-lisp
 
@@ -412,6 +425,12 @@ correctly.
 
 ** Helpful Help Commands
 
+[[https://github.com/Wilfred/helpful][Helpful]] adds a lot of very helpful (get it?) information to Emacs' =describe-=
+command buffers.  For example, if you use =describe-function=, you will not only
+get the documentation about the function, you will also see the source code of
+the function and where it gets used in other places in the Emacs configuration.
+It is very useful for figuring out how things work in Emacs.
+
 #+begin_src emacs-lisp
 
   (use-package helpful
@@ -452,6 +471,8 @@ correctly.
 
 ** Highlight Matching Parens
 
+Display highlighting on whatever paren matches the one before or after point.
+
 #+begin_src emacs-lisp
 
   (use-package paren
@@ -461,6 +482,8 @@ correctly.
 #+end_src
 
 ** Paren Face
+
+[[https://github.com/tarsius/paren-face][paren-face]] dims the parentheses to reduce visual distractions.
 
 #+begin_src emacs-lisp
 
