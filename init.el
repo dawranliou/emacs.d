@@ -1,9 +1,21 @@
-;; NOTE: init.el is now generated from Emacs.org.  Please edit that file
-;;       in Emacs and init.el will be generated automatically!
+;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
+;;       Emacs and init.el will be generated automatically!
 
 ;; You will most likely need to adjust this font size for your system!
 (defvar dawran/default-font-size 140)
 (defvar dawran/default-variable-font-size 160)
+
+;; The default is 800 kilobytes.  Measured in bytes.
+(setq gc-cons-threshold (* 50 1000 1000))
+
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
 ;; Keep transient cruft out of ~/.emacs.d/
 (setq backup-directory-alist `(("." . ,(expand-file-name "backups" user-emacs-directory))))
@@ -35,6 +47,11 @@
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+;; Since I let =evil-mode= take over =C-u= for buffer scrolling, I need to
+;; re-bind the =universal-argument= command to another key sequence.  I'm
+;; choosing =C-M-u= for this purpose.
+(global-set-key (kbd "C-M-u") 'universal-argument)
 
 (use-package general
   :config
