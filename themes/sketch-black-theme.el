@@ -108,8 +108,23 @@
    `(git-gutter:deleted ((,class (:background ,warning :foreground ,warning))))
 
    ;; org mode
-   `(org-block ((,class (:extend t :background ,weakest))))
+   `(org-block ((,class (:extend t :background ,weakest :inherit (shadow fixed-pitch)))))
+   `(org-code ((,class (:inherit (shadow fixed-pitch)))))
+   `(org-table ((,class (:inherit (shadow fixed-pitch)))))
+   `(org-verbatim ((,class (:inherit (shadow fixed-pitch)))))
+   `(org-special-keyword ((,class (:inherit (font-lock-comment-face fixed-pitch)))))
+   `(org-meta-line ((,class (:inherit (font-lock-comment-face fixed-pitch)))))
+   `(org-checkbox ((,class (:inherit fixed-pitch))))
    `(org-hide ((,class (:foreground ,bg))))
+   ;; use :overline to give headings more top margin
+   `(org-level-1 ((,class (:height 1.3))))
+   `(org-level-2 ((,class (:height 1.2 :overline ,bg))))
+   `(org-level-3 ((,class (:height 1.1 :overline ,bg))))
+   `(org-level-4 ((,class (:height 1.1 :overline ,bg))))
+   `(org-level-5 ((,class (:height 1.1 :overline ,bg))))
+   `(org-level-6 ((,class (:height 1.1 :overline ,bg))))
+   `(org-level-7 ((,class (:height 1.1 :overline ,bg))))
+   `(org-level-8 ((,class (:height 1.1 :overline ,bg))))
 
    ;; flymake mode
    `(flymake-warning ((,class (:underline (:style wave :color ,weaker)))))
