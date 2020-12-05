@@ -80,14 +80,14 @@
     :states '(normal insert visual emacs)
     :keymaps 'override
     :prefix "SPC"
-    :global-prefix "M-SPC")
+    :global-prefix "C-SPC")
 
   (general-create-definer dawran/localleader-keys
     :states '(normal insert visual emacs)
     :keymaps 'override
     :major-modes t
     :prefix ","
-    :non-normal-prefix "M-,")
+    :non-normal-prefix "C-,")
 
   (dawran/leader-keys
     "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
