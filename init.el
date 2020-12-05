@@ -200,9 +200,6 @@
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
-  :config
-  ;; tone down the modeline bar
-  (set-face-attribute 'doom-modeline-bar nil :inherit 'mode-line)
   :custom
   (doom-modeline-height 15)
   (doom-modeline-lsp t)
