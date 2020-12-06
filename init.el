@@ -576,6 +576,13 @@
 (dawran/leader-keys
   "e" 'eshell)
 
+(use-package eshell-toggle
+  :custom
+  (eshell-toggle-use-projectile-root t)
+  (eshell-toggle-run-command nil)
+  :bind
+  ("C-M-'" . eshell-toggle))
+
 (use-package projectile
   :diminish projectile-mode
   :config (projectile-mode)

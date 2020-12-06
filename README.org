@@ -56,6 +56,7 @@ by a bunch of resources I’ve found online:
   - [[#exec-path][Exec-path]]
   - [[#vterm][Vterm]]
   - [[#eshell][Eshell]]
+    - [[#toggling-eshell][Toggling eshell]]
   - [[#projectile][Projectile]]
   - [[#undo-fu][Undo-fu]]
   - [[#magit][Magit]]
@@ -934,6 +935,19 @@ Display highlighting on whatever paren matches the one before or after point.
 
   (dawran/leader-keys
     "e" 'eshell)
+
+#+end_src
+
+*** Toggling eshell
+
+#+begin_src emacs-lisp
+
+  (use-package eshell-toggle
+    :custom
+    (eshell-toggle-use-projectile-root t)
+    (eshell-toggle-run-command nil)
+    :bind
+    ("C-M-'" . eshell-toggle))
 
 #+end_src
 
