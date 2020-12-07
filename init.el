@@ -801,3 +801,12 @@
 (use-package flycheck
   :defer t
   :hook (lsp-mode . flycheck-mode))
+
+(setq world-clock-list '(("Asia/Taipei" "Taipei")
+                         ("America/Toronto" "Toronto")
+                         ("America/Los_Angeles" "San Francisco")
+                         ("Europe/Berlin" "Düsseldorf")
+                         ("Europe/London" "GMT")))
+
+(dawran/leader-keys
+  "tc" 'world-clock)

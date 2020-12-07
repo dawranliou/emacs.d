@@ -80,6 +80,8 @@ by a bunch of resources I’ve found online:
     - [[#markdown][Markdown]]
   - [[#company][Company]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
+- [[#misc][Misc]]
+  - [[#world-time][World Time]]
 :END:
 
 * Variables
@@ -1327,5 +1329,21 @@ primarily with Emacs' built-in libraries:
   (use-package flycheck
     :defer t
     :hook (lsp-mode . flycheck-mode))
+
+#+end_src
+
+* Misc
+** World Time
+
+#+begin_src emacs-lisp
+
+  (setq world-clock-list '(("Asia/Taipei" "Taipei")
+                           ("America/Toronto" "Toronto")
+                           ("America/Los_Angeles" "San Francisco")
+                           ("Europe/Berlin" "Düsseldorf")
+                           ("Europe/London" "GMT")))
+
+  (dawran/leader-keys
+    "tc" 'world-clock)
 
 #+end_src
