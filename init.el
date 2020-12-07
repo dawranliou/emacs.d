@@ -69,33 +69,7 @@
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; Since I let =evil-mode= take over =C-u= for buffer scrolling, I need to
-;; re-bind the =universal-argument= command to another key sequence.  I'm
-;; choosing =C-M-u= for this purpose.
 (global-set-key (kbd "C-M-u") 'universal-argument)
-
-(use-package general
-  :config
-  (general-create-definer dawran/leader-keys
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "C-SPC")
-
-  (general-create-definer dawran/localleader-keys
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :major-modes t
-    :prefix ","
-    :non-normal-prefix "C-,")
-
-  (dawran/leader-keys
-    "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
-    "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")
-    "tw" 'whitespace-mode
-    "tm" 'toggle-frame-maximized
-    "tM" 'toggle-frame-fullscreen))
 
 (use-package evil
   :init
@@ -146,6 +120,35 @@
     "*" #'evil-visualstar/begin-search-forward
     "#" #'evil-visualstar/begin-search-backward))
 
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 1))
+
+(use-package general
+  :config
+  (general-create-definer dawran/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (general-create-definer dawran/localleader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :major-modes t
+    :prefix ","
+    :non-normal-prefix "C-,")
+
+  (dawran/leader-keys
+    "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")
+    "tw" 'whitespace-mode
+    "tm" 'toggle-frame-maximized
+    "tM" 'toggle-frame-fullscreen))
+
 (setq inhibit-startup-message t)
 
 (scroll-bar-mode -1)        ; Disable visible scrollbar
@@ -159,8 +162,10 @@
 (setq ring-bell-function #'ignore
       visible-bell nil)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'sketch-white t)
+(blink-cursor-mode 0)
+
+(setq-default fill-column 80)
+(setq-default line-spacing 0.1)
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
@@ -174,12 +179,10 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-(blink-cursor-mode 0)
-
 (global-hl-line-mode 1)
 
-(setq-default fill-column 80)
-(setq-default line-spacing 0.1)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(load-theme 'sketch-white t)
 
 (set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
 
@@ -188,11 +191,6 @@
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
-
-(use-package ns-auto-titlebar
-  :hook (after-init . ns-auto-titlebar-mode))
-
-(setq delete-by-moving-to-trash t)
 
 (use-package doom-themes)
 
@@ -204,12 +202,6 @@
   (doom-modeline-height 15)
   (doom-modeline-lsp t)
   (doom-modeline-icon nil))
-
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 1))
 
 (use-package ivy
   :diminish
@@ -362,6 +354,11 @@
   :config
   (unicode-fonts-setup))
 
+(use-package ns-auto-titlebar
+  :hook (after-init . ns-auto-titlebar-mode))
+
+(setq ns-use-proxy-icon nil)
+
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)
@@ -378,6 +375,65 @@
   ;; intuitive. To the average user it looks like whitespace cleanup is failing,
   ;; which causes folks to redundantly install their own.
   (ws-butler-keep-whitespace-before-point nil))
+
+(use-package lispy
+  :hook ((emacs-lisp-mode . lispy-mode)
+         (clojure-mode . lispy-mode)
+         (clojurescript-mode . lispy-mode)
+         (cider-repl-mode . lispy-mode))
+  :custom
+  (lispy-close-quotes-at-end-p t)
+  :config
+  (lispy-set-key-theme '(lispy c-digits))
+  (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
+
+(use-package lispyville
+  :hook ((lispy-mode . lispyville-mode))
+  :config
+  (lispyville-set-key-theme '(operators
+                              c-w
+                              (prettify insert)
+                              additional
+                              additional-insert
+                              additional-movement
+                              (atom-movement normal visual)
+                              slurp/barf-cp)))
+
+(use-package evil-multiedit
+  :config
+  (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
+  (define-key evil-normal-state-map (kbd "M-d") 'evil-multiedit-match-symbol-and-next)
+  (define-key evil-normal-state-map (kbd "M-D") 'evil-multiedit-match-symbol-and-prev)
+  (define-key evil-visual-state-map (kbd "M-d") 'evil-multiedit-match-and-next)
+  (define-key evil-visual-state-map (kbd "M-D") 'evil-multiedit-match-and-prev)
+  (define-key evil-insert-state-map (kbd "M-d") 'evil-multiedit-toggle-marker-here)
+
+  ;; Restore the last group of multiedit regions.
+  (define-key evil-normal-state-map (kbd "C-M-d") 'evil-multiedit-restore)
+  (define-key evil-visual-state-map (kbd "C-M-d") 'evil-multiedit-restore)
+
+  ;; RET will toggle the region under the cursor
+  (define-key evil-multiedit-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
+
+  ;; ...and in visual mode, RET will disable all fields outside the selected region
+  (define-key evil-motion-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
+
+  ;; For moving between edit regions
+  (define-key evil-multiedit-state-map (kbd "C-n") 'evil-multiedit-next)
+  (define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
+  (define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
+  (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
+
+(use-package undo-fu
+  :config
+  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+  (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo))
+
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
+
+(use-package expand-region
+  :bind ("s-'" .  er/mark-outside-pairs))
 
 (defun dawran/org-mode-setup ()
   (org-indent-mode)
@@ -609,11 +665,6 @@
   "pc"  'projectile-run-async-shell-command-in-root
   "SPC" 'counsel-projectile-find-file)
 
-(use-package undo-fu
-  :config
-  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-  (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo))
-
 (use-package magit
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
@@ -630,40 +681,9 @@
   "gd"  'magit-diff-unstaged
   "gl"  'magit-log-buffer-file)
 
-(use-package smartparens
-  :hook (prog-mode . smartparens-mode))
-
 (use-package rg
   :config
   (rg-enable-default-bindings))
-
-(use-package expand-region
-  :bind ("s-'" .  er/mark-outside-pairs))
-
-(use-package evil-multiedit
-  :config
-  (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
-  (define-key evil-normal-state-map (kbd "M-d") 'evil-multiedit-match-symbol-and-next)
-  (define-key evil-normal-state-map (kbd "M-D") 'evil-multiedit-match-symbol-and-prev)
-  (define-key evil-visual-state-map (kbd "M-d") 'evil-multiedit-match-and-next)
-  (define-key evil-visual-state-map (kbd "M-D") 'evil-multiedit-match-and-prev)
-  (define-key evil-insert-state-map (kbd "M-d") 'evil-multiedit-toggle-marker-here)
-
-  ;; Restore the last group of multiedit regions.
-  (define-key evil-normal-state-map (kbd "C-M-d") 'evil-multiedit-restore)
-  (define-key evil-visual-state-map (kbd "C-M-d") 'evil-multiedit-restore)
-
-  ;; RET will toggle the region under the cursor
-  (define-key evil-multiedit-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
-
-  ;; ...and in visual mode, RET will disable all fields outside the selected region
-  (define-key evil-motion-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
-
-  ;; For moving between edit regions
-  (define-key evil-multiedit-state-map (kbd "C-n") 'evil-multiedit-next)
-  (define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
-  (define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
-  (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
 
 (use-package lsp-mode
   :disabled
@@ -703,29 +723,6 @@
     :keymaps '(clojure-mode-map clojurescript-mode-map)
     "d" 'xref-find-definitions
     "r" 'xref-find-references))
-
-(use-package lispy
-  :hook ((emacs-lisp-mode . lispy-mode)
-         (clojure-mode . lispy-mode)
-         (clojurescript-mode . lispy-mode)
-         (cider-repl-mode . lispy-mode))
-  :custom
-  (lispy-close-quotes-at-end-p t)
-  :config
-  (lispy-set-key-theme '(lispy c-digits))
-  (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
-
-(use-package lispyville
-  :hook ((lispy-mode . lispyville-mode))
-  :config
-  (lispyville-set-key-theme '(operators
-                              c-w
-                              (prettify insert)
-                              additional
-                              additional-insert
-                              additional-movement
-                              (atom-movement normal visual)
-                              slurp/barf-cp)))
 
 (use-package clojure-mode
   :config

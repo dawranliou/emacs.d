@@ -18,14 +18,20 @@ by a bunch of resources I’ve found online:
 - [[#gc-performance][GC Performance]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
-- [[#keybinding-configuration][Keybinding Configuration]]
-- [[#basic-ui-configuration][Basic UI Configuration]]
+- [[#keybindings][Keybindings]]
+  - [[#esc-cancels-all][ESC Cancels All]]
+  - [[#rebind-c-u][Rebind C-u]]
+  - [[#evil][Evil]]
+  - [[#keybinding-panel-which-key][Keybinding Panel (which-key)]]
+  - [[#simplify-leader-bindings-generalel][Simplify Leader Bindings (general.el)]]
+- [[#ui][UI]]
+  - [[#clean-up-emacs-ui-to-be-more-minimal][Clean up Emacs' UI to be more minimal]]
+  - [[#display-line-number][Display line number]]
+  - [[#highlight-line][Highlight line]]
+  - [[#theme][Theme]]
   - [[#font-configuration][Font configuration]]
-- [[#macos][MacOS]]
-- [[#ui-configuration][UI Configuration]]
   - [[#color-theme][Color Theme]]
   - [[#modeline][Modeline]]
-  - [[#which-key][Which Key]]
   - [[#ivy][Ivy]]
   - [[#helpful-help-commands][Helpful Help Commands]]
   - [[#text-scaling][Text Scaling]]
@@ -36,10 +42,16 @@ by a bunch of resources I’ve found online:
   - [[#highlight-fill-column][Highlight Fill Column]]
   - [[#center-buffers][Center Buffers]]
   - [[#emoji-and-unicode][Emoji and Unicode]]
-- [[#editing-configuration][Editing Configuration]]
+  - [[#native-titlebar][Native Titlebar]]
+- [[#editing][Editing]]
   - [[#tabs][Tabs]]
   - [[#commenting-lines][Commenting Lines]]
   - [[#automatically-clean-whitespace][Automatically Clean Whitespace]]
+  - [[#lisp-s-expression-editing][Lisp S-expression Editing]]
+  - [[#evil-multiedit][Evil Multiedit]]
+  - [[#undo-fu][Undo-fu]]
+  - [[#smart-parens][Smart Parens]]
+  - [[#expand-region][Expand Region]]
 - [[#org-mode][Org Mode]]
   - [[#basic-config][Basic Config]]
   - [[#nicer-heading-bullets][Nicer Heading Bullets]]
@@ -50,23 +62,18 @@ by a bunch of resources I’ve found online:
   - [[#journal][Journal]]
   - [[#roam][Roam]]
   - [[#presentation][Presentation]]
-- [[#file-management][File Management]]
-  - [[#dired][Dired]]
-- [[#development][Development]]
+- [[#dired][Dired]]
+- [[#shell][Shell]]
   - [[#exec-path][Exec-path]]
   - [[#vterm][Vterm]]
   - [[#eshell][Eshell]]
     - [[#toggling-eshell][Toggling eshell]]
+- [[#development][Development]]
   - [[#projectile][Projectile]]
-  - [[#undo-fu][Undo-fu]]
   - [[#magit][Magit]]
-  - [[#smart-parens][Smart Parens]]
   - [[#ripgrep][Ripgrep]]
-  - [[#expand-region][Expand Region]]
-  - [[#evil-multiedit][Evil Multiedit]]
   - [[#languages][Languages]]
     - [[#lsp][LSP]]
-    - [[#meta-lisp][Meta Lisp]]
     - [[#clojure][Clojure]]
     - [[#markdown][Markdown]]
   - [[#company][Company]]
@@ -194,45 +201,42 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
 #+end_src
 
-* Keybinding Configuration
+* Keybindings
 
 This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.
 [[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with
 which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs
 modes with Vi-like keybindings for evil-mode.
 
+** ESC Cancels All
+
 #+begin_src emacs-lisp
 
   ;; Make ESC quit prompts
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-  ;; Since I let =evil-mode= take over =C-u= for buffer scrolling, I need to
-  ;; re-bind the =universal-argument= command to another key sequence.  I'm
-  ;; choosing =C-M-u= for this purpose.
+#+end_src
+
+** Rebind C-u
+
+Since I let =evil-mode= take over =C-u= for buffer scrolling, I need to re-bind
+the =universal-argument= command to another key sequence.  I'm choosing =C-M-u=
+for this purpose.
+
+#+begin_src emacs-lisp
+
   (global-set-key (kbd "C-M-u") 'universal-argument)
 
-  (use-package general
-    :config
-    (general-create-definer dawran/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC"
-      :global-prefix "C-SPC")
+#+end_src
 
-    (general-create-definer dawran/localleader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :major-modes t
-      :prefix ","
-      :non-normal-prefix "C-,")
+** Evil
 
-    (dawran/leader-keys
-      "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
-      "t"  '(:ignore t :which-key "toggles")
-      "tt" '(counsel-load-theme :which-key "choose theme")
-      "tw" 'whitespace-mode
-      "tm" 'toggle-frame-maximized
-      "tM" 'toggle-frame-fullscreen))
+Some tips can be found here:
+
+- https://github.com/noctuid/evil-guide
+- https://nathantypanski.com/blog/2014-08-03-a-vim-like-emacs-config.html
+
+#+begin_src emacs-lisp
 
   (use-package evil
     :init
@@ -285,7 +289,56 @@ modes with Vi-like keybindings for evil-mode.
 
 #+end_src
 
-* Basic UI Configuration
+** Keybinding Panel (which-key)
+
+[[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key
+binding in Emacs to offer you all possible completions for the prefix.  For
+example, if you press =C-c= (hold control and press the letter =c=), a panel
+will appear at the bottom of the frame displaying all of the bindings under that
+prefix and which command they run.  This is very useful for learning the
+possible key bindings in the mode of your current buffer.
+
+#+begin_src emacs-lisp
+
+  (use-package which-key
+    :init (which-key-mode)
+    :diminish which-key-mode
+    :config
+    (setq which-key-idle-delay 1))
+
+#+end_src
+
+** Simplify Leader Bindings (general.el)
+
+#+begin_src emacs-lisp
+
+  (use-package general
+    :config
+    (general-create-definer dawran/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC"
+      :global-prefix "C-SPC")
+
+    (general-create-definer dawran/localleader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :major-modes t
+      :prefix ","
+      :non-normal-prefix "C-,")
+
+    (dawran/leader-keys
+      "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
+      "t"  '(:ignore t :which-key "toggles")
+      "tt" '(counsel-load-theme :which-key "choose theme")
+      "tw" 'whitespace-mode
+      "tm" 'toggle-frame-maximized
+      "tM" 'toggle-frame-fullscreen))
+
+#+end_src
+
+* UI
+** Clean up Emacs' UI to be more minimal
 
 #+begin_src emacs-lisp
 
@@ -302,8 +355,16 @@ modes with Vi-like keybindings for evil-mode.
   (setq ring-bell-function #'ignore
         visible-bell nil)
 
-  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-  (load-theme 'sketch-white t)
+  (blink-cursor-mode 0)
+
+  (setq-default fill-column 80)
+  (setq-default line-spacing 0.1)
+
+#+end_src
+
+** Display line number
+
+#+begin_src emacs-lisp
 
   (column-number-mode)
   (global-display-line-numbers-mode t)
@@ -317,12 +378,24 @@ modes with Vi-like keybindings for evil-mode.
                   eshell-mode-hook))
     (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-  (blink-cursor-mode 0)
+#+end_src
+
+** Highlight line
+
+#+begin_src emacs-lisp
 
   (global-hl-line-mode 1)
 
-  (setq-default fill-column 80)
-  (setq-default line-spacing 0.1)
+#+end_src
+
+** Theme
+
+I'm using my personal theme - =sketch-white= as my prefered theme.
+
+#+begin_src emacs-lisp
+
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+  (load-theme 'sketch-white t)
 
 #+end_src
 
@@ -340,18 +413,6 @@ modes with Vi-like keybindings for evil-mode.
 
 #+end_src
 
-* MacOS
-
-#+begin_src emacs-lisp
-
-  (use-package ns-auto-titlebar
-    :hook (after-init . ns-auto-titlebar-mode))
-
-  (setq delete-by-moving-to-trash t)
-
-#+end_src
-
-* UI Configuration
 ** Color Theme
 
 #+begin_src emacs-lisp
@@ -376,25 +437,6 @@ correctly.
     (doom-modeline-height 15)
     (doom-modeline-lsp t)
     (doom-modeline-icon nil))
-
-#+end_src
-
-** Which Key
-
-[[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key
-binding in Emacs to offer you all possible completions for the prefix.  For
-example, if you press =C-c= (hold control and press the letter =c=), a panel
-will appear at the bottom of the frame displaying all of the bindings under that
-prefix and which command they run.  This is very useful for learning the
-possible key bindings in the mode of your current buffer.
-
-#+begin_src emacs-lisp
-
-  (use-package which-key
-    :init (which-key-mode)
-    :diminish which-key-mode
-    :config
-    (setq which-key-idle-delay 1))
 
 #+end_src
 
@@ -624,9 +666,21 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
-* Editing Configuration
+** Native Titlebar
 
+#+begin_src emacs-lisp
+
+  (use-package ns-auto-titlebar
+    :hook (after-init . ns-auto-titlebar-mode))
+
+  (setq ns-use-proxy-icon nil)
+
+#+end_src
+
+* Editing
 ** Tabs
+
+Default to an indentation size of 2 spaces since it’s the norm for pretty much every language I use.
 
 #+begin_src emacs-lisp
 
@@ -658,6 +712,99 @@ Display highlighting on whatever paren matches the one before or after point.
     ;; intuitive. To the average user it looks like whitespace cleanup is failing,
     ;; which causes folks to redundantly install their own.
     (ws-butler-keep-whitespace-before-point nil))
+
+#+end_src
+
+** Lisp S-expression Editing
+
+I prefer to use [[https://github.com/abo-abo/lispy][lispy]] and [[https://github.com/noctuid/lispyville][lispyville]] for lisp structural editing.
+
+#+begin_src emacs-lisp
+
+  (use-package lispy
+    :hook ((emacs-lisp-mode . lispy-mode)
+           (clojure-mode . lispy-mode)
+           (clojurescript-mode . lispy-mode)
+           (cider-repl-mode . lispy-mode))
+    :custom
+    (lispy-close-quotes-at-end-p t)
+    :config
+    (lispy-set-key-theme '(lispy c-digits))
+    (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
+
+  (use-package lispyville
+    :hook ((lispy-mode . lispyville-mode))
+    :config
+    (lispyville-set-key-theme '(operators
+                                c-w
+                                (prettify insert)
+                                additional
+                                additional-insert
+                                additional-movement
+                                (atom-movement normal visual)
+                                slurp/barf-cp)))
+
+#+end_src
+
+** Evil Multiedit
+
+I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to do multiple cursor edits.
+
+#+begin_src emacs-lisp
+
+  (use-package evil-multiedit
+    :config
+    (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
+    (define-key evil-normal-state-map (kbd "M-d") 'evil-multiedit-match-symbol-and-next)
+    (define-key evil-normal-state-map (kbd "M-D") 'evil-multiedit-match-symbol-and-prev)
+    (define-key evil-visual-state-map (kbd "M-d") 'evil-multiedit-match-and-next)
+    (define-key evil-visual-state-map (kbd "M-D") 'evil-multiedit-match-and-prev)
+    (define-key evil-insert-state-map (kbd "M-d") 'evil-multiedit-toggle-marker-here)
+
+    ;; Restore the last group of multiedit regions.
+    (define-key evil-normal-state-map (kbd "C-M-d") 'evil-multiedit-restore)
+    (define-key evil-visual-state-map (kbd "C-M-d") 'evil-multiedit-restore)
+
+    ;; RET will toggle the region under the cursor
+    (define-key evil-multiedit-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
+
+    ;; ...and in visual mode, RET will disable all fields outside the selected region
+    (define-key evil-motion-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
+
+    ;; For moving between edit regions
+    (define-key evil-multiedit-state-map (kbd "C-n") 'evil-multiedit-next)
+    (define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
+    (define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
+    (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
+
+#+end_src
+
+** Undo-fu
+
+#+begin_src emacs-lisp
+
+  (use-package undo-fu
+    :config
+    (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+    (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo))
+
+#+end_src
+
+** Smart Parens
+
+#+begin_src emacs-lisp
+
+  (use-package smartparens
+    :hook (prog-mode . smartparens-mode))
+
+#+end_src
+
+** Expand Region
+
+#+begin_src emacs-lisp
+
+  (use-package expand-region
+    :bind ("s-'" .  er/mark-outside-pairs))
 
 #+end_src
 
@@ -827,8 +974,8 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
-* File Management
-** Dired
+* Dired
+
 #+begin_src emacs-lisp
 
   (use-package dired
@@ -876,7 +1023,7 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
-* Development
+* Shell
 ** Exec-path
 
 #+begin_src emacs-lisp
@@ -951,6 +1098,7 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
+* Development
 ** Projectile
 
 #+begin_src emacs-lisp
@@ -983,17 +1131,6 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
-** Undo-fu
-
-#+begin_src emacs-lisp
-
-  (use-package undo-fu
-    :config
-    (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-    (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo))
-
-#+end_src
-
 ** Magit
 
 #+begin_src emacs-lisp
@@ -1016,15 +1153,6 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
-** Smart Parens
-
-#+begin_src emacs-lisp
-
-  (use-package smartparens
-    :hook (prog-mode . smartparens-mode))
-
-#+end_src
-
 ** Ripgrep
 
 #+begin_src emacs-lisp
@@ -1032,46 +1160,6 @@ Display highlighting on whatever paren matches the one before or after point.
   (use-package rg
     :config
     (rg-enable-default-bindings))
-
-#+end_src
-
-** Expand Region
-
-#+begin_src emacs-lisp
-
-  (use-package expand-region
-    :bind ("s-'" .  er/mark-outside-pairs))
-
-#+end_src
-
-** Evil Multiedit
-
-#+begin_src emacs-lisp
-
-  (use-package evil-multiedit
-    :config
-    (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
-    (define-key evil-normal-state-map (kbd "M-d") 'evil-multiedit-match-symbol-and-next)
-    (define-key evil-normal-state-map (kbd "M-D") 'evil-multiedit-match-symbol-and-prev)
-    (define-key evil-visual-state-map (kbd "M-d") 'evil-multiedit-match-and-next)
-    (define-key evil-visual-state-map (kbd "M-D") 'evil-multiedit-match-and-prev)
-    (define-key evil-insert-state-map (kbd "M-d") 'evil-multiedit-toggle-marker-here)
-
-    ;; Restore the last group of multiedit regions.
-    (define-key evil-normal-state-map (kbd "C-M-d") 'evil-multiedit-restore)
-    (define-key evil-visual-state-map (kbd "C-M-d") 'evil-multiedit-restore)
-
-    ;; RET will toggle the region under the cursor
-    (define-key evil-multiedit-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
-
-    ;; ...and in visual mode, RET will disable all fields outside the selected region
-    (define-key evil-motion-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
-
-    ;; For moving between edit regions
-    (define-key evil-multiedit-state-map (kbd "C-n") 'evil-multiedit-next)
-    (define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
-    (define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
-    (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
 
 #+end_src
 
@@ -1118,35 +1206,6 @@ Display highlighting on whatever paren matches the one before or after point.
       :keymaps '(clojure-mode-map clojurescript-mode-map)
       "d" 'xref-find-definitions
       "r" 'xref-find-references))
-
-#+end_src
-
-*** Meta Lisp
-
-#+begin_src emacs-lisp
-
-  (use-package lispy
-    :hook ((emacs-lisp-mode . lispy-mode)
-           (clojure-mode . lispy-mode)
-           (clojurescript-mode . lispy-mode)
-           (cider-repl-mode . lispy-mode))
-    :custom
-    (lispy-close-quotes-at-end-p t)
-    :config
-    (lispy-set-key-theme '(lispy c-digits))
-    (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
-
-  (use-package lispyville
-    :hook ((lispy-mode . lispyville-mode))
-    :config
-    (lispyville-set-key-theme '(operators
-                                c-w
-                                (prettify insert)
-                                additional
-                                additional-insert
-                                additional-movement
-                                (atom-movement normal visual)
-                                slurp/barf-cp)))
 
 #+end_src
 
