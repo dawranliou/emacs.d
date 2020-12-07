@@ -72,8 +72,10 @@ by a bunch of resources I’ve found online:
   - [[#projectile][Projectile]]
   - [[#magit][Magit]]
   - [[#ripgrep][Ripgrep]]
+  - [[#lsp][LSP]]
+    - [[#lsp-modeel-disabled][lsp-mode.el (disabled)]]
+    - [[#eglot][Eglot]]
   - [[#languages][Languages]]
-    - [[#lsp][LSP]]
     - [[#clojure][Clojure]]
     - [[#markdown][Markdown]]
   - [[#company][Company]]
@@ -1160,8 +1162,9 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
 #+end_src
 
-** Languages
-*** LSP
+** LSP
+*** lsp-mode.el (disabled)
+[[https://github.com/emacs-lsp/lsp-mode][lsp-mode]] is currently disabled in favor of eglot mode.
 
 #+begin_src emacs-lisp
 
@@ -1192,6 +1195,21 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
       "d" 'lsp-find-definition
       "r" 'lsp-find-references))
 
+#+end_src
+
+*** Eglot
+[[https://github.com/joaotavora/eglot][eglot]] is a client for Language Server Protocol servers in Emacs. Comparing with
+lsp-mode, eglot seems to be closer-to-the metal because it chooses to work
+primarily with Emacs' built-in libraries:
+
+1. definitions can be found via =xref-find-definitions=;
+2. on-the-fly diagnostics are given by =flymake-mode=;
+3. function signature hints are given by =eldoc-mode=;
+4. completion can be summoned with =completion-at-point=.
+5. projects are discovered via =project.el='s API;
+
+#+begin_src emacs-lisp
+
   (use-package eglot
     :hook ((clojure-mode . eglot-ensure)
            (clojurec-mode . eglot-ensure)
@@ -1206,6 +1224,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
 #+end_src
 
+** Languages
 *** Clojure
 
 #+begin_src emacs-lisp
