@@ -1106,22 +1106,19 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
   (use-package projectile
     :diminish projectile-mode
     :config (projectile-mode)
-    :custom ((projectile-completion-system 'ivy))
+    :custom
+    (projectile-completion-system 'ivy)
+    (projectile-switch-project-action #'projectile-dired)
     :bind-keymap
     ("C-c p" . projectile-command-map))
 
   (use-package counsel-projectile
     :bind (("s-F" . counsel-projectile-rg)
-           ("s-p" . counsel-projectile))
-    :config
-    (counsel-projectile-mode)
-    (counsel-projectile-modify-action
-     'counsel-projectile-switch-project-action
-     '((default counsel-projectile-switch-project-action-vc))))
+           ("s-p" . counsel-projectile)))
 
   (dawran/leader-keys
     "pf"  'counsel-projectile-find-file
-    "pp"  'counsel-projectile-switch-project
+    "pp"  'projectile-switch-project
     "pF"  'counsel-projectile-rg
     "pe"  'projectile-run-eshell
     "pv"  'projectile-run-vterm
