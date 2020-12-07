@@ -253,6 +253,7 @@
   :after counsel)
 
 (dawran/leader-keys
+  "C-SPC" 'counsel-M-x
   "b"   '(:ignore t :which-key "buffers")
   "bb"  '(counsel-ibuffer :which-key "switch buffer")
   "bd"  '(bury-buffer :which-key "bury buffer")
