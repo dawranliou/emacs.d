@@ -329,8 +329,13 @@
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
-(winner-mode)
-(define-key evil-window-map "u" 'winner-undo)
+(use-package winner-mode
+  :ensure nil
+  :bind (:map evil-window-map
+          ("u" . winner-undo)
+          ("U" . winner-redo))
+  :config
+  (winner-mode))
 
 (dawran/leader-keys "w" 'evil-window-map)
 
