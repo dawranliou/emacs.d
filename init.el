@@ -682,6 +682,7 @@
   "gg"  'magit-status
   "gb"  'magit-blame-addition
   "gd"  'magit-diff-unstaged
+  "gf"  'magit-file-dispatch
   "gl"  'magit-log-buffer-file)
 
 (use-package rg
