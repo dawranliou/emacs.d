@@ -179,7 +179,11 @@
                 eshell-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-(global-hl-line-mode 1)
+(use-package hl-line
+  :ensure nil
+  :hook
+  (prog-mode . hl-line-mode)
+  (text-mode . hl-line-mode))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'sketch-white t)

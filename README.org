@@ -388,7 +388,11 @@ possible key bindings in the mode of your current buffer.
 
 #+begin_src emacs-lisp
 
-  (global-hl-line-mode 1)
+  (use-package hl-line
+    :ensure nil
+    :hook
+    (prog-mode . hl-line-mode)
+    (text-mode . hl-line-mode))
 
 #+end_src
 
