@@ -812,6 +812,12 @@
   :defer t
   :hook (lsp-mode . flycheck-mode))
 
+(use-package flyspell
+  :ensure nil
+  :hook
+  (prog-mode . flyspell-prog-mode)
+  (text-mode . flyspell-mode))
+
 (setq world-clock-list '(("Asia/Taipei" "Taipei")
                          ("America/Toronto" "Toronto")
                          ("America/Los_Angeles" "San Francisco")

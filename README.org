@@ -81,6 +81,7 @@ by a bunch of resources I’ve found online:
     - [[#markdown][Markdown]]
   - [[#company][Company]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
+  - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
 - [[#misc][Misc]]
   - [[#world-time][World Time]]
 :END:
@@ -1349,6 +1350,17 @@ primarily with Emacs' built-in libraries:
 
 #+end_src
 
+** Spell Checking Comments and Text
+
+#+begin_src emacs-lisp
+
+(use-package flyspell
+  :ensure nil
+  :hook
+  (prog-mode . flyspell-prog-mode)
+  (text-mode . flyspell-mode))
+
+#+end_src
 * Misc
 ** World Time
 
