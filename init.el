@@ -369,6 +369,8 @@
 
 (setq ns-use-proxy-icon nil)
 
+(use-package rainbow-mode)
+
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)

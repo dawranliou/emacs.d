@@ -43,6 +43,7 @@ by a bunch of resources I’ve found online:
   - [[#center-buffers][Center Buffers]]
   - [[#emoji-and-unicode][Emoji and Unicode]]
   - [[#native-titlebar][Native Titlebar]]
+  - [[#rainbow-mode][Rainbow Mode]]
 - [[#editing][Editing]]
   - [[#tabs][Tabs]]
   - [[#commenting-lines][Commenting Lines]]
@@ -688,6 +689,14 @@ Display highlighting on whatever paren matches the one before or after point.
     :hook (after-init . ns-auto-titlebar-mode))
 
   (setq ns-use-proxy-icon nil)
+
+#+end_src
+
+** Rainbow Mode
+
+#+begin_src emacs-lisp
+
+(use-package rainbow-mode)
 
 #+end_src
 
