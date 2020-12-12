@@ -470,18 +470,7 @@
       ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
-  (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
-  (defun org-journal-find-location ()
-    ;; Open today's journal, but specify a non-nil prefix argument in order to
-    ;; inhibit inserting the heading; org-capture will insert the heading.
-    (org-journal-new-entry t)
-    (unless (eq org-journal-file-type 'daily)
-      (org-narrow-to-subtree))
-    (goto-char (point-max)))
-
-  (dawran/leader-keys
-    "j" '(org-journal-new-entry :which-key "journal")))
+  (advice-add 'org-refile :after 'org-save-all-org-buffers))
 
 (use-package evil-org
   :after org
@@ -530,7 +519,16 @@
   (org-journal-dir "~/org/journal/")
   (org-journal-file-type 'weekly)
   :config
+  (defun org-journal-find-location ()
+    ;; Open today's journal, but specify a non-nil prefix argument in order to
+    ;; inhibit inserting the heading; org-capture will insert the heading.
+    (org-journal-new-entry t)
+    (unless (eq org-journal-file-type 'daily)
+      (org-narrow-to-subtree))
+    (goto-char (point-max)))
+
   (dawran/leader-keys
+    "j" '(org-journal-new-entry :which-key "journal")
     "n" '(:ignore t :which-key "notes")
     "nj" '(org-journal-open-current-journal-file :which-key "journal")))
 
