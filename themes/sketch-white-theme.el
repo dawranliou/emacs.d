@@ -34,11 +34,9 @@
       (weak "#888888")
       (weaker "#dddddd")
       (weakest "#efefef")
-      (highlight "#fda50f")
-      ;; (str     "#0271b5") ; blue
-      (str     "#3c5e2b") ; green
-      (success "#00ff00")
-      (warning "#ff0000")
+      (highlight "#8fcedc")
+      (success "#3b7220")
+      (warning "#c6353d")
       )
   (custom-theme-set-faces
    'sketch-white
