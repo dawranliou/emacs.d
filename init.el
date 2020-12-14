@@ -168,16 +168,9 @@
 (setq-default line-spacing 0.1)
 
 (column-number-mode)
-(global-display-line-numbers-mode t)
 
-;; Disable line numbers for some modes
-(dolist (mode '(org-mode-hook
-                markdown-mode-hook
-                term-mode-hook
-                vterm-mode-hook
-                shell-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+;; Enable line numbers for prog modes only
+(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
 
 (use-package hl-line
   :ensure nil
