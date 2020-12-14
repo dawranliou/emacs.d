@@ -7,6 +7,10 @@ found online:
 - https://github.com/maio/eink-emacs
 - https://lospec.com/palette-list/1bit-monitor-glow
 
+I also shared some thoughts on syntax highlighting on my blog:
+
+- https://dawranliou.com/blog/rethink-syntax-highlighting/
+
 * sketch-white-theme
 
 #+CAPTION: A screenshot of sketch-white-theme
