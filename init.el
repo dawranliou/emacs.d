@@ -361,7 +361,8 @@
 (use-package ns-auto-titlebar
   :hook (after-init . ns-auto-titlebar-mode))
 
-(setq ns-use-proxy-icon nil)
+(setq ns-use-proxy-icon nil
+      frame-title-format nil)
 
 (use-package rainbow-mode)
 

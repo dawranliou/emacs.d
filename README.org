@@ -683,7 +683,8 @@ Display highlighting on whatever paren matches the one before or after point.
   (use-package ns-auto-titlebar
     :hook (after-init . ns-auto-titlebar-mode))
 
-  (setq ns-use-proxy-icon nil)
+  (setq ns-use-proxy-icon nil
+        frame-title-format nil)
 
 #+end_src
 
