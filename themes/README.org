@@ -15,4 +15,4 @@ found online:
 * sketch-black-theme
 
 #+CAPTION: A screenshot of sketch-black-theme
-[[./screenshots/sketch-black-theme.png]]
+[[./screenshots/sketch-black-theme-on-white.png]]
