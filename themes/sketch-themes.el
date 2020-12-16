@@ -48,7 +48,8 @@
               (weak . "#6E706E")        ; (120, 2, 44)
               (weaker . "#555755")      ; (120, 2, 34)
               (weakest . "#2F302F")     ; (120, 2, 19)
-              (highlight . "#68386c")
+              ;; (highlight . "#CC7F22")
+              (highlight . "#7D5DC1")
               (success . "#63c74d")
               (warning . "#e43b44")))))
 
