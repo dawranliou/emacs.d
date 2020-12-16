@@ -646,26 +646,18 @@
 
 (use-package projectile
   :diminish projectile-mode
-  :config (projectile-mode)
   :custom
   (projectile-completion-system 'ivy)
-  (projectile-switch-project-action #'projectile-dired)
   :bind-keymap
-  ("C-c p" . projectile-command-map))
+  ("C-c p" . projectile-command-map)
+  :config
+  (projectile-mode)
+  (dawran/leader-keys
+    "SPC" 'projectile-find-file))
 
 (use-package counsel-projectile
   :bind (("s-F" . counsel-projectile-rg)
          ("s-p" . counsel-projectile)))
-
-(dawran/leader-keys
-  "pf"  'counsel-projectile-find-file
-  "pp"  'projectile-switch-project
-  "pF"  'counsel-projectile-rg
-  "pe"  'projectile-run-eshell
-  "pv"  'projectile-run-vterm
-  "pd"  'projectile-dired
-  "pc"  'projectile-run-async-shell-command-in-root
-  "SPC" 'counsel-projectile-find-file)
 
 (use-package magit
   :custom
