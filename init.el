@@ -180,7 +180,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'sketch-white t)
+(load-theme 'sketch-black t)
 
 (set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
 
