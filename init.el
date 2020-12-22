@@ -151,12 +151,24 @@
 
 (setq inhibit-startup-message t)
 
-(scroll-bar-mode -1)        ; Disable visible scrollbar
-(tool-bar-mode -1)          ; Disable the toolbar
-(tooltip-mode -1)           ; Disable tooltips
-(set-fringe-mode 10)        ; Give some breathing room
+;;(scroll-bar-mode -1)        ; Disable visible scrollbar
+;;(tool-bar-mode -1)          ; Disable the toolbar
+;;(tooltip-mode -1)           ; Disable tooltips
+;;(set-fringe-mode 10)        ; Give some breathing room
 
-(menu-bar-mode -1)            ; Disable the menu bar
+;;(menu-bar-mode -1)            ; Disable the menu bar
+
+(setq default-frame-alist
+      (append (list
+	             ;;'(font . "Roboto Mono:style=Light:size=14")
+	             ;;'(min-height . 1)  '(height     . 45)
+	             '(min-width  . 1) '(width      . 81)
+               '(vertical-scroll-bars . nil)
+               ;;'(internal-border-width . 24)
+               ;;'(left-fringe    . 0)
+               ;;'(right-fringe   . 0)
+               '(tool-bar-lines . 0)
+               '(menu-bar-lines . 0))))
 
 ;; No beeping nor visible bell
 (setq ring-bell-function #'ignore
@@ -224,7 +236,10 @@
          ("C-d" . ivy-switch-buffer-kill)
          :map ivy-reverse-i-search-map
          ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill)))
+         ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (setq ivy-count-format "(%d/%d) "
+        ))
 
 (use-package ivy-rich
   :init
@@ -726,7 +741,7 @@
 
 (use-package cider
   :config
-  (setq cider-repl-display-in-current-window t
+  (setq cider-repl-display-in-current-window nil
         cider-repl-pop-to-buffer-on-connect nil
         cider-repl-use-pretty-printing t
         cider-repl-buffer-size-limit 100000
