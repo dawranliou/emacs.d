@@ -170,7 +170,7 @@ Measure the startup time:
   (setq backup-directory-alist
         `(("." . ,(expand-file-name "backups" user-emacs-directory)))
         auto-save-file-name-transforms
-        `((".*" ,(expand-file-name "backups/" user-emacs-directory) t)))
+        `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
 
   ;; Keep customization settings in a temporary file (thanks Ambrevar!)
   (setq custom-file
