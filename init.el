@@ -121,7 +121,7 @@
     "#" #'evil-visualstar/begin-search-backward))
 
 (use-package which-key
-  :init (which-key-mode)
+  :hook (pre-command-mode . which-key-mode)
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 1))
@@ -202,8 +202,6 @@
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
-(use-package doom-themes)
-
 (use-package all-the-icons)
 
 (use-package doom-modeline
@@ -225,30 +223,6 @@
 (use-package paren-face
   :hook
   (lispy-mode . paren-face-mode))
-
-(use-package darkroom
-  :commands darkroom-mode
-  :config
-  (setq darkroom-text-scale-increase 0))
-
-(defun dawran/enter-focus-mode ()
-  (interactive)
-  (darkroom-mode 1)
-  (display-line-numbers-mode 0))
-
-(defun dawran/leave-focus-mode ()
-  (interactive)
-  (darkroom-mode 0)
-  (display-line-numbers-mode 1))
-
-(defun dawran/toggle-focus-mode ()
-  (interactive)
-  (if (symbol-value darkroom-mode)
-    (dawran/leave-focus-mode)
-    (dawran/enter-focus-mode)))
-
-(dawran/leader-keys
-  "tf" '(dawran/toggle-focus-mode :which-key "focus mode"))
 
 (use-package ace-window
   :bind (("M-o" . ace-window))
@@ -277,12 +251,14 @@
         visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
-(use-package visual-fill-column)
+(use-package visual-fill-column
+  :defer t)
 
 (use-package emojify
   :hook (after-init . global-emojify-mode))
 
 (use-package unicode-fonts
+  :defer t
   :config
   (unicode-fonts-setup))
 
@@ -513,24 +489,17 @@
   :hook (org-mode . org-make-toc-mode))
 
 (use-package org-journal
+  :commands (org-journal-new-entry org-journal-open-current-journal-file)
   :custom
   (org-journal-date-prefix "* ")
   (org-journal-file-format "%F.org")
   (org-journal-dir "~/org/journal/")
-  (org-journal-file-type 'weekly)
-  :config
-  (defun org-journal-find-location ()
-    ;; Open today's journal, but specify a non-nil prefix argument in order to
-    ;; inhibit inserting the heading; org-capture will insert the heading.
-    (org-journal-new-entry t)
-    (unless (eq org-journal-file-type 'daily)
-      (org-narrow-to-subtree))
-    (goto-char (point-max)))
+  (org-journal-file-type 'weekly))
 
-  (dawran/leader-keys
-    "j" '(org-journal-new-entry :which-key "journal")
-    "n" '(:ignore t :which-key "notes")
-    "nj" '(org-journal-open-current-journal-file :which-key "journal")))
+(dawran/leader-keys
+  "j" '(org-journal-new-entry :which-key "journal")
+  "n" '(:ignore t :which-key "notes")
+  "nj" '(org-journal-open-current-journal-file :which-key "journal"))
 
 (use-package org-roam
   :hook (org-mode . org-roam-mode)
@@ -548,6 +517,7 @@
   "nc" 'org-roam-capture)
 
 (use-package org-tree-slide
+  :commands (org-tree-slide-mode)
   :custom
   (org-image-actual-width nil)
   (org-tree-slide-slide-in-effect nil)
@@ -581,6 +551,7 @@
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 (use-package dired-single
+  :after dired
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-single-up-directory
@@ -593,6 +564,7 @@
     "H" 'dired-hide-dotfiles-mode))
 
 (use-package dired-ranger
+  :after dired
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "y" 'dired-ranger-copy
@@ -630,6 +602,7 @@
   :hook (eshell-first-time-mode . dawran/configure-eshell))
 
 (use-package exec-path-from-shell
+  :defer t
   :init
   (setq exec-path-from-shell-check-startup-files nil)
   :config

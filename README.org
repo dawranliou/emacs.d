@@ -30,12 +30,10 @@ by a bunch of resources I’ve found online:
   - [[#highlight-line][Highlight line]]
   - [[#theme][Theme]]
   - [[#font-configuration][Font configuration]]
-  - [[#color-theme][Color Theme]]
   - [[#modeline][Modeline]]
   - [[#text-scaling][Text Scaling]]
   - [[#highlight-matching-parens][Highlight Matching Parens]]
   - [[#paren-face][Paren Face]]
-  - [[#darkroom-for-distraction-free-writing][Darkroom for Distraction-free Writing]]
   - [[#window-management][Window Management]]
   - [[#highlight-fill-column][Highlight Fill Column]]
   - [[#center-buffers][Center Buffers]]
@@ -308,7 +306,7 @@ possible key bindings in the mode of your current buffer.
 #+begin_src emacs-lisp
 
   (use-package which-key
-    :init (which-key-mode)
+    :hook (pre-command-mode . which-key-mode)
     :diminish which-key-mode
     :config
     (setq which-key-idle-delay 1))
@@ -430,14 +428,6 @@ I'm using my personal theme - =sketch-white= as my prefered theme.
 
 #+end_src
 
-** Color Theme
-
-#+begin_src emacs-lisp
-
-  (use-package doom-themes)
-
-#+end_src
-
 ** Modeline
 
 NOTE: The first time you load your configuration on a new machine, you’ll need
@@ -492,36 +482,6 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
-** Darkroom for Distraction-free Writing
-
-#+begin_src emacs-lisp
-
-  (use-package darkroom
-    :commands darkroom-mode
-    :config
-    (setq darkroom-text-scale-increase 0))
-
-  (defun dawran/enter-focus-mode ()
-    (interactive)
-    (darkroom-mode 1)
-    (display-line-numbers-mode 0))
-
-  (defun dawran/leave-focus-mode ()
-    (interactive)
-    (darkroom-mode 0)
-    (display-line-numbers-mode 1))
-
-  (defun dawran/toggle-focus-mode ()
-    (interactive)
-    (if (symbol-value darkroom-mode)
-      (dawran/leave-focus-mode)
-      (dawran/enter-focus-mode)))
-
-  (dawran/leader-keys
-    "tf" '(dawran/toggle-focus-mode :which-key "focus mode"))
-
-#+end_src
-
 ** Window Management
 #+begin_src emacs-lisp
 
@@ -564,7 +524,8 @@ Display highlighting on whatever paren matches the one before or after point.
           visual-fill-column-center-text t)
     (visual-fill-column-mode 1))
 
-  (use-package visual-fill-column)
+  (use-package visual-fill-column
+    :defer t)
 
 #+end_src
 
@@ -576,6 +537,7 @@ Display highlighting on whatever paren matches the one before or after point.
     :hook (after-init . global-emojify-mode))
 
   (use-package unicode-fonts
+    :defer t
     :config
     (unicode-fonts-setup))
 
@@ -941,24 +903,17 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+begin_src emacs-lisp
 
   (use-package org-journal
+    :commands (org-journal-new-entry org-journal-open-current-journal-file)
     :custom
     (org-journal-date-prefix "* ")
     (org-journal-file-format "%F.org")
     (org-journal-dir "~/org/journal/")
-    (org-journal-file-type 'weekly)
-    :config
-    (defun org-journal-find-location ()
-      ;; Open today's journal, but specify a non-nil prefix argument in order to
-      ;; inhibit inserting the heading; org-capture will insert the heading.
-      (org-journal-new-entry t)
-      (unless (eq org-journal-file-type 'daily)
-        (org-narrow-to-subtree))
-      (goto-char (point-max)))
+    (org-journal-file-type 'weekly))
 
-    (dawran/leader-keys
-      "j" '(org-journal-new-entry :which-key "journal")
-      "n" '(:ignore t :which-key "notes")
-      "nj" '(org-journal-open-current-journal-file :which-key "journal")))
+  (dawran/leader-keys
+    "j" '(org-journal-new-entry :which-key "journal")
+    "n" '(:ignore t :which-key "notes")
+    "nj" '(org-journal-open-current-journal-file :which-key "journal"))
 
 #+end_src
 
@@ -988,6 +943,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+begin_src emacs-lisp
 
   (use-package org-tree-slide
+    :commands (org-tree-slide-mode)
     :custom
     (org-image-actual-width nil)
     (org-tree-slide-slide-in-effect nil)
@@ -1027,6 +983,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
     (add-to-list 'dired-omit-extensions ".DS_Store"))
 
   (use-package dired-single
+    :after dired
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "h" 'dired-single-up-directory
@@ -1039,6 +996,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
       "H" 'dired-hide-dotfiles-mode))
 
   (use-package dired-ranger
+    :after dired
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "y" 'dired-ranger-copy
@@ -1095,6 +1053,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
     :hook (eshell-first-time-mode . dawran/configure-eshell))
 
   (use-package exec-path-from-shell
+    :defer t
     :init
     (setq exec-path-from-shell-check-startup-files nil)
     :config
