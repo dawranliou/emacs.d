@@ -415,34 +415,31 @@
                               slurp/barf-cp)))
 
 (use-package evil-multiedit
-  :config
-  (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
-  (define-key evil-normal-state-map (kbd "M-d") 'evil-multiedit-match-symbol-and-next)
-  (define-key evil-normal-state-map (kbd "M-D") 'evil-multiedit-match-symbol-and-prev)
-  (define-key evil-visual-state-map (kbd "M-d") 'evil-multiedit-match-and-next)
-  (define-key evil-visual-state-map (kbd "M-D") 'evil-multiedit-match-and-prev)
-  (define-key evil-insert-state-map (kbd "M-d") 'evil-multiedit-toggle-marker-here)
-
-  ;; Restore the last group of multiedit regions.
-  (define-key evil-normal-state-map (kbd "C-M-d") 'evil-multiedit-restore)
-  (define-key evil-visual-state-map (kbd "C-M-d") 'evil-multiedit-restore)
-
-  ;; RET will toggle the region under the cursor
-  (define-key evil-multiedit-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
-
-  ;; ...and in visual mode, RET will disable all fields outside the selected region
-  (define-key evil-motion-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
-
-  ;; For moving between edit regions
-  (define-key evil-multiedit-state-map (kbd "C-n") 'evil-multiedit-next)
-  (define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
-  (define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
-  (define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev))
+  :bind (:map evil-visual-state-map
+         ("R" . evil-multiedit-match-all)
+         ("M-d" . evil-multiedit-match-and-next)
+         ("M-D" . evil-multiedit-match-and-prev)
+         ("C-M-d" . evil-multiedit-restore)
+         :map evil-normal-state-map
+         ("M-d" . evil-multiedit-match-symbol-and-next)
+         ("M-D" . evil-multiedit-match-symbol-and-prev)
+         ("C-M-d" . evil-multiedit-restore)
+         :map evil-insert-state-map
+         ("M-d" . evil-multiedit-toggle-marker-here)
+         :map evil-motion-state-map
+         ("RET" . evil-multiedit-toggle-or-restrict-region)
+         :map evil-multiedit-state-map
+         ("RET" . evil-multiedit-toggle-or-restrict-region)
+         ("C-n" . evil-multiedit-next)
+         ("C-p" . evil-multiedit-prev)
+         :map evil-multiedit-insert-state-map
+         ("C-n" . evil-multiedit-next)
+         ("C-p" . evil-multiedit-prev)))
 
 (use-package undo-fu
-  :config
-  (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-  (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo))
+  :bind (:map evil-normal-state-map
+         ("u" . undo-fu-only-undo)
+         ("\C-r" . undo-fu-only-redo)))
 
 (use-package smartparens
   :hook (prog-mode . smartparens-mode))
@@ -536,7 +533,7 @@
     "nj" '(org-journal-open-current-journal-file :which-key "journal")))
 
 (use-package org-roam
-  :hook (after-init . org-roam-mode)
+  :hook (org-mode . org-roam-mode)
   :commands (org-roam org-roam-insert org-roam-switch-to-buffer
              org-roam-find-file org-roam-graph-show org-roam-capture)
   :custom
