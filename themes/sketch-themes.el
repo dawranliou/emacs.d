@@ -160,7 +160,7 @@
       (org-level-8 (:weight semi-bold :height 1.1 :overline ,bg))
 
       ;; flymake mode
-      (flymake-warning (:underline (:style wave :color ,weaker)))
+      (flymake-warning (:underline (:style wave :color ,weak)))
       (flymake-error (:underline (:style wave :color ,warning)))
 
       ))))
