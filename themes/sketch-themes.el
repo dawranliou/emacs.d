@@ -34,8 +34,8 @@
 ;;; Code:
 
 (defconst sketch-themes-colors
-  '((white . ((fg . "#111111")
-              (bg . "#ffffff")
+  '((white . ((fg . "#212121")
+              (bg . "#FAFAFA")
               (weak . "#888888")
               (weaker . "#dddddd")
               (weakest . "#efefef")
