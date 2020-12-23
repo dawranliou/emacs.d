@@ -213,97 +213,10 @@
   (doom-modeline-lsp t)
   (doom-modeline-icon nil))
 
-(use-package ivy
-  :diminish
-  :custom (ivy-initial-inputs-alist nil)
-  :init
-  (ivy-mode 1)
-  (setq ivy-re-builders-alist
-        '((counsel-rg     . ivy--regex-plus)
-          (swiper         . ivy--regex-plus)
-          (swiper-isearch . ivy--regex-plus)
-          (t              . ivy--regex-ignore-order)))
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("C-SPC" . ivy-call-and-recenter)
-         ("TAB" . ivy-alt-done)
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
-  :config
-  (setq ivy-count-format "(%d/%d) "
-        ))
-
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
-
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-         ("C-x b" . counsel-ibuffer)
-         ("C-x C-f" . counsel-find-file)
-         ("C-M-j" . counsel-switch-buffer)
-         ("s-b" . counsel-switch-buffer)
-         ("s-y" . counsel-yank-pop)
-         ("s-P" . counsel-M-x)
-         :map minibuffer-local-map
-         ("C-r" . counsel-minibuffer-history))
-  :config
-  (counsel-mode 1))
-
-(use-package swiper
-  :bind ("s-f" . swiper-isearch))
-
-(use-package smex ;; Adds M-x recent command sorting for counsel-M-x
-  :defer 1
-  :after counsel)
-
-(dawran/leader-keys
-  "C-SPC" 'counsel-M-x
-  "b"   '(:ignore t :which-key "buffers")
-  "bb"  '(counsel-ibuffer :which-key "switch buffer")
-  "bd"  '(bury-buffer :which-key "bury buffer")
-  "bk"  '(kill-this-buffer :which-key "kill buffer")
-  "'"   '(ivy-resume :which-key "ivy resume")
-  "f"   '(:ignore t :which-key "files")
-  "ff"  '(counsel-find-file :which-key "open file")
-  "fr"  '(counsel-recentf :which-key "recent files")
-  "fj"  '(counsel-file-jump :which-key "jump to file"))
-
-(use-package helpful
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ("C-h F" . counsel-describe-face)
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
-
 (use-package default-text-scale
-  :defer 1
+  :defer t
   :config
   (default-text-scale-mode))
-
-(use-package hydra)
-
-(defhydra hydra-text-scale (:timeout 4)
-  "scale text"
-  ("j" default-text-scale-increase "+")
-  ("k" default-text-scale-decrease "-")
-  ("r" default-text-scale-reset "reset")
-  ("f" nil "finished" :exit t))
-
-(dawran/leader-keys
-  "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 (use-package paren
   :config
@@ -379,7 +292,87 @@
 (setq ns-use-proxy-icon nil
       frame-title-format nil)
 
-(use-package rainbow-mode)
+(use-package rainbow-mode
+  :commands rainbow-mode)
+
+(use-package ivy
+  :diminish
+  :custom (ivy-initial-inputs-alist nil)
+  :hook (pre-command . ivy-mode)
+  :init
+  (setq ivy-re-builders-alist
+        '((counsel-rg     . ivy--regex-plus)
+          (swiper         . ivy--regex-plus)
+          (swiper-isearch . ivy--regex-plus)
+          (t              . ivy--regex-ignore-order)))
+  :bind (("C-s" . swiper)
+         :map ivy-minibuffer-map
+         ("C-SPC" . ivy-call-and-recenter)
+         ("TAB" . ivy-alt-done)
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-done)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (setq ivy-count-format "(%d/%d) "
+        ))
+
+(use-package ivy-rich
+  :hook (ivy-mode . ivy-rich-mode))
+
+(use-package ivy-prescient
+  :hook ((ivy-mode . ivy-prescient-mode)
+         (ivy-prescient-mode . prescient-persist-mode)))
+
+(use-package counsel
+  :bind (("M-x" . counsel-M-x)
+         ("C-x b" . counsel-ibuffer)
+         ("C-x C-f" . counsel-find-file)
+         ("C-M-j" . counsel-switch-buffer)
+         ("s-b" . counsel-switch-buffer)
+         ("s-y" . counsel-yank-pop)
+         ("s-P" . counsel-M-x)
+         :map minibuffer-local-map
+         ("C-r" . counsel-minibuffer-history))
+  :config
+  (counsel-mode 1))
+
+(use-package swiper
+  :bind ("s-f" . swiper-isearch))
+
+(use-package smex ;; Adds M-x recent command sorting for counsel-M-x
+  :disabled
+  :defer 1
+  :after counsel)
+
+(dawran/leader-keys
+  "C-SPC" 'counsel-M-x
+  "b"   '(:ignore t :which-key "buffers")
+  "bb"  '(counsel-ibuffer :which-key "switch buffer")
+  "bd"  '(bury-buffer :which-key "bury buffer")
+  "bk"  '(kill-this-buffer :which-key "kill buffer")
+  "'"   '(ivy-resume :which-key "ivy resume")
+  "f"   '(:ignore t :which-key "files")
+  "ff"  '(counsel-find-file :which-key "open file")
+  "fr"  '(counsel-recentf :which-key "recent files")
+  "fj"  '(counsel-file-jump :which-key "jump to file"))
+
+(use-package helpful
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ("C-h F" . counsel-describe-face)
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
 
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
@@ -665,23 +658,23 @@
   (projectile-completion-system 'ivy)
   :bind-keymap
   ("C-c p" . projectile-command-map)
-  :config
-  (projectile-mode)
+  :init
   (dawran/leader-keys
-    "SPC" 'projectile-find-file))
+    "SPC" 'projectile-find-file)
+  :config
+  (projectile-mode))
 
 (use-package counsel-projectile
   :bind (("s-F" . counsel-projectile-rg)
          ("s-p" . counsel-projectile)))
 
 (use-package magit
+  :bind ("s-g" . magit-status)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package evil-magit
   :after magit)
-
-(global-set-key (kbd "s-g") 'magit-status)
 
 (dawran/leader-keys
   "g"   '(:ignore t :which-key "git")
@@ -692,6 +685,7 @@
   "gl"  'magit-log-buffer-file)
 
 (use-package rg
+  :disabled
   :config
   (rg-enable-default-bindings))
 
@@ -813,7 +807,6 @@
   :hook (company-mode . company-box-mode))
 
 (use-package flycheck
-  :defer t
   :hook (lsp-mode . flycheck-mode))
 
 (use-package flyspell

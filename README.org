@@ -32,8 +32,6 @@ by a bunch of resources I’ve found online:
   - [[#font-configuration][Font configuration]]
   - [[#color-theme][Color Theme]]
   - [[#modeline][Modeline]]
-  - [[#ivy][Ivy]]
-  - [[#helpful-help-commands][Helpful Help Commands]]
   - [[#text-scaling][Text Scaling]]
   - [[#highlight-matching-parens][Highlight Matching Parens]]
   - [[#paren-face][Paren Face]]
@@ -44,6 +42,9 @@ by a bunch of resources I’ve found online:
   - [[#emoji-and-unicode][Emoji and Unicode]]
   - [[#native-titlebar][Native Titlebar]]
   - [[#rainbow-mode][Rainbow Mode]]
+- [[#completion][Completion]]
+  - [[#ivy][Ivy]]
+- [[#helpful-help-commands][Helpful Help Commands]]
 - [[#editing][Editing]]
   - [[#tabs][Tabs]]
   - [[#commenting-lines][Commenting Lines]]
@@ -456,125 +457,14 @@ correctly.
 
 #+end_src
 
-** Ivy
-
-[[https://oremacs.com/swiper/][Ivy]] is an excellent completion framework for Emacs.  It provides a minimal yet
-powerful selection menu that appears when you open files, switch buffers, and
-for many other tasks in Emacs.  Counsel is a customized set of commands to
-replace `find-file` with `counsel-find-file`, etc which provide useful commands
-for each of the default completion commands.
-
-#+begin_src emacs-lisp
-
-  (use-package ivy
-    :diminish
-    :custom (ivy-initial-inputs-alist nil)
-    :init
-    (ivy-mode 1)
-    (setq ivy-re-builders-alist
-          '((counsel-rg     . ivy--regex-plus)
-            (swiper         . ivy--regex-plus)
-            (swiper-isearch . ivy--regex-plus)
-            (t              . ivy--regex-ignore-order)))
-    :bind (("C-s" . swiper)
-           :map ivy-minibuffer-map
-           ("C-SPC" . ivy-call-and-recenter)
-           ("TAB" . ivy-alt-done)
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
-    :config
-    (setq ivy-count-format "(%d/%d) "
-          ))
-
-  (use-package ivy-rich
-    :init
-    (ivy-rich-mode 1))
-
-  (use-package counsel
-    :bind (("M-x" . counsel-M-x)
-           ("C-x b" . counsel-ibuffer)
-           ("C-x C-f" . counsel-find-file)
-           ("C-M-j" . counsel-switch-buffer)
-           ("s-b" . counsel-switch-buffer)
-           ("s-y" . counsel-yank-pop)
-           ("s-P" . counsel-M-x)
-           :map minibuffer-local-map
-           ("C-r" . counsel-minibuffer-history))
-    :config
-    (counsel-mode 1))
-
-  (use-package swiper
-    :bind ("s-f" . swiper-isearch))
-
-  (use-package smex ;; Adds M-x recent command sorting for counsel-M-x
-    :defer 1
-    :after counsel)
-
-  (dawran/leader-keys
-    "C-SPC" 'counsel-M-x
-    "b"   '(:ignore t :which-key "buffers")
-    "bb"  '(counsel-ibuffer :which-key "switch buffer")
-    "bd"  '(bury-buffer :which-key "bury buffer")
-    "bk"  '(kill-this-buffer :which-key "kill buffer")
-    "'"   '(ivy-resume :which-key "ivy resume")
-    "f"   '(:ignore t :which-key "files")
-    "ff"  '(counsel-find-file :which-key "open file")
-    "fr"  '(counsel-recentf :which-key "recent files")
-    "fj"  '(counsel-file-jump :which-key "jump to file"))
-
-#+end_src
-
-** Helpful Help Commands
-
-[[https://github.com/Wilfred/helpful][Helpful]] adds a lot of very helpful (get it?) information to Emacs' =describe-=
-command buffers.  For example, if you use =describe-function=, you will not only
-get the documentation about the function, you will also see the source code of
-the function and where it gets used in other places in the Emacs configuration.
-It is very useful for figuring out how things work in Emacs.
-
-#+begin_src emacs-lisp
-
-  (use-package helpful
-    :custom
-    (counsel-describe-function-function #'helpful-callable)
-    (counsel-describe-variable-function #'helpful-variable)
-    :bind
-    ("C-h F" . counsel-describe-face)
-    ([remap describe-function] . counsel-describe-function)
-    ([remap describe-command] . helpful-command)
-    ([remap describe-variable] . counsel-describe-variable)
-    ([remap describe-key] . helpful-key))
-
-#+end_src
-
 ** Text Scaling
 
 #+begin_src emacs-lisp
 
   (use-package default-text-scale
-    :defer 1
+    :defer t
     :config
     (default-text-scale-mode))
-
-  (use-package hydra)
-
-  (defhydra hydra-text-scale (:timeout 4)
-    "scale text"
-    ("j" default-text-scale-increase "+")
-    ("k" default-text-scale-decrease "-")
-    ("r" default-text-scale-reset "reset")
-    ("f" nil "finished" :exit t))
-
-  (dawran/leader-keys
-    "ts" '(hydra-text-scale/body :which-key "scale text"))
 
 #+end_src
 
@@ -707,7 +597,112 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+begin_src emacs-lisp
 
-(use-package rainbow-mode)
+(use-package rainbow-mode
+  :commands rainbow-mode)
+
+#+end_src
+
+* Completion
+** Ivy
+
+[[https://oremacs.com/swiper/][Ivy]] is an excellent completion framework for Emacs.  It provides a minimal yet
+powerful selection menu that appears when you open files, switch buffers, and
+for many other tasks in Emacs.  Counsel is a customized set of commands to
+replace `find-file` with `counsel-find-file`, etc which provide useful commands
+for each of the default completion commands.
+
+#+begin_src emacs-lisp
+
+  (use-package ivy
+    :diminish
+    :custom (ivy-initial-inputs-alist nil)
+    :hook (pre-command . ivy-mode)
+    :init
+    (setq ivy-re-builders-alist
+          '((counsel-rg     . ivy--regex-plus)
+            (swiper         . ivy--regex-plus)
+            (swiper-isearch . ivy--regex-plus)
+            (t              . ivy--regex-ignore-order)))
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("C-SPC" . ivy-call-and-recenter)
+           ("TAB" . ivy-alt-done)
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    (setq ivy-count-format "(%d/%d) "
+          ))
+
+  (use-package ivy-rich
+    :hook (ivy-mode . ivy-rich-mode))
+
+  (use-package ivy-prescient
+    :hook ((ivy-mode . ivy-prescient-mode)
+           (ivy-prescient-mode . prescient-persist-mode)))
+
+  (use-package counsel
+    :bind (("M-x" . counsel-M-x)
+           ("C-x b" . counsel-ibuffer)
+           ("C-x C-f" . counsel-find-file)
+           ("C-M-j" . counsel-switch-buffer)
+           ("s-b" . counsel-switch-buffer)
+           ("s-y" . counsel-yank-pop)
+           ("s-P" . counsel-M-x)
+           :map minibuffer-local-map
+           ("C-r" . counsel-minibuffer-history))
+    :config
+    (counsel-mode 1))
+
+  (use-package swiper
+    :bind ("s-f" . swiper-isearch))
+
+  (use-package smex ;; Adds M-x recent command sorting for counsel-M-x
+    :disabled
+    :defer 1
+    :after counsel)
+
+  (dawran/leader-keys
+    "C-SPC" 'counsel-M-x
+    "b"   '(:ignore t :which-key "buffers")
+    "bb"  '(counsel-ibuffer :which-key "switch buffer")
+    "bd"  '(bury-buffer :which-key "bury buffer")
+    "bk"  '(kill-this-buffer :which-key "kill buffer")
+    "'"   '(ivy-resume :which-key "ivy resume")
+    "f"   '(:ignore t :which-key "files")
+    "ff"  '(counsel-find-file :which-key "open file")
+    "fr"  '(counsel-recentf :which-key "recent files")
+    "fj"  '(counsel-file-jump :which-key "jump to file"))
+
+#+end_src
+
+* Helpful Help Commands
+
+[[https://github.com/Wilfred/helpful][Helpful]] adds a lot of very helpful (get it?) information to Emacs' =describe-=
+command buffers.  For example, if you use =describe-function=, you will not only
+get the documentation about the function, you will also see the source code of
+the function and where it gets used in other places in the Emacs configuration.
+It is very useful for figuring out how things work in Emacs.
+
+#+begin_src emacs-lisp
+
+  (use-package helpful
+    :custom
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable)
+    :bind
+    ("C-h F" . counsel-describe-face)
+    ([remap describe-function] . counsel-describe-function)
+    ([remap describe-command] . helpful-command)
+    ([remap describe-variable] . counsel-describe-variable)
+    ([remap describe-key] . helpful-key))
 
 #+end_src
 
@@ -1141,10 +1136,11 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
     (projectile-completion-system 'ivy)
     :bind-keymap
     ("C-c p" . projectile-command-map)
-    :config
-    (projectile-mode)
+    :init
     (dawran/leader-keys
-      "SPC" 'projectile-find-file))
+      "SPC" 'projectile-find-file)
+    :config
+    (projectile-mode))
 
   (use-package counsel-projectile
     :bind (("s-F" . counsel-projectile-rg)
@@ -1157,13 +1153,12 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+begin_src emacs-lisp
 
   (use-package magit
+    :bind ("s-g" . magit-status)
     :custom
     (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
   (use-package evil-magit
     :after magit)
-
-  (global-set-key (kbd "s-g") 'magit-status)
 
   (dawran/leader-keys
     "g"   '(:ignore t :which-key "git")
@@ -1180,6 +1175,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+begin_src emacs-lisp
 
   (use-package rg
+    :disabled
     :config
     (rg-enable-default-bindings))
 
@@ -1349,7 +1345,6 @@ primarily with Emacs' built-in libraries:
 #+begin_src emacs-lisp
 
   (use-package flycheck
-    :defer t
     :hook (lsp-mode . flycheck-mode))
 
 #+end_src
