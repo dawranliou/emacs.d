@@ -304,7 +304,8 @@
 
 (use-package ivy-prescient
   :hook ((ivy-mode . ivy-prescient-mode)
-         (ivy-prescient-mode . prescient-persist-mode)))
+         (ivy-prescient-mode . prescient-persist-mode))
+  :custom (prescient-sort-length-enable nil))
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
