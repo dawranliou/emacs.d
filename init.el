@@ -114,7 +114,7 @@
     "#" #'evil-visualstar/begin-search-backward))
 
 (use-package which-key
-  :hook (emacs-startup . which-key-mode)
+  :hook (after-init . which-key-mode)
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 1))
