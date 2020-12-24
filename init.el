@@ -41,13 +41,6 @@
       auto-save-file-name-transforms
       `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
 
-;; Keep customization settings in a temporary file (thanks Ambrevar!)
-(setq custom-file
-      (if (boundp 'server-socket-dir)
-          (expand-file-name "custom.el" server-socket-dir)
-        (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
-(load custom-file t)
-
 ;; Initialize package sources
 (require 'package)
 
@@ -121,7 +114,7 @@
     "#" #'evil-visualstar/begin-search-backward))
 
 (use-package which-key
-  :hook (pre-command-mode . which-key-mode)
+  :hook (emacs-startup . which-key-mode)
   :diminish which-key-mode
   :config
   (setq which-key-idle-delay 1))
@@ -202,7 +195,8 @@
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :defer t)
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
@@ -274,7 +268,7 @@
 (use-package ivy
   :diminish
   :custom (ivy-initial-inputs-alist nil)
-  :hook (pre-command . ivy-mode)
+  :hook (after-init . ivy-mode)
   :init
   (setq ivy-re-builders-alist
         '((counsel-rg     . ivy--regex-plus)
@@ -447,7 +441,12 @@
       ("Tasks.org" :maxlevel . 1)))
 
   ;; Save Org buffers after refiling!
-  (advice-add 'org-refile :after 'org-save-all-org-buffers))
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+  (require 'org-tempo)
+
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 (use-package evil-org
   :after org
@@ -464,17 +463,6 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-(org-babel-do-load-languages 'org-babel-load-languages
- '((emacs-lisp . t)
-   (python . t)))
-
-(push '("conf-unix" . conf-unix) org-src-lang-modes)
-
-(require 'org-tempo)
-
-(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 
 (defun dawran/org-babel-tangle-config ()
   "Automatically tangle our Emacs.org config file when we save it."
@@ -693,18 +681,20 @@
          (clojurescript-mode . eglot-ensure))
   :config
   (add-to-list 'eglot-server-programs
-               '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp")))
+               '((clojure-mode clojurescript-mode) . ("bash" "-c" "/usr/local/bin/clojure-lsp")))
   (dawran/localleader-keys
     :keymaps '(clojure-mode-map clojurescript-mode-map)
     "d" 'xref-find-definitions
     "r" 'xref-find-references))
 
 (use-package clojure-mode
+  :defer
   :config
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
 
 (use-package cider
+  :commands cider
   :config
   (setq cider-repl-display-in-current-window nil
         cider-repl-pop-to-buffer-on-connect nil
@@ -715,7 +705,6 @@
   (evil-collection-cider-setup)
   (dawran/localleader-keys
     :keymaps '(clojure-mode-map clojurescript-mode-map)
-    "," 'cider
     "e" '(:ignore t :which-key "eval")
     "eb" 'cider-eval-buffer
     "ef" 'cider-eval-defun-at-point
@@ -723,6 +712,10 @@
     "t" '(:ignore t :which-key "test")
     "tt" 'cider-test-run-test
     "tn" 'cider-test-run-ns-tests))
+
+(dawran/localleader-keys
+  :keymaps '(clojure-mode-map clojurescript-mode-map)
+  "," 'cider)
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
