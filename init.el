@@ -65,6 +65,7 @@
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
 (use-package evil
+  :defer .1
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -100,11 +101,13 @@
 
 (use-package evil-collection
   :after evil
+  :commands evil-collection-define-key
   :config
   (evil-collection-init))
 
 ;; Allows you to use the selection for * and #
 (use-package evil-visualstar
+  :after evil
   :commands (evil-visualstar/begin-search
              evil-visualstar/begin-search-forward
              evil-visualstar/begin-search-backward)
@@ -518,6 +521,7 @@
 (use-package dired
   :ensure nil
   :commands (dired)
+  :after (evil-collection)
   :bind ("C-x C-j" . dired-jump)
   :init
   (setq dired-auto-revert-buffer t
@@ -540,7 +544,7 @@
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 (use-package dired-single
-  :after dired
+  :after (dired evil-collection)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-single-up-directory
@@ -548,12 +552,13 @@
 
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode)
+  :after (evil-collection)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
 (use-package dired-ranger
-  :after dired
+  :after (dired evil-collection)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "y" 'dired-ranger-copy
