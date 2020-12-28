@@ -597,7 +597,7 @@
   :hook (eshell-first-time-mode . dawran/configure-eshell))
 
 (use-package exec-path-from-shell
-  :defer t
+  :defer 1
   :init
   (setq exec-path-from-shell-check-startup-files nil)
   :config
