@@ -494,19 +494,20 @@
   "nj" '(org-journal-open-current-journal-file :which-key "journal"))
 
 (use-package org-roam
-  :hook (org-mode . org-roam-mode)
-  :commands (org-roam org-roam-insert org-roam-switch-to-buffer
-             org-roam-find-file org-roam-graph-show org-roam-capture)
+  :commands org-roam-find-file
   :custom
-  (org-roam-directory "~/org/roam/"))
+  (org-roam-directory "~/org/roam/")
+  :config
+  (dawran/leader-keys
+    :keymaps 'org-roam-mode-map
+    "nl" 'org-roam
+    "ng" 'org-roam-graph-show
+    :keymaps 'org-mode-map
+    "ni" 'org-roam-insert
+    "nI" 'org-roam-insert-immediate))
 
 (dawran/leader-keys
-  "nl" 'org-roam
-  "ni" 'org-roam-insert
-  "nb" 'org-roam-switch-to-buffer
-  "nf" 'org-roam-find-file
-  "ng" 'org-roam-graph-show
-  "nc" 'org-roam-capture)
+  "nf" 'org-roam-find-file)
 
 (use-package org-tree-slide
   :commands (org-tree-slide-mode)
