@@ -101,7 +101,7 @@
 
 (use-package evil-collection
   :after evil
-  :commands evil-collection-define-key
+  :commands (evil-collection-define-key evil-collection-cider-setup)
   :config
   (evil-collection-init))
 
