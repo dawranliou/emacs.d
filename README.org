@@ -184,27 +184,31 @@ Put custom settings into its own file.
 
 * Package System Setup
 
+[[https://github.com/raxod502/straight.el][straight.el]] for reproducible package management.
+
+#+begin_src emacs-lisp
+
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+        (bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+
+#+end_src
+
 Emacs has a built in package manager but it doesn’t make it easy to automatically install packages on a new system the first time you pull down your configuration. [[https://github.com/jwiegley/use-package][use-package]] is a really helpful package used in this configuration to make it a lot easier to automate the installation and configuration of everything else we use.
 
 #+begin_src emacs-lisp
 
-  ;; Initialize package sources
-  (require 'package)
-
-  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")
-                           ("elpa" . "https://elpa.gnu.org/packages/")))
-
-  (package-initialize)
-  (unless package-archive-contents
-   (package-refresh-contents))
-
-  ;; Initialize use-package on non-Linux platforms
-  (unless (package-installed-p 'use-package)
-     (package-install 'use-package))
-
-  (require 'use-package)
-  (setq use-package-always-ensure t)
+  (straight-use-package 'use-package)
+  (setq straight-use-package-by-default t)
 
 #+end_src
 
@@ -402,7 +406,6 @@ possible key bindings in the mode of your current buffer.
 #+begin_src emacs-lisp
 
   (use-package hl-line
-    :ensure nil
     :hook
     (prog-mode . hl-line-mode)
     (text-mode . hl-line-mode))
@@ -499,7 +502,7 @@ Display highlighting on whatever paren matches the one before or after point.
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
   (use-package winner-mode
-    :ensure nil
+    :straight nil
     :bind (:map evil-window-map
             ("u" . winner-undo)
             ("U" . winner-redo))
@@ -950,7 +953,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+begin_src emacs-lisp
 
   (use-package dired
-    :ensure nil
+    :straight nil
     :commands (dired)
     :after (evil-collection)
     :bind ("C-x C-j" . dired-jump)
@@ -969,7 +972,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
   (use-package dired-x
     :after dired
-    :ensure nil
+    :straight nil
     :init (setq-default dired-omit-files-p t)
     :config
     (add-to-list 'dired-omit-extensions ".DS_Store"))
@@ -1307,11 +1310,11 @@ primarily with Emacs' built-in libraries:
 
 #+begin_src emacs-lisp
 
-(use-package flyspell
-  :ensure nil
-  :hook
-  (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode))
+  (use-package flyspell
+    :straight nil
+    :hook
+    (prog-mode . flyspell-prog-mode)
+    (text-mode . flyspell-mode))
 
 #+end_src
 * Misc

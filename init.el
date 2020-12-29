@@ -44,23 +44,21 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
-;; Initialize package sources
-(require 'package)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
-
-(package-initialize)
-(unless package-archive-contents
- (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-   (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -186,7 +184,6 @@
 (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
 
 (use-package hl-line
-  :ensure nil
   :hook
   (prog-mode . hl-line-mode)
   (text-mode . hl-line-mode))
@@ -232,7 +229,7 @@
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package winner-mode
-  :ensure nil
+  :straight nil
   :bind (:map evil-window-map
           ("u" . winner-undo)
           ("U" . winner-redo))
@@ -524,7 +521,7 @@
   (org-tree-slide-header t))
 
 (use-package dired
-  :ensure nil
+  :straight nil
   :commands (dired)
   :after (evil-collection)
   :bind ("C-x C-j" . dired-jump)
@@ -543,7 +540,7 @@
 
 (use-package dired-x
   :after dired
-  :ensure nil
+  :straight nil
   :init (setq-default dired-omit-files-p t)
   :config
   (add-to-list 'dired-omit-extensions ".DS_Store"))
@@ -784,7 +781,7 @@
   :hook (lsp-mode . flycheck-mode))
 
 (use-package flyspell
-  :ensure nil
+  :straight nil
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
