@@ -104,6 +104,7 @@
 
 (use-package evil-collection
   :after evil
+  :hook (evil-mode . evil-collection-mode)
   :commands (evil-collection-define-key evil-collection-cider-setup)
   :config
   (evil-collection-init))
@@ -111,6 +112,7 @@
 ;; Allows you to use the selection for * and #
 (use-package evil-visualstar
   :after evil
+  :hook (evil-mode . evil-visualstar-mode)
   :commands (evil-visualstar/begin-search
              evil-visualstar/begin-search-forward
              evil-visualstar/begin-search-backward)
@@ -374,22 +376,21 @@
          (clojurescript-mode . lispy-mode)
          (cider-repl-mode . lispy-mode))
   :custom
-  (lispy-close-quotes-at-end-p t)
-  :config
-  (lispy-set-key-theme '(lispy c-digits))
-  (add-hook 'lispy-mode-hook (lambda () (modify-syntax-entry ?- "w"))))
+  (lispy-close-quotes-at-end-p t))
 
 (use-package lispyville
   :hook ((lispy-mode . lispyville-mode))
+  :custom
+  (lispyville-key-theme '(operators
+                          c-w
+                          (prettify insert)
+                          additional
+                          additional-insert
+                          additional-movement
+                          (atom-movement normal visual)
+                          slurp/barf-cp))
   :config
-  (lispyville-set-key-theme '(operators
-                              c-w
-                              (prettify insert)
-                              additional
-                              additional-insert
-                              additional-movement
-                              (atom-movement normal visual)
-                              slurp/barf-cp)))
+  (lispyville-set-key-theme))
 
 (use-package evil-multiedit
   :bind (:map evil-visual-state-map
