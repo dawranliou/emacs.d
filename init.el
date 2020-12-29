@@ -2,10 +2,6 @@
 ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
 ;;       Emacs and init.el will be generated automatically!
 
-;; You will most likely need to adjust this font size for your system!
-(defvar dawran/default-font-size 140)
-(defvar dawran/default-variable-font-size 160)
-
 (setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
       gc-cons-percentage 0.6)
 
@@ -159,7 +155,7 @@
 
 (setq default-frame-alist
       (append (list
-	             ;;'(font . "Roboto Mono:style=Light:size=14")
+	             '(font . "Monolisa-14")
 	             ;;'(min-height . 1)  '(height     . 45)
 	             '(min-width  . 1) '(width      . 81)
                '(vertical-scroll-bars . nil)
@@ -192,13 +188,11 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'sketch-black t)
 
-(set-face-attribute 'default nil :font "Monolisa" :height dawran/default-font-size)
-
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height dawran/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height dawran/default-variable-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160 :weight 'regular)
 
 (use-package all-the-icons
   :defer t)
