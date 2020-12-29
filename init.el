@@ -41,6 +41,9 @@
       auto-save-file-name-transforms
       `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
 
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file 'noerror)
+
 ;; Initialize package sources
 (require 'package)
 

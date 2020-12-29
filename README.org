@@ -161,6 +161,8 @@ Measure the startup time:
 
 * Keep .emacs.d Clean
 
+Put backups and auto-save files in their own folders.
+
 #+begin_src emacs-lisp
 
   ;; Keep backup files and auto-save files in the backups directory
@@ -168,6 +170,15 @@ Measure the startup time:
         `(("." . ,(expand-file-name "backups" user-emacs-directory)))
         auto-save-file-name-transforms
         `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
+
+#+end_src
+
+Put custom settings into its own file.
+
+#+begin_src emacs-lisp
+
+  (setq custom-file (concat user-emacs-directory "custom.el"))
+  (load custom-file 'noerror)
 
 #+end_src
 
