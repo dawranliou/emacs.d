@@ -31,7 +31,6 @@
  ("eshell-toggle" . "bbf69e54ba97f23ae281f5c455c194e8a236549c")
  ("evil" . "d6cf6680ec52733ea78dc530ed75fadc5171c758")
  ("evil-collection" . "16e14ea9c58aa1224c09d02e40ad3edde72c820a")
- ("evil-magit" . "f4a8c8d3a5a699baea9356be7c1c5fd8867f610c")
  ("evil-multiedit" . "9f271e0e6048297692f80ed6c5ae8994ac523abc")
  ("evil-nerd-commenter" . "563cdc154b1f29d181b883563dd37be7eafafdee")
  ("evil-org-mode" . "80ef38fb378541937f6ddfe836809e76eda1e355")

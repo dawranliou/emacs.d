@@ -99,7 +99,7 @@
 (use-package evil-collection
   :after evil
   :hook (evil-mode . evil-collection-mode)
-  :commands (evil-collection-define-key evil-collection-cider-setup)
+  :commands (evil-collection-define-key evil-collection-cider-setup evil-collection-magit-init)
   :config
   (evil-collection-init))
 
@@ -630,10 +630,9 @@
 (use-package magit
   :bind ("s-g" . magit-status)
   :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-(use-package evil-magit
-  :after magit)
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  :config
+  (evil-collection-magit-init))
 
 (dawran/leader-keys
   "g"   '(:ignore t :which-key "git")
