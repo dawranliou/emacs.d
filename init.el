@@ -490,9 +490,8 @@
   (org-journal-file-type 'weekly))
 
 (dawran/leader-keys
-  "j" '(org-journal-new-entry :which-key "journal")
   "n" '(:ignore t :which-key "notes")
-  "nj" '(org-journal-open-current-journal-file :which-key "journal"))
+  "nj" '(org-journal-new-entry :which-key "journal"))
 
 (use-package org-roam
   :commands org-roam-find-file
