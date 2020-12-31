@@ -1,5 +1,5 @@
 #+TITLE: Daw-Ran Liou's Emacs Configuration
-#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
+#+PROPERTY: header-args:emacs-lisp :tangle init.el :results silent
 
 This is an ongoing evolution of my original Emacs configuration files, inspired
 by a bunch of resources I’ve found online:
@@ -14,6 +14,7 @@ by a bunch of resources I’ve found online:
 :END:
 :CONTENTS:
 - [[#table-of-contents][Table of Contents]]
+- [[#early-initel][Early-init.el]]
 - [[#variables][Variables]]
 - [[#gc-performance][GC Performance]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
@@ -83,6 +84,37 @@ by a bunch of resources I’ve found online:
   - [[#world-time][World Time]]
 :END:
 
+* Early-init.el
+
+From [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][The Early Init File:]]
+
+#+begin_quote
+Most customizations for Emacs should be put in the normal init file. See Init
+File. However, it is sometimes desirable to have customizations that take effect
+during Emacs startup earlier than the normal init file is processed. Such
+customizations can be put in the early init file, ~/.config/emacs/early-init.el
+or ~/.emacs.d/early-init.el. This file is loaded before the package system and
+GUI is initialized, so in it you can customize variables that affect frame
+appearance as well as the package initialization process, such as
+package-enable-at-startup, package-load-list, and package-user-dir.
+#+end_quote
+
+#+begin_src emacs-lisp :tangle early-init.el
+
+  ;;; early-init.el -*- lexical-binding: t; -*-
+  ;; NOTE: early-init.el is now generated from Emacs.org.  Please edit that file
+  ;;       in Emacs and early-init.el will be generated automatically!
+
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.6)
+  (setq package-enable-at-startup nil)
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist)
+  (setq frame-inhibit-implied-resize t)
+
+#+end_src
+
 * Variables
 
 #+begin_src emacs-lisp
@@ -98,19 +130,11 @@ by a bunch of resources I’ve found online:
 Source: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]
 
 The GC can easily double startup time, so we suppress it at startup by turning
-up =gc-cons-threshold= (and perhaps =gc-cons-percentage=) temporarily:
-
-#+begin_src emacs-lisp
-
-  (setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
-        gc-cons-percentage 0.6)
-
-#+end_src
-
-However, it is important to reset it eventually. Not doing so will cause garbage
-collection freezes during long-term interactive use. Conversely, a
-=gc-cons-threshold= that is too small will cause stuttering. We use 16mb as our
-default.
+up =gc-cons-threshold= (and perhaps =gc-cons-percentage=) temporarily in the
+early-init.el.  However, it is important to reset it eventually. Not doing so
+will cause garbage collection freezes during long-term interactive
+use. Conversely, a =gc-cons-threshold= that is too small will cause
+stuttering. We use 16mb as our default.
 
 #+begin_src emacs-lisp
 
@@ -357,24 +381,12 @@ possible key bindings in the mode of your current buffer.
 
   (setq inhibit-startup-message t)
 
-  ;;(scroll-bar-mode -1)        ; Disable visible scrollbar
-  ;;(tool-bar-mode -1)          ; Disable the toolbar
-  ;;(tooltip-mode -1)           ; Disable tooltips
-  ;;(set-fringe-mode 10)        ; Give some breathing room
-
-  ;;(menu-bar-mode -1)            ; Disable the menu bar
-
   (setq default-frame-alist
         (append (list
 	               '(font . "Monolisa-14")
-	               ;;'(min-height . 1)  '(height     . 45)
+	               '(min-height . 1) '(height     . 45)
 	               '(min-width  . 1) '(width      . 81)
-                 '(vertical-scroll-bars . nil)
-                 ;;'(internal-border-width . 24)
-                 ;;'(left-fringe    . 0)
-                 ;;'(right-fringe   . 0)
-                 '(tool-bar-lines . 0)
-                 '(menu-bar-lines . 0))))
+                 )))
 
   ;; No beeping nor visible bell
   (setq ring-bell-function #'ignore

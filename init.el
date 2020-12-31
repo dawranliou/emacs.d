@@ -2,9 +2,6 @@
 ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
 ;;       Emacs and init.el will be generated automatically!
 
-(setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
-      gc-cons-percentage 0.6)
-
 (add-hook 'emacs-startup-hook
   (lambda ()
     (setq gc-cons-threshold 16777216 ; 16mb
@@ -146,24 +143,12 @@
 
 (setq inhibit-startup-message t)
 
-;;(scroll-bar-mode -1)        ; Disable visible scrollbar
-;;(tool-bar-mode -1)          ; Disable the toolbar
-;;(tooltip-mode -1)           ; Disable tooltips
-;;(set-fringe-mode 10)        ; Give some breathing room
-
-;;(menu-bar-mode -1)            ; Disable the menu bar
-
 (setq default-frame-alist
       (append (list
 	             '(font . "Monolisa-14")
-	             ;;'(min-height . 1)  '(height     . 45)
+	             '(min-height . 1) '(height     . 45)
 	             '(min-width  . 1) '(width      . 81)
-               '(vertical-scroll-bars . nil)
-               ;;'(internal-border-width . 24)
-               ;;'(left-fringe    . 0)
-               ;;'(right-fringe   . 0)
-               '(tool-bar-lines . 0)
-               '(menu-bar-lines . 0))))
+               )))
 
 ;; No beeping nor visible bell
 (setq ring-bell-function #'ignore
