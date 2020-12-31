@@ -598,6 +598,7 @@
 
 (use-package projectile
   :diminish projectile-mode
+  :commands projectile-project-name
   :custom
   (projectile-completion-system 'ivy)
   :bind-keymap
