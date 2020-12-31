@@ -130,11 +130,19 @@ package-enable-at-startup, package-load-list, and package-user-dir.
 Source: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]
 
 The GC can easily double startup time, so we suppress it at startup by turning
-up =gc-cons-threshold= (and perhaps =gc-cons-percentage=) temporarily in the
-early-init.el.  However, it is important to reset it eventually. Not doing so
-will cause garbage collection freezes during long-term interactive
-use. Conversely, a =gc-cons-threshold= that is too small will cause
-stuttering. We use 16mb as our default.
+up =gc-cons-threshold= (and perhaps =gc-cons-percentage=) temporarily.
+
+#+begin_src emacs-lisp
+
+  (setq gc-cons-threshold most-positive-fixnum
+        gc-cons-percentage 0.6)
+
+#+end_src
+
+However, it is important to reset it eventually. Not doing so will cause garbage
+collection freezes during long-term interactive use. Conversely, a
+=gc-cons-threshold= that is too small will cause stuttering. We use 16mb as our
+default.
 
 #+begin_src emacs-lisp
 
@@ -381,11 +389,13 @@ possible key bindings in the mode of your current buffer.
 
   (setq inhibit-startup-message t)
 
+  (setq frame-inhibit-implied-resize t)
+
   (setq default-frame-alist
         (append (list
-	               '(font . "Monolisa-14")
-	               '(min-height . 1) '(height     . 45)
-	               '(min-width  . 1) '(width      . 81)
+                 '(font . "Monolisa-14")
+                 '(min-height . 1) '(height     . 45)
+                 '(min-width  . 1) '(width      . 81)
                  )))
 
   ;; No beeping nor visible bell

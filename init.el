@@ -2,6 +2,9 @@
 ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
 ;;       Emacs and init.el will be generated automatically!
 
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
+
 (add-hook 'emacs-startup-hook
   (lambda ()
     (setq gc-cons-threshold 16777216 ; 16mb
@@ -143,11 +146,13 @@
 
 (setq inhibit-startup-message t)
 
+(setq frame-inhibit-implied-resize t)
+
 (setq default-frame-alist
       (append (list
-	             '(font . "Monolisa-14")
-	             '(min-height . 1) '(height     . 45)
-	             '(min-width  . 1) '(width      . 81)
+               '(font . "Monolisa-14")
+               '(min-height . 1) '(height     . 45)
+               '(min-width  . 1) '(width      . 81)
                )))
 
 ;; No beeping nor visible bell
