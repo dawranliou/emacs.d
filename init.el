@@ -305,12 +305,18 @@
   ;:custom
   ;(counsel-describe-function-function #'helpful-callable)
   ;(counsel-describe-variable-function #'helpful-variable)
+;; Package `ctrlf' provides a replacement for `isearch' that is more
+;; similar to the tried-and-true text search interfaces in web
+;; browsers and other programs (think of what happens when you type
+;; ctrl+F).
+(use-package ctrlf
+  :straight (:host github :repo "raxod502/ctrlf")
   :bind
-  ;("C-h F" . counsel-describe-face)
-  ;([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ;([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
+  ("s-f" . ctrlf-forward-literal)
+
+  :init
+
+  (ctrlf-mode +1))
 
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)

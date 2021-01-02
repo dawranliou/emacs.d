@@ -45,6 +45,7 @@ by a bunch of resources I’ve found online:
 - [[#completion][Completion]]
   - [[#selectrum][Selectrum]]
   - [[#marginalia][Marginalia]]
+  - [[#ctrlf][CtrlF]]
 - [[#helpful-help-commands][Helpful Help Commands]]
 - [[#editing][Editing]]
   - [[#tabs][Tabs]]
@@ -661,6 +662,23 @@ Display highlighting on whatever paren matches the one before or after point.
                                   marginalia-annotators-light nil)))
 
 #+end_src
+
+** CtrlF
+
+#+begin_src emacs-lisp
+
+  ;; Package `ctrlf' provides a replacement for `isearch' that is more
+  ;; similar to the tried-and-true text search interfaces in web
+  ;; browsers and other programs (think of what happens when you type
+  ;; ctrl+F).
+  (use-package ctrlf
+    :straight (:host github :repo "raxod502/ctrlf")
+    :bind
+    ("s-f" . ctrlf-forward-literal)
+
+    :init
+
+    (ctrlf-mode +1))
 
 #+end_src
 
