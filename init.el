@@ -53,8 +53,10 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+
+(straight-use-package 'use-package)
+(setq use-package-always-defer t)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -122,6 +124,7 @@
   (setq which-key-idle-delay 1))
 
 (use-package general
+  :demand t
   :config
   (general-create-definer dawran/leader-keys
     :states '(normal insert visual emacs)
@@ -593,7 +596,7 @@
   ("C-M-'" . eshell-toggle))
 
 (use-package projectile
-  :diminish projectile-mode
+  :defer 1
   :commands projectile-project-name
   :custom
   (projectile-completion-system 'default)
@@ -721,6 +724,7 @@
   (add-hook 'markdown-mode-hook 'dw/markdown-mode-hook)))
 
 (use-package company
+  :defer 0.5
   :hook (;(lsp-mode . company-mode)
          (eglot-managed-mode . company-mode))
   :bind (:map company-active-map
