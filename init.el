@@ -142,7 +142,7 @@
   (dawran/leader-keys
     "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
-    ;"tt" '(counsel-load-theme :which-key "choose theme")
+    "tt" '(load-theme :which-key "choose theme")
     "tw" 'whitespace-mode
     "tm" 'toggle-frame-maximized
     "tM" 'toggle-frame-fullscreen))
@@ -602,15 +602,13 @@
   (projectile-completion-system 'default)
   :bind-keymap
   ("C-c p" . projectile-command-map)
+  :bind
+  ("s-p" . projectile-find-file)
   :init
   (dawran/leader-keys
     "SPC" 'projectile-find-file)
   :config
   (projectile-mode))
-
-;(use-package counsel-projectile
-;  :bind (("s-F" . counsel-projectile-rg)
-;         ("s-p" . counsel-projectile)))
 
 (use-package magit
   :bind ("s-g" . magit-status)
