@@ -722,7 +722,6 @@
   (add-hook 'markdown-mode-hook 'dw/markdown-mode-hook)))
 
 (use-package company
-  :defer 0.5
   :hook (;(lsp-mode . company-mode)
          (eglot-managed-mode . company-mode))
   :bind (:map company-active-map
