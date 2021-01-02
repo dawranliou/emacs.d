@@ -53,8 +53,10 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
+
+(straight-use-package 'use-package)
+(setq use-package-always-defer t)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -122,6 +124,7 @@
   (setq which-key-idle-delay 1))
 
 (use-package general
+  :demand t
   :config
   (general-create-definer dawran/leader-keys
     :states '(normal insert visual emacs)
@@ -139,12 +142,13 @@
   (dawran/leader-keys
     "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
-    "tt" '(counsel-load-theme :which-key "choose theme")
+    "tt" '(load-theme :which-key "choose theme")
     "tw" 'whitespace-mode
     "tm" 'toggle-frame-maximized
     "tM" 'toggle-frame-fullscreen))
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-b") #'switch-to-buffer)
+(global-set-key (kbd "C-M-j") #'switch-to-buffer)
 
 (setq inhibit-startup-message t)
 
@@ -256,85 +260,73 @@
 (use-package rainbow-mode
   :commands rainbow-mode)
 
-(use-package ivy
-  :diminish
-  :custom (ivy-initial-inputs-alist nil)
-  :hook (after-init . ivy-mode)
+;; Package `selectrum' is an incremental completion and narrowing
+;; framework. Like Ivy and Helm, which it improves on, Selectrum
+;; provides a user interface for choosing from a list of options by
+;; typing a query to narrow the list, and then selecting one of the
+;; remaining candidates. This offers a significant improvement over
+;; the default Emacs interface for candidate selection.
+(use-package selectrum
+  :straight (:host github :repo "raxod502/selectrum")
+  :defer t
   :init
-  (setq ivy-re-builders-alist
-        '((counsel-rg     . ivy--regex-plus)
-          (swiper         . ivy--regex-plus)
-          (swiper-isearch . ivy--regex-plus)
-          (t              . ivy--regex-ignore-order)))
-  :bind (("C-s" . swiper)
-         :map ivy-minibuffer-map
-         ("C-SPC" . ivy-call-and-recenter)
-         ("TAB" . ivy-alt-done)
-         ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
-         :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
-         ("C-l" . ivy-done)
-         ("C-d" . ivy-switch-buffer-kill)
-         :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
-         ("C-d" . ivy-reverse-i-search-kill))
+  ;; This doesn't actually load Selectrum.
+  (selectrum-mode +1))
+
+;; Package `prescient' is a library for intelligent sorting and
+;; filtering in various contexts.
+(use-package prescient
   :config
-  (setq ivy-count-format "(%d/%d) "
-        ))
+  ;; Remember usage statistics across Emacs sessions.
+  (prescient-persist-mode +1)
+  ;; The default settings seem a little forgetful to me. Let's try
+  ;; this out.
+  (setq prescient-history-length 1000))
 
-(use-package ivy-rich
-  :hook (ivy-mode . ivy-rich-mode))
-
-(use-package ivy-prescient
-  :hook ((ivy-mode . ivy-prescient-mode)
-         (ivy-prescient-mode . prescient-persist-mode))
-  :custom (prescient-sort-length-enable nil))
-
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-         ("C-x b" . counsel-ibuffer)
-         ("C-x C-f" . counsel-find-file)
-         ("C-M-j" . counsel-switch-buffer)
-         ("s-b" . counsel-switch-buffer)
-         ("s-y" . counsel-yank-pop)
-         ("s-P" . counsel-M-x)
-         :map minibuffer-local-map
-         ("C-r" . counsel-minibuffer-history))
+;; Package `selectrum-prescient' provides intelligent sorting and
+;; filtering for candidates in Selectrum menus.
+(use-package selectrum-prescient
+  :straight (:host github :repo "raxod502/prescient.el"
+                   :files ("selectrum-prescient.el"))
+  :demand t
+  :after selectrum
   :config
-  (counsel-mode 1))
+  (selectrum-prescient-mode +1))
 
-(use-package swiper
-  :bind ("s-f" . swiper-isearch))
+(use-package marginalia
+  :defer 2
+  :bind (:map minibuffer-local-map
+              ("C-M-a" . marginalia-cycle))
+  :init
+  (marginalia-mode)
+  ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
+  (advice-add #'marginalia-cycle :after
+              (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
+  (setq marginalia-annotators '(marginalia-annotators-heavy
+                                marginalia-annotators-light nil)))
 
-(use-package smex ;; Adds M-x recent command sorting for counsel-M-x
-  :disabled
-  :defer 1
-  :after counsel)
+;; Package `ctrlf' provides a replacement for `isearch' that is more
+;; similar to the tried-and-true text search interfaces in web
+;; browsers and other programs (think of what happens when you type
+;; ctrl+F).
+(use-package ctrlf
+  :straight (:host github :repo "raxod502/ctrlf")
+  :bind
+  ("s-f" . ctrlf-forward-literal)
 
-(dawran/leader-keys
-  "C-SPC" 'counsel-M-x
-  "b"   '(:ignore t :which-key "buffers")
-  "bb"  '(counsel-ibuffer :which-key "switch buffer")
-  "bd"  '(bury-buffer :which-key "bury buffer")
-  "bk"  '(kill-this-buffer :which-key "kill buffer")
-  "'"   '(ivy-resume :which-key "ivy resume")
-  "f"   '(:ignore t :which-key "files")
-  "ff"  '(counsel-find-file :which-key "open file")
-  "fr"  '(counsel-recentf :which-key "recent files")
-  "fj"  '(counsel-file-jump :which-key "jump to file"))
+  :init
+
+  (ctrlf-mode +1))
 
 (use-package helpful
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ("C-h F" . counsel-describe-face)
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
+  :defer t
+  :bind (;; Remap standard commands.
+         ("C-h f"   . #'helpful-callable)
+         ("C-h v"   . #'helpful-variable)
+         ("C-h k"   . #'helpful-key)
+         ("C-c C-d" . #'helpful-at-point)
+         ("C-h C"   . #'helpful-command)
+         ("C-h F"   . #'describe-face)))
 
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
@@ -570,7 +562,7 @@
   (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
   ;; Bind some useful keys for evil-mode
-  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
+  ;(evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
   (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
 
   (setq eshell-history-size          10000
@@ -604,21 +596,19 @@
   ("C-M-'" . eshell-toggle))
 
 (use-package projectile
-  :diminish projectile-mode
+  :defer 1
   :commands projectile-project-name
   :custom
-  (projectile-completion-system 'ivy)
+  (projectile-completion-system 'default)
   :bind-keymap
   ("C-c p" . projectile-command-map)
+  :bind
+  ("s-p" . projectile-find-file)
   :init
   (dawran/leader-keys
     "SPC" 'projectile-find-file)
   :config
   (projectile-mode))
-
-(use-package counsel-projectile
-  :bind (("s-F" . counsel-projectile-rg)
-         ("s-p" . counsel-projectile)))
 
 (use-package magit
   :bind ("s-g" . magit-status)
@@ -636,7 +626,8 @@
   "gl"  'magit-log-buffer-file)
 
 (use-package rg
-  :disabled
+  :bind ("s-F" . rg-project)
+  :after projectile
   :config
   (rg-enable-default-bindings))
 
