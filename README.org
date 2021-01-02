@@ -25,6 +25,7 @@ by a bunch of resources I’ve found online:
   - [[#evil][Evil]]
   - [[#keybinding-panel-which-key][Keybinding Panel (which-key)]]
   - [[#simplify-leader-bindings-generalel][Simplify Leader Bindings (general.el)]]
+  - [[#better-default-bindings][Better Default Bindings]]
 - [[#ui][UI]]
   - [[#clean-up-emacs-ui-to-be-more-minimal][Clean up Emacs' UI to be more minimal]]
   - [[#display-line-number][Display line number]]
@@ -379,6 +380,14 @@ possible key bindings in the mode of your current buffer.
       "tw" 'whitespace-mode
       "tm" 'toggle-frame-maximized
       "tM" 'toggle-frame-fullscreen))
+
+#+end_src
+
+** Better Default Bindings
+
+#+begin_src emacs-lisp
+
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 #+end_src
 

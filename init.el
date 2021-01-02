@@ -144,6 +144,8 @@
     "tm" 'toggle-frame-maximized
     "tM" 'toggle-frame-fullscreen))
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 (setq inhibit-startup-message t)
 
 (setq frame-inhibit-implied-resize t)
