@@ -596,7 +596,7 @@
   :diminish projectile-mode
   :commands projectile-project-name
   :custom
-  (projectile-completion-system 'ivy)
+  (projectile-completion-system 'default)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
