@@ -693,15 +693,14 @@ It is very useful for figuring out how things work in Emacs.
 #+begin_src emacs-lisp
 
   (use-package helpful
-    ;:custom
-    ;(counsel-describe-function-function #'helpful-callable)
-    ;(counsel-describe-variable-function #'helpful-variable)
-    :bind
-    ;("C-h F" . counsel-describe-face)
-    ;([remap describe-function] . counsel-describe-function)
-    ([remap describe-command] . helpful-command)
-    ;([remap describe-variable] . counsel-describe-variable)
-    ([remap describe-key] . helpful-key))
+    :defer t
+    :bind (;; Remap standard commands.
+           ("C-h f"   . #'helpful-callable)
+           ("C-h v"   . #'helpful-variable)
+           ("C-h k"   . #'helpful-key)
+           ("C-c C-d" . #'helpful-at-point)
+           ("C-h C"   . #'helpful-command)
+           ("C-h F"   . #'describe-face)))
 
 #+end_src
 

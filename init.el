@@ -301,10 +301,6 @@
   (setq marginalia-annotators '(marginalia-annotators-heavy
                                 marginalia-annotators-light nil)))
 
-(use-package helpful
-  ;:custom
-  ;(counsel-describe-function-function #'helpful-callable)
-  ;(counsel-describe-variable-function #'helpful-variable)
 ;; Package `ctrlf' provides a replacement for `isearch' that is more
 ;; similar to the tried-and-true text search interfaces in web
 ;; browsers and other programs (think of what happens when you type
@@ -317,6 +313,16 @@
   :init
 
   (ctrlf-mode +1))
+
+(use-package helpful
+  :defer t
+  :bind (;; Remap standard commands.
+         ("C-h f"   . #'helpful-callable)
+         ("C-h v"   . #'helpful-variable)
+         ("C-h k"   . #'helpful-key)
+         ("C-c C-d" . #'helpful-at-point)
+         ("C-h C"   . #'helpful-command)
+         ("C-h F"   . #'describe-face)))
 
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
