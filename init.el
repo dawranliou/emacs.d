@@ -625,7 +625,8 @@
   "gl"  'magit-log-buffer-file)
 
 (use-package rg
-  :disabled
+  :bind ("s-F" . rg-project)
+  :after projectile
   :config
   (rg-enable-default-bindings))
 
