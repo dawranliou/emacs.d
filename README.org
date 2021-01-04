@@ -46,6 +46,7 @@ by a bunch of resources I’ve found online:
   - [[#selectrum][Selectrum]]
   - [[#marginalia][Marginalia]]
   - [[#ctrlf][CtrlF]]
+  - [[#consult][Consult]]
 - [[#helpful-help-commands][Helpful Help Commands]]
 - [[#editing][Editing]]
   - [[#tabs][Tabs]]
@@ -683,6 +684,79 @@ Display highlighting on whatever paren matches the one before or after point.
     :init
 
     (ctrlf-mode +1))
+
+#+end_src
+
+** Consult
+
+#+begin_src emacs-lisp
+
+  (use-package consult
+    :defer 2
+    ;; Replace bindings. Lazily loaded due by `use-package'.
+    :bind (("C-x M-:" . consult-complex-command)
+           ("C-c h" . consult-history)
+           ("C-c m" . consult-mode-command)
+           ("C-x b" . consult-buffer)
+           ("C-x 4 b" . consult-buffer-other-window)
+           ("C-x 5 b" . consult-buffer-other-frame)
+           ("C-x r x" . consult-register)
+           ("C-x r b" . consult-bookmark)
+           ("M-g g" . consult-goto-line)
+           ("M-g M-g" . consult-goto-line)
+           ("M-g o" . consult-outline)       ;; "M-s o" is a good alternative.
+           ("M-g l" . consult-line)          ;; "M-s l" is a good alternative.
+           ("M-g m" . consult-mark)          ;; I recommend to bind Consult navigation
+           ("M-g k" . consult-global-mark)   ;; commands under the "M-g" prefix.
+           ("M-g r" . consult-git-grep)      ;; or consult-grep, consult-ripgrep
+           ("M-g f" . consult-find)          ;; or consult-fdfind, consult-locate
+           ("M-g i" . consult-project-imenu) ;; or consult-imenu
+           ("M-g e" . consult-error)
+           ("M-s m" . consult-multi-occur)
+           ("M-y" . consult-yank-pop)
+           ("<help> a" . consult-apropos))
+
+    ;; The :init configuration is always executed (Not lazy!)
+    :init
+
+    ;; Replace `multi-occur' with `consult-multi-occur', which is a drop-in replacement.
+    (fset 'multi-occur #'consult-multi-occur)
+
+    ;; Configure other variables and modes in the :config section, after lazily loading the package
+    :config
+
+    ;; Optionally configure a function which returns the project root directory
+    (autoload 'projectile-project-root "projectile")
+    (setq consult-project-root-function #'projectile-project-root)
+
+    ;; Optionally configure narrowing key.
+    ;; Both < and C-+ work reasonably well.
+    (setq consult-narrow-key "<") ;; (kbd "C-+")
+    ;; Optionally make narrowing help available in the minibuffer.
+    ;; Probably not needed if you are using which-key.
+    ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+
+    ;; Optional configure a view library to be used by `consult-buffer'.
+    ;; The view library must provide two functions, one to open the view by name,
+    ;; and one function which must return a list of views as strings.
+    ;; Example: https://github.com/minad/bookmark-view/
+    ;; (setq consult-view-open-function #'bookmark-jump
+    ;;       consult-view-list-function #'bookmark-view-names)
+
+    ;; Optionally enable previews. Note that individual previews can be disabled
+    ;; via customization variables.
+    (consult-preview-mode))
+
+  ;; Enable Consult-Selectrum integration.
+  ;; This package should be installed if Selectrum is used.
+  (use-package consult-selectrum
+    :after selectrum
+    :demand t)
+
+  ;; Optionally add the `consult-flycheck' command.
+  (use-package consult-flycheck
+    :bind (:map flycheck-command-map
+                ("!" . consult-flycheck)))
 
 #+end_src
 
