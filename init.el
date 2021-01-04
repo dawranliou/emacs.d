@@ -320,7 +320,8 @@
 
 (use-package embark
   :bind
-  ("C-A" . embark-act))
+  ("C-A" . embark-act)
+  ("C-c C-o" . embark-occur))
 
 (use-package consult
   :defer 2
@@ -328,18 +329,16 @@
   :bind (("C-x M-:" . consult-complex-command)
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
-         ("C-x b" . consult-buffer)
+         ("C-M-j" . consult-buffer)
          ("C-x 4 b" . consult-buffer-other-window)
          ("C-x 5 b" . consult-buffer-other-frame)
          ("C-x r x" . consult-register)
-         ("C-x r b" . consult-bookmark)
-         ("M-g g" . consult-goto-line)
-         ("M-g M-g" . consult-goto-line)
          ("M-g o" . consult-outline)       ;; "M-s o" is a good alternative.
          ("M-g l" . consult-line)          ;; "M-s l" is a good alternative.
          ("M-g m" . consult-mark)          ;; I recommend to bind Consult navigation
          ("M-g k" . consult-global-mark)   ;; commands under the "M-g" prefix.
          ("M-g r" . consult-git-grep)      ;; or consult-grep, consult-ripgrep
+         ("s-F" . consult-ripgrep)
          ("M-g f" . consult-find)          ;; or consult-fdfind, consult-locate
          ("M-g i" . consult-project-imenu) ;; or consult-imenu
          ("M-g e" . consult-error)
@@ -700,6 +699,7 @@
   "gl"  'magit-log-buffer-file)
 
 (use-package rg
+  :disabled
   :bind ("s-F" . rg-project)
   :after projectile
   :config
