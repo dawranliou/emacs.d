@@ -318,6 +318,10 @@
 
   (ctrlf-mode +1))
 
+(use-package embark
+  :bind
+  ("C-A" . embark-act))
+
 (use-package consult
   :defer 2
   ;; Replace bindings. Lazily loaded due by `use-package'.

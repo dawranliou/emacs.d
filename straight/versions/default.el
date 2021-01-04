@@ -29,6 +29,7 @@
  ("emacsmirror-mirror" . "73d68771488284cceb42f70fda551e0a516cb249")
  ("emacsql" . "6d8cd9366284b5a27268ff4b783e2c34573d5b60")
  ("emacsql-sqlite3" . "50aa9bdd76b0d18bf80526cff13a69fe306ee29c")
+ ("embark" . "e227d91991bad7d85c38337718143e3466ca1949")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
  ("eshell-toggle" . "bbf69e54ba97f23ae281f5c455c194e8a236549c")
  ("evil" . "d6cf6680ec52733ea78dc530ed75fadc5171c758")
