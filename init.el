@@ -100,8 +100,8 @@
 
 (use-package evil-collection
   :after evil
+  :demand t
   :hook (evil-mode . evil-collection-mode)
-  :commands (evil-collection-define-key evil-collection-cider-setup evil-collection-magit-init)
   :config
   (evil-collection-init))
 
@@ -499,6 +499,7 @@
 
 (use-package dired
   :straight nil
+  :demand t
   :commands (dired)
   :after (evil-collection)
   :bind ("C-x C-j" . dired-jump)
@@ -517,6 +518,7 @@
 
 (use-package dired-x
   :after dired
+  :demand t
   :straight nil
   :init (setq-default dired-omit-files-p t)
   :config
@@ -524,6 +526,7 @@
 
 (use-package dired-single
   :after (dired evil-collection)
+  :demand t
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-single-up-directory
@@ -532,12 +535,14 @@
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :after (evil-collection)
+  :demand t
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
 (use-package dired-ranger
   :after (dired evil-collection)
+  :demand t
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "y" 'dired-ranger-copy
@@ -613,9 +618,7 @@
 (use-package magit
   :bind ("s-g" . magit-status)
   :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-  :config
-  (evil-collection-magit-init))
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (dawran/leader-keys
   "g"   '(:ignore t :which-key "git")

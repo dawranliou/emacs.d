@@ -320,8 +320,8 @@ Some tips can be found here:
 
   (use-package evil-collection
     :after evil
+    :demand t
     :hook (evil-mode . evil-collection-mode)
-    :commands (evil-collection-define-key evil-collection-cider-setup evil-collection-magit-init)
     :config
     (evil-collection-init))
 
@@ -981,6 +981,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
   (use-package dired
     :straight nil
+    :demand t
     :commands (dired)
     :after (evil-collection)
     :bind ("C-x C-j" . dired-jump)
@@ -999,6 +1000,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
   (use-package dired-x
     :after dired
+    :demand t
     :straight nil
     :init (setq-default dired-omit-files-p t)
     :config
@@ -1006,6 +1008,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
   (use-package dired-single
     :after (dired evil-collection)
+    :demand t
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "h" 'dired-single-up-directory
@@ -1014,12 +1017,14 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
   (use-package dired-hide-dotfiles
     :hook (dired-mode . dired-hide-dotfiles-mode)
     :after (evil-collection)
+    :demand t
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "H" 'dired-hide-dotfiles-mode))
 
   (use-package dired-ranger
     :after (dired evil-collection)
+    :demand t
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "y" 'dired-ranger-copy
@@ -1133,9 +1138,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
   (use-package magit
     :bind ("s-g" . magit-status)
     :custom
-    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
-    :config
-    (evil-collection-magit-init))
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
   (dawran/leader-keys
     "g"   '(:ignore t :which-key "git")
