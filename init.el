@@ -338,8 +338,8 @@
          ("M-g l" . consult-line)          ;; "M-s l" is a good alternative.
          ("M-g m" . consult-mark)          ;; I recommend to bind Consult navigation
          ("M-g k" . consult-global-mark)   ;; commands under the "M-g" prefix.
-         ("M-g r" . consult-git-grep)      ;; or consult-grep, consult-ripgrep
-         ("s-F" . consult-ripgrep)
+         ;;("M-g r" . consult-git-grep)      ;; or consult-grep, consult-ripgrep
+         ;;("s-F" . consult-ripgrep)
          ("M-g f" . consult-find)          ;; or consult-fdfind, consult-locate
          ("M-g i" . consult-project-imenu) ;; or consult-imenu
          ("M-g e" . consult-error)
@@ -700,7 +700,6 @@
   "gl"  'magit-log-buffer-file)
 
 (use-package rg
-  :disabled
   :bind ("s-F" . rg-project)
   :after projectile
   :config
