@@ -9,6 +9,7 @@
  ("clojure-mode" . "53ef8ac076ae7811627fbdd408e519ab7fca9a0b")
  ("company-box" . "be37a9a30dc112ab172af21af694e2cb04a74f85")
  ("company-mode" . "3644a595b4647367de42a8de485efa0aae0c0213")
+ ("consult" . "718f6cc1262c69c5affe024e95ca06724b358768")
  ("ctrlf" . "5acefdc9a6f8e35febf6f71b6a34a0d4fc499269")
  ("dash.el" . "f800e2e6537f0a16a4041f488b14f10706a61dff")
  ("default-text-scale" . "bfc0987c37e93742255d3b23d86c17096fda8e7e")
