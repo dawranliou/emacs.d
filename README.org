@@ -694,8 +694,9 @@ Display highlighting on whatever paren matches the one before or after point.
 
   (use-package embark
     :bind
-    ("C-A" . embark-act)
-    ("C-c C-o" . embark-occur))
+    (:map minibuffer-local-map
+          ("C-S-a" . embark-act)
+          ("C-c C-o" . embark-occur)))
 
 #+end_src
 

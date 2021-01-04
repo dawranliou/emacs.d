@@ -320,8 +320,9 @@
 
 (use-package embark
   :bind
-  ("C-A" . embark-act)
-  ("C-c C-o" . embark-occur))
+  (:map minibuffer-local-map
+        ("C-S-a" . embark-act)
+        ("C-c C-o" . embark-occur)))
 
 (use-package consult
   :defer 2
