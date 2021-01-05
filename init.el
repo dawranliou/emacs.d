@@ -443,6 +443,7 @@
                           (atom-movement normal visual)
                           slurp/barf-cp))
   :config
+  (lispy-set-key-theme '(lispy c-digits))
   (lispyville-set-key-theme))
 
 (use-package evil-multiedit
