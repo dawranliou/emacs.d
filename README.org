@@ -510,8 +510,7 @@ Display highlighting on whatever paren matches the one before or after point.
 #+begin_src emacs-lisp
 
   (use-package paren
-    :config
-    (show-paren-mode 1))
+    :hook (prog-mode . show-paren-mode))
 
 #+end_src
 

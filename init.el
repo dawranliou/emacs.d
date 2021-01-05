@@ -206,8 +206,7 @@
   (default-text-scale-mode))
 
 (use-package paren
-  :config
-  (show-paren-mode 1))
+  :hook (prog-mode . show-paren-mode))
 
 (use-package paren-face
   :hook
