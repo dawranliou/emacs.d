@@ -16,7 +16,10 @@ by a bunch of resources I’ve found online:
 - [[#table-of-contents][Table of Contents]]
 - [[#early-initel][Early-init.el]]
 - [[#variables][Variables]]
-- [[#gc-performance][GC Performance]]
+- [[#startup-performance][Startup Performance]]
+  - [[#gc][GC]]
+  - [[#unset-file-name-handler-alist-temporarily][Unset file-name-handler-alist temporarily]]
+  - [[#measure-the-startup-time][Measure the startup time]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
 - [[#keybindings][Keybindings]]
@@ -130,9 +133,11 @@ package-enable-at-startup, package-load-list, and package-user-dir.
 
 #+end_src
 
-* GC Performance
+* Startup Performance
 
 Source: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]
+
+** GC
 
 The GC can easily double startup time, so we suppress it at startup by turning
 up =gc-cons-threshold= (and perhaps =gc-cons-percentage=) temporarily.
@@ -178,7 +183,29 @@ helm and ivy). Here is how Doom does it:
 
 #+end_src
 
-Measure the startup time:
+** Unset =file-name-handler-alist= temporarily
+
+Emacs consults this variable every time a file is read or library loaded, or
+when certain functions in the file API are used (like =expand-file-name= or
+=file-truename=).
+
+Emacs does this to check if a special handler is needed to read that file, but
+none of them are (typically) necessary at startup, so we disable them
+(temporarily!):
+
+#+begin_src emacs-lisp
+
+  (defvar doom--file-name-handler-alist file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+
+  ;; Alternatively, restore it even later:
+  (add-hook 'emacs-startup-hook
+    (lambda ()
+      (setq file-name-handler-alist doom--file-name-handler-alist)))
+
+#+end_src
+
+** Measure the startup time
 
 #+begin_src emacs-lisp
 
