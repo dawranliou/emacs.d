@@ -357,6 +357,7 @@
          ("C-c h" . consult-history)
          ("C-c m" . consult-mode-command)
          ("C-M-j" . consult-buffer)
+         ("s-b" . consult-buffer)
          ("C-x 4 b" . consult-buffer-other-window)
          ("C-x 5 b" . consult-buffer-other-frame)
          ("C-x r x" . consult-register)
