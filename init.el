@@ -497,7 +497,9 @@
   :hook (prog-mode . smartparens-mode))
 
 (use-package expand-region
-  :bind ("s-'" .  er/mark-outside-pairs))
+  :bind
+  ("s-'" .  er/expand-region)
+  ("s-\"" .  er/contract-region))
 
 (defun dawran/org-mode-setup ()
   (org-indent-mode)
