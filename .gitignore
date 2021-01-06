@@ -15,6 +15,6 @@
 /emojis/
 /var/
 /custom.el
-/straight/build-cache.el
-/straight/build/
+/straight/build*-cache.el
+/straight/build*/
 /straight/repos/

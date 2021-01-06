@@ -48,6 +48,9 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
+(setq straight-use-package-by-default t
+      straight-build-dir (format "build-%s" emacs-version))
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -61,10 +64,8 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setq straight-use-package-by-default t)
-
 (straight-use-package 'use-package)
-(setq use-package-always-defer t)
+;;(setq use-package-always-defer t)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -251,6 +252,7 @@
   :defer t)
 
 (use-package emojify
+  :disabled
   :hook (after-init . global-emojify-mode))
 
 (use-package unicode-fonts
@@ -301,7 +303,6 @@
   (selectrum-prescient-mode +1))
 
 (use-package marginalia
-  :defer 2
   :bind (:map minibuffer-local-map
               ("C-M-a" . marginalia-cycle))
   :init
@@ -332,7 +333,6 @@
         ("C-c C-o" . embark-occur)))
 
 (use-package consult
-  :defer 2
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (("C-x M-:" . consult-complex-command)
          ("C-c h" . consult-history)

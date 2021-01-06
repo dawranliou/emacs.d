@@ -249,6 +249,9 @@ Put custom settings into its own file.
 
 #+begin_src emacs-lisp
 
+  (setq straight-use-package-by-default t
+        straight-build-dir (format "build-%s" emacs-version))
+
   (defvar bootstrap-version)
   (let ((bootstrap-file
          (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -268,10 +271,8 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
 #+begin_src emacs-lisp
 
-  (setq straight-use-package-by-default t)
-
   (straight-use-package 'use-package)
-  (setq use-package-always-defer t)
+  ;;(setq use-package-always-defer t)
 
 #+end_src
 
@@ -605,6 +606,7 @@ Display highlighting on whatever paren matches the one before or after point.
 #+begin_src emacs-lisp
 
   (use-package emojify
+    :disabled
     :hook (after-init . global-emojify-mode))
 
   (use-package unicode-fonts
@@ -682,7 +684,6 @@ Display highlighting on whatever paren matches the one before or after point.
 #+begin_src emacs-lisp
 
   (use-package marginalia
-    :defer 2
     :bind (:map minibuffer-local-map
                 ("C-M-a" . marginalia-cycle))
     :init
@@ -731,7 +732,6 @@ Display highlighting on whatever paren matches the one before or after point.
 #+begin_src emacs-lisp
 
   (use-package consult
-    :defer 2
     ;; Replace bindings. Lazily loaded due by `use-package'.
     :bind (("C-x M-:" . consult-complex-command)
            ("C-c h" . consult-history)
