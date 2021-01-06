@@ -466,7 +466,7 @@
   (lispyville-set-key-theme))
 
 (use-package evil-multiedit
-  :demand t
+  :defer 2
   :bind (:map evil-visual-state-map
          ("R" . evil-multiedit-match-all)
          ("M-d" . evil-multiedit-match-and-next)
