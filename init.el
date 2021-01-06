@@ -561,6 +561,7 @@
 (use-package org-journal
   :commands (org-journal-new-entry org-journal-open-current-journal-file)
   :custom
+  (org-journal-date-format "%A, %d/%m/%Y")
   (org-journal-date-prefix "* ")
   (org-journal-file-format "%F.org")
   (org-journal-dir "~/org/journal/")
