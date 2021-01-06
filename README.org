@@ -1,5 +1,5 @@
 #+TITLE: Daw-Ran Liou's Emacs Configuration
-#+STARTUP: content
+#+STARTUP: overview
 #+PROPERTY: header-args:emacs-lisp :tangle init.el :results silent
 
 This is an ongoing evolution of my original Emacs configuration files, inspired
