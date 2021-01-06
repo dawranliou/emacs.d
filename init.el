@@ -83,6 +83,8 @@
 (global-set-key (kbd "s-S") 'write-file)              ;; save as
 (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
 (global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
+(global-set-key (kbd "s-k") 'kill-this-buffer)
+(global-set-key (kbd "s-=") 'text-scale-adjust)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
