@@ -1,4 +1,5 @@
 #+TITLE: Daw-Ran Liou's Emacs Configuration
+#+STARTUP: content
 #+PROPERTY: header-args:emacs-lisp :tangle init.el :results silent
 
 This is an ongoing evolution of my original Emacs configuration files, inspired
@@ -22,6 +23,7 @@ by a bunch of resources I’ve found online:
   - [[#measure-the-startup-time][Measure the startup time]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
+- [[#macos][MacOS]]
 - [[#keybindings][Keybindings]]
   - [[#esc-cancels-all][ESC Cancels All]]
   - [[#rebind-c-u][Rebind C-u]]
@@ -273,6 +275,29 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
   (straight-use-package 'use-package)
   ;;(setq use-package-always-defer t)
+
+#+end_src
+
+* MacOS
+
+#+begin_src emacs-lisp
+
+  (mac-auto-operator-composition-mode)
+
+  (setq-default delete-by-moving-to-trash t)
+
+  ;; Both command keys are 'Super'
+  (setq mac-right-command-modifier 'super)
+  (setq mac-command-modifier 'super)
+
+  ;; Option or Alt is naturally 'Meta'
+  (setq mac-option-modifier 'meta)
+  (setq mac-right-option-modifier 'meta)
+
+  (global-set-key (kbd "s-s") 'save-buffer)             ;; save
+  (global-set-key (kbd "s-S") 'write-file)              ;; save as
+  (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
+  (global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
 
 #+end_src
 

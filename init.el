@@ -67,6 +67,23 @@
 (straight-use-package 'use-package)
 ;;(setq use-package-always-defer t)
 
+(mac-auto-operator-composition-mode)
+
+(setq-default delete-by-moving-to-trash t)
+
+;; Both command keys are 'Super'
+(setq mac-right-command-modifier 'super)
+(setq mac-command-modifier 'super)
+
+;; Option or Alt is naturally 'Meta'
+(setq mac-option-modifier 'meta)
+(setq mac-right-option-modifier 'meta)
+
+(global-set-key (kbd "s-s") 'save-buffer)             ;; save
+(global-set-key (kbd "s-S") 'write-file)              ;; save as
+(global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
+(global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
+
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
