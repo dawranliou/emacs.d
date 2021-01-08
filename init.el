@@ -402,36 +402,14 @@
          ("M-y" . consult-yank-pop)
          ("<help> a" . consult-apropos))
 
-  ;; The :init configuration is always executed (Not lazy!)
   :init
-
   ;; Replace `multi-occur' with `consult-multi-occur', which is a drop-in replacement.
   (fset 'multi-occur #'consult-multi-occur)
 
-  ;; Configure other variables and modes in the :config section, after lazily loading the package
   :config
-
-  ;; Optionally configure a function which returns the project root directory
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-root-function #'projectile-project-root)
-
-  ;; Optionally configure narrowing key.
-  ;; Both < and C-+ work reasonably well.
-  (setq consult-narrow-key "<") ;; (kbd "C-+")
-  ;; Optionally make narrowing help available in the minibuffer.
-  ;; Probably not needed if you are using which-key.
-  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
-
-  ;; Optional configure a view library to be used by `consult-buffer'.
-  ;; The view library must provide two functions, one to open the view by name,
-  ;; and one function which must return a list of views as strings.
-  ;; Example: https://github.com/minad/bookmark-view/
-  ;; (setq consult-view-open-function #'bookmark-jump
-  ;;       consult-view-list-function #'bookmark-view-names)
-
-  ;; Optionally enable previews. Note that individual previews can be disabled
-  ;; via customization variables.
-  (consult-preview-mode))
+  (setq consult-narrow-key "<"))
 
 ;; Enable Consult-Selectrum integration.
 ;; This package should be installed if Selectrum is used.
