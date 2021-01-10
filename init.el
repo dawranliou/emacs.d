@@ -854,12 +854,12 @@
 
 (use-package company
   :blackout t
-  :hook (;(lsp-mode . company-mode)
-         (eglot-managed-mode . company-mode))
-  :bind (:map company-active-map
-         ("<tab>" . company-complete-selection))
-        (:map eglot-mode-map
-         ("<tab>" . company-indent-or-complete-common))
+  :hook (after-init . global-company-mode)
+  :bind* ("M-TAB" . company-manual-begin)
+  :bind (([remap completion-at-point] . #'company-manual-begin)
+         ([remap complete-symbol] . #'company-manual-begin)
+         (:map company-active-map
+               ("<tab>" . company-complete-selection)))
   :custom
   (company-minimum-prefix-length 1)
   (company-idle-delay nil)
