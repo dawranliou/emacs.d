@@ -67,6 +67,12 @@
 (straight-use-package 'use-package)
 ;;(setq use-package-always-defer t)
 
+(use-package blackout
+  :straight (:host github :repo "raxod502/blackout")
+  :demand t)
+
+(blackout 'auto-revert-mode)
+
 (mac-auto-operator-composition-mode)
 
 (setq-default delete-by-moving-to-trash t)
@@ -146,6 +152,7 @@
     "#" #'evil-visualstar/begin-search-backward))
 
 (use-package which-key
+  :blackout t
   :hook (after-init . which-key-mode)
   :diminish which-key-mode
   :config
@@ -222,6 +229,7 @@
   :defer t)
 
 (use-package doom-modeline
+  :disabled t
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-height 15)
@@ -380,6 +388,7 @@
    embark-become-indicator embark-action-indicator))
 
 (use-package consult
+  ;;:blackout t
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (("C-x M-:" . consult-complex-command)
          ("C-c h" . consult-history)
@@ -440,6 +449,7 @@
   :bind ("M-/" . evilnc-comment-or-uncomment-lines))
 
 (use-package ws-butler
+  :blackout t
   :hook ((text-mode . ws-butler-mode)
          (prog-mode . ws-butler-mode))
   :custom
@@ -450,6 +460,7 @@
   (ws-butler-keep-whitespace-before-point nil))
 
 (use-package lispy
+  :blackout t
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
@@ -458,6 +469,7 @@
   (lispy-close-quotes-at-end-p t))
 
 (use-package lispyville
+  :blackout t
   :hook ((lispy-mode . lispyville-mode))
   :custom
   (lispyville-key-theme '(operators
@@ -466,6 +478,7 @@
                           additional
                           additional-insert
                           additional-movement
+                          additional-wrap
                           (atom-movement normal visual)
                           slurp/barf-cp))
   :config
@@ -501,6 +514,7 @@
          ("\C-r" . undo-fu-only-redo)))
 
 (use-package smartparens
+  :blackout t
   :hook (prog-mode . smartparens-mode))
 
 (use-package expand-region
@@ -510,8 +524,11 @@
 
 (defun dawran/org-mode-setup ()
   (org-indent-mode)
+  (blackout 'org-indent-mode)
   (variable-pitch-mode 1)
+  (blackout 'buffer-face-mode)
   (visual-line-mode 1)
+  (blackout 'visual-line-mode)
   (dawran/visual-fill))
 
 (use-package org
@@ -539,6 +556,7 @@
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 (use-package evil-org
+  :blackout t
   :after org
   :hook ((org-mode . evil-org-mode)
          (evil-org-mode . (lambda ()
@@ -710,7 +728,7 @@
   ("C-M-'" . eshell-toggle))
 
 (use-package projectile
-  :defer 1
+  :blackout t
   :commands projectile-project-name
   :custom
   (projectile-completion-system 'default)
@@ -789,6 +807,7 @@
         clojure-align-forms-automatically t))
 
 (use-package cider
+  :blackout clj-refactor-mode
   :commands cider
   :config
   (setq cider-repl-display-in-current-window nil
@@ -834,6 +853,7 @@
   (add-hook 'markdown-mode-hook 'dw/markdown-mode-hook)))
 
 (use-package company
+  :blackout t
   :hook (;(lsp-mode . company-mode)
          (eglot-managed-mode . company-mode))
   :bind (:map company-active-map
@@ -863,16 +883,20 @@
                 (company-ensure-emulation-alist)))))
 
 (use-package company-box
+  :blackout t
   :hook (company-mode . company-box-mode))
 
 (use-package flycheck
   :hook (lsp-mode . flycheck-mode))
 
 (use-package flyspell
+  :blackout t
   :straight nil
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
+
+(blackout 'eldoc-mode)
 
 (setq world-clock-list '(("Asia/Taipei" "Taipei")
                          ("America/Toronto" "Toronto")

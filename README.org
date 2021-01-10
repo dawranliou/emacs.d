@@ -22,6 +22,7 @@ by a bunch of resources I’ve found online:
   - [[#measure-the-startup-time][Measure the startup time]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
+  - [[#blackout][Blackout]]
 - [[#macos][MacOS]]
 - [[#keybindings][Keybindings]]
   - [[#esc-cancels-all][ESC Cancels All]]
@@ -89,6 +90,7 @@ by a bunch of resources I’ve found online:
   - [[#company][Company]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
   - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
+  - [[#eldoc][Eldoc]]
 - [[#misc][Misc]]
   - [[#world-time][World Time]]
 :END:
@@ -275,6 +277,22 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
 #+end_src
 
+** Blackout
+
+[[https://github.com/raxod502/blackout][Blackout]] is an easy way to turn off mode line lighters. It's similar to
+diminish.el or delight.el. See the comparisons at:
+https://github.com/raxod502/blackout.
+
+#+begin_src emacs-lisp
+
+  (use-package blackout
+    :straight (:host github :repo "raxod502/blackout")
+    :demand t)
+
+  (blackout 'auto-revert-mode)
+
+#+end_src
+
 * MacOS
 
 #+begin_src emacs-lisp
@@ -405,6 +423,7 @@ possible key bindings in the mode of your current buffer.
 #+begin_src emacs-lisp
 
   (use-package which-key
+    :blackout t
     :hook (after-init . which-key-mode)
     :diminish which-key-mode
     :config
@@ -477,7 +496,6 @@ possible key bindings in the mode of your current buffer.
   (setq-default line-spacing 0.1)
 
 #+end_src
-
 ** Display line number
 
 #+begin_src emacs-lisp
@@ -536,6 +554,7 @@ correctly.
     :defer t)
 
   (use-package doom-modeline
+    :disabled t
     :hook (after-init . doom-modeline-mode)
     :custom
     (doom-modeline-height 15)
@@ -784,6 +803,7 @@ Display highlighting on whatever paren matches the one before or after point.
 #+begin_src emacs-lisp
 
   (use-package consult
+    ;;:blackout t
     ;; Replace bindings. Lazily loaded due by `use-package'.
     :bind (("C-x M-:" . consult-complex-command)
            ("C-c h" . consult-history)
@@ -877,6 +897,7 @@ Default to an indentation size of 2 spaces since it’s the norm for pretty much
 #+begin_src emacs-lisp
 
   (use-package ws-butler
+    :blackout t
     :hook ((text-mode . ws-butler-mode)
            (prog-mode . ws-butler-mode))
     :custom
@@ -895,6 +916,7 @@ I prefer to use [[https://github.com/abo-abo/lispy][lispy]] and [[https://github
 #+begin_src emacs-lisp
 
   (use-package lispy
+    :blackout t
     :hook ((emacs-lisp-mode . lispy-mode)
            (clojure-mode . lispy-mode)
            (clojurescript-mode . lispy-mode)
@@ -903,6 +925,7 @@ I prefer to use [[https://github.com/abo-abo/lispy][lispy]] and [[https://github
     (lispy-close-quotes-at-end-p t))
 
   (use-package lispyville
+    :blackout t
     :hook ((lispy-mode . lispyville-mode))
     :custom
     (lispyville-key-theme '(operators
@@ -911,6 +934,7 @@ I prefer to use [[https://github.com/abo-abo/lispy][lispy]] and [[https://github
                             additional
                             additional-insert
                             additional-movement
+                            additional-wrap
                             (atom-movement normal visual)
                             slurp/barf-cp))
     :config
@@ -966,6 +990,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+begin_src emacs-lisp
 
   (use-package smartparens
+    :blackout t
     :hook (prog-mode . smartparens-mode))
 
 #+end_src
@@ -988,8 +1013,11 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
   (defun dawran/org-mode-setup ()
     (org-indent-mode)
+    (blackout 'org-indent-mode)
     (variable-pitch-mode 1)
+    (blackout 'buffer-face-mode)
     (visual-line-mode 1)
+    (blackout 'visual-line-mode)
     (dawran/visual-fill))
 
   (use-package org
@@ -1017,6 +1045,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
     (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
   (use-package evil-org
+    :blackout t
     :after org
     :hook ((org-mode . evil-org-mode)
            (evil-org-mode . (lambda ()
@@ -1262,7 +1291,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+begin_src emacs-lisp
 
   (use-package projectile
-    :defer 1
+    :blackout t
     :commands projectile-project-name
     :custom
     (projectile-completion-system 'default)
@@ -1383,6 +1412,7 @@ primarily with Emacs' built-in libraries:
           clojure-align-forms-automatically t))
 
   (use-package cider
+    :blackout clj-refactor-mode
     :commands cider
     :config
     (setq cider-repl-display-in-current-window nil
@@ -1440,6 +1470,7 @@ primarily with Emacs' built-in libraries:
 #+begin_src emacs-lisp
 
   (use-package company
+    :blackout t
     :hook (;(lsp-mode . company-mode)
            (eglot-managed-mode . company-mode))
     :bind (:map company-active-map
@@ -1469,6 +1500,7 @@ primarily with Emacs' built-in libraries:
                   (company-ensure-emulation-alist)))))
 
   (use-package company-box
+    :blackout t
     :hook (company-mode . company-box-mode))
 
 #+end_src
@@ -1487,10 +1519,18 @@ primarily with Emacs' built-in libraries:
 #+begin_src emacs-lisp
 
   (use-package flyspell
+    :blackout t
     :straight nil
     :hook
     (prog-mode . flyspell-prog-mode)
     (text-mode . flyspell-mode))
+
+#+end_src
+** Eldoc
+
+#+begin_src emacs-lisp
+
+  (blackout 'eldoc-mode)
 
 #+end_src
 * Misc
