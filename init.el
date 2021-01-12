@@ -274,6 +274,11 @@
     (format (format "%%s%%%ds" width) left right)))
 
 (defcustom my/mode-line-left
+  nil
+  "Composite mode line construct to be shown left-aligned."
+  :type 'sexp)
+
+(defcustom my/mode-line-right
   '(;; Show [*] if the buffer is modified.
     (:eval (my/mode-line-buffer-modified-status))
     " "
@@ -286,11 +291,6 @@
     "  "
     evil-mode-line-tag
     mode-line-modes)
-  "Composite mode line construct to be shown left-aligned."
-  :type 'sexp)
-
-(defcustom my/mode-line-right
-  nil
   "Composite mode line construct to be shown right-aligned."
   :type 'sexp)
 
