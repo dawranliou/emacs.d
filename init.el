@@ -792,6 +792,7 @@
     "r" 'lsp-find-references))
 
 (use-package eglot
+  :blackout t
   :hook ((clojure-mode . eglot-ensure)
          (clojurec-mode . eglot-ensure)
          (clojurescript-mode . eglot-ensure))
@@ -804,13 +805,13 @@
     "r" 'xref-find-references))
 
 (use-package clojure-mode
-  :defer
+  :blackout clj-refactor-mode
   :config
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
 
 (use-package cider
-  :blackout clj-refactor-mode
+  :blackout t
   :commands cider
   :config
   (setq cider-repl-display-in-current-window nil
@@ -901,7 +902,8 @@
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
 
-(blackout 'eldoc-mode)
+(use-package eldoc
+  :blackout t)
 
 (setq world-clock-list '(("Asia/Taipei" "Taipei")
                          ("America/Toronto" "Toronto")
