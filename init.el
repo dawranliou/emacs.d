@@ -856,6 +856,7 @@
   (add-hook 'markdown-mode-hook 'dw/markdown-mode-hook)))
 
 (use-package company
+  :disabled t
   :blackout t
   :hook (after-init . global-company-mode)
   :bind* ("M-TAB" . company-manual-begin)
@@ -886,6 +887,7 @@
                 (company-ensure-emulation-alist)))))
 
 (use-package company-box
+  :disabled t
   :blackout t
   :hook (company-mode . company-box-mode))
 
