@@ -388,6 +388,7 @@
    embark-become-indicator embark-action-indicator))
 
 (use-package consult
+  :disabled t
   ;;:blackout t
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (("C-x M-:" . consult-complex-command)
@@ -423,11 +424,13 @@
 ;; Enable Consult-Selectrum integration.
 ;; This package should be installed if Selectrum is used.
 (use-package consult-selectrum
+  :disabled t
   :after selectrum
   :demand t)
 
 ;; Optionally add the `consult-flycheck' command.
 (use-package consult-flycheck
+  :disabled t
   :bind (:map flycheck-command-map
               ("!" . consult-flycheck)))
 
