@@ -236,6 +236,74 @@
   (doom-modeline-lsp t)
   (doom-modeline-icon nil))
 
+;;;; Mode line
+
+;; The following code customizes the mode line to something like:
+;; [*] radian.el   18% (18,0)     [radian:develop*]  (Emacs-Lisp)
+
+(defun my/mode-line-buffer-modified-status ()
+  "Return a mode line construct indicating buffer modification status.
+  This is [*] if the buffer has been modified and whitespace
+  otherwise. (Non-file-visiting buffers are never considered to be
+  modified.) It is shown in the same color as the buffer name, i.e.
+  `mode-line-buffer-id'."
+  (propertize
+   (if (and (buffer-modified-p)
+            (buffer-file-name))
+       "[*]"
+     "   ")
+   'face 'mode-line-buffer-id))
+
+;; Normally the buffer name is right-padded with whitespace until it
+;; is at least 12 characters. This is a waste of space, so we
+;; eliminate the padding here. Check the docstrings for more
+;; information.
+(setq-default mode-line-buffer-identification
+              (propertized-buffer-identification "%b"))
+
+;; Make `mode-line-position' show the column, not just the row.
+(column-number-mode +1)
+
+;; https://emacs.stackexchange.com/a/7542/12534
+(defun my/mode-line-align (left right)
+  "Render a left/right aligned string for the mode line.
+  LEFT and RIGHT are strings, and the return value is a string that
+  displays them left- and right-aligned respectively, separated by
+  spaces."
+  (let ((width (- (window-total-width) (length left))))
+    (format (format "%%s%%%ds" width) left right)))
+
+(defcustom my/mode-line-left
+  '(;; Show [*] if the buffer is modified.
+    (:eval (my/mode-line-buffer-modified-status))
+    " "
+    ;; Show the name of the current buffer.
+    mode-line-buffer-identification
+    " "
+    ;; Show the row and column of point.
+    mode-line-position
+    ;; Show the active major and minor modes.
+    "  "
+    evil-mode-line-tag
+    mode-line-modes)
+  "Composite mode line construct to be shown left-aligned."
+  :type 'sexp)
+
+(defcustom my/mode-line-right
+  nil
+  "Composite mode line construct to be shown right-aligned."
+  :type 'sexp)
+
+;; Actually reset the mode line format to show all the things we just
+;; defined.
+(setq-default mode-line-format
+              '(:eval (replace-regexp-in-string
+                       "%" "%%"
+                       (my/mode-line-align
+                        (format-mode-line my/mode-line-left)
+                        (format-mode-line my/mode-line-right))
+                       'fixedcase 'literal)))
+
 (use-package default-text-scale
   :defer t
   :config
