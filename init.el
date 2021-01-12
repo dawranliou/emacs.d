@@ -754,6 +754,12 @@
   :config
   (setq vterm-max-scrollback 10000))
 
+(defun dawran/eshell-history ()
+  (interactive)
+  (insert (completing-read
+           "Eshell history:"
+           (ring-elements eshell-history-ring))))
+
 (defun dawran/configure-eshell ()
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
@@ -765,7 +771,7 @@
   (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
   ;; Bind some useful keys for evil-mode
-  ;(evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'counsel-esh-history)
+  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
   (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
 
   (setq eshell-history-size          10000
