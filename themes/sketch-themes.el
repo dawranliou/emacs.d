@@ -95,7 +95,7 @@
       (line-number (:background ,bg :foreground ,weaker))
 
       ;; mode line
-      (mode-line (:foreground ,fg :background ,bg :overline ,weak :box (:line-width 4 :color ,bg)))
+      (mode-line (:foreground ,fg :background ,weakest :box (:line-width 4 :color ,weakest)))
       (mode-line-inactive (:foreground ,weaker :background ,bg :overline ,weakest))
       (doom-modeline-bar (:background ,weaker))
       (doom-modeline-info (:inherit bold))
