@@ -886,7 +886,6 @@
         clojure-align-forms-automatically t))
 
 (use-package cider
-  :blackout t
   :commands cider
   :config
   (setq cider-repl-display-in-current-window nil
