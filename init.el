@@ -287,9 +287,9 @@
     " "
     ;; Show the row and column of point.
     mode-line-position
-    ;; Show the active major and minor modes.
-    "  "
     evil-mode-line-tag
+    ;; Show the active major and minor modes.
+    " "
     mode-line-modes)
   "Composite mode line construct to be shown right-aligned."
   :type 'sexp)
