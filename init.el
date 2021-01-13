@@ -757,7 +757,9 @@
   (interactive)
   (insert (completing-read
            "Eshell history:"
-           (ring-elements eshell-history-ring))))
+           (cl-remove-duplicates
+            (ring-elements eshell-history-ring)
+            :test #'equal :from-end t))))
 
 (defun dawran/configure-eshell ()
   ;; Save command history when commands are entered
