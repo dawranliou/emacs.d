@@ -881,6 +881,8 @@
 
 (use-package clojure-mode
   :blackout clj-refactor-mode
+  :custom
+  (cljr-magic-requires nil)
   :config
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
