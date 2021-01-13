@@ -364,6 +364,8 @@ Some tips can be found here:
     (setq evil-want-C-i-jump t)
     (setq evil-move-beyond-eol t)
     (setq evil-move-cursor-back nil)
+    :custom
+    (evil-undo-system 'undo-fu)
     :config
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
@@ -1055,10 +1057,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
 #+begin_src emacs-lisp
 
-  (use-package undo-fu
-    :bind (:map evil-normal-state-map
-           ("u" . undo-fu-only-undo)
-           ("\C-r" . undo-fu-only-redo)))
+  (use-package undo-fu)
 
 #+end_src
 

@@ -106,6 +106,8 @@
   (setq evil-want-C-i-jump t)
   (setq evil-move-beyond-eol t)
   (setq evil-move-cursor-back nil)
+  :custom
+  (evil-undo-system 'undo-fu)
   :config
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
@@ -579,10 +581,7 @@
          ("C-n" . evil-multiedit-next)
          ("C-p" . evil-multiedit-prev)))
 
-(use-package undo-fu
-  :bind (:map evil-normal-state-map
-         ("u" . undo-fu-only-undo)
-         ("\C-r" . undo-fu-only-redo)))
+(use-package undo-fu)
 
 (use-package smartparens
   :blackout t
