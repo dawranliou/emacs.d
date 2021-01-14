@@ -9,6 +9,10 @@ by a bunch of resources I’ve found online:
 - [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org]]
 - https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org
 
+A recent screenshot:
+
+[[file:screenshot.png]]
+
 * Table of Contents
 :PROPERTIES:
 :TOC:      :include all
