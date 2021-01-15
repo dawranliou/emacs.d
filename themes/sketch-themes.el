@@ -115,7 +115,6 @@
       (font-lock-type-face (:foreground ,fg))
       (font-lock-variable-name-face (:foreground ,fg :bold t))
       (font-lock-warning-face (:foreground ,fg :underline (:color ,warning :style wave)))
-      (hl-fill-column-face (:background ,weakest))
       (fill-column-indicator (:foreground ,weakest))
 
       ;; clojure mode
@@ -125,7 +124,7 @@
       (hl-line (:background ,weakest))
 
       ;; hl fill column
-      (hl-fill-column-face (:background ,weakest))
+      (hl-fill-column-face (:background ,weaker))
 
       ;; company
       (company-tooltip (:foreground ,fg :background ,weakest))
