@@ -539,7 +539,9 @@
          (clojurescript-mode . lispy-mode)
          (cider-repl-mode . lispy-mode))
   :custom
-  (lispy-close-quotes-at-end-p t))
+  (lispy-close-quotes-at-end-p t)
+  :config
+  (add-hook 'lispy-mode-hook #'turn-off-smartparens-mode))
 
 (use-package lispyville
   :blackout t
