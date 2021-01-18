@@ -101,7 +101,7 @@
    `(org-footnote  ((,class (:underline t :foreground ,fg4))))
    `(org-link ((,class (:underline t :foreground ,type ))))
    `(org-special-keyword ((,class (:foreground ,func))))
-   `(org-block ((,class (:foreground ,fg3))))
+   `(org-block ((,class (:foreground ,fg1))))
    `(org-quote ((,class (:inherit org-block :slant italic))))
    `(org-verse ((,class (:inherit org-block :slant italic))))
    `(org-todo ((,class (:box (:line-width 1 :color ,fg3) :foreground ,keyword :bold t))))
@@ -172,7 +172,7 @@
    `(magit-hunk-heading           ((,class (:background ,bg3))))
    `(magit-section-highlight      ((,class (:background ,bg2))))
    `(magit-hunk-heading-highlight ((,class (:background ,bg3))))
-   `(magit-diff-context-highlight ((,class (:background ,bg3 :foreground ,fg3))))
+   `(magit-diff-context-highlight ((,class (:background ,bg2))))
    `(magit-diffstat-added   ((,class (:foreground ,type))))
    `(magit-diffstat-removed ((,class (:foreground ,var))))
    `(magit-process-ok ((,class (:foreground ,func :weight bold))))
@@ -254,7 +254,7 @@
    `(jde-java-font-lock-number-face ((t (:foreground ,var))))
    ;; emacs >= 26.1
    `(line-number ((t (:inherit fringe :background ,bg1 :foreground ,fg4))))
-   `(line-number-current-line ((t (:inherit (hl-line fringe) :foreground ,fg3 :weight bold))))
+   `(line-number-current-line ((t (:inherit (hl-line fringe) :foreground ,fg2 :weight bold))))
    ;; emacs >= 27.1
    `(tab-line ((,class (:inherit fringe :box (:line-width 4 :color ,bg2)))))
    `(tab-line-tab ((,class (:inherit tab-line))))
