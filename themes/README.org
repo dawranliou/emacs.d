@@ -23,7 +23,7 @@ I also shared some thoughts on syntax highlighting on my blog:
 
 * Oil 6 Theme
 
-A theme based on the [[Oil 6 Palette created by GrafxKid][https://lospec.com/palette-list/oil-6]]. The palette has the
+A theme based on the [[https://lospec.com/palette-list/oil-6][Oil 6 Palette created by GrafxKid]] The palette has the
 following six colours:
 
 - #fbf5ef
