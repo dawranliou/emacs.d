@@ -1,4 +1,18 @@
-#+TITLE: Sketch Themes
+#+TITLE: Daw-Ran Liou's Emacs Theme Gallery
+
+* Table of Contents
+:PROPERTIES:
+:TOC:      :include all
+:END:
+:CONTENTS:
+- [[#table-of-contents][Table of Contents]]
+- [[#sketch-themes][Sketch Themes]]
+  - [[#sketch-white-theme][sketch-white-theme]]
+  - [[#sketch-black-theme][sketch-black-theme]]
+- [[#oil-6-theme][Oil 6 Theme]]
+:END:
+
+* Sketch Themes
 
 This is an ongoing evolution of my theme, inspired by a bunch of resources I’ve
 found online:
@@ -11,12 +25,12 @@ I also shared some thoughts on syntax highlighting on my blog:
 
 - https://dawranliou.com/blog/rethink-syntax-highlighting/
 
-* sketch-white-theme
+** sketch-white-theme
 
 #+CAPTION: A screenshot of sketch-white-theme
 [[./screenshots/sketch-white-theme.png]]
 
-* sketch-black-theme
+** sketch-black-theme
 
 #+CAPTION: A screenshot of sketch-black-theme
 [[./screenshots/sketch-black-theme-on-white.png]]
