@@ -20,3 +20,18 @@ I also shared some thoughts on syntax highlighting on my blog:
 
 #+CAPTION: A screenshot of sketch-black-theme
 [[./screenshots/sketch-black-theme-on-white.png]]
+
+* Oil 6 Theme
+
+A theme based on the [[Oil 6 Palette created by GrafxKid][https://lospec.com/palette-list/oil-6]]. The palette has the
+following six colours:
+
+- #fbf5ef
+- #f2d3ab
+- #c69fa5
+- #8b6d9c
+- #494d7e
+- #272744
+
+#+CAPTION: A screenshot of oil6-theme
+[[file:screenshots/oil6-theme.png]]
