@@ -20,6 +20,7 @@ A recent screenshot:
 :CONTENTS:
 - [[#table-of-contents][Table of Contents]]
 - [[#early-initel][Early-init.el]]
+- [[#private-lisp][Private Lisp]]
 - [[#startup-performance][Startup Performance]]
   - [[#gc][GC]]
   - [[#unset-file-name-handler-alist-temporarily][Unset file-name-handler-alist temporarily]]
@@ -127,6 +128,16 @@ package-enable-at-startup, package-load-list, and package-user-dir.
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist)
   (setq frame-inhibit-implied-resize t)
+
+#+end_src
+
+* Private Lisp
+
+The =private= folder is for things I do not wish to track in the git repo.
+
+#+begin_src emacs-lisp
+
+  (add-to-list 'load-path "~/.emacs.d/private/")
 
 #+end_src
 
