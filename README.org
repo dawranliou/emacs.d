@@ -133,14 +133,6 @@ package-enable-at-startup, package-load-list, and package-user-dir.
 
 * Private Lisp
 
-The =private= folder is for things I do not wish to track in the git repo.
-
-#+begin_src emacs-lisp
-
-  (add-to-list 'load-path "~/.emacs.d/private/")
-
-#+end_src
-
 Load =private.el= after init.
 
 #+begin_src emacs-lisp

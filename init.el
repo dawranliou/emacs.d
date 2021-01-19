@@ -1,5 +1,3 @@
-(add-to-list 'load-path "~/.emacs.d/private/")
-
 (add-hook
  'after-init-hook
  (lambda ()
