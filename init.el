@@ -176,7 +176,7 @@
     :states '(normal insert visual emacs)
     :keymaps 'override
     :prefix "SPC"
-    :global-prefix "C-SPC")
+    :global-prefix "M-SPC")
 
   (general-create-definer dawran/localleader-keys
     :states '(normal insert visual emacs)
