@@ -535,8 +535,7 @@ possible key bindings in the mode of your current buffer.
 
   (use-package hl-line
     :hook
-    (prog-mode . hl-line-mode)
-    (text-mode . hl-line-mode))
+    (prog-mode . hl-line-mode))
 
 #+end_src
 

@@ -221,8 +221,7 @@
 
 (use-package hl-line
   :hook
-  (prog-mode . hl-line-mode)
-  (text-mode . hl-line-mode))
+  (prog-mode . hl-line-mode))
 
 (add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
