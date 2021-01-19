@@ -1,10 +1,3 @@
-(add-hook
- 'after-init-hook
- (lambda ()
-   (let ((private-file (concat user-emacs-directory "private.el")))
-     (when (file-exists-p private-file)
-       (load-file private-file)))))
-
 ;; -*- lexical-binding: t; -*-
 ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
 ;;       Emacs and init.el will be generated automatically!
@@ -45,6 +38,13 @@
                              (float-time
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
+
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (let ((private-file (concat user-emacs-directory "private.el")))
+     (when (file-exists-p private-file)
+       (load-file private-file)))))
 
 ;; Keep backup files and auto-save files in the backups directory
 (setq backup-directory-alist

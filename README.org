@@ -20,11 +20,11 @@ A recent screenshot:
 :CONTENTS:
 - [[#table-of-contents][Table of Contents]]
 - [[#early-initel][Early-init.el]]
-- [[#private-lisp][Private Lisp]]
 - [[#startup-performance][Startup Performance]]
   - [[#gc][GC]]
   - [[#unset-file-name-handler-alist-temporarily][Unset file-name-handler-alist temporarily]]
   - [[#measure-the-startup-time][Measure the startup time]]
+- [[#private-lisp][Private Lisp]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
   - [[#blackout][Blackout]]
@@ -131,21 +131,6 @@ package-enable-at-startup, package-load-list, and package-user-dir.
 
 #+end_src
 
-* Private Lisp
-
-Load =private.el= after init.
-
-#+begin_src emacs-lisp
-
-  (add-hook
-   'after-init-hook
-   (lambda ()
-     (let ((private-file (concat user-emacs-directory "private.el")))
-       (when (file-exists-p private-file)
-         (load-file private-file)))))
-
-#+end_src
-
 * Startup Performance
 
 Source: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]
@@ -238,6 +223,21 @@ none of them are (typically) necessary at startup, so we disable them
                                (float-time
                                 (time-subtract after-init-time before-init-time)))
                        gcs-done)))
+
+#+end_src
+
+* Private Lisp
+
+Load =private.el= after init.
+
+#+begin_src emacs-lisp
+
+  (add-hook
+   'after-init-hook
+   (lambda ()
+     (let ((private-file (concat user-emacs-directory "private.el")))
+       (when (file-exists-p private-file)
+         (load-file private-file)))))
 
 #+end_src
 
