@@ -670,11 +670,12 @@
   (org-journal-date-prefix "* ")
   (org-journal-file-format "%F.org")
   (org-journal-dir "~/org/journal/")
-  (org-journal-file-type 'weekly))
+  (org-journal-file-type 'weekly)
+  (org-journal-find-file #'find-file))
 
 (dawran/leader-keys
   "n" '(:ignore t :which-key "notes")
-  "nj" '(org-journal-new-entry :which-key "journal"))
+  "nj" '(org-journal-open-current-journal-file :which-key "journal"))
 
 (use-package org-roam
   :commands org-roam-find-file
