@@ -1,5 +1,12 @@
 (add-to-list 'load-path "~/.emacs.d/private/")
 
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (let ((private-file (concat user-emacs-directory "private.el")))
+     (when (file-exists-p private-file)
+       (load-file private-file)))))
+
 ;; -*- lexical-binding: t; -*-
 ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
 ;;       Emacs and init.el will be generated automatically!
