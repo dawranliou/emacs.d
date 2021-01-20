@@ -36,6 +36,7 @@ A recent screenshot:
   - [[#keybinding-panel-which-key][Keybinding Panel (which-key)]]
   - [[#simplify-leader-bindings-generalel][Simplify Leader Bindings (general.el)]]
   - [[#better-default-bindings][Better Default Bindings]]
+  - [[#quickly-jump-to-scratch-buffer][Quickly Jump to Scratch Buffer]]
 - [[#ui][UI]]
   - [[#clean-up-emacs-ui-to-be-more-minimal][Clean up Emacs' UI to be more minimal]]
   - [[#display-line-number][Display line number]]
@@ -329,12 +330,16 @@ https://github.com/raxod502/blackout.
   (setq mac-option-modifier 'meta)
   (setq mac-right-option-modifier 'meta)
 
+  ;; Make keybindings feel natural on mac
   (global-set-key (kbd "s-s") 'save-buffer)             ;; save
   (global-set-key (kbd "s-S") 'write-file)              ;; save as
   (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
   (global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
   (global-set-key (kbd "s-k") 'kill-this-buffer)
   (global-set-key (kbd "s-=") 'text-scale-adjust)
+  (global-set-key (kbd "s-v") 'yank)
+  (global-set-key (kbd "s-c") 'kill-ring-save)
+  (global-set-key (kbd "s-z") 'undo)
 
 #+end_src
 
@@ -489,6 +494,14 @@ possible key bindings in the mode of your current buffer.
 
   (global-set-key (kbd "C-x C-b") #'switch-to-buffer)
   (global-set-key (kbd "C-M-j") #'switch-to-buffer)
+** Quickly Jump to Scratch Buffer
+
+#+begin_src emacs-lisp
+
+  (global-set-key (kbd "s-t")
+                  #'(lambda ()
+                      (interactive)
+                      (switch-to-buffer (get-buffer-create "*scratch*"))))
 
 #+end_src
 
@@ -1049,7 +1062,7 @@ Default to an indentation size of 2 spaces since it’s the norm for pretty much
 #+begin_src emacs-lisp
 
   (use-package evil-nerd-commenter
-    :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+    :bind ("s-/" . evilnc-comment-or-uncomment-lines))
 
 #+end_src
 

@@ -92,12 +92,16 @@
 (setq mac-option-modifier 'meta)
 (setq mac-right-option-modifier 'meta)
 
+;; Make keybindings feel natural on mac
 (global-set-key (kbd "s-s") 'save-buffer)             ;; save
 (global-set-key (kbd "s-S") 'write-file)              ;; save as
 (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
 (global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
 (global-set-key (kbd "s-k") 'kill-this-buffer)
 (global-set-key (kbd "s-=") 'text-scale-adjust)
+(global-set-key (kbd "s-v") 'yank)
+(global-set-key (kbd "s-c") 'kill-ring-save)
+(global-set-key (kbd "s-z") 'undo)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -193,6 +197,10 @@
 
 (global-set-key (kbd "C-x C-b") #'switch-to-buffer)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
+(global-set-key (kbd "s-t")
+                #'(lambda ()
+                    (interactive)
+                    (switch-to-buffer (get-buffer-create "*scratch*"))))
 
 (setq inhibit-startup-message t)
 
@@ -582,7 +590,7 @@ FACE defaults to inheriting from default and highlight."
 (setq-default indent-tabs-mode nil)
 
 (use-package evil-nerd-commenter
-  :bind ("M-/" . evilnc-comment-or-uncomment-lines))
+  :bind ("s-/" . evilnc-comment-or-uncomment-lines))
 
 (use-package ws-butler
   :blackout t
