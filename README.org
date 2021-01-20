@@ -84,6 +84,7 @@ A recent screenshot:
   - [[#eshell][Eshell]]
     - [[#toggling-eshell][Toggling eshell]]
 - [[#development][Development]]
+  - [[#project][Project]]
   - [[#projectile][Projectile]]
   - [[#magit][Magit]]
   - [[#ripgrep][Ripgrep]]
@@ -1468,7 +1469,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
   (use-package eshell-toggle
     :custom
-    (eshell-toggle-use-projectile-root t)
+    (eshell-toggle-use-git-root t)
     (eshell-toggle-run-command nil)
     :bind
     ("C-M-'" . eshell-toggle))
@@ -1476,11 +1477,37 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 #+end_src
 
 * Development
+** Project
+
+#+begin_src emacs-lisp
+
+  (use-package project
+    :commands project-root
+    :bind
+    (("s-p" . project-find-file)
+     ("s-P" . project-switch-project))
+    :init
+    (defun project-magit-status+ ()
+      ""
+      (interactive)
+      (magit-status (project-root (project-current t))))
+    :custom
+    (project-switch-commands '((project-find-file "Find file")
+                               (project-find-regexp "Find regexp")
+                               (project-dired "Dired")
+                               (project-magit-status+ "Git" ?g)
+                               (project-eshell "Eshell"))))
+
+#+end_src
+
 ** Projectile
+
+Currently disabled in favor of default project.el
 
 #+begin_src emacs-lisp
 
   (use-package projectile
+    :disabled t
     :blackout t
     :commands projectile-project-name
     :custom
@@ -1522,7 +1549,6 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
   (use-package rg
     :bind ("s-F" . rg-project)
-    :after projectile
     :config
     (rg-enable-default-bindings))
 

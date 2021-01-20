@@ -880,12 +880,30 @@ FACE defaults to inheriting from default and highlight."
 
 (use-package eshell-toggle
   :custom
-  (eshell-toggle-use-projectile-root t)
+  (eshell-toggle-use-git-root t)
   (eshell-toggle-run-command nil)
   :bind
   ("C-M-'" . eshell-toggle))
 
+(use-package project
+  :commands project-root
+  :bind
+  (("s-p" . project-find-file)
+   ("s-P" . project-switch-project))
+  :init
+  (defun project-magit-status+ ()
+    ""
+    (interactive)
+    (magit-status (project-root (project-current t))))
+  :custom
+  (project-switch-commands '((project-find-file "Find file")
+                             (project-find-regexp "Find regexp")
+                             (project-dired "Dired")
+                             (project-magit-status+ "Git" ?g)
+                             (project-eshell "Eshell"))))
+
 (use-package projectile
+  :disabled t
   :blackout t
   :commands projectile-project-name
   :custom
@@ -915,7 +933,6 @@ FACE defaults to inheriting from default and highlight."
 
 (use-package rg
   :bind ("s-F" . rg-project)
-  :after projectile
   :config
   (rg-enable-default-bindings))
 
