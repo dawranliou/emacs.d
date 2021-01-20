@@ -119,6 +119,7 @@
   (setq evil-move-cursor-back nil)
   :custom
   (evil-undo-system 'undo-fu)
+  (evil-symbol-word-search t)
   :config
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
@@ -142,6 +143,10 @@
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)
+
+  ;; Let emacs bindings for M-. and M-, take over
+  (define-key evil-normal-state-map (kbd "M-.") nil)
+  (define-key evil-normal-state-map (kbd "M-,") nil)
 
   (global-set-key (kbd "s-w") 'evil-window-delete))
 
@@ -197,6 +202,8 @@
 
 (global-set-key (kbd "C-x C-b") #'switch-to-buffer)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
+(global-set-key (kbd "M-:") 'pp-eval-expression)
+
 (global-set-key (kbd "s-t")
                 #'(lambda ()
                     (interactive)
@@ -447,10 +454,10 @@ FACE defaults to inheriting from default and highlight."
 ;; the default Emacs interface for candidate selection.
 (use-package selectrum
   :straight (:host github :repo "raxod502/selectrum")
-  :defer t
   :init
   ;; This doesn't actually load Selectrum.
-  (selectrum-mode +1))
+  (selectrum-mode +1)
+  (dawran/leader-keys "TAB" #'selectrum-repeat))
 
 ;; Package `prescient' is a library for intelligent sorting and
 ;; filtering in various contexts.
@@ -467,7 +474,6 @@ FACE defaults to inheriting from default and highlight."
 (use-package selectrum-prescient
   :straight (:host github :repo "raxod502/prescient.el"
                    :files ("selectrum-prescient.el"))
-  :demand t
   :after selectrum
   :config
   (selectrum-prescient-mode +1))
@@ -947,11 +953,7 @@ FACE defaults to inheriting from default and highlight."
          (clojurescript-mode . eglot-ensure))
   :config
   (add-to-list 'eglot-server-programs
-               '((clojure-mode clojurescript-mode) . ("bash" "-c" "/usr/local/bin/clojure-lsp")))
-  (dawran/localleader-keys
-    :keymaps '(clojure-mode-map clojurescript-mode-map)
-    "d" 'xref-find-definitions
-    "r" 'xref-find-references))
+               '((clojure-mode clojurescript-mode) . ("bash" "-c" "/usr/local/bin/clojure-lsp"))))
 
 (use-package clojure-mode
   :blackout clj-refactor-mode

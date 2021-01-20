@@ -391,6 +391,7 @@ Some tips can be found here:
     (setq evil-move-cursor-back nil)
     :custom
     (evil-undo-system 'undo-fu)
+    (evil-symbol-word-search t)
     :config
     (evil-mode 1)
     (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
@@ -414,6 +415,10 @@ Some tips can be found here:
 
     (evil-set-initial-state 'messages-buffer-mode 'normal)
     (evil-set-initial-state 'dashboard-mode 'normal)
+
+    ;; Let emacs bindings for M-. and M-, take over
+    (define-key evil-normal-state-map (kbd "M-.") nil)
+    (define-key evil-normal-state-map (kbd "M-,") nil)
 
     (global-set-key (kbd "s-w") 'evil-window-delete))
 
@@ -494,6 +499,10 @@ possible key bindings in the mode of your current buffer.
 
   (global-set-key (kbd "C-x C-b") #'switch-to-buffer)
   (global-set-key (kbd "C-M-j") #'switch-to-buffer)
+  (global-set-key (kbd "M-:") 'pp-eval-expression)
+
+#+end_src
+
 ** Quickly Jump to Scratch Buffer
 
 #+begin_src emacs-lisp
@@ -868,10 +877,10 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   ;; the default Emacs interface for candidate selection.
   (use-package selectrum
     :straight (:host github :repo "raxod502/selectrum")
-    :defer t
     :init
     ;; This doesn't actually load Selectrum.
-    (selectrum-mode +1))
+    (selectrum-mode +1)
+    (dawran/leader-keys "TAB" #'selectrum-repeat))
 
   ;; Package `prescient' is a library for intelligent sorting and
   ;; filtering in various contexts.
@@ -888,7 +897,6 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   (use-package selectrum-prescient
     :straight (:host github :repo "raxod502/prescient.el"
                      :files ("selectrum-prescient.el"))
-    :demand t
     :after selectrum
     :config
     (selectrum-prescient-mode +1))
@@ -1575,11 +1583,7 @@ primarily with Emacs' built-in libraries:
            (clojurescript-mode . eglot-ensure))
     :config
     (add-to-list 'eglot-server-programs
-                 '((clojure-mode clojurescript-mode) . ("bash" "-c" "/usr/local/bin/clojure-lsp")))
-    (dawran/localleader-keys
-      :keymaps '(clojure-mode-map clojurescript-mode-map)
-      "d" 'xref-find-definitions
-      "r" 'xref-find-references))
+                 '((clojure-mode clojurescript-mode) . ("bash" "-c" "/usr/local/bin/clojure-lsp"))))
 
 #+end_src
 
