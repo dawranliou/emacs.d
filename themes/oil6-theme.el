@@ -191,7 +191,7 @@
    `(rainbow-delimiters-depth-7-face ((,class :foreground ,type)))
    `(rainbow-delimiters-depth-8-face ((,class :foreground ,var)))
    `(magit-item-highlight ((,class :background ,bg3)))
-   `(magit-section-heading        ((,class (:foreground ,keyword :weight bold))))
+   `(magit-section-heading        ((,class (:foreground ,func :weight bold))))
    `(magit-hunk-heading           ((,class (:background ,bg3))))
    `(magit-section-highlight      ((,class (:background ,bg2))))
    `(magit-hunk-heading-highlight ((,class (:background ,bg3))))
