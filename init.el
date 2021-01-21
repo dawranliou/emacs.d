@@ -597,7 +597,6 @@
 
 (use-package evil-org
   :blackout t
-  :after org
   :hook ((org-mode . evil-org-mode)
          (evil-org-mode . (lambda ()
                             (evil-org-set-key-theme '(navigation todo insert
@@ -607,7 +606,6 @@
   (evil-org-set-key-theme))
 
 (use-package org-bullets
-  :after org
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
@@ -698,13 +696,12 @@
 
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode)
-  :after (evil-collection)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
 (use-package dired-ranger
-  :after (dired evil-collection)
+  :after dired
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "y" 'dired-ranger-copy
