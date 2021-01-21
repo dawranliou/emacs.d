@@ -424,16 +424,11 @@ Some tips can be found here:
     (global-set-key (kbd "s-w") 'evil-window-delete))
 
   (use-package evil-collection
-    :after evil
-    :hook (evil-mode . evil-collection-mode)
-    :commands evil-collection-define-key
     :config
     (evil-collection-init))
 
   ;; Allows you to use the selection for * and #
   (use-package evil-visualstar
-    :after evil
-    :hook (evil-mode . evil-visualstar-mode)
     :commands (evil-visualstar/begin-search
                evil-visualstar/begin-search-forward
                evil-visualstar/begin-search-backward)
