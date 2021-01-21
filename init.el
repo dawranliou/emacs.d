@@ -892,7 +892,6 @@
         cider-repl-buffer-size-limit 100000
         cider-repl-result-prefix ";; => ")
   (add-hook 'cider-repl-mode-hook 'evil-insert-state)
-  (evil-collection-cider-setup)
   (dawran/localleader-keys
     :keymaps '(clojure-mode-map clojurescript-mode-map)
     "e" '(:ignore t :which-key "eval")
