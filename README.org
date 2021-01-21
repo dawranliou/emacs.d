@@ -8,6 +8,9 @@ by a bunch of resources I’ve found online:
 - https://github.com/hlissner/doom-emacs
 - [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org]]
 - https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org
+- https://github.com/meqif/.emacs.d
+- https://github.com/raxod502/radian/blob/develop/emacs/radian.el
+- https://github.com/oantolin/emacs-config
 
 A recent screenshot:
 
