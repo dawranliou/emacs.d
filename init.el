@@ -75,8 +75,7 @@
 ;;(setq use-package-always-defer t)
 
 (use-package blackout
-  :straight (:host github :repo "raxod502/blackout")
-  :demand t)
+  :straight (:host github :repo "raxod502/blackout"))
 
 (use-package autorevert
   :defer t
@@ -111,7 +110,6 @@
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
 (use-package evil
-  :defer .1
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -154,8 +152,8 @@
 
 (use-package evil-collection
   :after evil
-  :demand t
   :hook (evil-mode . evil-collection-mode)
+  :commands evil-collection-define-key
   :config
   (evil-collection-init))
 
@@ -179,7 +177,6 @@
   (setq which-key-idle-delay 1))
 
 (use-package general
-  :demand t
   :config
   (general-create-definer dawran/leader-keys
     :states '(normal insert visual emacs)
@@ -251,6 +248,7 @@
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160 :weight 'regular)
 
 (use-package all-the-icons
+  :disabled t
   :defer t)
 
 (use-package doom-modeline
@@ -330,6 +328,7 @@
                        'fixedcase 'literal)))
 
 (use-package default-text-scale
+  :disabled t
   :defer t
   :config
   (default-text-scale-mode))
@@ -376,7 +375,7 @@
   :defer t)
 
 (use-package emojify
-  :disabled
+  :disabled t
   :hook (after-init . global-emojify-mode))
 
 (use-package unicode-fonts
@@ -531,7 +530,6 @@
               ("!" . consult-flycheck)))
 
 (use-package helpful
-  :defer t
   :bind (;; Remap standard commands.
          ("C-h f"   . #'helpful-callable)
          ("C-h v"   . #'helpful-variable)
@@ -595,7 +593,6 @@
   (lispyville-set-key-theme))
 
 (use-package evil-multiedit
-  :defer 2
   :bind (:map evil-visual-state-map
          ("R" . evil-multiedit-match-all)
          ("M-d" . evil-multiedit-match-and-next)
@@ -733,9 +730,7 @@
 
 (use-package dired
   :straight nil
-  :demand t
   :commands (dired)
-  :after (evil-collection)
   :bind ("C-x C-j" . dired-jump)
   :init
   (setq dired-auto-revert-buffer t
@@ -752,15 +747,13 @@
 
 (use-package dired-x
   :after dired
-  :demand t
   :straight nil
   :init (setq-default dired-omit-files-p t)
   :config
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 (use-package dired-single
-  :after (dired evil-collection)
-  :demand t
+  :after dired
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "h" 'dired-single-up-directory
@@ -769,14 +762,12 @@
 (use-package dired-hide-dotfiles
   :hook (dired-mode . dired-hide-dotfiles-mode)
   :after (evil-collection)
-  :demand t
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 
 (use-package dired-ranger
   :after (dired evil-collection)
-  :demand t
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "y" 'dired-ranger-copy
@@ -878,6 +869,7 @@
 (use-package magit
   :bind ("s-g" . magit-status)
   :custom
+  (magit-diff-refine-hunk 'all)
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (dawran/leader-keys
@@ -894,7 +886,7 @@
   (rg-enable-default-bindings))
 
 (use-package lsp-mode
-  :disabled
+  :disabled t
   :commands lsp
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
