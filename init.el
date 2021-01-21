@@ -74,13 +74,6 @@
 (straight-use-package 'use-package)
 ;;(setq use-package-always-defer t)
 
-(use-package blackout
-  :straight (:host github :repo "raxod502/blackout"))
-
-(use-package autorevert
-  :defer t
-  :blackout auto-revert-mode)
-
 (mac-auto-operator-composition-mode)
 
 (setq-default delete-by-moving-to-trash t)
@@ -163,13 +156,6 @@
     "*" #'evil-visualstar/begin-search-forward
     "#" #'evil-visualstar/begin-search-backward))
 
-(use-package which-key
-  :blackout t
-  :hook (after-init . which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 1))
-
 (use-package general
   :config
   (general-create-definer dawran/leader-keys
@@ -201,6 +187,20 @@
                 #'(lambda ()
                     (interactive)
                     (switch-to-buffer (get-buffer-create "*scratch*"))))
+
+(use-package blackout
+  :straight (:host github :repo "raxod502/blackout"))
+
+(use-package autorevert
+  :defer t
+  :blackout auto-revert-mode)
+
+(use-package which-key
+  :blackout t
+  :hook (after-init . which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 1))
 
 (setq inhibit-startup-message t)
 

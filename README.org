@@ -27,17 +27,17 @@ A recent screenshot:
 - [[#private-lisp][Private Lisp]]
 - [[#keep-emacsd-clean][Keep .emacs.d Clean]]
 - [[#package-system-setup][Package System Setup]]
-  - [[#blackout][Blackout]]
 - [[#macos][MacOS]]
 - [[#keybindings][Keybindings]]
   - [[#esc-cancels-all][ESC Cancels All]]
   - [[#rebind-c-u][Rebind C-u]]
   - [[#evil][Evil]]
-  - [[#keybinding-panel-which-key][Keybinding Panel (which-key)]]
   - [[#simplify-leader-bindings-generalel][Simplify Leader Bindings (general.el)]]
   - [[#better-default-bindings][Better Default Bindings]]
   - [[#quickly-jump-to-scratch-buffer][Quickly Jump to Scratch Buffer]]
 - [[#ui][UI]]
+  - [[#blackout-mode-line-lighters][Blackout Mode Line Lighters]]
+  - [[#keybinding-panel-which-key][Keybinding Panel (which-key)]]
   - [[#clean-up-emacs-ui-to-be-more-minimal][Clean up Emacs' UI to be more minimal]]
   - [[#display-line-number][Display line number]]
   - [[#highlight-line][Highlight line]]
@@ -300,23 +300,6 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
 #+end_src
 
-** Blackout
-
-[[https://github.com/raxod502/blackout][Blackout]] is an easy way to turn off mode line lighters. It's similar to
-diminish.el or delight.el. See the comparisons at:
-https://github.com/raxod502/blackout.
-
-#+begin_src emacs-lisp
-
-  (use-package blackout
-    :straight (:host github :repo "raxod502/blackout"))
-
-  (use-package autorevert
-    :defer t
-    :blackout auto-revert-mode)
-
-#+end_src
-
 * MacOS
 
 #+begin_src emacs-lisp
@@ -439,26 +422,6 @@ Some tips can be found here:
 
 #+end_src
 
-** Keybinding Panel (which-key)
-
-[[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key
-binding in Emacs to offer you all possible completions for the prefix.  For
-example, if you press =C-c= (hold control and press the letter =c=), a panel
-will appear at the bottom of the frame displaying all of the bindings under that
-prefix and which command they run.  This is very useful for learning the
-possible key bindings in the mode of your current buffer.
-
-#+begin_src emacs-lisp
-
-  (use-package which-key
-    :blackout t
-    :hook (after-init . which-key-mode)
-    :diminish which-key-mode
-    :config
-    (setq which-key-idle-delay 1))
-
-#+end_src
-
 ** Simplify Leader Bindings (general.el)
 
 #+begin_src emacs-lisp
@@ -510,6 +473,43 @@ possible key bindings in the mode of your current buffer.
 #+end_src
 
 * UI
+** Blackout Mode Line Lighters
+
+[[https://github.com/raxod502/blackout][Blackout]] is an easy way to turn off mode line lighters. It's similar to
+diminish.el or delight.el. See the comparisons at:
+https://github.com/raxod502/blackout.
+
+#+begin_src emacs-lisp
+
+  (use-package blackout
+    :straight (:host github :repo "raxod502/blackout"))
+
+  (use-package autorevert
+    :defer t
+    :blackout auto-revert-mode)
+
+#+end_src
+
+** Keybinding Panel (which-key)
+
+[[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key
+binding in Emacs to offer you all possible completions for the prefix.  For
+example, if you press =C-c= (hold control and press the letter =c=), a panel
+will appear at the bottom of the frame displaying all of the bindings under that
+prefix and which command they run.  This is very useful for learning the
+possible key bindings in the mode of your current buffer.
+
+#+begin_src emacs-lisp
+
+  (use-package which-key
+    :blackout t
+    :hook (after-init . which-key-mode)
+    :diminish which-key-mode
+    :config
+    (setq which-key-idle-delay 1))
+
+#+end_src
+
 ** Clean up Emacs' UI to be more minimal
 
 #+begin_src emacs-lisp
