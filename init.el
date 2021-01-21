@@ -99,7 +99,6 @@
 (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
 (global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
 (global-set-key (kbd "s-k") 'kill-this-buffer)
-(global-set-key (kbd "s-=") 'text-scale-adjust)
 (global-set-key (kbd "s-v") 'yank)
 (global-set-key (kbd "s-c") 'kill-ring-save)
 (global-set-key (kbd "s-z") 'undo)
@@ -247,18 +246,6 @@
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160 :weight 'regular)
 
-(use-package all-the-icons
-  :disabled t
-  :defer t)
-
-(use-package doom-modeline
-  :disabled t
-  :hook (after-init . doom-modeline-mode)
-  :custom
-  (doom-modeline-height 15)
-  (doom-modeline-lsp t)
-  (doom-modeline-icon nil))
-
 ;;;; Mode line
 
 ;; The following code customizes the mode line to something like:
@@ -326,6 +313,8 @@
                         (format-mode-line my/mode-line-left)
                         (format-mode-line my/mode-line-right))
                        'fixedcase 'literal)))
+
+(global-set-key (kbd "s-=") 'text-scale-adjust)
 
 (use-package default-text-scale
   :disabled t
@@ -481,53 +470,6 @@
      (which-key--show-keymap "Embark" map nil nil 'no-paging)
      #'which-key--hide-popup-ignore-command)
    embark-become-indicator embark-action-indicator))
-
-(use-package consult
-  :disabled t
-  ;;:blackout t
-  ;; Replace bindings. Lazily loaded due by `use-package'.
-  :bind (("C-x M-:" . consult-complex-command)
-         ("C-c h" . consult-history)
-         ("C-c m" . consult-mode-command)
-         ("C-M-j" . consult-buffer)
-         ("s-b" . consult-buffer)
-         ("C-x 4 b" . consult-buffer-other-window)
-         ("C-x 5 b" . consult-buffer-other-frame)
-         ("C-x r x" . consult-register)
-         ("M-g o" . consult-outline)       ;; "M-s o" is a good alternative.
-         ("M-g l" . consult-line)          ;; "M-s l" is a good alternative.
-         ("M-g m" . consult-mark)          ;; I recommend to bind Consult navigation
-         ("M-g k" . consult-global-mark)   ;; commands under the "M-g" prefix.
-         ;;("M-g r" . consult-git-grep)      ;; or consult-grep, consult-ripgrep
-         ;;("s-F" . consult-ripgrep)
-         ("M-g f" . consult-find)          ;; or consult-fdfind, consult-locate
-         ("M-g i" . consult-project-imenu) ;; or consult-imenu
-         ("M-g e" . consult-error)
-         ("M-s m" . consult-multi-occur)
-         ("M-y" . consult-yank-pop)
-         ("<help> a" . consult-apropos))
-
-  :init
-  ;; Replace `multi-occur' with `consult-multi-occur', which is a drop-in replacement.
-  (fset 'multi-occur #'consult-multi-occur)
-
-  :config
-  (autoload 'projectile-project-root "projectile")
-  (setq consult-project-root-function #'projectile-project-root)
-  (setq consult-narrow-key "<"))
-
-;; Enable Consult-Selectrum integration.
-;; This package should be installed if Selectrum is used.
-(use-package consult-selectrum
-  :disabled t
-  :after selectrum
-  :demand t)
-
-;; Optionally add the `consult-flycheck' command.
-(use-package consult-flycheck
-  :disabled t
-  :bind (:map flycheck-command-map
-              ("!" . consult-flycheck)))
 
 (use-package helpful
   :bind (;; Remap standard commands.

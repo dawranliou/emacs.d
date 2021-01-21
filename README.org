@@ -58,7 +58,6 @@ A recent screenshot:
   - [[#marginalia][Marginalia]]
   - [[#ctrlf][CtrlF]]
   - [[#embark][Embark]]
-  - [[#consult][Consult]]
 - [[#helpful-help-commands][Helpful Help Commands]]
 - [[#buffers-and-files][Buffers and Files]]
 - [[#editing][Editing]]
@@ -86,7 +85,7 @@ A recent screenshot:
     - [[#toggling-eshell][Toggling eshell]]
 - [[#development][Development]]
   - [[#project][Project]]
-  - [[#projectile][Projectile]]
+  - [[#projectile-disabled][Projectile (disabled)]]
   - [[#magit][Magit]]
   - [[#ripgrep][Ripgrep]]
   - [[#lsp][LSP]]
@@ -95,7 +94,7 @@ A recent screenshot:
   - [[#languages][Languages]]
     - [[#clojure][Clojure]]
     - [[#markdown][Markdown]]
-  - [[#company][Company]]
+  - [[#company-disabled][Company (disabled)]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
   - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
   - [[#eldoc][Eldoc]]
@@ -340,7 +339,6 @@ https://github.com/raxod502/blackout.
   (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
   (global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
   (global-set-key (kbd "s-k") 'kill-this-buffer)
-  (global-set-key (kbd "s-=") 'text-scale-adjust)
   (global-set-key (kbd "s-v") 'yank)
   (global-set-key (kbd "s-c") 'kill-ring-save)
   (global-set-key (kbd "s-z") 'undo)
@@ -589,26 +587,6 @@ I'm using my personal theme - =sketch-white= as my prefered theme.
 
 ** Modeline
 
-NOTE: The first time you load your configuration on a new machine, you’ll need
-to run =M-x all-the-icons-install-fonts= so that mode line icons display
-correctly.
-
-#+begin_src emacs-lisp
-
-  (use-package all-the-icons
-    :disabled t
-    :defer t)
-
-  (use-package doom-modeline
-    :disabled t
-    :hook (after-init . doom-modeline-mode)
-    :custom
-    (doom-modeline-height 15)
-    (doom-modeline-lsp t)
-    (doom-modeline-icon nil))
-
-#+end_src
-
 The simple mode line is mostly stolen from: https://github.com/raxod502/radian/blob/develop/emacs/radian.el
 
 #+begin_src emacs-lisp
@@ -686,6 +664,8 @@ The simple mode line is mostly stolen from: https://github.com/raxod502/radian/b
 ** Text Scaling
 
 #+begin_src emacs-lisp
+
+  (global-set-key (kbd "s-=") 'text-scale-adjust)
 
   (use-package default-text-scale
     :disabled t
@@ -925,59 +905,6 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
        (which-key--show-keymap "Embark" map nil nil 'no-paging)
        #'which-key--hide-popup-ignore-command)
      embark-become-indicator embark-action-indicator))
-
-#+end_src
-
-** Consult
-
-#+begin_src emacs-lisp
-
-  (use-package consult
-    :disabled t
-    ;;:blackout t
-    ;; Replace bindings. Lazily loaded due by `use-package'.
-    :bind (("C-x M-:" . consult-complex-command)
-           ("C-c h" . consult-history)
-           ("C-c m" . consult-mode-command)
-           ("C-M-j" . consult-buffer)
-           ("s-b" . consult-buffer)
-           ("C-x 4 b" . consult-buffer-other-window)
-           ("C-x 5 b" . consult-buffer-other-frame)
-           ("C-x r x" . consult-register)
-           ("M-g o" . consult-outline)       ;; "M-s o" is a good alternative.
-           ("M-g l" . consult-line)          ;; "M-s l" is a good alternative.
-           ("M-g m" . consult-mark)          ;; I recommend to bind Consult navigation
-           ("M-g k" . consult-global-mark)   ;; commands under the "M-g" prefix.
-           ;;("M-g r" . consult-git-grep)      ;; or consult-grep, consult-ripgrep
-           ;;("s-F" . consult-ripgrep)
-           ("M-g f" . consult-find)          ;; or consult-fdfind, consult-locate
-           ("M-g i" . consult-project-imenu) ;; or consult-imenu
-           ("M-g e" . consult-error)
-           ("M-s m" . consult-multi-occur)
-           ("M-y" . consult-yank-pop)
-           ("<help> a" . consult-apropos))
-
-    :init
-    ;; Replace `multi-occur' with `consult-multi-occur', which is a drop-in replacement.
-    (fset 'multi-occur #'consult-multi-occur)
-
-    :config
-    (autoload 'projectile-project-root "projectile")
-    (setq consult-project-root-function #'projectile-project-root)
-    (setq consult-narrow-key "<"))
-
-  ;; Enable Consult-Selectrum integration.
-  ;; This package should be installed if Selectrum is used.
-  (use-package consult-selectrum
-    :disabled t
-    :after selectrum
-    :demand t)
-
-  ;; Optionally add the `consult-flycheck' command.
-  (use-package consult-flycheck
-    :disabled t
-    :bind (:map flycheck-command-map
-                ("!" . consult-flycheck)))
 
 #+end_src
 
@@ -1456,7 +1383,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
 #+end_src
 
-** Projectile
+** Projectile (disabled)
 
 Currently disabled in favor of default project.el
 
@@ -1648,7 +1575,7 @@ primarily with Emacs' built-in libraries:
 
 #+end_src
 
-** Company
+** Company (disabled)
 
 #+begin_src emacs-lisp
 
