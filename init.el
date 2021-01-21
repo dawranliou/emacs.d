@@ -78,7 +78,9 @@
   :straight (:host github :repo "raxod502/blackout")
   :demand t)
 
-(blackout 'auto-revert-mode)
+(use-package autorevert
+  :defer t
+  :blackout auto-revert-mode)
 
 (mac-auto-operator-composition-mode)
 
@@ -911,21 +913,33 @@
     "r" 'lsp-find-references))
 
 (use-package eglot
-  :blackout t
   :hook ((clojure-mode . eglot-ensure)
          (clojurec-mode . eglot-ensure)
          (clojurescript-mode . eglot-ensure))
+  :custom
+  (eglot-connect-timeout 300)
   :config
   (add-to-list 'eglot-server-programs
                '((clojure-mode clojurescript-mode) . ("bash" "-c" "/usr/local/bin/clojure-lsp"))))
 
+(use-package eldoc
+  :defer t
+  :blackout t)
+
+(use-package flymake
+  :defer t
+  :blackout t)
+
 (use-package clojure-mode
-  :blackout clj-refactor-mode
   :custom
   (cljr-magic-requires nil)
   :config
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
+
+(use-package clj-refactor
+  :defer t
+  :blackout t)
 
 (use-package cider
   :commands cider
