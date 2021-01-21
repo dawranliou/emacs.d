@@ -60,6 +60,7 @@ A recent screenshot:
   - [[#embark][Embark]]
   - [[#consult][Consult]]
 - [[#helpful-help-commands][Helpful Help Commands]]
+- [[#buffers-and-files][Buffers and Files]]
 - [[#editing][Editing]]
   - [[#tabs][Tabs]]
   - [[#commenting-lines][Commenting Lines]]
@@ -98,6 +99,7 @@ A recent screenshot:
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
   - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
   - [[#eldoc][Eldoc]]
+- [[#extras][Extras]]
 - [[#misc][Misc]]
   - [[#world-time][World Time]]
 :END:
@@ -1002,6 +1004,20 @@ It is very useful for figuring out how things work in Emacs.
 
 #+end_src
 
+* Buffers and Files
+
+#+begin_src emacs-lisp
+
+  (use-package recentf
+    :defer 1
+    :custom
+    ;; Increase recent entries list from default (20)
+    (recentf-max-saved-items 100)
+    :config
+    (recentf-mode +1))
+
+#+end_src
+
 * Editing
 ** Tabs
 
@@ -1709,6 +1725,22 @@ primarily with Emacs' built-in libraries:
 
   (use-package eldoc
     :blackout t)
+
+#+end_src
+* Extras
+
+My extra lisp stuffs. Credits to:
+
+- https://github.com/raxod502/selectrum/wiki/Useful-Commands
+
+#+begin_src emacs-lisp
+
+  (use-package extras
+    :straight nil
+    :load-path "lisp/"
+    :bind
+    (("M-y" . yank-pop+)
+     ("C-x C-r" . recentf-open-files+)))
 
 #+end_src
 * Misc

@@ -540,6 +540,14 @@
          ("C-h C"   . #'helpful-command)
          ("C-h F"   . #'describe-face)))
 
+(use-package recentf
+  :defer 1
+  :custom
+  ;; Increase recent entries list from default (20)
+  (recentf-max-saved-items 100)
+  :config
+  (recentf-mode +1))
+
 (setq-default tab-width 2)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)
@@ -1034,6 +1042,13 @@
 
 (use-package eldoc
   :blackout t)
+
+(use-package extras
+  :straight nil
+  :load-path "lisp/"
+  :bind
+  (("M-y" . yank-pop+)
+   ("C-x C-r" . recentf-open-files+)))
 
 (setq world-clock-list '(("Asia/Taipei" "Taipei")
                          ("America/Toronto" "Toronto")
