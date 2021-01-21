@@ -1,5 +1,12 @@
 ;;; -*- lexical-binding: t; -*-
 
+(defun my/set-font ()
+  "Select xfont."
+  (interactive)
+  (set-frame-font (completing-read
+                   "Choose font:"
+                   (cl-remove-duplicates (x-list-fonts "*") :test #'equal))))
+
 (defun yank-pop+ ()
   "If there is a recent yank act like `yank-pop'.
 Otherwise choose text from the kill ring and insert it."
