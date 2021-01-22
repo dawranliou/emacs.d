@@ -877,6 +877,8 @@
 
 (use-package cider
   :commands cider
+  :custom
+  (cider-font-lock-dynamically '(macro core function var))
   :config
   (setq cider-repl-display-in-current-window nil
         cider-repl-pop-to-buffer-on-connect nil
