@@ -12,6 +12,9 @@ by a bunch of resources I’ve found online:
 - https://github.com/raxod502/radian/blob/develop/emacs/radian.el
 - https://github.com/oantolin/emacs-config
 
+Style guide:
+- [[https://github.com/bbatsov/emacs-lisp-style-guide][bbatsov's emacs-lisp-style-guide]]
+
 A recent screenshot:
 
 [[file:screenshot.png]]
