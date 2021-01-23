@@ -902,3 +902,12 @@
 
 (dawran/leader-keys
   "tc" 'world-clock)
+
+(use-package elfeed
+  :commands elfeed
+  :custom
+  (elfeed-feeds '("https://planet.emacslife.com/atom.xml"
+                  "http://planet.clojure.in/atom.xml"))
+  :config
+  (dawran/leader-keys
+    "R" '(elfeed :which-key "RSS")))

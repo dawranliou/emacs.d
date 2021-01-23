@@ -102,8 +102,9 @@ A recent screenshot:
   - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
   - [[#eldoc][Eldoc]]
 - [[#extras][Extras]]
-- [[#misc][Misc]]
+- [[#app][App]]
   - [[#world-time][World Time]]
+  - [[#rss][RSS]]
 :END:
 
 * Early-init.el
@@ -1555,7 +1556,7 @@ My extra lisp stuffs. Credits to:
      ("C-x C-r" . recentf-open-files+)))
 
 #+end_src
-* Misc
+* App
 ** World Time
 
 #+begin_src emacs-lisp
@@ -1568,5 +1569,19 @@ My extra lisp stuffs. Credits to:
 
   (dawran/leader-keys
     "tc" 'world-clock)
+
+#+end_src
+** RSS
+
+#+begin_src emacs-lisp
+
+  (use-package elfeed
+    :commands elfeed
+    :custom
+    (elfeed-feeds '("https://planet.emacslife.com/atom.xml"
+                    "http://planet.clojure.in/atom.xml"))
+    :config
+    (dawran/leader-keys
+      "R" '(elfeed :which-key "RSS")))
 
 #+end_src
