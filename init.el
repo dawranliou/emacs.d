@@ -376,6 +376,8 @@
 ;; the default Emacs interface for candidate selection.
 (use-package selectrum
   :straight (:host github :repo "raxod502/selectrum")
+  :custom
+  (selectrum-count-style 'current/matches)
   :init
   ;; This doesn't actually load Selectrum.
   (selectrum-mode +1)
