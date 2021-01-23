@@ -181,7 +181,7 @@
     "tm" 'toggle-frame-maximized
     "tM" 'toggle-frame-fullscreen))
 
-(global-set-key (kbd "C-x C-b") #'switch-to-buffer)
+(global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
 (global-set-key (kbd "M-:") 'pp-eval-expression)
 
