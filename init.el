@@ -911,8 +911,13 @@
 (use-package elfeed
   :commands elfeed
   :custom
-  (elfeed-feeds '("https://planet.emacslife.com/atom.xml"
-                  "http://planet.clojure.in/atom.xml"))
-  :config
-  (dawran/leader-keys
-    "R" '(elfeed :which-key "RSS")))
+  (elfeed-feeds '(("https://planet.emacslife.com/atom.xml" emacs)
+                  ("http://planet.clojure.in/atom.xml" clojure)
+                  ("https://www.reddit.com/r/programming.rss" programming)
+                  ("https://news.ycombinator.com/rss" news)
+                  ("https://css-tricks.com/feed/" css)
+                  ("https://www.reddit.com/r/emacs.rss" emacs)
+                  ("https://www.reddit.com/r/clojure.rss" clojure))))
+
+(dawran/leader-keys
+  "R" '(elfeed :which-key "RSS"))
