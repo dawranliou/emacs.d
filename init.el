@@ -6,9 +6,9 @@
       gc-cons-percentage 0.6)
 
 (add-hook 'emacs-startup-hook
-  (lambda ()
-    (setq gc-cons-threshold 16777216 ; 16mb
-          gc-cons-percentage 0.1)))
+          (lambda ()
+            (setq gc-cons-threshold 16777216 ; 16mb
+                  gc-cons-percentage 0.1)))
 
 (defun doom-defer-garbage-collection-h ()
   (setq gc-cons-threshold most-positive-fixnum))
@@ -27,8 +27,8 @@
 
 ;; Alternatively, restore it even later:
 (add-hook 'emacs-startup-hook
-  (lambda ()
-    (setq file-name-handler-alist doom--file-name-handler-alist)))
+          (lambda ()
+            (setq file-name-handler-alist doom--file-name-handler-alist)))
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
@@ -336,8 +336,8 @@
 (use-package winner-mode
   :straight nil
   :bind (:map evil-window-map
-          ("u" . winner-undo)
-          ("U" . winner-redo))
+              ("u" . winner-undo)
+              ("U" . winner-redo))
   :config
   (winner-mode))
 
@@ -347,8 +347,8 @@
   :hook (prog-mode . hl-fill-column-mode)
   :config
   (set-face-attribute 'hl-fill-column-face nil
-   :background (face-attribute 'shadow :background)
-   :inverse-video nil))
+                      :background (face-attribute 'shadow :background)
+                      :inverse-video nil))
 
 (defun dawran/visual-fill ()
   (setq visual-fill-column-width 100
@@ -531,25 +531,25 @@
 
 (use-package evil-multiedit
   :bind (:map evil-visual-state-map
-         ("R" . evil-multiedit-match-all)
-         ("M-d" . evil-multiedit-match-and-next)
-         ("M-D" . evil-multiedit-match-and-prev)
-         ("C-M-d" . evil-multiedit-restore)
-         :map evil-normal-state-map
-         ("M-d" . evil-multiedit-match-symbol-and-next)
-         ("M-D" . evil-multiedit-match-symbol-and-prev)
-         ("C-M-d" . evil-multiedit-restore)
-         :map evil-insert-state-map
-         ("M-d" . evil-multiedit-toggle-marker-here)
-         :map evil-motion-state-map
-         ("RET" . evil-multiedit-toggle-or-restrict-region)
-         :map evil-multiedit-state-map
-         ("RET" . evil-multiedit-toggle-or-restrict-region)
-         ("C-n" . evil-multiedit-next)
-         ("C-p" . evil-multiedit-prev)
-         :map evil-multiedit-insert-state-map
-         ("C-n" . evil-multiedit-next)
-         ("C-p" . evil-multiedit-prev)))
+              ("R" . evil-multiedit-match-all)
+              ("M-d" . evil-multiedit-match-and-next)
+              ("M-D" . evil-multiedit-match-and-prev)
+              ("C-M-d" . evil-multiedit-restore)
+              :map evil-normal-state-map
+              ("M-d" . evil-multiedit-match-symbol-and-next)
+              ("M-D" . evil-multiedit-match-symbol-and-prev)
+              ("C-M-d" . evil-multiedit-restore)
+              :map evil-insert-state-map
+              ("M-d" . evil-multiedit-toggle-marker-here)
+              :map evil-motion-state-map
+              ("RET" . evil-multiedit-toggle-or-restrict-region)
+              :map evil-multiedit-state-map
+              ("RET" . evil-multiedit-toggle-or-restrict-region)
+              ("C-n" . evil-multiedit-next)
+              ("C-p" . evil-multiedit-prev)
+              :map evil-multiedit-insert-state-map
+              ("C-n" . evil-multiedit-next)
+              ("C-p" . evil-multiedit-prev)))
 
 (use-package undo-fu)
 
@@ -574,36 +574,27 @@
 (use-package org
   :hook (org-mode . dawran/org-mode-setup)
   :config
-  (setq org-ellipsis " ▾")
+  (setq org-ellipsis " ▾"
+        org-hide-emphasis-markers t
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 2
+        org-hide-block-startup nil
+        org-src-preserve-indentation nil
+        ;; org-startup-folded 'content
+        org-cycle-separator-lines 2)
 
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
 
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
-
-  (setq org-refile-targets
-    '(("Archive.org" :maxlevel . 1)
-      ("Tasks.org" :maxlevel . 1)))
-
-  ;; Save Org buffers after refiling!
-  (advice-add 'org-refile :after 'org-save-all-org-buffers)
-
   (require 'org-tempo)
-
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 (use-package evil-org
   :blackout t
-  :hook ((org-mode . evil-org-mode)
-         (evil-org-mode . (lambda ()
-                            (evil-org-set-key-theme '(navigation todo insert
-                                                      textobjects
-                                                      additional)))))
-  :config
-  (evil-org-set-key-theme))
+  :after evil
+  :hook (org-mode . evil-org-mode))
 
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode)
@@ -831,13 +822,13 @@
   (lsp-enable-which-key-integration t)
   ;; add paths to your local installation of project mgmt tools, like lein
   (setenv "PATH" (concat
-                   "/usr/local/bin" path-separator
-                   (getenv "PATH")))
+                  "/usr/local/bin" path-separator
+                  (getenv "PATH")))
   (dolist (m '(clojure-mode
                clojurec-mode
                clojurescript-mode
                clojurex-mode))
-     (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
+    (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
   (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp") ;; Optional: In case `clojure-lsp` is not in your PATH
         lsp-enable-indentation nil)
 
@@ -907,19 +898,7 @@
   :mode "\\.md\\'"
   :hook (markdown-mode . dawran/visual-fill)
   :config
-  (setq markdown-command "marked")
-  (defun dawran/set-markdown-header-font-sizes ()
-    (dolist (face '((markdown-header-face-1 . 1.2)
-                    (markdown-header-face-2 . 1.1)
-                    (markdown-header-face-3 . 1.0)
-                    (markdown-header-face-4 . 1.0)
-                    (markdown-header-face-5 . 1.0)))
-      (set-face-attribute (car face) nil :weight 'normal :height (cdr face)))
-
-  (defun dawran/markdown-mode-hook ()
-    (dawran/set-markdown-header-font-sizes))
-
-  (add-hook 'markdown-mode-hook 'dw/markdown-mode-hook)))
+  (setq markdown-command "marked"))
 
 (use-package company
   :disabled t
