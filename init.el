@@ -896,14 +896,17 @@
   (("M-y" . yank-pop+)
    ("C-x C-r" . recentf-open-files+)))
 
-(setq world-clock-list '(("Asia/Taipei" "Taipei")
-                         ("America/Toronto" "Toronto")
-                         ("America/Los_Angeles" "San Francisco")
-                         ("Europe/Berlin" "Düsseldorf")
-                         ("Europe/London" "GMT")))
+(use-package time
+  :straight nil
+  :custom
+  (display-time-world-list '(("Asia/Taipei" "Taipei")
+                             ("America/Toronto" "Toronto")
+                             ("America/Los_Angeles" "San Francisco")
+                             ("Europe/Berlin" "Düsseldorf")
+                             ("Europe/London" "GMT"))))
 
 (dawran/leader-keys
-  "tc" 'world-clock)
+  "tc" #'display-time-world)
 
 (use-package elfeed
   :commands elfeed
