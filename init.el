@@ -95,6 +95,8 @@
 (global-set-key (kbd "s-v") 'yank)
 (global-set-key (kbd "s-c") 'kill-ring-save)
 (global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-=") 'text-scale-adjust)
+(global-set-key (kbd "s-+") 'text-scale-increase)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -309,14 +311,6 @@
                         (format-mode-line my/mode-line-right))
                        'fixedcase 'literal)))
 
-(global-set-key (kbd "s-=") 'text-scale-adjust)
-
-(use-package default-text-scale
-  :disabled t
-  :defer t
-  :config
-  (default-text-scale-mode))
-
 (use-package paren
   :hook (prog-mode . show-paren-mode))
 
@@ -357,10 +351,6 @@
 
 (use-package visual-fill-column
   :defer t)
-
-(use-package emojify
-  :disabled t
-  :hook (after-init . global-emojify-mode))
 
 (use-package unicode-fonts
   :defer t
@@ -775,22 +765,6 @@
                              (project-magit-status+ "Git" ?g)
                              (project-eshell "Eshell"))))
 
-(use-package projectile
-  :disabled t
-  :blackout t
-  :commands projectile-project-name
-  :custom
-  (projectile-completion-system 'default)
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :bind
-  ("s-p" . projectile-find-file)
-  :init
-  (dawran/leader-keys
-    "SPC" 'projectile-find-file)
-  :config
-  (projectile-mode))
-
 (use-package magit
   :bind ("s-g" . magit-status)
   :custom
@@ -899,42 +873,6 @@
   :hook (markdown-mode . dawran/visual-fill)
   :config
   (setq markdown-command "marked"))
-
-(use-package company
-  :disabled t
-  :blackout t
-  :hook (after-init . global-company-mode)
-  :bind* ("M-TAB" . company-manual-begin)
-  :bind (([remap completion-at-point] . #'company-manual-begin)
-         ([remap complete-symbol] . #'company-manual-begin)
-         (:map company-active-map
-               ("<tab>" . company-complete-selection)))
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay nil)
-  :config
-  (add-hook 'evil-local-mode-hook
-            (lambda ()
-              ;; Note:
-              ;; Check if `company-emulation-alist' is in
-              ;; `emulation-mode-map-alists', if true, call
-              ;; `company-ensure-emulation-alist' to ensure
-              ;; `company-emulation-alist' is the first item of
-              ;; `emulation-mode-map-alists', thus has a higher
-              ;; priority than keymaps of evil-mode.
-              ;; We raise the priority of company-mode keymaps
-              ;; unconditionally even when completion is not
-              ;; activated. This should not cause problems,
-              ;; because when completion is activated, the value of
-              ;; `company-emulation-alist' is ((t . company-my-keymap)),
-              ;; when completion is not activated, the value is ((t . nil)).
-              (when (memq 'company-emulation-alist emulation-mode-map-alists)
-                (company-ensure-emulation-alist)))))
-
-(use-package company-box
-  :disabled t
-  :blackout t
-  :hook (company-mode . company-box-mode))
 
 (use-package flycheck
   :hook (lsp-mode . flycheck-mode))
