@@ -552,7 +552,16 @@
 (use-package expand-region
   :bind
   ("s-'" .  er/expand-region)
-  ("s-\"" .  er/contract-region))
+  ("s-\"" .  er/contract-region)
+  :config
+  (defun my/greedy-expansion-list ()
+    "Skip marking words or inside quotes and pairs"
+    (setq-local er/try-expand-list
+                (cl-set-difference er/try-expand-list
+                                   '(er/mark-word
+                                     er/mark-inside-quotes
+                                     er/mark-inside-pairs))))
+  (er/enable-mode-expansions 'lispy-mode #'my/greedy-expansion-list))
 
 (defun dawran/org-mode-setup ()
   (org-indent-mode)
