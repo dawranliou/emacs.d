@@ -563,6 +563,17 @@
                                      er/mark-inside-pairs))))
   (er/enable-mode-expansions 'lispy-mode #'my/greedy-expansion-list))
 
+(use-package savehist
+  :hook (after-init . savehist-mode)
+  :custom
+  (savehist-file "~/.emacs.d/savehist")
+  (savehist-save-minibuffer-history t)
+  (savehist-additional-variables
+   '(kill-ring
+     mark-ring global-mark-ring
+     search-ring regexp-search-ring))
+  (history-length 20000))
+
 (defun dawran/org-mode-setup ()
   (org-indent-mode)
   (blackout 'org-indent-mode)

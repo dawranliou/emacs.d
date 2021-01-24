@@ -74,6 +74,7 @@ A recent screenshot:
   - [[#undo-fu][Undo-fu]]
   - [[#smart-parens][Smart Parens]]
   - [[#expand-region][Expand Region]]
+  - [[#savehist][Savehist]]
 - [[#org-mode][Org Mode]]
   - [[#basic-config][Basic Config]]
   - [[#nicer-heading-bullets][Nicer Heading Bullets]]
@@ -1070,6 +1071,25 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
     (er/enable-mode-expansions 'lispy-mode #'my/greedy-expansion-list))
 
 #+end_src
+
+** Savehist
+
+Remember history of things across launches (ie. kill ring).
+
+#+begin_src emacs-lisp
+
+  (use-package savehist
+    :hook (after-init . savehist-mode)
+    :custom
+    (savehist-file "~/.emacs.d/savehist")
+    (savehist-save-minibuffer-history t)
+    (savehist-additional-variables
+     '(kill-ring
+       mark-ring global-mark-ring
+       search-ring regexp-search-ring))
+    (history-length 20000))
+
+    #+end_src
 
 * Org Mode
 ** Basic Config
