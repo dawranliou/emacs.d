@@ -460,9 +460,10 @@
 
 (use-package helpful
   :bind (;; Remap standard commands.
-         ("C-h f"   . #'helpful-callable)
-         ("C-h v"   . #'helpful-variable)
-         ("C-h k"   . #'helpful-key)
+         ([remap describe-function] . #'helpful-callable)
+         ([remap describe-variable] . #'helpful-variable)
+         ([remap describe-key]      . #'helpful-key)
+         ([remap describe-symbol]   . #'helpful-symbol)
          ("C-c C-d" . #'helpful-at-point)
          ("C-h C"   . #'helpful-command)
          ("C-h F"   . #'describe-face)))
