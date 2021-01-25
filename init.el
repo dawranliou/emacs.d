@@ -559,6 +559,8 @@
   :bind
   ("s-'" .  er/expand-region)
   ("s-\"" .  er/contract-region)
+  :hook
+  (prog-mode . my/greedy-expansion-list)
   :config
   (defun my/greedy-expansion-list ()
     "Skip marking words or inside quotes and pairs"
@@ -566,8 +568,7 @@
                 (cl-set-difference er/try-expand-list
                                    '(er/mark-word
                                      er/mark-inside-quotes
-                                     er/mark-inside-pairs))))
-  (er/enable-mode-expansions 'lispy-mode #'my/greedy-expansion-list))
+                                     er/mark-inside-pairs)))))
 
 (use-package savehist
   :hook (after-init . savehist-mode)
