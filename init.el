@@ -642,7 +642,8 @@
 
 (dawran/leader-keys
   "n" '(:ignore t :which-key "notes")
-  "nj" '(org-journal-open-current-journal-file :which-key "journal"))
+  "nj" '(org-journal-open-current-journal-file :which-key "journal")
+  "nJ" '(org-journal-new-entry :which-key "new journal entry"))
 
 (use-package org-roam
   :commands org-roam-find-file

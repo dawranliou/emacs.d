@@ -1188,7 +1188,8 @@ Remember history of things across launches (ie. kill ring).
 
   (dawran/leader-keys
     "n" '(:ignore t :which-key "notes")
-    "nj" '(org-journal-open-current-journal-file :which-key "journal"))
+    "nj" '(org-journal-open-current-journal-file :which-key "journal")
+    "nJ" '(org-journal-new-entry :which-key "new journal entry"))
 
 #+end_src
 
