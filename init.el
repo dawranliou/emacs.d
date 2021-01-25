@@ -230,8 +230,13 @@
 (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
 
 (use-package hl-line
+  :disabled t
   :hook
   (prog-mode . hl-line-mode))
+
+(use-package idle-highlight-mode
+  :hook
+  (prog-mode . idle-highlight-mode))
 
 (add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")

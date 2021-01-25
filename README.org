@@ -46,7 +46,8 @@ A recent screenshot:
   - [[#keybinding-panel-which-key][Keybinding Panel (which-key)]]
   - [[#clean-up-emacs-ui-to-be-more-minimal][Clean up Emacs' UI to be more minimal]]
   - [[#display-line-number][Display line number]]
-  - [[#highlight-line][Highlight line]]
+  - [[#highlight-line-disabled][Highlight line (disabled)]]
+  - [[#highlight-on-idle][Highlight on Idle]]
   - [[#theme][Theme]]
   - [[#font-configuration][Font configuration]]
   - [[#modeline][Modeline]]
@@ -553,13 +554,24 @@ possible key bindings in the mode of your current buffer.
 
 #+end_src
 
-** Highlight line
+** Highlight line (disabled)
 
 #+begin_src emacs-lisp
 
   (use-package hl-line
+    :disabled t
     :hook
     (prog-mode . hl-line-mode))
+
+#+end_src
+
+** Highlight on Idle
+
+#+begin_src emacs-lisp
+
+  (use-package idle-highlight-mode
+    :hook
+    (prog-mode . idle-highlight-mode))
 
 #+end_src
 
