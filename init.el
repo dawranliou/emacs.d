@@ -378,6 +378,8 @@
   :straight (:host github :repo "raxod502/selectrum")
   :custom
   (selectrum-count-style 'current/matches)
+  ;; The default 10 seem to cutoff the last line for my screen
+  (selectrum-max-window-height 12)
   :init
   ;; This doesn't actually load Selectrum.
   (selectrum-mode +1)
