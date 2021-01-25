@@ -1385,7 +1385,7 @@ Remember history of things across launches (ie. kill ring).
     (project-switch-commands '((project-find-file "Find file")
                                (project-find-regexp "Find regexp")
                                (project-dired "Dired")
-                               (project-magit-status+ "Git" ?g)
+                               (project-magit-status+ "Magit" ?m)
                                (project-eshell "Eshell"))))
 
 #+end_src

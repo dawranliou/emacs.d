@@ -789,7 +789,7 @@
   (project-switch-commands '((project-find-file "Find file")
                              (project-find-regexp "Find regexp")
                              (project-dired "Dired")
-                             (project-magit-status+ "Git" ?g)
+                             (project-magit-status+ "Magit" ?m)
                              (project-eshell "Eshell"))))
 
 (use-package magit
