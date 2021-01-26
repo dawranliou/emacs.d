@@ -55,7 +55,22 @@
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
    `(default-italic ((,class (:italic t))))
 
-   ;; Syntax highlighting
+   ;; Emacs UI
+   `(region ((,class (:background ,fg1 :foreground ,bg1))))
+   `(fringe ((,class (:background ,bg1 :foreground ,fg4))))
+   `(cursor ((,class (:background ,bg4))))
+   `(header-line ((,class (:inherit mode-line))))
+   `(mode-line ((,class (:box (:line-width 1 :color ,bg2) :foreground ,fg3 :background ,bg2))))
+   `(mode-line-inactive ((,class (:inherit mode-line :foreground ,fg4 :background ,bg1))))
+   `(mode-line-buffer-id ((,class (:bold t :foreground ,fg2))))
+   `(line-number ((t (:inherit fringe :background ,bg1 :foreground ,fg4))))
+   `(line-number-current-line ((t (:inherit fringe :foreground ,fg2 :weight bold))))
+   `(link ((,class (:foreground ,const :underline t))))
+   `(minibuffer-prompt ((,class (:bold t :foreground ,keyword))))
+   `(vertical-border ((,class (:foreground ,fg3))))
+   `(warning ((,class (:foreground ,warning))))
+
+   ;; Language Syntax highlighting
    `(font-lock-builtin-face ((,class (:foreground ,builtin))))
    `(font-lock-comment-face ((,class (:foreground ,comment))))
    `(font-lock-negation-char-face ((,class (:foreground ,const))))
@@ -69,29 +84,15 @@
    `(font-lock-variable-name-face ((,class (:foreground ,var))))
    `(font-lock-warning-face ((,class (:underline (:color ,warning :style wave)))))
 
-   ;; Emacs UI
-   `(region ((,class (:background ,fg1 :foreground ,bg1))))
-   `(fringe ((,class (:background ,bg1 :foreground ,fg4))))
-   `(cursor ((,class (:background ,bg4))))
-   `(header-line ((,class (:inherit mode-line))))
-   `(mode-line ((,class (:box (:line-width 1 :color ,bg2) :bold t :foreground ,fg3 :background ,bg2))))
-   `(mode-line-inactive ((,class (:box (:line-width 1 :color ,bg2) :foreground ,fg4 :background ,bg1 :weight normal))))
-   `(mode-line-buffer-id ((,class (:bold t :foreground ,fg2))))
-   `(line-number ((t (:inherit fringe :background ,bg1 :foreground ,fg4))))
-   `(line-number-current-line ((t (:inherit (hl-line fringe) :foreground ,fg2 :weight bold))))
-   `(link ((,class (:foreground ,const :underline t))))
-   `(minibuffer-prompt ((,class (:bold t :foreground ,keyword))))
-   `(vertical-border ((,class (:foreground ,fg3))))
-   `(warning ((,class (:foreground ,warning))))
-
-   ;; Highlighting stuff
+   ;; Highlighting
    `(highlight ((,class (:foreground ,fg1 :background ,bg3))))
    `(hl-line ((,class (:background ,bg2))))
    `(idle-highlight ((,class (:background ,bg2))))
    `(hl-fill-column-face ((,class (:background ,bg2))))
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
    `(show-paren-match ((,class (:background ,bg3))))
-   `(lazy-highlight ((,class (:foreground ,fg2 :background ,bg3))))
+   `(isearch ((,class (:background ,bg3))))
+   `(lazy-highlight ((,class (:background ,bg3))))
 
    ;; Flymake
    `(flymake-warning ((,class (:underline (:style wave :color ,warning)))))
