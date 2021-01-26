@@ -47,8 +47,8 @@
       (str     "#c69fa5")
       (type    "#fbf5ef")
       (var     "#f2d3ab")
-      (warning "#f2d3ab")
-      (warning2 "#c69fa5"))
+      (warning "#8b6d9c")
+      (warning2 "#f2d3ab"))
   (custom-theme-set-faces
    'oil6
    ;; Default
