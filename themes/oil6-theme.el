@@ -56,7 +56,7 @@
    `(default-italic ((,class (:italic t))))
 
    ;; Emacs UI
-   `(region ((,class (:background ,fg1 :foreground ,bg1))))
+   `(region ((,class (:foreground ,fg1 :background ,bg3))))
    `(fringe ((,class (:background ,bg1 :foreground ,fg4))))
    `(cursor ((,class (:background ,bg4))))
    `(header-line ((,class (:inherit mode-line))))
@@ -91,8 +91,8 @@
    `(hl-fill-column-face ((,class (:background ,bg2))))
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
    `(show-paren-match ((,class (:background ,bg3))))
-   `(isearch ((,class (:background ,bg3))))
-   `(lazy-highlight ((,class (:background ,bg3))))
+   `(isearch ((,class (:inherit region))))
+   `(lazy-highlight ((,class (:inherit region))))
 
    ;; Flymake
    `(flymake-warning ((,class (:underline (:style wave :color ,warning)))))
