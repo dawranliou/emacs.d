@@ -286,11 +286,6 @@
     (format (format "%%s%%%ds" width) left right)))
 
 (defcustom my/mode-line-left
-  nil
-  "Composite mode line construct to be shown left-aligned."
-  :type 'sexp)
-
-(defcustom my/mode-line-right
   '(;; Show [*] if the buffer is modified.
     (:eval (my/mode-line-buffer-modified-status))
     " "
@@ -299,10 +294,14 @@
     " "
     ;; Show the row and column of point.
     mode-line-position
-    evil-mode-line-tag
-    ;; Show the active major and minor modes.
-    " "
-    mode-line-modes)
+    evil-mode-line-tag)
+  "Composite mode line construct to be shown left-aligned."
+  :type 'sexp)
+
+(defcustom my/mode-line-right
+  '(""
+    mode-line-modes
+    mode-line-misc-info)
   "Composite mode line construct to be shown right-aligned."
   :type 'sexp)
 
