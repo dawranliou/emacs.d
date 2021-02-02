@@ -300,8 +300,7 @@
 
 (defcustom my/mode-line-right
   '(""
-    mode-line-modes
-    mode-line-misc-info)
+    mode-line-modes)
   "Composite mode line construct to be shown right-aligned."
   :type 'sexp)
 
@@ -819,33 +818,18 @@
   (rg-enable-default-bindings))
 
 (use-package lsp-mode
-  :disabled t
-  :commands lsp
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
          (clojurescript-mode . lsp))
-  :init
-  (setq lsp-keymap-prefix "s-l")
+  :custom
+  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-keymap-prefix "s-l")
+  (lsp-enable-indentation nil)
   :config
-  (lsp-enable-which-key-integration t)
-  ;; add paths to your local installation of project mgmt tools, like lein
-  (setenv "PATH" (concat
-                  "/usr/local/bin" path-separator
-                  (getenv "PATH")))
-  (dolist (m '(clojure-mode
-               clojurec-mode
-               clojurescript-mode
-               clojurex-mode))
-    (add-to-list 'lsp-language-id-configuration `(,m . "clojure")))
-  (setq lsp-clojure-server-command '("bash" "-c" "clojure-lsp") ;; Optional: In case `clojure-lsp` is not in your PATH
-        lsp-enable-indentation nil)
-
-  (dawran/localleader-keys
-    :keymaps '(clojure-mode-map clojurescript-mode-map)
-    "d" 'lsp-find-definition
-    "r" 'lsp-find-references))
+  (lsp-enable-which-key-integration t))
 
 (use-package eglot
+  :disabled t
   :hook ((clojure-mode . eglot-ensure)
          (clojurec-mode . eglot-ensure)
          (clojurescript-mode . eglot-ensure))
@@ -869,11 +853,8 @@
   (advice-add 'eglot--guess-contact :around
               #'my/eglot--guess-contact-clojure-project-monorepo))
 
-(use-package eldoc
-  :defer t
-  :blackout t)
-
 (use-package flymake
+  :disabled t
   :defer t
   :blackout t)
 
@@ -922,6 +903,10 @@
 
 (use-package flycheck
   :hook (lsp-mode . flycheck-mode))
+
+(use-package eldoc
+  :defer t
+  :blackout t)
 
 (use-package flyspell
   :blackout t
