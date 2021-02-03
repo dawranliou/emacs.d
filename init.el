@@ -235,6 +235,7 @@
   (prog-mode . hl-line-mode))
 
 (use-package idle-highlight-mode
+  :blackout t
   :hook
   (prog-mode . idle-highlight-mode))
 
@@ -914,9 +915,6 @@
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
-
-(use-package eldoc
-  :blackout t)
 
 (use-package extras
   :straight nil

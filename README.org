@@ -103,7 +103,6 @@ A recent screenshot:
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
   - [[#eldoc][Eldoc]]
   - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
-  - [[#eldoc][Eldoc]]
 - [[#extras][Extras]]
 - [[#app][App]]
   - [[#world-time][World Time]]
@@ -571,6 +570,7 @@ possible key bindings in the mode of your current buffer.
 #+begin_src emacs-lisp
 
   (use-package idle-highlight-mode
+    :blackout t
     :hook
     (prog-mode . idle-highlight-mode))
 
@@ -1588,14 +1588,6 @@ primarily with Emacs' built-in libraries:
     :hook
     (prog-mode . flyspell-prog-mode)
     (text-mode . flyspell-mode))
-
-#+end_src
-** Eldoc
-
-#+begin_src emacs-lisp
-
-  (use-package eldoc
-    :blackout t)
 
 #+end_src
 * Extras
