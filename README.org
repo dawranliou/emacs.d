@@ -1564,7 +1564,9 @@ primarily with Emacs' built-in libraries:
 #+begin_src emacs-lisp
 
   (use-package flycheck
-    :hook (lsp-mode . flycheck-mode))
+    :hook ((clojure-mode . flycheck-mode)
+           (clojurec-mode . flycheck-mode)
+           (clojurescript-mode . flycheck-mode)))
 
 #+end_src
 

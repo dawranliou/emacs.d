@@ -859,10 +859,15 @@
   :defer t
   :blackout t)
 
+(use-package flycheck-clj-kondo
+  :disabled t
+  :defer t)
+
 (use-package clojure-mode
   :custom
   (cljr-magic-requires nil)
   :config
+  ;; (require 'flycheck-clj-kondo)
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
 
@@ -903,7 +908,9 @@
   (setq markdown-command "marked"))
 
 (use-package flycheck
-  :hook (lsp-mode . flycheck-mode))
+  :hook ((clojure-mode . flycheck-mode)
+         (clojurec-mode . flycheck-mode)
+         (clojurescript-mode . flycheck-mode)))
 
 (use-package eldoc
   :defer t
