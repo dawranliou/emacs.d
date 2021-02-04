@@ -1311,6 +1311,17 @@ Remember history of things across launches (ie. kill ring).
       "X" 'dired-ranger-move
       "p" 'dired-ranger-paste))
 
+  (use-package dired-subtree
+    :after dired)
+
+  (use-package dired-toggle
+    :commands dired-toggle
+    :straight nil
+    :load-path "lisp/")
+
+  (dawran/leader-keys
+    "td" 'dired-toggle)
+
 #+end_src
 
 * Shell
@@ -1394,6 +1405,9 @@ Remember history of things across launches (ie. kill ring).
     (eshell-toggle-run-command nil)
     :bind
     ("C-M-'" . eshell-toggle))
+
+  (dawran/leader-keys
+    "te" 'eshell-toggle)
 
 #+end_src
 

@@ -729,6 +729,17 @@
     "X" 'dired-ranger-move
     "p" 'dired-ranger-paste))
 
+(use-package dired-subtree
+  :after dired)
+
+(use-package dired-toggle
+  :commands dired-toggle
+  :straight nil
+  :load-path "lisp/")
+
+(dawran/leader-keys
+  "td" 'dired-toggle)
+
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
 (use-package vterm
@@ -787,6 +798,9 @@
   (eshell-toggle-run-command nil)
   :bind
   ("C-M-'" . eshell-toggle))
+
+(dawran/leader-keys
+  "te" 'eshell-toggle)
 
 (use-package project
   :commands project-root
