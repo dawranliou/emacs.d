@@ -13,9 +13,10 @@ Otherwise choose text from the kill ring and insert it."
   (interactive)
   (if (eq last-command 'yank)
       (yank-pop)
-    (let ((text (completing-read "Yank Ring: "
-                                 (cl-remove-duplicates kill-ring :test #'equal :from-end t)
-                                 nil ':require-match)))
+    (let* ((selectrum-should-sort-p nil)
+           (text (completing-read "Yank Ring: "
+                                  (cl-remove-duplicates kill-ring :test #'equal :from-end t)
+                                  nil ':require-match)))
       (setq yank-window-start (window-start))
       (push-mark)
       (insert-for-yank text)
