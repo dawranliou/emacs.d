@@ -67,6 +67,8 @@ A recent screenshot:
   - [[#embark][Embark]]
 - [[#helpful-help-commands][Helpful Help Commands]]
 - [[#buffers-and-files][Buffers and Files]]
+  - [[#persistent-scratch][Persistent Scratch]]
+  - [[#recent-files][Recent Files]]
 - [[#editing][Editing]]
   - [[#tabs][Tabs]]
   - [[#commenting-lines][Commenting Lines]]
@@ -931,6 +933,20 @@ It is very useful for figuring out how things work in Emacs.
 #+end_src
 
 * Buffers and Files
+
+** Persistent Scratch
+
+#+begin_src emacs-lisp
+
+  (use-package persistent-scratch
+    :custom
+    (persistent-scratch-autosave-interval 60)
+    :config
+    (persistent-scratch-setup-default))
+
+#+end_src
+
+** Recent Files
 
 #+begin_src emacs-lisp
 

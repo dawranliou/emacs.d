@@ -474,6 +474,12 @@
          ("C-h C"   . #'helpful-command)
          ("C-h F"   . #'describe-face)))
 
+(use-package persistent-scratch
+  :custom
+  (persistent-scratch-autosave-interval 60)
+  :config
+  (persistent-scratch-setup-default))
+
 (use-package recentf
   :defer 1
   :custom

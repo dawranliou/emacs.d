@@ -22,3 +22,5 @@
 /private.el
 /url/
 /savehist
+/.persistent-scratch
+/history
