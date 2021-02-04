@@ -735,11 +735,7 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 #+begin_src emacs-lisp
 
   (use-package hl-fill-column
-    :hook (prog-mode . hl-fill-column-mode)
-    :config
-    (set-face-attribute 'hl-fill-column-face nil
-                        :background (face-attribute 'shadow :background)
-                        :inverse-video nil))
+    :hook (prog-mode . hl-fill-column-mode))
 
 #+end_src
 
