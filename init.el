@@ -819,10 +819,12 @@
   (rg-enable-default-bindings))
 
 (use-package lsp-mode
+  :disabled t
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
          (clojurescript-mode . lsp))
   :custom
+  (lsp-enable-file-watchers nil)
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-keymap-prefix "s-l")
   (lsp-enable-indentation nil)
@@ -860,14 +862,13 @@
   :blackout t)
 
 (use-package flycheck-clj-kondo
-  :disabled t
   :defer t)
 
 (use-package clojure-mode
   :custom
   (cljr-magic-requires nil)
   :config
-  ;; (require 'flycheck-clj-kondo)
+  (require 'flycheck-clj-kondo)
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
 
@@ -877,12 +878,14 @@
 
 (use-package cider
   :commands cider
+  :custom
+  (cider-repl-display-help-banner nil)
+  (cider-repl-display-in-current-window nil)
+  (cider-repl-pop-to-buffer-on-connect nil)
+  (cider-repl-use-pretty-printing t)
+  (cider-repl-buffer-size-limit 100000)
+  (cider-repl-result-prefix ";; => ")
   :config
-  (setq cider-repl-display-in-current-window nil
-        cider-repl-pop-to-buffer-on-connect nil
-        cider-repl-use-pretty-printing t
-        cider-repl-buffer-size-limit 100000
-        cider-repl-result-prefix ";; => ")
   (add-hook 'cider-repl-mode-hook 'evil-insert-state)
   (dawran/localleader-keys
     :keymaps '(clojure-mode-map clojurescript-mode-map)
