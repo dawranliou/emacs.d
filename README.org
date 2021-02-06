@@ -1541,6 +1541,7 @@ primarily with Emacs' built-in libraries:
     :defer t)
 
   (use-package clojure-mode
+    :defer t
     :custom
     (cljr-magic-requires nil)
     :config
@@ -1651,6 +1652,7 @@ My extra lisp stuffs. Credits to:
 #+begin_src emacs-lisp
 
   (use-package time
+    :commands display-time-world
     :straight nil
     :custom
     (display-time-world-list '(("Asia/Taipei" "Taipei")

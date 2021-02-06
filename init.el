@@ -881,6 +881,7 @@
   :defer t)
 
 (use-package clojure-mode
+  :defer t
   :custom
   (cljr-magic-requires nil)
   :config
@@ -952,6 +953,7 @@
    ("C-x C-r" . recentf-open-files+)))
 
 (use-package time
+  :commands display-time-world
   :straight nil
   :custom
   (display-time-world-list '(("Asia/Taipei" "Taipei")
