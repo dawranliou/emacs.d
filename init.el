@@ -72,7 +72,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-;;(setq use-package-always-defer t)
+(setq use-package-verbose t)
 
 (mac-auto-operator-composition-mode)
 
