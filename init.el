@@ -422,7 +422,7 @@
 (use-package ctrlf
   :straight (:host github :repo "raxod502/ctrlf")
   :bind
-  ("s-f" . ctrlf-forward-literal)
+  ("s-f" . ctrlf-forward-fuzzy-regexp)
 
   :init
 
