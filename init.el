@@ -425,8 +425,17 @@
   ("s-f" . ctrlf-forward-fuzzy-regexp)
 
   :init
+  (ctrlf-mode +1)
 
-  (ctrlf-mode +1))
+  :config
+  (defun ctrlf-toggle-fuzzy-regexp ()
+    "Toggle CTRLF style to `regexp' or back to `literal'."
+    (interactive)
+    (setq ctrlf--style
+          (if (eq ctrlf--style 'fuzzy-regexp) 'literal 'fuzzy-regexp)))
+
+  (add-to-list 'ctrlf-minibuffer-bindings
+               '("s-f" . ctrlf-toggle-fuzzy-regexp)))
 
 (use-package embark
   :bind
