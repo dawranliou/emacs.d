@@ -860,20 +860,20 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   (use-package ctrlf
     :straight (:host github :repo "raxod502/ctrlf")
     :bind
-    ("s-f" . ctrlf-forward-fuzzy-regexp)
+    ("s-f" . ctrlf-forward-fuzzy)
 
     :init
     (ctrlf-mode +1)
 
     :config
-    (defun ctrlf-toggle-fuzzy-regexp ()
-      "Toggle CTRLF style to `regexp' or back to `literal'."
+    (defun ctrlf-toggle-fuzzy ()
+      "Toggle CTRLF style to `fuzzy' or back to `literal'."
       (interactive)
       (setq ctrlf--style
-            (if (eq ctrlf--style 'fuzzy-regexp) 'literal 'fuzzy-regexp)))
+            (if (eq ctrlf--style 'fuzzy) 'literal 'fuzzy)))
 
     (add-to-list 'ctrlf-minibuffer-bindings
-                 '("s-f" . ctrlf-toggle-fuzzy-regexp)))
+                 '("s-f" . ctrlf-toggle-fuzzy)))
 
 #+end_src
 
