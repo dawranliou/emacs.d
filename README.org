@@ -79,6 +79,7 @@ A recent screenshot:
   - [[#smart-parens][Smart Parens]]
   - [[#expand-region][Expand Region]]
   - [[#savehist][Savehist]]
+  - [[#saveplace][Saveplace]]
 - [[#org-mode][Org Mode]]
   - [[#basic-config][Basic Config]]
   - [[#nicer-heading-bullets][Nicer Heading Bullets]]
@@ -1130,6 +1131,18 @@ Remember history of things across launches (ie. kill ring).
     (history-length 20000))
 
     #+end_src
+
+** Saveplace
+
+When you visit a file, point goes to the last place where it was when you previously visited the same file.
+
+#+begin_src emacs-lisp
+
+  (use-package saveplace
+    :config
+    (save-place-mode t))
+
+#+end_src
 
 * Org Mode
 ** Basic Config

@@ -596,6 +596,10 @@
      search-ring regexp-search-ring))
   (history-length 20000))
 
+(use-package saveplace
+  :config
+  (save-place-mode t))
+
 (defun dawran/org-mode-setup ()
   (org-indent-mode)
   (blackout 'org-indent-mode)
