@@ -241,7 +241,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'oil6 t)
+(add-hook 'after-init-hook (lambda () (load-theme 'oil6 t)))
 
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)

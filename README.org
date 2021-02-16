@@ -588,7 +588,7 @@ I'm using my personal theme - =sketch-white= as my prefered theme.
 
   (add-to-list 'load-path "~/.emacs.d/themes")
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-  (load-theme 'oil6 t)
+  (add-hook 'after-init-hook (lambda () (load-theme 'oil6 t)))
 
 #+end_src
 
