@@ -100,7 +100,7 @@
 
    ;; Org
    `(org-document-title ((,class (:foreground ,fg2 :height 1.4 :bold t))))
-   `(org-hide ((,class (:foreground ,bg1))))
+   `(org-hide ((,class (:inherit 'fixed-pitch :foreground ,bg1))))
    `(org-level-1 ((,class (:bold t :foreground ,fg2 :height 1.3))))
    `(org-level-2 ((,class (:bold nil :foreground ,fg3 :height 1.2))))
    `(org-level-3 ((,class (:bold t :foreground ,fg4 :height 1.1))))
