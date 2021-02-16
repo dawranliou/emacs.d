@@ -1367,12 +1367,19 @@ When you visit a file, point goes to the last place where it was when you previo
 #+begin_src emacs-lisp
 
   (defun dawran/eshell-history ()
+    "Browse eshell history."
     (interactive)
-    (insert (completing-read
-             "Eshell history:"
-             (cl-remove-duplicates
-              (ring-elements eshell-history-ring)
-              :test #'equal :from-end t))))
+    (let ((candidates (cl-remove-duplicates
+                       (ring-elements eshell-history-ring)
+                       :test #'equal :from-end t))
+          (input (let ((input-start (save-excursion (eshell-bol)))
+                       (input-end (save-excursion (end-of-line) (point))))
+                   (buffer-substring-no-properties input-start input-end))))
+      (let ((selected (completing-read "Eshell history:"
+                                       candidates nil nil input)))
+        (end-of-line)
+        (eshell-kill-input)
+        (insert (string-trim selected)))))
 
   (defun dawran/configure-eshell ()
     ;; Save command history when commands are entered
