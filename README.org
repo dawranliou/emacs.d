@@ -1,6 +1,6 @@
-#+TITLE: Daw-Ran Liou's Emacs Configuration
-#+STARTUP: overview
-#+PROPERTY: header-args:emacs-lisp :tangle init.el :results silent
+#+TITLE:Daw-Ran Liou's Emacs Configuration
+#+STARTUP:overview
+#+PROPERTY:header-args:emacs-lisp :tangle init.el :results silent
 
 This is an ongoing evolution of my original Emacs configuration files, inspired
 by a bunch of resources I’ve found online:
@@ -1184,8 +1184,13 @@ When you visit a file, point goes to the last place where it was when you previo
 #+begin_src emacs-lisp
 
   (defun dawran/org-mode-setup ()
+    ;; hide title / author ... keywords
+    (setq-local org-hidden-keywords '(title author date))
+
+    ;; Indentation
     (org-indent-mode)
     (blackout 'org-indent-mode)
+
     (variable-pitch-mode 1)
     (blackout 'buffer-face-mode)
     (visual-line-mode 1)

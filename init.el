@@ -617,8 +617,13 @@
   (save-place-mode t))
 
 (defun dawran/org-mode-setup ()
+  ;; hide title / author ... keywords
+  (setq-local org-hidden-keywords '(title author date))
+
+  ;; Indentation
   (org-indent-mode)
   (blackout 'org-indent-mode)
+
   (variable-pitch-mode 1)
   (blackout 'buffer-face-mode)
   (visual-line-mode 1)
