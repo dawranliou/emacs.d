@@ -222,7 +222,7 @@
 (blink-cursor-mode 0)
 
 (setq-default fill-column 80)
-(setq-default line-spacing 0.1)
+(setq-default line-spacing 1)
 
 (column-number-mode)
 
