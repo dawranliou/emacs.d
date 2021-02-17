@@ -88,6 +88,7 @@ A recent screenshot:
   - [[#journal][Journal]]
   - [[#roam][Roam]]
   - [[#presentation][Presentation]]
+  - [[#paste-clipboard-image-into-org-files][Paste Clipboard Image into Org files]]
 - [[#dired][Dired]]
 - [[#shell][Shell]]
   - [[#exec-path][Exec-path]]
@@ -1278,6 +1279,33 @@ When you visit a file, point goes to the last place where it was when you previo
     (org-tree-slide-deactivate-message "Presentation ended.")
     (org-tree-slide-breadcrumbs " > ")
     (org-tree-slide-header t))
+
+#+end_src
+
+** Paste Clipboard Image into Org files
+
+Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
+
+#+begin_src emacs-lisp
+
+  (defvar org-paste-clipboard-image-dir "img")
+
+  (defun dawran/org-paste-clipboard-image ()
+    "Paste clipboard image to org file."
+    (interactive)
+    (if (not (executable-find "pngpaste"))
+        (message "Requires pngpaste in PATH")
+      (unless (file-exists-p org-paste-clipboard-image-dir)
+        (make-directory org-paste-clipboard-image-dir t))
+      (let ((image-file (format "%s/%s.png"
+                                org-paste-clipboard-image-dir
+                                (make-temp-name "org-image-paste-"))))
+        (call-process-shell-command (format "pngpaste %s" image-file))
+        (insert (format  "#+CAPTION: %s\n" (read-string "Caption: ")))
+        (insert (format "[[file:%s]]" image-file))
+        (org-display-inline-images))))
+
+  (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image)
 
 #+end_src
 

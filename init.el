@@ -693,6 +693,25 @@
   (org-tree-slide-breadcrumbs " > ")
   (org-tree-slide-header t))
 
+(defvar org-paste-clipboard-image-dir "img")
+
+(defun dawran/org-paste-clipboard-image ()
+  "Paste clipboard image to org file."
+  (interactive)
+  (if (not (executable-find "pngpaste"))
+      (message "Requires pngpaste in PATH")
+    (unless (file-exists-p org-paste-clipboard-image-dir)
+      (make-directory org-paste-clipboard-image-dir t))
+    (let ((image-file (format "%s/%s.png"
+                              org-paste-clipboard-image-dir
+                              (make-temp-name "org-image-paste-"))))
+      (call-process-shell-command (format "pngpaste %s" image-file))
+      (insert (format  "#+CAPTION: %s\n" (read-string "Caption: ")))
+      (insert (format "[[file:%s]]" image-file))
+      (org-display-inline-images))))
+
+(define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image)
+
 (use-package dired
   :straight nil
   :commands (dired)
