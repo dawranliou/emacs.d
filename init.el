@@ -648,7 +648,9 @@
 
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+
+  (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
 
 (use-package evil-org
   :blackout t
@@ -730,8 +732,6 @@
       (insert (format  "#+CAPTION: %s\n" (read-string "Caption: ")))
       (insert (format "[[file:%s]]" image-file))
       (org-display-inline-images))))
-
-(define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image)
 
 (use-package dired
   :straight nil

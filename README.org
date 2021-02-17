@@ -1215,7 +1215,9 @@ When you visit a file, point goes to the last place where it was when you previo
 
     (require 'org-tempo)
     (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+
+    (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
 
   (use-package evil-org
     :blackout t
@@ -1341,8 +1343,6 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
         (insert (format  "#+CAPTION: %s\n" (read-string "Caption: ")))
         (insert (format "[[file:%s]]" image-file))
         (org-display-inline-images))))
-
-  (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image)
 
 #+end_src
 
