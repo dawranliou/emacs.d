@@ -243,12 +243,16 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-hook 'after-init-hook (lambda () (load-theme 'oil6 t)))
 
+(defvar dawran/after-load-theme-hook nil
+  "Hook run after a color theme is loaded using `load-theme'.")
+
 (defun dawran/load-theme-action (theme)
   "Disable current themes and load theme THEME."
   (condition-case nil
       (progn
         (mapc #'disable-theme custom-enabled-themes)
-        (load-theme (intern theme) t))
+        (load-theme (intern theme) t)
+        (run-hooks 'dawran/after-load-theme-hook))
     (error "Problem loading theme %s" theme)))
 
 (defun dawran/load-theme ()
@@ -330,6 +334,17 @@
                         (format-mode-line my/mode-line-left)
                         (format-mode-line my/mode-line-right))
                        'fixedcase 'literal)))
+
+(defun dawran/set-mode-line-padding ()
+  "Add some padding to the mode line."
+  (dolist (face '(mode-line mode-line-inactive))
+    (let ((background (face-attribute face :background)))
+      (set-face-attribute face nil
+                          :box `(:line-width 5 :color ,background)))))
+
+(dawran/set-mode-line-padding)
+
+(add-hook 'dawran/after-load-theme-hook #'dawran/set-mode-line-padding)
 
 (use-package paren
   :hook (prog-mode . show-paren-mode))
@@ -623,6 +638,12 @@
   ;; Indentation
   (org-indent-mode)
   (blackout 'org-indent-mode)
+
+  ;; Add padding to headings
+  (dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4))
+    (let ((background (face-attribute 'default :background)))
+      (set-face-attribute face nil
+                          :box `(:line-width 2 :color ,background))))
 
   (variable-pitch-mode 1)
   (blackout 'buffer-face-mode)
