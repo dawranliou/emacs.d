@@ -176,7 +176,7 @@
   (dawran/leader-keys
     "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
-    "tt" '(load-theme :which-key "choose theme")
+    "tt" '(dawran/load-theme :which-key "choose theme")
     "tw" 'whitespace-mode
     "tm" 'toggle-frame-maximized
     "tM" 'toggle-frame-fullscreen))
@@ -242,6 +242,22 @@
 (add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-hook 'after-init-hook (lambda () (load-theme 'oil6 t)))
+
+(defun dawran/load-theme-action (theme)
+  "Disable current themes and load theme THEME."
+  (condition-case nil
+      (progn
+        (mapc #'disable-theme custom-enabled-themes)
+        (load-theme (intern theme) t))
+    (error "Problem loading theme %s" theme)))
+
+(defun dawran/load-theme ()
+  "Disable current themes and load theme from the completion list."
+  (interactive)
+  (let ((theme (completing-read "Load custom theme: "
+                                (mapcar 'symbol-name
+                                        (custom-available-themes)))))
+    (dawran/load-theme-action theme)))
 
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)

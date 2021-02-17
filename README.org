@@ -50,6 +50,7 @@ A recent screenshot:
   - [[#highlight-line-disabled][Highlight line (disabled)]]
   - [[#highlight-on-idle][Highlight on Idle]]
   - [[#theme][Theme]]
+    - [[#load-theme-action][Load Theme Action]]
   - [[#font-configuration][Font configuration]]
   - [[#modeline][Modeline]]
   - [[#highlight-matching-parens][Highlight Matching Parens]]
@@ -458,7 +459,7 @@ Some tips can be found here:
     (dawran/leader-keys
       "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
       "t"  '(:ignore t :which-key "toggles")
-      "tt" '(load-theme :which-key "choose theme")
+      "tt" '(dawran/load-theme :which-key "choose theme")
       "tw" 'whitespace-mode
       "tm" 'toggle-frame-maximized
       "tM" 'toggle-frame-fullscreen))
@@ -584,13 +585,44 @@ possible key bindings in the mode of your current buffer.
 
 ** Theme
 
-I'm using my personal theme - =sketch-white= as my prefered theme.
+I'm using my personal theme - =oil6= as my prefered theme.
 
 #+begin_src emacs-lisp
 
   (add-to-list 'load-path "~/.emacs.d/themes")
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
   (add-hook 'after-init-hook (lambda () (load-theme 'oil6 t)))
+
+#+end_src
+
+*** Load Theme Action
+
+Loading themes on top of one another usually have unwanted side effects of
+residual faces from the previous ones. I like to keep multiple themes at
+disposal at the same time. Each one of them have different emphasis and
+philosophy behind. Rather than making sure the themes overrides the leftover
+faces properly, the simpler way to address this is by disabling all other
+enabled themes.
+
+This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/counsel.el][counsel-load-theme-action]].
+
+#+begin_src emacs-lisp
+
+  (defun dawran/load-theme-action (theme)
+    "Disable current themes and load theme THEME."
+    (condition-case nil
+        (progn
+          (mapc #'disable-theme custom-enabled-themes)
+          (load-theme (intern theme) t))
+      (error "Problem loading theme %s" theme)))
+
+  (defun dawran/load-theme ()
+    "Disable current themes and load theme from the completion list."
+    (interactive)
+    (let ((theme (completing-read "Load custom theme: "
+                                  (mapcar 'symbol-name
+                                          (custom-available-themes)))))
+      (dawran/load-theme-action theme)))
 
 #+end_src
 
