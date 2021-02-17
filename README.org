@@ -111,6 +111,7 @@ A recent screenshot:
 - [[#app][App]]
   - [[#world-time][World Time]]
   - [[#rss][RSS]]
+  - [[#gemini][Gemini]]
 :END:
 
 * Early-init.el
@@ -1711,5 +1712,13 @@ My extra lisp stuffs. Credits to:
 
   (dawran/leader-keys
     "R" '(elfeed :which-key "RSS"))
+
+#+end_src
+** Gemini
+
+#+begin_src emacs-lisp
+
+  (use-package elpher
+    :commands elpher)
 
 #+end_src

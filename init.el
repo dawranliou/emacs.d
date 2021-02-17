@@ -998,3 +998,6 @@
 
 (dawran/leader-keys
   "R" '(elfeed :which-key "RSS"))
+
+(use-package elpher
+  :commands elpher)
