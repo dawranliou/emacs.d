@@ -262,7 +262,7 @@
                                         (custom-available-themes)))))
     (dawran/load-theme-action theme)))
 
-(add-hook 'after-init-hook (lambda () (dawran/load-theme-action "sketch-black")))
+(dawran/load-theme-action "sketch-black")
 
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)
@@ -342,6 +342,8 @@
     (let ((background (face-attribute face :background)))
       (set-face-attribute face nil
                           :box `(:line-width 5 :color ,background)))))
+
+(dawran/set-mode-line-padding)
 
 (add-hook 'dawran/after-load-theme-hook #'dawran/set-mode-line-padding)
 
@@ -637,8 +639,6 @@
       (set-face-attribute face nil
                           :box `(:line-width 4 :color ,background)))))
 
-(dawran/org-padding-setup)
-
 (defun dawran/org-mode-setup ()
   ;; hide title / author ... keywords
   (setq-local org-hidden-keywords '(title author date))
@@ -646,6 +646,8 @@
   ;; Indentation
   (org-indent-mode)
   (blackout 'org-indent-mode)
+
+  (dawran/org-padding-setup)
 
   (variable-pitch-mode 1)
   (blackout 'buffer-face-mode)

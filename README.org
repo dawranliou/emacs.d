@@ -627,7 +627,7 @@ This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/co
                                           (custom-available-themes)))))
       (dawran/load-theme-action theme)))
 
-  (add-hook 'after-init-hook (lambda () (dawran/load-theme-action "sketch-black")))
+  (dawran/load-theme-action "sketch-black")
 
 #+end_src
 
@@ -721,6 +721,8 @@ The simple mode line is mostly stolen from: https://github.com/raxod502/radian/b
       (let ((background (face-attribute face :background)))
         (set-face-attribute face nil
                             :box `(:line-width 5 :color ,background)))))
+
+  (dawran/set-mode-line-padding)
 
   (add-hook 'dawran/after-load-theme-hook #'dawran/set-mode-line-padding)
 
@@ -1204,8 +1206,6 @@ When you visit a file, point goes to the last place where it was when you previo
         (set-face-attribute face nil
                             :box `(:line-width 4 :color ,background)))))
 
-  (dawran/org-padding-setup)
-
   (defun dawran/org-mode-setup ()
     ;; hide title / author ... keywords
     (setq-local org-hidden-keywords '(title author date))
@@ -1213,6 +1213,8 @@ When you visit a file, point goes to the last place where it was when you previo
     ;; Indentation
     (org-indent-mode)
     (blackout 'org-indent-mode)
+
+    (dawran/org-padding-setup)
 
     (variable-pitch-mode 1)
     (blackout 'buffer-face-mode)
