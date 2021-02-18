@@ -268,7 +268,7 @@
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170)
 
 ;;;; Mode line
 
