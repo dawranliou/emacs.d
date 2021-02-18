@@ -630,6 +630,15 @@
   :config
   (save-place-mode t))
 
+(defun dawran/org-padding-setup ()
+  "Add padding to org headings."
+  (dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4))
+    (let ((background (face-attribute 'default :background)))
+      (set-face-attribute face nil
+                          :box `(:line-width 4 :color ,background)))))
+
+(dawran/org-padding-setup)
+
 (defun dawran/org-mode-setup ()
   ;; hide title / author ... keywords
   (setq-local org-hidden-keywords '(title author date))
@@ -638,12 +647,6 @@
   (org-indent-mode)
   (blackout 'org-indent-mode)
 
-  ;; Add padding to headings
-  (dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4))
-    (let ((background (face-attribute 'default :background)))
-      (set-face-attribute face nil
-                          :box `(:line-width 4 :color ,background))))
-
   (variable-pitch-mode 1)
   (blackout 'buffer-face-mode)
   (visual-line-mode 1)
@@ -651,7 +654,8 @@
   (dawran/visual-fill))
 
 (use-package org
-  :hook (org-mode . dawran/org-mode-setup)
+  :hook ((org-mode . dawran/org-mode-setup)
+         (dawran/after-load-theme . dawran/org-padding-setup))
   :config
   (setq org-ellipsis " ▾"
         org-hide-emphasis-markers t
