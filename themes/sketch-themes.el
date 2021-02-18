@@ -168,6 +168,10 @@
       (flymake-warning (:underline (:style wave :color ,weak)))
       (flymake-error (:underline (:style wave :color ,warning)))
 
+      ;; flycheck mode
+      (flycheck-warning (:underline (:style wave :color ,weak)))
+      (flycheck-error (:underline (:style wave :color ,warning)))
+
       ;; flyspell mode
       (flyspell-duplicate (:underline (:color ,weak :style wave)))
       (flyspell-incorrect (:underline (:color ,warning :style wave)))
