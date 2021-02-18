@@ -591,7 +591,6 @@ I'm using my personal theme - =oil6= as my prefered theme.
 
   (add-to-list 'load-path "~/.emacs.d/themes")
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-  (add-hook 'after-init-hook (lambda () (load-theme 'oil6 t)))
 
 #+end_src
 
@@ -627,6 +626,8 @@ This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/co
                                   (mapcar 'symbol-name
                                           (custom-available-themes)))))
       (dawran/load-theme-action theme)))
+
+  (add-hook 'after-init-hook (lambda () (dawran/load-theme-action "oil6")))
 
 #+end_src
 
@@ -720,8 +721,6 @@ The simple mode line is mostly stolen from: https://github.com/raxod502/radian/b
       (let ((background (face-attribute face :background)))
         (set-face-attribute face nil
                             :box `(:line-width 5 :color ,background)))))
-
-  (dawran/set-mode-line-padding)
 
   (add-hook 'dawran/after-load-theme-hook #'dawran/set-mode-line-padding)
 

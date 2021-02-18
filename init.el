@@ -241,7 +241,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-hook 'after-init-hook (lambda () (load-theme 'oil6 t)))
 
 (defvar dawran/after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
@@ -262,6 +261,8 @@
                                 (mapcar 'symbol-name
                                         (custom-available-themes)))))
     (dawran/load-theme-action theme)))
+
+(add-hook 'after-init-hook (lambda () (dawran/load-theme-action "oil6")))
 
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)
@@ -341,8 +342,6 @@
     (let ((background (face-attribute face :background)))
       (set-face-attribute face nil
                           :box `(:line-width 5 :color ,background)))))
-
-(dawran/set-mode-line-padding)
 
 (add-hook 'dawran/after-load-theme-hook #'dawran/set-mode-line-padding)
 
