@@ -917,7 +917,8 @@
 (use-package lsp-mode
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
-         (clojurescript-mode . lsp))
+         (clojurescript-mode . lsp)
+         (lsp-mode . (lambda () (setq-local idle-highlight-mode nil))))
   :custom
   (lsp-enable-file-watchers nil)
   (lsp-headerline-breadcrumb-enable nil)
