@@ -636,10 +636,10 @@ This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/co
 #+begin_src emacs-lisp
 
   ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)
+  (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
 
   ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160 :weight 'regular)
+  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160)
 
 #+end_src
 

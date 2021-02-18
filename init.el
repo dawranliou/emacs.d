@@ -265,10 +265,10 @@
 (add-hook 'after-init-hook (lambda () (dawran/load-theme-action "sketch-black")))
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160 :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 160)
 
 ;;;; Mode line
 
