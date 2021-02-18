@@ -642,7 +642,7 @@
   (dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4))
     (let ((background (face-attribute 'default :background)))
       (set-face-attribute face nil
-                          :box `(:line-width 2 :color ,background))))
+                          :box `(:line-width 4 :color ,background))))
 
   (variable-pitch-mode 1)
   (blackout 'buffer-face-mode)
