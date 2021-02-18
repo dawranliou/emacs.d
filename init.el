@@ -262,7 +262,7 @@
                                         (custom-available-themes)))))
     (dawran/load-theme-action theme)))
 
-(add-hook 'after-init-hook (lambda () (dawran/load-theme-action "oil6")))
+(add-hook 'after-init-hook (lambda () (dawran/load-theme-action "sketch-black")))
 
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140 :weight 'regular)
