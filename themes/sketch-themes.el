@@ -92,6 +92,7 @@
       (vertical-border (:foreground ,weaker))
       (default-italic (:italic t))
       (line-number (:background ,bg :foreground ,weaker))
+      (line-number-current-line (:background ,bg :foreground ,fg))
 
       ;; mode line
       (mode-line (:foreground ,fg :background ,weakest))
