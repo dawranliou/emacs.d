@@ -74,7 +74,6 @@
    (mapcar
     (lambda (entry) (list (car entry) `((t ,@(cdr entry)))))
     `(
-
       ;; default
       (default (:background ,bg :foreground ,fg))
       (fringe (:background ,bg))
@@ -148,20 +147,30 @@
       (org-special-keyword (:inherit (font-lock-comment-face fixed-pitch)))
       (org-meta-line (:inherit (font-lock-comment-face fixed-pitch)))
       (org-checkbox (:inherit fixed-pitch))
-      (org-hide (:foreground ,bg))
+      (org-hide (:inherit 'fixed-pitch :foreground ,bg))
       (org-document-title (:height 2.0))
-      (org-level-1 (:height 1.4 :overline ,weaker))
-      (org-level-2 (:height 1.3 :overline ,weaker))
-      (org-level-3 (:height 1.2 :overline ,weaker))
-      (org-level-4 (:height 1.1 :overline ,weaker))
-      (org-level-5 (:height 1.1 :overline ,weaker))
-      (org-level-6 (:height 1.1 :overline ,weaker))
-      (org-level-7 (:height 1.1 :overline ,weaker))
-      (org-level-8 (:height 1.1 :overline ,weaker))
+      (org-level-1 (:height 1.4 :overline ,weakest))
+      (org-level-2 (:height 1.3 :overline ,weakest))
+      (org-level-3 (:height 1.2 :overline ,weakest))
+      (org-level-4 (:height 1.1 :overline ,weakest))
+      (org-level-5 (:height 1.1 :overline ,weakest))
+      (org-level-6 (:height 1.1 :overline ,weakest))
+      (org-level-7 (:height 1.1 :overline ,weakest))
+      (org-level-8 (:height 1.1 :overline ,weakest))
+      (org-done (:foreground ,weak :bold t))
+      (org-headline-done (:foreground ,fg))
+      (org-todo (:foreground ,success :bold t))
+      (org-drawer (:foreground ,weak))
+      (org-date (:underline t))
+      (org-ellipsis (:foreground ,weak))
 
       ;; flymake mode
       (flymake-warning (:underline (:style wave :color ,weak)))
       (flymake-error (:underline (:style wave :color ,warning)))
+
+      ;; flyspell mode
+      (flyspell-duplicate (:underline (:color ,weak :style wave)))
+      (flyspell-incorrect (:underline (:color ,warning :style wave)))
 
       ))))
 
