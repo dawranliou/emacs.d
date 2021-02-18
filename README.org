@@ -715,17 +715,6 @@ The simple mode line is mostly stolen from: https://github.com/raxod502/radian/b
                           (format-mode-line my/mode-line-right))
                          'fixedcase 'literal)))
 
-  (defun dawran/set-mode-line-padding ()
-    "Add some padding to the mode line."
-    (dolist (face '(mode-line mode-line-inactive))
-      (let ((background (face-attribute face :background)))
-        (set-face-attribute face nil
-                            :box `(:line-width 5 :color ,background)))))
-
-  (dawran/set-mode-line-padding)
-
-  (add-hook 'dawran/after-load-theme-hook #'dawran/set-mode-line-padding)
-
 #+end_src
 
 ** Highlight Matching Parens
@@ -1199,13 +1188,6 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (defun dawran/org-padding-setup ()
-    "Add padding to org headings."
-    (dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4))
-      (let ((background (face-attribute 'default :background)))
-        (set-face-attribute face nil
-                            :box `(:line-width 4 :color ,background)))))
-
   (defun dawran/org-mode-setup ()
     ;; hide title / author ... keywords
     (setq-local org-hidden-keywords '(title author date))
@@ -1214,8 +1196,6 @@ When you visit a file, point goes to the last place where it was when you previo
     (org-indent-mode)
     (blackout 'org-indent-mode)
 
-    (dawran/org-padding-setup)
-
     (variable-pitch-mode 1)
     (blackout 'buffer-face-mode)
     (visual-line-mode 1)
@@ -1223,8 +1203,7 @@ When you visit a file, point goes to the last place where it was when you previo
     (dawran/visual-fill))
 
   (use-package org
-    :hook ((org-mode . dawran/org-mode-setup)
-           (dawran/after-load-theme . dawran/org-padding-setup))
+    :hook (org-mode . dawran/org-mode-setup)
     :config
     (setq org-ellipsis " ▾"
           org-hide-emphasis-markers t

@@ -336,17 +336,6 @@
                         (format-mode-line my/mode-line-right))
                        'fixedcase 'literal)))
 
-(defun dawran/set-mode-line-padding ()
-  "Add some padding to the mode line."
-  (dolist (face '(mode-line mode-line-inactive))
-    (let ((background (face-attribute face :background)))
-      (set-face-attribute face nil
-                          :box `(:line-width 5 :color ,background)))))
-
-(dawran/set-mode-line-padding)
-
-(add-hook 'dawran/after-load-theme-hook #'dawran/set-mode-line-padding)
-
 (use-package paren
   :hook (prog-mode . show-paren-mode))
 
@@ -632,13 +621,6 @@
   :config
   (save-place-mode t))
 
-(defun dawran/org-padding-setup ()
-  "Add padding to org headings."
-  (dolist (face '(org-level-1 org-level-2 org-level-3 org-level-4))
-    (let ((background (face-attribute 'default :background)))
-      (set-face-attribute face nil
-                          :box `(:line-width 4 :color ,background)))))
-
 (defun dawran/org-mode-setup ()
   ;; hide title / author ... keywords
   (setq-local org-hidden-keywords '(title author date))
@@ -647,8 +629,6 @@
   (org-indent-mode)
   (blackout 'org-indent-mode)
 
-  (dawran/org-padding-setup)
-
   (variable-pitch-mode 1)
   (blackout 'buffer-face-mode)
   (visual-line-mode 1)
@@ -656,8 +636,7 @@
   (dawran/visual-fill))
 
 (use-package org
-  :hook ((org-mode . dawran/org-mode-setup)
-         (dawran/after-load-theme . dawran/org-padding-setup))
+  :hook (org-mode . dawran/org-mode-setup)
   :config
   (setq org-ellipsis " ▾"
         org-hide-emphasis-markers t
