@@ -129,7 +129,8 @@
   (define-key evil-visual-state-map "\C-k" 'kill-line)
 
   ;; Get around faster
-  (define-key evil-motion-state-map "gs" 'evil-avy-goto-char-timer)
+  (define-key evil-motion-state-map "gs" 'evil-avy-goto-symbol-1)
+  (define-key evil-motion-state-map "gS" 'evil-avy-goto-char-timer)
 
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
