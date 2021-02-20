@@ -49,7 +49,7 @@ A recent screenshot:
   - [[#display-line-number][Display line number]]
   - [[#highlight-line-disabled][Highlight line (disabled)]]
   - [[#highlight-on-idle][Highlight on Idle]]
-  - [[#theme][Theme]]
+  - [[#themes][Themes]]
     - [[#load-theme-action][Load Theme Action]]
   - [[#font-configuration][Font configuration]]
   - [[#modeline][Modeline]]
@@ -584,14 +584,22 @@ possible key bindings in the mode of your current buffer.
 
 #+end_src
 
-** Theme
+** Themes
 
 I'm using my personal theme - =oil6= as my prefered theme.
 
 #+begin_src emacs-lisp
 
-  (add-to-list 'load-path "~/.emacs.d/themes")
   (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
+#+end_src
+
+Here's my other published themes
+
+#+begin_src emacs-lisp
+
+  (use-package sketch-themes
+    :straight (:host github :repo "dawranliou/sketch-themes"))
 
 #+end_src
 

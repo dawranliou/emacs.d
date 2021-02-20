@@ -240,8 +240,10 @@
   :hook
   (prog-mode . idle-highlight-mode))
 
-(add-to-list 'load-path "~/.emacs.d/themes")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
+(use-package sketch-themes
+  :straight (:host github :repo "dawranliou/sketch-themes"))
 
 (defvar dawran/after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
