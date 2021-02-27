@@ -636,7 +636,7 @@ This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/co
                                           (custom-available-themes)))))
       (dawran/load-theme-action theme)))
 
-  (add-hook 'after-init-hook (lambda () (dawran/load-theme-action "sketch-black")))
+  (dawran/load-theme-action "sketch-white")
 
 #+end_src
 
