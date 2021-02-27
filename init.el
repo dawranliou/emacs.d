@@ -632,7 +632,7 @@
   (org-indent-mode)
   (blackout 'org-indent-mode)
 
-  (variable-pitch-mode 1)
+  ;; (variable-pitch-mode 1)
   (blackout 'buffer-face-mode)
   (visual-line-mode 1)
   (blackout 'visual-line-mode)

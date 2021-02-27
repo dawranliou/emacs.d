@@ -1205,7 +1205,7 @@ When you visit a file, point goes to the last place where it was when you previo
     (org-indent-mode)
     (blackout 'org-indent-mode)
 
-    (variable-pitch-mode 1)
+    ;; (variable-pitch-mode 1)
     (blackout 'buffer-face-mode)
     (visual-line-mode 1)
     (blackout 'visual-line-mode)
