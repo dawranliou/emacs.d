@@ -41,11 +41,11 @@ A recent screenshot:
   - [[#evil][Evil]]
   - [[#simplify-leader-bindings-generalel][Simplify Leader Bindings (general.el)]]
   - [[#better-default-bindings][Better Default Bindings]]
-  - [[#quickly-jump-to-scratch-buffer][Quickly Jump to Scratch Buffer]]
 - [[#ui][UI]]
   - [[#blackout-mode-line-lighters][Blackout Mode Line Lighters]]
   - [[#keybinding-panel-which-key][Keybinding Panel (which-key)]]
   - [[#clean-up-emacs-ui-to-be-more-minimal][Clean up Emacs' UI to be more minimal]]
+  - [[#scratch-buffer][Scratch Buffer]]
   - [[#display-line-number][Display line number]]
   - [[#highlight-line-disabled][Highlight line (disabled)]]
   - [[#highlight-on-idle][Highlight on Idle]]
@@ -477,17 +477,6 @@ Some tips can be found here:
 
 #+end_src
 
-** Quickly Jump to Scratch Buffer
-
-#+begin_src emacs-lisp
-
-  (global-set-key (kbd "s-t")
-                  #'(lambda ()
-                      (interactive)
-                      (switch-to-buffer (get-buffer-create "*scratch*"))))
-
-#+end_src
-
 * UI
 ** Blackout Mode Line Lighters
 
@@ -551,6 +540,40 @@ possible key bindings in the mode of your current buffer.
   (setq-default line-spacing 1)
 
 #+end_src
+
+** Scratch Buffer
+
+#+begin_src emacs-lisp
+
+  (defvar scratch-mode-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "C-c c") 'lisp-interaction-mode)
+      (define-key map (kbd "C-c C-c") 'lisp-interaction-mode)
+      map)
+    "Keymap for `scratch-mode'.")
+
+  (define-derived-mode scratch-mode
+    fundamental-mode
+    "Scratch"
+    "Major mode for the *scratch* buffer.\\{scratch-mode-map}"
+    (setq-local indent-line-function 'indent-relative))
+
+  (setq initial-major-mode 'scratch-mode)
+  (setq initial-scratch-message nil)
+
+  (defun jump-to-scratch-buffer ()
+    "Jump to the existing *scratch* buffer or create a new one."
+    (interactive)
+    (let ((scratch-buffer (get-buffer-create "*scratch*")))
+      (unless (derived-mode-p 'scratch-mode)
+        (with-current-buffer scratch-buffer
+          (scratch-mode)))
+      (switch-to-buffer scratch-buffer)))
+
+  (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
+
+#+end_src
+
 ** Display line number
 
 #+begin_src emacs-lisp

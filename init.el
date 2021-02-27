@@ -186,11 +186,6 @@
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
 (global-set-key (kbd "M-:") 'pp-eval-expression)
 
-(global-set-key (kbd "s-t")
-                #'(lambda ()
-                    (interactive)
-                    (switch-to-buffer (get-buffer-create "*scratch*"))))
-
 (use-package blackout
   :straight (:host github :repo "raxod502/blackout"))
 
@@ -224,6 +219,33 @@
 
 (setq-default fill-column 80)
 (setq-default line-spacing 1)
+
+(defvar scratch-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c c") 'lisp-interaction-mode)
+    (define-key map (kbd "C-c C-c") 'lisp-interaction-mode)
+    map)
+  "Keymap for `scratch-mode'.")
+
+(define-derived-mode scratch-mode
+  fundamental-mode
+  "Scratch"
+  "Major mode for the *scratch* buffer.\\{scratch-mode-map}"
+  (setq-local indent-line-function 'indent-relative))
+
+(setq initial-major-mode 'scratch-mode)
+(setq initial-scratch-message nil)
+
+(defun jump-to-scratch-buffer ()
+  "Jump to the existing *scratch* buffer or create a new one."
+  (interactive)
+  (let ((scratch-buffer (get-buffer-create "*scratch*")))
+    (unless (derived-mode-p 'scratch-mode)
+      (with-current-buffer scratch-buffer
+        (scratch-mode)))
+    (switch-to-buffer scratch-buffer)))
+
+(global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 
 (column-number-mode)
 
