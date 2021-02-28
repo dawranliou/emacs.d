@@ -612,7 +612,7 @@
 
 (use-package undo-fu)
 
-(use-package electric-pair
+(use-package elec-pair
   :straight nil
   :hook (prog-mode . electric-pair-mode))
 
