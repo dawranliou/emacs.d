@@ -612,9 +612,9 @@
 
 (use-package undo-fu)
 
-(use-package smartparens
-  :blackout t
-  :hook (prog-mode . smartparens-mode))
+(use-package electric-pair
+  :straight nil
+  :hook (prog-mode . electric-pair-mode))
 
 (use-package expand-region
   :bind

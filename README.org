@@ -77,7 +77,7 @@ A recent screenshot:
   - [[#lisp-s-expression-editing][Lisp S-expression Editing]]
   - [[#evil-multiedit][Evil Multiedit]]
   - [[#undo-fu][Undo-fu]]
-  - [[#smart-parens][Smart Parens]]
+  - [[#electric-pair][Electric Pair]]
   - [[#expand-region][Expand Region]]
   - [[#savehist][Savehist]]
   - [[#saveplace][Saveplace]]
@@ -1153,13 +1153,14 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
 #+end_src
 
-** Smart Parens
+** Electric Pair
+Automatically close brackets, parens, etc. Bundled with Emacs.
 
 #+begin_src emacs-lisp
 
-  (use-package smartparens
-    :blackout t
-    :hook (prog-mode . smartparens-mode))
+  (use-package electric-pair
+    :straight nil
+    :hook (prog-mode . electric-pair-mode))
 
 #+end_src
 
