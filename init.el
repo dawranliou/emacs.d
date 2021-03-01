@@ -581,10 +581,7 @@
                           slurp/barf-cp))
   :config
   (lispy-set-key-theme '(lispy c-digits))
-  (lispyville-set-key-theme)
-
-  (lispyville--define-key 'normal (kbd "M-J") #'evil-multiedit-match-and-next)
-  (lispyville--define-key 'normal (kbd "M-K") #'evil-multiedit-match-and-prev))
+  (lispyville-set-key-theme))
 
 (use-package evil-multiedit
   :bind (:map evil-visual-state-map
