@@ -578,6 +578,7 @@
                           additional-movement
                           additional-wrap
                           (atom-movement normal visual)
+                          commentary
                           slurp/barf-cp))
   :config
   (lispy-set-key-theme '(lispy c-digits))

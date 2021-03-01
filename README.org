@@ -1103,6 +1103,7 @@ I prefer to use [[https://github.com/abo-abo/lispy][lispy]] and [[https://github
                             additional-movement
                             additional-wrap
                             (atom-movement normal visual)
+                            commentary
                             slurp/barf-cp))
     :config
     (lispy-set-key-theme '(lispy c-digits))
