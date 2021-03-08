@@ -666,16 +666,16 @@
         org-hide-block-startup nil
         org-src-preserve-indentation nil
         ;; org-startup-folded 'content
-        org-cycle-separator-lines 2)
+        org-cycle-separator-lines 2
+        org-log-done 'time
+        org-log-into-drawer t))
 
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t)
-
-  (require 'org-tempo)
+(use-package org-tempo
+  :straight nil
+  :after org
+  :config
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-
-  (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 (use-package evil-org
   :blackout t
@@ -752,6 +752,9 @@
       (insert (format  "#+CAPTION: %s\n" (read-string "Caption: ")))
       (insert (format "[[file:%s]]" image-file))
       (org-display-inline-images))))
+
+(with-eval-after-load "org"
+  (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
 
 (use-package dired
   :straight nil
