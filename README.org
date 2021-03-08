@@ -132,17 +132,17 @@ package-enable-at-startup, package-load-list, and package-user-dir.
 
 #+begin_src emacs-lisp :tangle early-init.el
 
-  ;;; early-init.el -*- lexical-binding: t; -*-
-  ;; NOTE: early-init.el is now generated from Emacs.org.  Please edit that file
-  ;;       in Emacs and early-init.el will be generated automatically!
+;;; early-init.el -*- lexical-binding: t; -*-
+;; NOTE: early-init.el is now generated from Emacs.org.  Please edit that file
+;;       in Emacs and early-init.el will be generated automatically!
 
-  (setq gc-cons-threshold most-positive-fixnum
-        gc-cons-percentage 0.6)
-  (setq package-enable-at-startup nil)
-  (push '(menu-bar-lines . 0) default-frame-alist)
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (push '(vertical-scroll-bars . nil) default-frame-alist)
-  (setq frame-inhibit-implied-resize t)
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
+(setq package-enable-at-startup nil)
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars . nil) default-frame-alist)
+(setq frame-inhibit-implied-resize t)
 
 #+end_src
 
@@ -152,9 +152,9 @@ Source: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-d
 
 #+begin_src emacs-lisp
 
-  ;; -*- lexical-binding: t; -*-
-  ;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
-  ;;       Emacs and init.el will be generated automatically!
+;; -*- lexical-binding: t; -*-
+;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
+;;       Emacs and init.el will be generated automatically!
 
 #+end_src
 
@@ -165,8 +165,8 @@ up =gc-cons-threshold= (and perhaps =gc-cons-percentage=) temporarily.
 
 #+begin_src emacs-lisp
 
-  (setq gc-cons-threshold most-positive-fixnum
-        gc-cons-percentage 0.6)
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.6)
 
 #+end_src
 
@@ -177,10 +177,10 @@ default.
 
 #+begin_src emacs-lisp
 
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (setq gc-cons-threshold 16777216 ; 16mb
-                    gc-cons-percentage 0.1)))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold 16777216 ; 16mb
+                  gc-cons-percentage 0.1)))
 
 #+end_src
 
@@ -190,17 +190,17 @@ helm and ivy). Here is how Doom does it:
 
 #+begin_src emacs-lisp
 
-  (defun doom-defer-garbage-collection-h ()
-    (setq gc-cons-threshold most-positive-fixnum))
+(defun doom-defer-garbage-collection-h ()
+  (setq gc-cons-threshold most-positive-fixnum))
 
-  (defun doom-restore-garbage-collection-h ()
-    ;; Defer it so that commands launched immediately after will enjoy the
-    ;; benefits.
-    (run-at-time
-     1 nil (lambda () (setq gc-cons-threshold 16777216)))) ; 16mb
+(defun doom-restore-garbage-collection-h ()
+  ;; Defer it so that commands launched immediately after will enjoy the
+  ;; benefits.
+  (run-at-time
+   1 nil (lambda () (setq gc-cons-threshold 16777216)))) ; 16mb
 
-  (add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
-  (add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
+(add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
+(add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
 
 #+end_src
 
@@ -216,13 +216,13 @@ none of them are (typically) necessary at startup, so we disable them
 
 #+begin_src emacs-lisp
 
-  (defvar doom--file-name-handler-alist file-name-handler-alist)
-  (setq file-name-handler-alist nil)
+(defvar doom--file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
 
-  ;; Alternatively, restore it even later:
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (setq file-name-handler-alist doom--file-name-handler-alist)))
+;; Alternatively, restore it even later:
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq file-name-handler-alist doom--file-name-handler-alist)))
 
 #+end_src
 
@@ -230,14 +230,14 @@ none of them are (typically) necessary at startup, so we disable them
 
 #+begin_src emacs-lisp
 
-  ;; Profile emacs startup
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (message "*** Emacs loaded in %s with %d garbage collections."
-                       (format "%.2f seconds"
-                               (float-time
-                                (time-subtract after-init-time before-init-time)))
-                       gcs-done)))
+;; Profile emacs startup
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "*** Emacs loaded in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
 #+end_src
 
@@ -247,12 +247,12 @@ Load =private.el= after init.
 
 #+begin_src emacs-lisp
 
-  (add-hook
-   'after-init-hook
-   (lambda ()
-     (let ((private-file (concat user-emacs-directory "private.el")))
-       (when (file-exists-p private-file)
-         (load-file private-file)))))
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (let ((private-file (concat user-emacs-directory "private.el")))
+     (when (file-exists-p private-file)
+       (load-file private-file)))))
 
 #+end_src
 
@@ -262,11 +262,11 @@ Put backups and auto-save files in their own folders.
 
 #+begin_src emacs-lisp
 
-  ;; Keep backup files and auto-save files in the backups directory
-  (setq backup-directory-alist
-        `(("." . ,(expand-file-name "backups" user-emacs-directory)))
-        auto-save-file-name-transforms
-        `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
+;; Keep backup files and auto-save files in the backups directory
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
+      auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
 
 #+end_src
 
@@ -274,8 +274,8 @@ Put custom settings into its own file.
 
 #+begin_src emacs-lisp
 
-  (setq custom-file (concat user-emacs-directory "custom.el"))
-  (load custom-file 'noerror)
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file 'noerror)
 
 #+end_src
 
@@ -285,21 +285,21 @@ Put custom settings into its own file.
 
 #+begin_src emacs-lisp
 
-  (setq straight-use-package-by-default t
-        straight-build-dir (format "build-%s" emacs-version))
+(setq straight-use-package-by-default t
+      straight-build-dir (format "build-%s" emacs-version))
 
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-         (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-        (bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-          (url-retrieve-synchronously
-           "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-           'silent 'inhibit-cookies)
-        (goto-char (point-max))
-        (eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 #+end_src
 
@@ -307,8 +307,8 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
 #+begin_src emacs-lisp
 
-  (straight-use-package 'use-package)
-  (setq use-package-verbose t)
+(straight-use-package 'use-package)
+(setq use-package-verbose t)
 
 #+end_src
 
@@ -316,29 +316,29 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
 #+begin_src emacs-lisp
 
-  (mac-auto-operator-composition-mode)
+(mac-auto-operator-composition-mode)
 
-  (setq-default delete-by-moving-to-trash t)
+(setq-default delete-by-moving-to-trash t)
 
-  ;; Both command keys are 'Super'
-  (setq mac-right-command-modifier 'super)
-  (setq mac-command-modifier 'super)
+;; Both command keys are 'Super'
+(setq mac-right-command-modifier 'super)
+(setq mac-command-modifier 'super)
 
-  ;; Option or Alt is naturally 'Meta'
-  (setq mac-option-modifier 'meta)
-  (setq mac-right-option-modifier 'meta)
+;; Option or Alt is naturally 'Meta'
+(setq mac-option-modifier 'meta)
+(setq mac-right-option-modifier 'meta)
 
-  ;; Make keybindings feel natural on mac
-  (global-set-key (kbd "s-s") 'save-buffer)             ;; save
-  (global-set-key (kbd "s-S") 'write-file)              ;; save as
-  (global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
-  (global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
-  (global-set-key (kbd "s-k") 'kill-this-buffer)
-  (global-set-key (kbd "s-v") 'yank)
-  (global-set-key (kbd "s-c") 'kill-ring-save)
-  (global-set-key (kbd "s-z") 'undo)
-  (global-set-key (kbd "s-=") 'text-scale-adjust)
-  (global-set-key (kbd "s-+") 'text-scale-increase)
+;; Make keybindings feel natural on mac
+(global-set-key (kbd "s-s") 'save-buffer)             ;; save
+(global-set-key (kbd "s-S") 'write-file)              ;; save as
+(global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
+(global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
+(global-set-key (kbd "s-k") 'kill-this-buffer)
+(global-set-key (kbd "s-v") 'yank)
+(global-set-key (kbd "s-c") 'kill-ring-save)
+(global-set-key (kbd "s-z") 'undo)
+(global-set-key (kbd "s-=") 'text-scale-adjust)
+(global-set-key (kbd "s-+") 'text-scale-increase)
 
 #+end_src
 
@@ -353,8 +353,8 @@ modes with Vi-like keybindings for evil-mode.
 
 #+begin_src emacs-lisp
 
-  ;; Make ESC quit prompts
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 #+end_src
 
@@ -366,7 +366,7 @@ for this purpose.
 
 #+begin_src emacs-lisp
 
-  (global-set-key (kbd "C-M-u") 'universal-argument)
+(global-set-key (kbd "C-M-u") 'universal-argument)
 
 #+end_src
 
@@ -379,61 +379,61 @@ Some tips can be found here:
 
 #+begin_src emacs-lisp
 
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-i-jump t)
-    (setq evil-move-beyond-eol t)
-    (setq evil-move-cursor-back nil)
-    :custom
-    (evil-undo-system 'undo-fu)
-    (evil-symbol-word-search t)
-    :config
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
-    (define-key evil-insert-state-map "\C-e" 'end-of-line)
-    (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
-    (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
-    (define-key evil-normal-state-map "\C-y" 'yank)
-    (define-key evil-insert-state-map "\C-y" 'yank)
-    (define-key evil-visual-state-map "\C-y" 'yank)
-    (define-key evil-normal-state-map "\C-k" 'kill-line)
-    (define-key evil-insert-state-map "\C-k" 'kill-line)
-    (define-key evil-visual-state-map "\C-k" 'kill-line)
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump t)
+  (setq evil-move-beyond-eol t)
+  (setq evil-move-cursor-back nil)
+  :custom
+  (evil-undo-system 'undo-fu)
+  (evil-symbol-word-search t)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-insert-state-map "\C-e" 'end-of-line)
+  (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-normal-state-map "\C-y" 'yank)
+  (define-key evil-insert-state-map "\C-y" 'yank)
+  (define-key evil-visual-state-map "\C-y" 'yank)
+  (define-key evil-normal-state-map "\C-k" 'kill-line)
+  (define-key evil-insert-state-map "\C-k" 'kill-line)
+  (define-key evil-visual-state-map "\C-k" 'kill-line)
 
-    ;; Get around faster
-    (define-key evil-motion-state-map "gs" 'evil-avy-goto-symbol-1)
-    (define-key evil-motion-state-map "gS" 'evil-avy-goto-char-timer)
+  ;; Get around faster
+  (define-key evil-motion-state-map "gs" 'evil-avy-goto-symbol-1)
+  (define-key evil-motion-state-map "gS" 'evil-avy-goto-char-timer)
 
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal)
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal)
 
-    ;; Let emacs bindings for M-. and M-, take over
-    (define-key evil-normal-state-map (kbd "M-.") nil)
-    (define-key evil-normal-state-map (kbd "M-,") nil)
+  ;; Let emacs bindings for M-. and M-, take over
+  (define-key evil-normal-state-map (kbd "M-.") nil)
+  (define-key evil-normal-state-map (kbd "M-,") nil)
 
-    (global-set-key (kbd "s-w") 'evil-window-delete))
+  (global-set-key (kbd "s-w") 'evil-window-delete))
 
-  (use-package evil-collection
-    :config
-    (evil-collection-init))
+(use-package evil-collection
+  :config
+  (evil-collection-init))
 
-  ;; Allows you to use the selection for * and #
-  (use-package evil-visualstar
-    :commands (evil-visualstar/begin-search
-               evil-visualstar/begin-search-forward
-               evil-visualstar/begin-search-backward)
-    :init
-    (evil-define-key 'visual 'global
-      "*" #'evil-visualstar/begin-search-forward
-      "#" #'evil-visualstar/begin-search-backward))
+;; Allows you to use the selection for * and #
+(use-package evil-visualstar
+  :commands (evil-visualstar/begin-search
+             evil-visualstar/begin-search-forward
+             evil-visualstar/begin-search-backward)
+  :init
+  (evil-define-key 'visual 'global
+    "*" #'evil-visualstar/begin-search-forward
+    "#" #'evil-visualstar/begin-search-backward))
 
 #+end_src
 
@@ -441,28 +441,28 @@ Some tips can be found here:
 
 #+begin_src emacs-lisp
 
-  (use-package general
-    :config
-    (general-create-definer dawran/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC"
-      :global-prefix "M-SPC")
+(use-package general
+  :config
+  (general-create-definer dawran/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "M-SPC")
 
-    (general-create-definer dawran/localleader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :major-modes t
-      :prefix ","
-      :non-normal-prefix "C-,")
+  (general-create-definer dawran/localleader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :major-modes t
+    :prefix ","
+    :non-normal-prefix "C-,")
 
-    (dawran/leader-keys
-      "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
-      "t"  '(:ignore t :which-key "toggles")
-      "tt" '(dawran/load-theme :which-key "choose theme")
-      "tw" 'whitespace-mode
-      "tm" 'toggle-frame-maximized
-      "tM" 'toggle-frame-fullscreen))
+  (dawran/leader-keys
+    "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(dawran/load-theme :which-key "choose theme")
+    "tw" 'whitespace-mode
+    "tm" 'toggle-frame-maximized
+    "tM" 'toggle-frame-fullscreen))
 
 #+end_src
 
@@ -470,9 +470,9 @@ Some tips can be found here:
 
 #+begin_src emacs-lisp
 
-  (global-set-key (kbd "C-x C-b") #'ibuffer)
-  (global-set-key (kbd "C-M-j") #'switch-to-buffer)
-  (global-set-key (kbd "M-:") 'pp-eval-expression)
+(global-set-key (kbd "C-x C-b") #'ibuffer)
+(global-set-key (kbd "C-M-j") #'switch-to-buffer)
+(global-set-key (kbd "M-:") 'pp-eval-expression)
 
 #+end_src
 
@@ -485,12 +485,12 @@ https://github.com/raxod502/blackout.
 
 #+begin_src emacs-lisp
 
-  (use-package blackout
-    :straight (:host github :repo "raxod502/blackout"))
+(use-package blackout
+  :straight (:host github :repo "raxod502/blackout"))
 
-  (use-package autorevert
-    :defer t
-    :blackout auto-revert-mode)
+(use-package autorevert
+  :defer t
+  :blackout auto-revert-mode)
 
 #+end_src
 
@@ -505,12 +505,12 @@ possible key bindings in the mode of your current buffer.
 
 #+begin_src emacs-lisp
 
-  (use-package which-key
-    :blackout t
-    :hook (after-init . which-key-mode)
-    :diminish which-key-mode
-    :config
-    (setq which-key-idle-delay 1))
+(use-package which-key
+  :blackout t
+  :hook (after-init . which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 1))
 
 #+end_src
 
@@ -518,25 +518,25 @@ possible key bindings in the mode of your current buffer.
 
 #+begin_src emacs-lisp
 
-  (setq inhibit-startup-message t)
+(setq inhibit-startup-message t)
 
-  (setq frame-inhibit-implied-resize t)
+(setq frame-inhibit-implied-resize t)
 
-  (setq default-frame-alist
-        (append (list
-                 '(font . "Monolisa-14")
-                 '(min-height . 1) '(height     . 45)
-                 '(min-width  . 1) '(width      . 81)
-                 )))
+(setq default-frame-alist
+      (append (list
+               '(font . "Monolisa-14")
+               '(min-height . 1) '(height     . 45)
+               '(min-width  . 1) '(width      . 81)
+               )))
 
-  ;; No beeping nor visible bell
-  (setq ring-bell-function #'ignore
-        visible-bell nil)
+;; No beeping nor visible bell
+(setq ring-bell-function #'ignore
+      visible-bell nil)
 
-  (blink-cursor-mode 0)
+(blink-cursor-mode 0)
 
-  (setq-default fill-column 80)
-  (setq-default line-spacing 1)
+(setq-default fill-column 80)
+(setq-default line-spacing 1)
 
 #+end_src
 
@@ -544,32 +544,32 @@ possible key bindings in the mode of your current buffer.
 
 #+begin_src emacs-lisp
 
-  (defvar scratch-mode-map
-    (let ((map (make-sparse-keymap)))
-      (define-key map (kbd "C-c c") 'lisp-interaction-mode)
-      (define-key map (kbd "C-c C-c") 'lisp-interaction-mode)
-      map)
-    "Keymap for `scratch-mode'.")
+(defvar scratch-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c c") 'lisp-interaction-mode)
+    (define-key map (kbd "C-c C-c") 'lisp-interaction-mode)
+    map)
+  "Keymap for `scratch-mode'.")
 
-  (define-derived-mode scratch-mode
-    fundamental-mode
-    "Scratch"
-    "Major mode for the *scratch* buffer.\\{scratch-mode-map}"
-    (setq-local indent-line-function 'indent-relative))
+(define-derived-mode scratch-mode
+  fundamental-mode
+  "Scratch"
+  "Major mode for the *scratch* buffer.\\{scratch-mode-map}"
+  (setq-local indent-line-function 'indent-relative))
 
-  (setq initial-major-mode 'scratch-mode)
-  (setq initial-scratch-message nil)
+(setq initial-major-mode 'scratch-mode)
+(setq initial-scratch-message nil)
 
-  (defun jump-to-scratch-buffer ()
-    "Jump to the existing *scratch* buffer or create a new one."
-    (interactive)
-    (let ((scratch-buffer (get-buffer-create "*scratch*")))
-      (unless (derived-mode-p 'scratch-mode)
-        (with-current-buffer scratch-buffer
-          (scratch-mode)))
-      (switch-to-buffer scratch-buffer)))
+(defun jump-to-scratch-buffer ()
+  "Jump to the existing *scratch* buffer or create a new one."
+  (interactive)
+  (let ((scratch-buffer (get-buffer-create "*scratch*")))
+    (unless (derived-mode-p 'scratch-mode)
+      (with-current-buffer scratch-buffer
+        (scratch-mode)))
+    (switch-to-buffer scratch-buffer)))
 
-  (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
+(global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 
 #+end_src
 
@@ -577,10 +577,10 @@ possible key bindings in the mode of your current buffer.
 
 #+begin_src emacs-lisp
 
-  (column-number-mode)
+(column-number-mode)
 
-  ;; Enable line numbers for prog modes only
-  (add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
+;; Enable line numbers for prog modes only
+(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
 
 #+end_src
 
@@ -588,10 +588,10 @@ possible key bindings in the mode of your current buffer.
 
 #+begin_src emacs-lisp
 
-  (use-package hl-line
-    :disabled t
-    :hook
-    (prog-mode . hl-line-mode))
+(use-package hl-line
+  :disabled t
+  :hook
+  (prog-mode . hl-line-mode))
 
 #+end_src
 
@@ -599,10 +599,10 @@ possible key bindings in the mode of your current buffer.
 
 #+begin_src emacs-lisp
 
-  (use-package idle-highlight-mode
-    :blackout t
-    :hook
-    (prog-mode . idle-highlight-mode))
+(use-package idle-highlight-mode
+  :blackout t
+  :hook
+  (prog-mode . idle-highlight-mode))
 
 #+end_src
 
@@ -612,7 +612,7 @@ I'm using my personal theme - =oil6= as my prefered theme.
 
 #+begin_src emacs-lisp
 
-  (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 #+end_src
 
@@ -620,8 +620,8 @@ Here's my other published themes
 
 #+begin_src emacs-lisp
 
-  (use-package sketch-themes
-    :straight (:host github :repo "dawranliou/sketch-themes"))
+(use-package sketch-themes
+  :straight (:host github :repo "dawranliou/sketch-themes"))
 
 #+end_src
 
@@ -638,27 +638,27 @@ This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/co
 
 #+begin_src emacs-lisp
 
-  (defvar dawran/after-load-theme-hook nil
-    "Hook run after a color theme is loaded using `load-theme'.")
+(defvar dawran/after-load-theme-hook nil
+  "Hook run after a color theme is loaded using `load-theme'.")
 
-  (defun dawran/load-theme-action (theme)
-    "Disable current themes and load theme THEME."
-    (condition-case nil
-        (progn
-          (mapc #'disable-theme custom-enabled-themes)
-          (load-theme (intern theme) t)
-          (run-hooks 'dawran/after-load-theme-hook))
-      (error "Problem loading theme %s" theme)))
+(defun dawran/load-theme-action (theme)
+  "Disable current themes and load theme THEME."
+  (condition-case nil
+      (progn
+        (mapc #'disable-theme custom-enabled-themes)
+        (load-theme (intern theme) t)
+        (run-hooks 'dawran/after-load-theme-hook))
+    (error "Problem loading theme %s" theme)))
 
-  (defun dawran/load-theme ()
-    "Disable current themes and load theme from the completion list."
-    (interactive)
-    (let ((theme (completing-read "Load custom theme: "
-                                  (mapcar 'symbol-name
-                                          (custom-available-themes)))))
-      (dawran/load-theme-action theme)))
+(defun dawran/load-theme ()
+  "Disable current themes and load theme from the completion list."
+  (interactive)
+  (let ((theme (completing-read "Load custom theme: "
+                                (mapcar 'symbol-name
+                                        (custom-available-themes)))))
+    (dawran/load-theme-action theme)))
 
-  (dawran/load-theme-action "sketch-white")
+(dawran/load-theme-action "sketch-white")
 
 #+end_src
 
@@ -666,11 +666,11 @@ This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/co
 
 #+begin_src emacs-lisp
 
-  ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
 
-  ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170)
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170)
 
 #+end_src
 
@@ -680,71 +680,71 @@ The simple mode line is mostly stolen from: https://github.com/raxod502/radian/b
 
 #+begin_src emacs-lisp
 
-  ;;;; Mode line
+;;;; Mode line
 
-  ;; The following code customizes the mode line to something like:
-  ;; [*] radian.el   18% (18,0)     [radian:develop*]  (Emacs-Lisp)
+;; The following code customizes the mode line to something like:
+;; [*] radian.el   18% (18,0)     [radian:develop*]  (Emacs-Lisp)
 
-  (defun my/mode-line-buffer-modified-status ()
-    "Return a mode line construct indicating buffer modification status.
-    This is [*] if the buffer has been modified and whitespace
-    otherwise. (Non-file-visiting buffers are never considered to be
-    modified.) It is shown in the same color as the buffer name, i.e.
-    `mode-line-buffer-id'."
-    (propertize
-     (if (and (buffer-modified-p)
-              (buffer-file-name))
-         "[*]"
-       "   ")
-     'face 'mode-line-buffer-id))
+(defun my/mode-line-buffer-modified-status ()
+  "Return a mode line construct indicating buffer modification status.
+  This is [*] if the buffer has been modified and whitespace
+  otherwise. (Non-file-visiting buffers are never considered to be
+  modified.) It is shown in the same color as the buffer name, i.e.
+  `mode-line-buffer-id'."
+  (propertize
+   (if (and (buffer-modified-p)
+            (buffer-file-name))
+       "[*]"
+     "   ")
+   'face 'mode-line-buffer-id))
 
-  ;; Normally the buffer name is right-padded with whitespace until it
-  ;; is at least 12 characters. This is a waste of space, so we
-  ;; eliminate the padding here. Check the docstrings for more
-  ;; information.
-  (setq-default mode-line-buffer-identification
-                (propertized-buffer-identification "%b"))
+;; Normally the buffer name is right-padded with whitespace until it
+;; is at least 12 characters. This is a waste of space, so we
+;; eliminate the padding here. Check the docstrings for more
+;; information.
+(setq-default mode-line-buffer-identification
+              (propertized-buffer-identification "%b"))
 
-  ;; Make `mode-line-position' show the column, not just the row.
-  (column-number-mode +1)
+;; Make `mode-line-position' show the column, not just the row.
+(column-number-mode +1)
 
-  ;; https://emacs.stackexchange.com/a/7542/12534
-  (defun my/mode-line-align (left right)
-    "Render a left/right aligned string for the mode line.
-    LEFT and RIGHT are strings, and the return value is a string that
-    displays them left- and right-aligned respectively, separated by
-    spaces."
-    (let ((width (- (window-total-width) (length left))))
-      (format (format "%%s%%%ds" width) left right)))
+;; https://emacs.stackexchange.com/a/7542/12534
+(defun my/mode-line-align (left right)
+  "Render a left/right aligned string for the mode line.
+  LEFT and RIGHT are strings, and the return value is a string that
+  displays them left- and right-aligned respectively, separated by
+  spaces."
+  (let ((width (- (window-total-width) (length left))))
+    (format (format "%%s%%%ds" width) left right)))
 
-  (defcustom my/mode-line-left
-    '(;; Show [*] if the buffer is modified.
-      (:eval (my/mode-line-buffer-modified-status))
-      " "
-      ;; Show the name of the current buffer.
-      mode-line-buffer-identification
-      " "
-      ;; Show the row and column of point.
-      mode-line-position
-      evil-mode-line-tag)
-    "Composite mode line construct to be shown left-aligned."
-    :type 'sexp)
+(defcustom my/mode-line-left
+  '(;; Show [*] if the buffer is modified.
+    (:eval (my/mode-line-buffer-modified-status))
+    " "
+    ;; Show the name of the current buffer.
+    mode-line-buffer-identification
+    " "
+    ;; Show the row and column of point.
+    mode-line-position
+    evil-mode-line-tag)
+  "Composite mode line construct to be shown left-aligned."
+  :type 'sexp)
 
-  (defcustom my/mode-line-right
-    '(""
-      mode-line-modes)
-    "Composite mode line construct to be shown right-aligned."
-    :type 'sexp)
+(defcustom my/mode-line-right
+  '(""
+    mode-line-modes)
+  "Composite mode line construct to be shown right-aligned."
+  :type 'sexp)
 
-  ;; Actually reset the mode line format to show all the things we just
-  ;; defined.
-  (setq-default mode-line-format
-                '(:eval (replace-regexp-in-string
-                         "%" "%%"
-                         (my/mode-line-align
-                          (format-mode-line my/mode-line-left)
-                          (format-mode-line my/mode-line-right))
-                         'fixedcase 'literal)))
+;; Actually reset the mode line format to show all the things we just
+;; defined.
+(setq-default mode-line-format
+              '(:eval (replace-regexp-in-string
+                       "%" "%%"
+                       (my/mode-line-align
+                        (format-mode-line my/mode-line-left)
+                        (format-mode-line my/mode-line-right))
+                       'fixedcase 'literal)))
 
 #+end_src
 
@@ -754,8 +754,8 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+begin_src emacs-lisp
 
-  (use-package paren
-    :hook (prog-mode . show-paren-mode))
+(use-package paren
+  :hook (prog-mode . show-paren-mode))
 
 #+end_src
 
@@ -763,9 +763,9 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package paren-blink
-    :straight nil
-    :load-path "lisp/")
+(use-package paren-blink
+  :straight nil
+  :load-path "lisp/")
 
 #+end_src
 
@@ -775,29 +775,29 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package paren-face
-    :hook
-    (lispy-mode . paren-face-mode))
+(use-package paren-face
+  :hook
+  (lispy-mode . paren-face-mode))
 
 #+end_src
 
 ** Window Management
 #+begin_src emacs-lisp
 
-  (use-package ace-window
-    :bind (("M-o" . ace-window))
-    :config
-    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+(use-package ace-window
+  :bind (("M-o" . ace-window))
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
-  (use-package winner-mode
-    :straight nil
-    :bind (:map evil-window-map
-                ("u" . winner-undo)
-                ("U" . winner-redo))
-    :config
-    (winner-mode))
+(use-package winner-mode
+  :straight nil
+  :bind (:map evil-window-map
+              ("u" . winner-undo)
+              ("U" . winner-redo))
+  :config
+  (winner-mode))
 
-  (dawran/leader-keys "w" 'evil-window-map)
+(dawran/leader-keys "w" 'evil-window-map)
 
 #+end_src
 
@@ -805,8 +805,8 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package hl-fill-column
-    :hook (prog-mode . hl-fill-column-mode))
+(use-package hl-fill-column
+  :hook (prog-mode . hl-fill-column-mode))
 
 #+end_src
 
@@ -814,13 +814,13 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (defun dawran/visual-fill ()
-    (setq visual-fill-column-width 100
-          visual-fill-column-center-text t)
-    (visual-fill-column-mode 1))
+(defun dawran/visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
 
-  (use-package visual-fill-column
-    :defer t)
+(use-package visual-fill-column
+  :defer t)
 
 #+end_src
 
@@ -828,10 +828,10 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package unicode-fonts
-    :defer t
-    :config
-    (unicode-fonts-setup))
+(use-package unicode-fonts
+  :defer t
+  :config
+  (unicode-fonts-setup))
 
 #+end_src
 
@@ -839,11 +839,11 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package ns-auto-titlebar
-    :hook (after-init . ns-auto-titlebar-mode))
+(use-package ns-auto-titlebar
+  :hook (after-init . ns-auto-titlebar-mode))
 
-  (setq ns-use-proxy-icon nil
-        frame-title-format nil)
+(setq ns-use-proxy-icon nil
+      frame-title-format nil)
 
 #+end_src
 
@@ -851,8 +851,8 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package rainbow-mode
-    :commands rainbow-mode)
+(use-package rainbow-mode
+  :commands rainbow-mode)
 
 #+end_src
 
@@ -863,43 +863,43 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (setq enable-recursive-minibuffers t)
+(setq enable-recursive-minibuffers t)
 
-  ;; Package `selectrum' is an incremental completion and narrowing
-  ;; framework. Like Ivy and Helm, which it improves on, Selectrum
-  ;; provides a user interface for choosing from a list of options by
-  ;; typing a query to narrow the list, and then selecting one of the
-  ;; remaining candidates. This offers a significant improvement over
-  ;; the default Emacs interface for candidate selection.
-  (use-package selectrum
-    :straight (:host github :repo "raxod502/selectrum")
-    :custom
-    (selectrum-count-style 'current/matches)
-    ;; The default 10 seem to cutoff the last line for my screen
-    (selectrum-max-window-height 12)
-    :init
-    ;; This doesn't actually load Selectrum.
-    (selectrum-mode +1)
-    (dawran/leader-keys "TAB" #'selectrum-repeat))
+;; Package `selectrum' is an incremental completion and narrowing
+;; framework. Like Ivy and Helm, which it improves on, Selectrum
+;; provides a user interface for choosing from a list of options by
+;; typing a query to narrow the list, and then selecting one of the
+;; remaining candidates. This offers a significant improvement over
+;; the default Emacs interface for candidate selection.
+(use-package selectrum
+  :straight (:host github :repo "raxod502/selectrum")
+  :custom
+  (selectrum-count-style 'current/matches)
+  ;; The default 10 seem to cutoff the last line for my screen
+  (selectrum-max-window-height 12)
+  :init
+  ;; This doesn't actually load Selectrum.
+  (selectrum-mode +1)
+  (dawran/leader-keys "TAB" #'selectrum-repeat))
 
-  ;; Package `prescient' is a library for intelligent sorting and
-  ;; filtering in various contexts.
-  (use-package prescient
-    :config
-    ;; Remember usage statistics across Emacs sessions.
-    (prescient-persist-mode +1)
-    ;; The default settings seem a little forgetful to me. Let's try
-    ;; this out.
-    (setq prescient-history-length 1000))
+;; Package `prescient' is a library for intelligent sorting and
+;; filtering in various contexts.
+(use-package prescient
+  :config
+  ;; Remember usage statistics across Emacs sessions.
+  (prescient-persist-mode +1)
+  ;; The default settings seem a little forgetful to me. Let's try
+  ;; this out.
+  (setq prescient-history-length 1000))
 
-  ;; Package `selectrum-prescient' provides intelligent sorting and
-  ;; filtering for candidates in Selectrum menus.
-  (use-package selectrum-prescient
-    :straight (:host github :repo "raxod502/prescient.el"
-                     :files ("selectrum-prescient.el"))
-    :after selectrum
-    :config
-    (selectrum-prescient-mode +1))
+;; Package `selectrum-prescient' provides intelligent sorting and
+;; filtering for candidates in Selectrum menus.
+(use-package selectrum-prescient
+  :straight (:host github :repo "raxod502/prescient.el"
+                   :files ("selectrum-prescient.el"))
+  :after selectrum
+  :config
+  (selectrum-prescient-mode +1))
 
 #+end_src
 
@@ -907,16 +907,16 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package marginalia
-    :bind (:map minibuffer-local-map
-                ("C-M-a" . marginalia-cycle))
-    :init
-    (marginalia-mode)
-    ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
-    (advice-add #'marginalia-cycle :after
-                (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
-    (setq marginalia-annotators '(marginalia-annotators-heavy
-                                  marginalia-annotators-light nil)))
+(use-package marginalia
+  :bind (:map minibuffer-local-map
+              ("C-M-a" . marginalia-cycle))
+  :init
+  (marginalia-mode)
+  ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
+  (advice-add #'marginalia-cycle :after
+              (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
+  (setq marginalia-annotators '(marginalia-annotators-heavy
+                                marginalia-annotators-light nil)))
 
 #+end_src
 
@@ -924,27 +924,27 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  ;; Package `ctrlf' provides a replacement for `isearch' that is more
-  ;; similar to the tried-and-true text search interfaces in web
-  ;; browsers and other programs (think of what happens when you type
-  ;; ctrl+F).
-  (use-package ctrlf
-    :straight (:host github :repo "raxod502/ctrlf")
-    :bind
-    ("s-f" . ctrlf-forward-fuzzy)
+;; Package `ctrlf' provides a replacement for `isearch' that is more
+;; similar to the tried-and-true text search interfaces in web
+;; browsers and other programs (think of what happens when you type
+;; ctrl+F).
+(use-package ctrlf
+  :straight (:host github :repo "raxod502/ctrlf")
+  :bind
+  ("s-f" . ctrlf-forward-fuzzy)
 
-    :init
-    (ctrlf-mode +1)
+  :init
+  (ctrlf-mode +1)
 
-    :config
-    (defun ctrlf-toggle-fuzzy ()
-      "Toggle CTRLF style to `fuzzy' or back to `literal'."
-      (interactive)
-      (setq ctrlf--style
-            (if (eq ctrlf--style 'fuzzy) 'literal 'fuzzy)))
+  :config
+  (defun ctrlf-toggle-fuzzy ()
+    "Toggle CTRLF style to `fuzzy' or back to `literal'."
+    (interactive)
+    (setq ctrlf--style
+          (if (eq ctrlf--style 'fuzzy) 'literal 'fuzzy)))
 
-    (add-to-list 'ctrlf-minibuffer-bindings
-                 '("s-f" . ctrlf-toggle-fuzzy)))
+  (add-to-list 'ctrlf-minibuffer-bindings
+               '("s-f" . ctrlf-toggle-fuzzy)))
 
 #+end_src
 
@@ -952,37 +952,37 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 #+begin_src emacs-lisp
 
-  (use-package embark
-    :bind
-    ("C-S-a" . embark-act)
+(use-package embark
+  :bind
+  ("C-S-a" . embark-act)
 
-    :config
-    ;; For Selectrum users:
-    (defun current-candidate+category ()
-      (when selectrum-active-p
-        (cons (selectrum--get-meta 'category)
-              (selectrum-get-current-candidate))))
+  :config
+  ;; For Selectrum users:
+  (defun current-candidate+category ()
+    (when selectrum-active-p
+      (cons (selectrum--get-meta 'category)
+            (selectrum-get-current-candidate))))
 
-    (add-hook 'embark-target-finders #'current-candidate+category)
+  (add-hook 'embark-target-finders #'current-candidate+category)
 
-    (defun current-candidates+category ()
-      (when selectrum-active-p
-        (cons (selectrum--get-meta 'category)
-              (selectrum-get-current-candidates
-               ;; Pass relative file names for dired.
-               minibuffer-completing-file-name))))
+  (defun current-candidates+category ()
+    (when selectrum-active-p
+      (cons (selectrum--get-meta 'category)
+            (selectrum-get-current-candidates
+             ;; Pass relative file names for dired.
+             minibuffer-completing-file-name))))
 
-    (add-hook 'embark-candidate-collectors #'current-candidates+category)
+  (add-hook 'embark-candidate-collectors #'current-candidates+category)
 
-    ;; No unnecessary computation delay after injection.
-    (add-hook 'embark-setup-hook 'selectrum-set-selected-candidate)
+  ;; No unnecessary computation delay after injection.
+  (add-hook 'embark-setup-hook 'selectrum-set-selected-candidate)
 
-    :custom
-    (embark-action-indicator
-     (lambda (map)
-       (which-key--show-keymap "Embark" map nil nil 'no-paging)
-       #'which-key--hide-popup-ignore-command)
-     embark-become-indicator embark-action-indicator))
+  :custom
+  (embark-action-indicator
+   (lambda (map)
+     (which-key--show-keymap "Embark" map nil nil 'no-paging)
+     #'which-key--hide-popup-ignore-command)
+   embark-become-indicator embark-action-indicator))
 
 #+end_src
 
@@ -996,15 +996,15 @@ It is very useful for figuring out how things work in Emacs.
 
 #+begin_src emacs-lisp
 
-  (use-package helpful
-    :bind (;; Remap standard commands.
-           ([remap describe-function] . #'helpful-callable)
-           ([remap describe-variable] . #'helpful-variable)
-           ([remap describe-key]      . #'helpful-key)
-           ([remap describe-symbol]   . #'helpful-symbol)
-           ("C-c C-d" . #'helpful-at-point)
-           ("C-h C"   . #'helpful-command)
-           ("C-h F"   . #'describe-face)))
+(use-package helpful
+  :bind (;; Remap standard commands.
+         ([remap describe-function] . #'helpful-callable)
+         ([remap describe-variable] . #'helpful-variable)
+         ([remap describe-key]      . #'helpful-key)
+         ([remap describe-symbol]   . #'helpful-symbol)
+         ("C-c C-d" . #'helpful-at-point)
+         ("C-h C"   . #'helpful-command)
+         ("C-h F"   . #'describe-face)))
 
 #+end_src
 
@@ -1014,11 +1014,11 @@ It is very useful for figuring out how things work in Emacs.
 
 #+begin_src emacs-lisp
 
-  (use-package persistent-scratch
-    :custom
-    (persistent-scratch-autosave-interval 60)
-    :config
-    (persistent-scratch-setup-default))
+(use-package persistent-scratch
+  :custom
+  (persistent-scratch-autosave-interval 60)
+  :config
+  (persistent-scratch-setup-default))
 
 #+end_src
 
@@ -1026,13 +1026,13 @@ It is very useful for figuring out how things work in Emacs.
 
 #+begin_src emacs-lisp
 
-  (use-package recentf
-    :defer 1
-    :custom
-    ;; Increase recent entries list from default (20)
-    (recentf-max-saved-items 100)
-    :config
-    (recentf-mode +1))
+(use-package recentf
+  :defer 1
+  :custom
+  ;; Increase recent entries list from default (20)
+  (recentf-max-saved-items 100)
+  :config
+  (recentf-mode +1))
 
 #+end_src
 
@@ -1043,9 +1043,9 @@ Default to an indentation size of 2 spaces since it’s the norm for pretty much
 
 #+begin_src emacs-lisp
 
-  (setq-default tab-width 2)
-  (setq-default evil-shift-width tab-width)
-  (setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default evil-shift-width tab-width)
+(setq-default indent-tabs-mode nil)
 
 #+end_src
 
@@ -1053,8 +1053,8 @@ Default to an indentation size of 2 spaces since it’s the norm for pretty much
 
 #+begin_src emacs-lisp
 
-  (use-package evil-nerd-commenter
-    :bind ("s-/" . evilnc-comment-or-uncomment-lines))
+(use-package evil-nerd-commenter
+  :bind ("s-/" . evilnc-comment-or-uncomment-lines))
 
 #+end_src
 
@@ -1062,16 +1062,16 @@ Default to an indentation size of 2 spaces since it’s the norm for pretty much
 
 #+begin_src emacs-lisp
 
-  (use-package ws-butler
-    :blackout t
-    :hook ((text-mode . ws-butler-mode)
-           (prog-mode . ws-butler-mode))
-    :custom
-    ;; ws-butler normally preserves whitespace in the buffer (but strips it from
-    ;; the written file). While sometimes convenient, this behavior is not
-    ;; intuitive. To the average user it looks like whitespace cleanup is failing,
-    ;; which causes folks to redundantly install their own.
-    (ws-butler-keep-whitespace-before-point nil))
+(use-package ws-butler
+  :blackout t
+  :hook ((text-mode . ws-butler-mode)
+         (prog-mode . ws-butler-mode))
+  :custom
+  ;; ws-butler normally preserves whitespace in the buffer (but strips it from
+  ;; the written file). While sometimes convenient, this behavior is not
+  ;; intuitive. To the average user it looks like whitespace cleanup is failing,
+  ;; which causes folks to redundantly install their own.
+  (ws-butler-keep-whitespace-before-point nil))
 
 #+end_src
 
@@ -1081,32 +1081,32 @@ I prefer to use [[https://github.com/abo-abo/lispy][lispy]] and [[https://github
 
 #+begin_src emacs-lisp
 
-  (use-package lispy
-    :blackout t
-    :hook ((emacs-lisp-mode . lispy-mode)
-           (clojure-mode . lispy-mode)
-           (clojurescript-mode . lispy-mode)
-           (cider-repl-mode . lispy-mode))
-    :custom
-    (lispy-close-quotes-at-end-p t))
+(use-package lispy
+  :blackout t
+  :hook ((emacs-lisp-mode . lispy-mode)
+         (clojure-mode . lispy-mode)
+         (clojurescript-mode . lispy-mode)
+         (cider-repl-mode . lispy-mode))
+  :custom
+  (lispy-close-quotes-at-end-p t))
 
-  (use-package lispyville
-    :blackout t
-    :hook ((lispy-mode . lispyville-mode))
-    :custom
-    (lispyville-key-theme '(operators
-                            c-w
-                            (prettify insert)
-                            additional
-                            additional-insert
-                            additional-movement
-                            additional-wrap
-                            (atom-movement normal visual)
-                            commentary
-                            slurp/barf-cp))
-    :config
-    (lispy-set-key-theme '(lispy c-digits))
-    (lispyville-set-key-theme))
+(use-package lispyville
+  :blackout t
+  :hook ((lispy-mode . lispyville-mode))
+  :custom
+  (lispyville-key-theme '(operators
+                          c-w
+                          (prettify insert)
+                          additional
+                          additional-insert
+                          additional-movement
+                          additional-wrap
+                          (atom-movement normal visual)
+                          commentary
+                          slurp/barf-cp))
+  :config
+  (lispy-set-key-theme '(lispy c-digits))
+  (lispyville-set-key-theme))
 
 #+end_src
 
@@ -1116,27 +1116,27 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
 #+begin_src emacs-lisp
 
-  (use-package evil-multiedit
-    :bind (:map evil-visual-state-map
-                ("R" . evil-multiedit-match-all)
-                ("M-d" . evil-multiedit-match-and-next)
-                ("M-D" . evil-multiedit-match-and-prev)
-                ("C-M-d" . evil-multiedit-restore)
-                :map evil-normal-state-map
-                ("M-d" . evil-multiedit-match-symbol-and-next)
-                ("M-D" . evil-multiedit-match-symbol-and-prev)
-                ("C-M-d" . evil-multiedit-restore)
-                :map evil-insert-state-map
-                ("M-d" . evil-multiedit-toggle-marker-here)
-                :map evil-motion-state-map
-                ("RET" . evil-multiedit-toggle-or-restrict-region)
-                :map evil-multiedit-state-map
-                ("RET" . evil-multiedit-toggle-or-restrict-region)
-                ("C-n" . evil-multiedit-next)
-                ("C-p" . evil-multiedit-prev)
-                :map evil-multiedit-insert-state-map
-                ("C-n" . evil-multiedit-next)
-                ("C-p" . evil-multiedit-prev)))
+(use-package evil-multiedit
+  :bind (:map evil-visual-state-map
+              ("R" . evil-multiedit-match-all)
+              ("M-d" . evil-multiedit-match-and-next)
+              ("M-D" . evil-multiedit-match-and-prev)
+              ("C-M-d" . evil-multiedit-restore)
+              :map evil-normal-state-map
+              ("M-d" . evil-multiedit-match-symbol-and-next)
+              ("M-D" . evil-multiedit-match-symbol-and-prev)
+              ("C-M-d" . evil-multiedit-restore)
+              :map evil-insert-state-map
+              ("M-d" . evil-multiedit-toggle-marker-here)
+              :map evil-motion-state-map
+              ("RET" . evil-multiedit-toggle-or-restrict-region)
+              :map evil-multiedit-state-map
+              ("RET" . evil-multiedit-toggle-or-restrict-region)
+              ("C-n" . evil-multiedit-next)
+              ("C-p" . evil-multiedit-prev)
+              :map evil-multiedit-insert-state-map
+              ("C-n" . evil-multiedit-next)
+              ("C-p" . evil-multiedit-prev)))
 
 #+end_src
 
@@ -1144,7 +1144,7 @@ I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to 
 
 #+begin_src emacs-lisp
 
-  (use-package undo-fu)
+(use-package undo-fu)
 
 #+end_src
 
@@ -1153,9 +1153,9 @@ Automatically close brackets, parens, etc. Bundled with Emacs.
 
 #+begin_src emacs-lisp
 
-  (use-package elec-pair
-    :straight nil
-    :hook (prog-mode . electric-pair-mode))
+(use-package elec-pair
+  :straight nil
+  :hook (prog-mode . electric-pair-mode))
 
 #+end_src
 
@@ -1163,20 +1163,20 @@ Automatically close brackets, parens, etc. Bundled with Emacs.
 
 #+begin_src emacs-lisp
 
-  (use-package expand-region
-    :bind
-    ("s-'" .  er/expand-region)
-    ("s-\"" .  er/contract-region)
-    :hook
-    (prog-mode . my/greedy-expansion-list)
-    :config
-    (defun my/greedy-expansion-list ()
-      "Skip marking words or inside quotes and pairs"
-      (setq-local er/try-expand-list
-                  (cl-set-difference er/try-expand-list
-                                     '(er/mark-word
-                                       er/mark-inside-quotes
-                                       er/mark-inside-pairs)))))
+(use-package expand-region
+  :bind
+  ("s-'" .  er/expand-region)
+  ("s-\"" .  er/contract-region)
+  :hook
+  (prog-mode . my/greedy-expansion-list)
+  :config
+  (defun my/greedy-expansion-list ()
+    "Skip marking words or inside quotes and pairs"
+    (setq-local er/try-expand-list
+                (cl-set-difference er/try-expand-list
+                                   '(er/mark-word
+                                     er/mark-inside-quotes
+                                     er/mark-inside-pairs)))))
 
 #+end_src
 
@@ -1186,16 +1186,16 @@ Remember history of things across launches (ie. kill ring).
 
 #+begin_src emacs-lisp
 
-  (use-package savehist
-    :hook (after-init . savehist-mode)
-    :custom
-    (savehist-file "~/.emacs.d/savehist")
-    (savehist-save-minibuffer-history t)
-    (savehist-additional-variables
-     '(kill-ring
-       mark-ring global-mark-ring
-       search-ring regexp-search-ring))
-    (history-length 20000))
+(use-package savehist
+  :hook (after-init . savehist-mode)
+  :custom
+  (savehist-file "~/.emacs.d/savehist")
+  (savehist-save-minibuffer-history t)
+  (savehist-additional-variables
+   '(kill-ring
+     mark-ring global-mark-ring
+     search-ring regexp-search-ring))
+  (history-length 20000))
 
     #+end_src
 
@@ -1205,9 +1205,9 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (use-package saveplace
-    :config
-    (save-place-mode t))
+(use-package saveplace
+  :config
+  (save-place-mode t))
 
 #+end_src
 
@@ -1216,45 +1216,54 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (defun dawran/org-mode-setup ()
-    ;; hide title / author ... keywords
-    (setq-local org-hidden-keywords '(title author date))
+(defun dawran/org-mode-setup ()
+  ;; hide title / author ... keywords
+  (setq-local org-hidden-keywords '(title author date))
+  (setq-local electric-pair-inhibit-predicate
+              `(lambda (c)
+                 (if (char-equal c ?<)
+                     t
+                   (,electric-pair-inhibit-predicate c))))
 
-    ;; Indentation
-    ;; (org-indent-mode)
-    (blackout 'org-indent-mode)
+  ;; Indentation
+  ;; (org-indent-mode)
+  (blackout 'org-indent-mode)
 
-    ;; (variable-pitch-mode 1)
-    (blackout 'buffer-face-mode)
-    (visual-line-mode 1)
-    (blackout 'visual-line-mode)
-    (dawran/visual-fill))
+  ;; (variable-pitch-mode 1)
+  (blackout 'buffer-face-mode)
+  (visual-line-mode 1)
+  (blackout 'visual-line-mode)
+  (dawran/visual-fill))
 
-  (use-package org
-    :hook (org-mode . dawran/org-mode-setup)
-    :config
-    (setq org-hide-emphasis-markers t
-          org-src-fontify-natively t
-          org-src-tab-acts-natively t
-          org-edit-src-content-indentation 2
-          org-hide-block-startup nil
-          org-src-preserve-indentation nil
-          ;; org-startup-folded 'content
-          org-cycle-separator-lines 2
-          org-log-done 'time
-          org-log-into-drawer t))
+(use-package org
+  :hook (org-mode . dawran/org-mode-setup)
+  :config
+  (setq org-hide-emphasis-markers t
+        org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0
+        org-src-window-setup 'current-window
+        org-indirect-buffer-display 'current-window
+        org-hide-block-startup nil
+        org-src-preserve-indentation nil
+        ;; org-startup-folded 'content
+        org-cycle-separator-lines 2
+        org-log-done 'time
+        org-log-into-drawer t
+        org-image-actual-width 640
+        org-attach-auto-tag "attachment"))
 
-  (use-package org-tempo
-    :straight nil
-    :after org
-    :config
-    (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
+(use-package org-tempo
+  :straight nil
+  :after org
+  :config
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
-  (use-package evil-org
-    :blackout t
-    :after evil
-    :hook (org-mode . evil-org-mode))
+(use-package evil-org
+  :blackout t
+  :after evil
+  :hook (org-mode . evil-org-mode))
 
 #+end_src
 
@@ -1262,15 +1271,15 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (defun dawran/org-babel-tangle-config ()
-    "Automatically tangle our Emacs.org config file when we save it."
-    (when (string-equal (buffer-file-name)
-                        (expand-file-name "./README.org"))
-      ;; Dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
+(defun dawran/org-babel-tangle-config ()
+  "Automatically tangle our Emacs.org config file when we save it."
+  (when (string-equal (buffer-file-name)
+                      (expand-file-name "./README.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
 
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
 #+end_src
 
@@ -1278,8 +1287,8 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (use-package org-make-toc
-    :hook (org-mode . org-make-toc-mode))
+(use-package org-make-toc
+  :hook (org-mode . org-make-toc-mode))
 
 #+end_src
 
@@ -1287,20 +1296,20 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (use-package org-journal
-    :commands (org-journal-new-entry org-journal-open-current-journal-file)
-    :custom
-    (org-journal-date-format "%A, %d/%m/%Y")
-    (org-journal-date-prefix "* ")
-    (org-journal-file-format "%F.org")
-    (org-journal-dir "~/org/journal/")
-    (org-journal-file-type 'weekly)
-    (org-journal-find-file #'find-file))
+(use-package org-journal
+  :commands (org-journal-new-entry org-journal-open-current-journal-file)
+  :custom
+  (org-journal-date-format "%A, %d/%m/%Y")
+  (org-journal-date-prefix "* ")
+  (org-journal-file-format "%F.org")
+  (org-journal-dir "~/org/journal/")
+  (org-journal-file-type 'weekly)
+  (org-journal-find-file #'find-file))
 
-  (dawran/leader-keys
-    "n" '(:ignore t :which-key "notes")
-    "nj" '(org-journal-open-current-journal-file :which-key "journal")
-    "nJ" '(org-journal-new-entry :which-key "new journal entry"))
+(dawran/leader-keys
+  "n" '(:ignore t :which-key "notes")
+  "nj" '(org-journal-open-current-journal-file :which-key "journal")
+  "nJ" '(org-journal-new-entry :which-key "new journal entry"))
 
 #+end_src
 
@@ -1308,21 +1317,21 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (use-package org-roam
-    :commands org-roam-find-file
-    :custom
-    (org-roam-directory "~/org/roam/")
-    :config
-    (dawran/leader-keys
-      :keymaps 'org-roam-mode-map
-      "nl" 'org-roam
-      "ng" 'org-roam-graph-show
-      :keymaps 'org-mode-map
-      "ni" 'org-roam-insert
-      "nI" 'org-roam-insert-immediate))
-
+(use-package org-roam
+  :commands org-roam-find-file
+  :custom
+  (org-roam-directory "~/org/roam/")
+  :config
   (dawran/leader-keys
-    "nf" 'org-roam-find-file)
+    :keymaps 'org-roam-mode-map
+    "nl" 'org-roam
+    "ng" 'org-roam-graph-show
+    :keymaps 'org-mode-map
+    "ni" 'org-roam-insert
+    "nI" 'org-roam-insert-immediate))
+
+(dawran/leader-keys
+  "nf" 'org-roam-find-file)
 
 #+end_src
 
@@ -1330,15 +1339,15 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+begin_src emacs-lisp
 
-  (use-package org-tree-slide
-    :commands (org-tree-slide-mode)
-    :custom
-    (org-image-actual-width nil)
-    (org-tree-slide-slide-in-effect nil)
-    (org-tree-slide-activate-message "Presentation started.")
-    (org-tree-slide-deactivate-message "Presentation ended.")
-    (org-tree-slide-breadcrumbs " > ")
-    (org-tree-slide-header t))
+(use-package org-tree-slide
+  :commands (org-tree-slide-mode)
+  :custom
+  (org-image-actual-width nil)
+  (org-tree-slide-slide-in-effect nil)
+  (org-tree-slide-activate-message "Presentation started.")
+  (org-tree-slide-deactivate-message "Presentation ended.")
+  (org-tree-slide-breadcrumbs " > ")
+  (org-tree-slide-header t))
 
 #+end_src
 
@@ -1348,25 +1357,25 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (defvar org-paste-clipboard-image-dir "img")
+(defvar org-paste-clipboard-image-dir "img")
 
-  (defun dawran/org-paste-clipboard-image ()
-    "Paste clipboard image to org file."
-    (interactive)
-    (if (not (executable-find "pngpaste"))
-        (message "Requires pngpaste in PATH")
-      (unless (file-exists-p org-paste-clipboard-image-dir)
-        (make-directory org-paste-clipboard-image-dir t))
-      (let ((image-file (format "%s/%s.png"
-                                org-paste-clipboard-image-dir
-                                (make-temp-name "org-image-paste-"))))
-        (call-process-shell-command (format "pngpaste %s" image-file))
-        (insert (format  "#+CAPTION: %s\n" (read-string "Caption: ")))
-        (insert (format "[[file:%s]]" image-file))
-        (org-display-inline-images))))
+(defun dawran/org-paste-clipboard-image ()
+  "Paste clipboard image to org file."
+  (interactive)
+  (if (not (executable-find "pngpaste"))
+      (message "Requires pngpaste in PATH")
+    (unless (file-exists-p org-paste-clipboard-image-dir)
+      (make-directory org-paste-clipboard-image-dir t))
+    (let ((image-file (format "%s/%s.png"
+                              org-paste-clipboard-image-dir
+                              (make-temp-name "org-image-paste-"))))
+      (call-process-shell-command (format "pngpaste %s" image-file))
+      (insert (format  "#+CAPTION: %s\n" (read-string "Caption: ")))
+      (insert (format "[[file:%s]]" image-file))
+      (org-display-inline-images))))
 
-  (with-eval-after-load "org"
-    (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
+(with-eval-after-load "org"
+  (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
 
 #+end_src
 
@@ -1374,64 +1383,64 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (use-package dired
-    :straight nil
-    :commands (dired)
-    :hook (dired-mode . dired-hide-details-mode)
-    :bind ("C-x C-j" . dired-jump)
-    :custom
-    (dired-auto-revert-buffer t)
-    (dired-dwim-target t)
-    (dired-recursive-copies 'always)
-    (dired-recursive-deletes 'always)
-    (dired-listing-switches "-AFhlv --group-directories-first")
-    :init
-    (setq insert-directory-program "gls")
-    :config
-    (evil-collection-define-key 'normal 'dired-mode-map
-      (kbd "C-c C-e") 'wdired-change-to-wdired-mode))
+(use-package dired
+  :straight nil
+  :commands (dired)
+  :hook (dired-mode . dired-hide-details-mode)
+  :bind ("C-x C-j" . dired-jump)
+  :custom
+  (dired-auto-revert-buffer t)
+  (dired-dwim-target t)
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always)
+  (dired-listing-switches "-AFhlv --group-directories-first")
+  :init
+  (setq insert-directory-program "gls")
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    (kbd "C-c C-e") 'wdired-change-to-wdired-mode))
 
-  (dawran/leader-keys
-    "d" '(dired-jump :which-key "dired"))
+(dawran/leader-keys
+  "d" '(dired-jump :which-key "dired"))
 
-  (use-package dired-x
-    :after dired
-    :straight nil
-    :init (setq-default dired-omit-files-p t)
-    :config
-    (add-to-list 'dired-omit-extensions ".DS_Store"))
+(use-package dired-x
+  :after dired
+  :straight nil
+  :init (setq-default dired-omit-files-p t)
+  :config
+  (add-to-list 'dired-omit-extensions ".DS_Store"))
 
-  (use-package dired-single
-    :after dired
-    :config
-    (evil-collection-define-key 'normal 'dired-mode-map
-      "h" 'dired-single-up-directory
-      "l" 'dired-single-buffer))
+(use-package dired-single
+  :after dired
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "h" 'dired-single-up-directory
+    "l" 'dired-single-buffer))
 
-  (use-package dired-hide-dotfiles
-    :hook (dired-mode . dired-hide-dotfiles-mode)
-    :config
-    (evil-collection-define-key 'normal 'dired-mode-map
-      "H" 'dired-hide-dotfiles-mode))
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))
 
-  (use-package dired-ranger
-    :after dired
-    :config
-    (evil-collection-define-key 'normal 'dired-mode-map
-      "y" 'dired-ranger-copy
-      "X" 'dired-ranger-move
-      "p" 'dired-ranger-paste))
+(use-package dired-ranger
+  :after dired
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "y" 'dired-ranger-copy
+    "X" 'dired-ranger-move
+    "p" 'dired-ranger-paste))
 
-  (use-package dired-subtree
-    :after dired)
+(use-package dired-subtree
+  :after dired)
 
-  (use-package dired-toggle
-    :commands dired-toggle
-    :straight nil
-    :load-path "lisp/")
+(use-package dired-toggle
+  :commands dired-toggle
+  :straight nil
+  :load-path "lisp/")
 
-  (dawran/leader-keys
-    "td" 'dired-toggle)
+(dawran/leader-keys
+  "td" 'dired-toggle)
 
 #+end_src
 
@@ -1440,7 +1449,7 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (setq exec-path (append exec-path '("/usr/local/bin")))
+(setq exec-path (append exec-path '("/usr/local/bin")))
 
 #+end_src
 
@@ -1448,10 +1457,10 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (use-package vterm
-    :commands vterm
-    :config
-    (setq vterm-max-scrollback 10000))
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-max-scrollback 10000))
 
 #+end_src
 
@@ -1459,57 +1468,57 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (defun dawran/eshell-history ()
-    "Browse eshell history."
-    (interactive)
-    (let ((candidates (cl-remove-duplicates
-                       (ring-elements eshell-history-ring)
-                       :test #'equal :from-end t))
-          (input (let ((input-start (save-excursion (eshell-bol)))
-                       (input-end (save-excursion (end-of-line) (point))))
-                   (buffer-substring-no-properties input-start input-end))))
-      (let ((selected (completing-read "Eshell history:"
-                                       candidates nil nil input)))
-        (end-of-line)
-        (eshell-kill-input)
-        (insert (string-trim selected)))))
+(defun dawran/eshell-history ()
+  "Browse eshell history."
+  (interactive)
+  (let ((candidates (cl-remove-duplicates
+                     (ring-elements eshell-history-ring)
+                     :test #'equal :from-end t))
+        (input (let ((input-start (save-excursion (eshell-bol)))
+                     (input-end (save-excursion (end-of-line) (point))))
+                 (buffer-substring-no-properties input-start input-end))))
+    (let ((selected (completing-read "Eshell history:"
+                                     candidates nil nil input)))
+      (end-of-line)
+      (eshell-kill-input)
+      (insert (string-trim selected)))))
 
-  (defun dawran/configure-eshell ()
-    ;; Save command history when commands are entered
-    (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+(defun dawran/configure-eshell ()
+  ;; Save command history when commands are entered
+  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
 
-    ;; Truncate buffer for performance
-    (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+  ;; Truncate buffer for performance
+  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
 
-    ;; Use Ivy to provide completions in eshell
-    (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
+  ;; Use Ivy to provide completions in eshell
+  (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
-    ;; Bind some useful keys for evil-mode
-    (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
-    (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
+  ;; Bind some useful keys for evil-mode
+  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
+  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
 
-    (setq eshell-history-size          10000
-          eshell-buffer-maximum-lines  10000
-          eshell-hist-ignoredups           t
-          eshell-highlight-prompt          t
-          eshell-scroll-to-bottom-on-input t))
+  (setq eshell-history-size          10000
+        eshell-buffer-maximum-lines  10000
+        eshell-hist-ignoredups           t
+        eshell-highlight-prompt          t
+        eshell-scroll-to-bottom-on-input t))
 
-  (use-package eshell
-    :hook (eshell-first-time-mode . dawran/configure-eshell))
+(use-package eshell
+  :hook (eshell-first-time-mode . dawran/configure-eshell))
 
-  (use-package exec-path-from-shell
-    :defer 1
-    :init
-    (setq exec-path-from-shell-check-startup-files nil)
-    :config
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
+(use-package exec-path-from-shell
+  :defer 1
+  :init
+  (setq exec-path-from-shell-check-startup-files nil)
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
-  (with-eval-after-load 'esh-opt
-    (setq eshell-destroy-buffer-when-process-dies t))
+(with-eval-after-load 'esh-opt
+  (setq eshell-destroy-buffer-when-process-dies t))
 
-  (dawran/leader-keys
-    "e" 'eshell)
+(dawran/leader-keys
+  "e" 'eshell)
 
 #+end_src
 
@@ -1517,15 +1526,15 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (use-package eshell-toggle
-    :custom
-    (eshell-toggle-use-git-root t)
-    (eshell-toggle-run-command nil)
-    :bind
-    ("C-M-'" . eshell-toggle))
+(use-package eshell-toggle
+  :custom
+  (eshell-toggle-use-git-root t)
+  (eshell-toggle-run-command nil)
+  :bind
+  ("C-M-'" . eshell-toggle))
 
-  (dawran/leader-keys
-    "te" 'eshell-toggle)
+(dawran/leader-keys
+  "te" 'eshell-toggle)
 
 #+end_src
 
@@ -1534,22 +1543,22 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (use-package project
-    :commands project-root
-    :bind
-    (("s-p" . project-find-file)
-     ("s-P" . project-switch-project))
-    :init
-    (defun project-magit-status+ ()
-      ""
-      (interactive)
-      (magit-status (project-root (project-current t))))
-    :custom
-    (project-switch-commands '((project-find-file "Find file")
-                               (project-find-regexp "Find regexp")
-                               (project-dired "Dired")
-                               (project-magit-status+ "Magit" ?m)
-                               (project-eshell "Eshell"))))
+(use-package project
+  :commands project-root
+  :bind
+  (("s-p" . project-find-file)
+   ("s-P" . project-switch-project))
+  :init
+  (defun project-magit-status+ ()
+    ""
+    (interactive)
+    (magit-status (project-root (project-current t))))
+  :custom
+  (project-switch-commands '((project-find-file "Find file")
+                             (project-find-regexp "Find regexp")
+                             (project-dired "Dired")
+                             (project-magit-status+ "Magit" ?m)
+                             (project-eshell "Eshell"))))
 
 #+end_src
 
@@ -1557,19 +1566,19 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (use-package magit
-    :bind ("s-g" . magit-status)
-    :custom
-    (magit-diff-refine-hunk 'all)
-    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+(use-package magit
+  :bind ("s-g" . magit-status)
+  :custom
+  (magit-diff-refine-hunk 'all)
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-  (dawran/leader-keys
-    "g"   '(:ignore t :which-key "git")
-    "gg"  'magit-status
-    "gb"  'magit-blame-addition
-    "gd"  'magit-diff-unstaged
-    "gf"  'magit-file-dispatch
-    "gl"  'magit-log-buffer-file)
+(dawran/leader-keys
+  "g"   '(:ignore t :which-key "git")
+  "gg"  'magit-status
+  "gb"  'magit-blame-addition
+  "gd"  'magit-diff-unstaged
+  "gf"  'magit-file-dispatch
+  "gl"  'magit-log-buffer-file)
 
 #+end_src
 
@@ -1577,10 +1586,10 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+begin_src emacs-lisp
 
-  (use-package rg
-    :bind ("s-F" . rg-project)
-    :config
-    (rg-enable-default-bindings))
+(use-package rg
+  :bind ("s-F" . rg-project)
+  :config
+  (rg-enable-default-bindings))
 
 #+end_src
 
@@ -1593,19 +1602,19 @@ lsp-mode ATM.
 
 #+begin_src emacs-lisp
 
-  (use-package lsp-mode
-    :hook ((clojure-mode . lsp)
-           (clojurec-mode . lsp)
-           (clojurescript-mode . lsp)
-           (lsp-mode . (lambda () (setq-local idle-highlight-mode nil))))
-    :custom
-    (lsp-enable-file-watchers nil)
-    (lsp-headerline-breadcrumb-enable nil)
-    (lsp-keymap-prefix "s-l")
-    (lsp-enable-indentation nil)
-    (lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp"))
-    :config
-    (lsp-enable-which-key-integration t))
+(use-package lsp-mode
+  :hook ((clojure-mode . lsp)
+         (clojurec-mode . lsp)
+         (clojurescript-mode . lsp)
+         (lsp-mode . (lambda () (setq-local idle-highlight-mode nil))))
+  :custom
+  (lsp-enable-file-watchers nil)
+  (lsp-headerline-breadcrumb-enable nil)
+  (lsp-keymap-prefix "s-l")
+  (lsp-enable-indentation nil)
+  (lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp"))
+  :config
+  (lsp-enable-which-key-integration t))
 
 #+end_src
 
@@ -1623,35 +1632,35 @@ primarily with Emacs' built-in libraries:
 
 #+begin_src emacs-lisp
 
-  (use-package eglot
-    :disabled t
-    :hook ((clojure-mode . eglot-ensure)
-           (clojurec-mode . eglot-ensure)
-           (clojurescript-mode . eglot-ensure))
-    :custom
-    (eglot-connect-timeout 6000)
-    :config
-    (add-to-list 'eglot-server-programs
-                 '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp")))
+(use-package eglot
+  :disabled t
+  :hook ((clojure-mode . eglot-ensure)
+         (clojurec-mode . eglot-ensure)
+         (clojurescript-mode . eglot-ensure))
+  :custom
+  (eglot-connect-timeout 6000)
+  :config
+  (add-to-list 'eglot-server-programs
+               '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp")))
 
-    (defun my/project-try-clojure (dir)
-      "Try to locate a clojure project."
-      (when-let ((found (clojure-project-dir)))
-        (cons 'transient found)))
+  (defun my/project-try-clojure (dir)
+    "Try to locate a clojure project."
+    (when-let ((found (clojure-project-dir)))
+      (cons 'transient found)))
 
-    (defun my/eglot--guess-contact-clojure-project-monorepo (orig-fun &rest args)
-      "Fix project-root for clojure monorepos."
-      (let ((project-find-functions
-             (cons 'my/project-try-clojure project-find-functions)))
-        (apply orig-fun args)))
+  (defun my/eglot--guess-contact-clojure-project-monorepo (orig-fun &rest args)
+    "Fix project-root for clojure monorepos."
+    (let ((project-find-functions
+           (cons 'my/project-try-clojure project-find-functions)))
+      (apply orig-fun args)))
 
-    (advice-add 'eglot--guess-contact :around
-                #'my/eglot--guess-contact-clojure-project-monorepo))
+  (advice-add 'eglot--guess-contact :around
+              #'my/eglot--guess-contact-clojure-project-monorepo))
 
-  (use-package flymake
-    :disabled t
-    :defer t
-    :blackout t)
+(use-package flymake
+  :disabled t
+  :defer t
+  :blackout t)
 
 #+end_src
 
@@ -1660,50 +1669,50 @@ primarily with Emacs' built-in libraries:
 
 #+begin_src emacs-lisp
 
-  (use-package flycheck-clj-kondo
-    :disabled t
-    :defer t)
+(use-package flycheck-clj-kondo
+  :disabled t
+  :defer t)
 
-  (use-package clojure-mode
-    :defer t
-    :custom
-    (cljr-magic-requires nil)
-    :config
-    ;; (require 'flycheck-clj-kondo)
-    (setq clojure-indent-style 'align-arguments
-          clojure-align-forms-automatically t))
+(use-package clojure-mode
+  :defer t
+  :custom
+  (cljr-magic-requires nil)
+  :config
+  ;; (require 'flycheck-clj-kondo)
+  (setq clojure-indent-style 'align-arguments
+        clojure-align-forms-automatically t))
 
-  (use-package clj-refactor
-    :defer t
-    :blackout t)
+(use-package clj-refactor
+  :defer t
+  :blackout t)
 
-  (use-package cider
-    :commands cider
-    :custom
-    (cider-repl-display-help-banner nil)
-    (cider-repl-display-in-current-window nil)
-    (cider-repl-pop-to-buffer-on-connect nil)
-    (cider-repl-use-pretty-printing t)
-    (cider-repl-buffer-size-limit 100000)
-    (cider-repl-result-prefix ";; => ")
-    :config
-    (add-hook 'cider-repl-mode-hook 'evil-insert-state)
-    (dawran/localleader-keys
-      :keymaps '(clojure-mode-map clojurescript-mode-map)
-      "e" '(:ignore t :which-key "eval")
-      "eb" 'cider-eval-buffer
-      "ef" 'cider-eval-defun-at-point
-      "ee" 'cider-eval-last-sexp
-      "t" '(:ignore t :which-key "test")
-      "tt" 'cider-test-run-test
-      "tn" 'cider-test-run-ns-tests))
-
+(use-package cider
+  :commands cider
+  :custom
+  (cider-repl-display-help-banner nil)
+  (cider-repl-display-in-current-window nil)
+  (cider-repl-pop-to-buffer-on-connect nil)
+  (cider-repl-use-pretty-printing t)
+  (cider-repl-buffer-size-limit 100000)
+  (cider-repl-result-prefix ";; => ")
+  :config
+  (add-hook 'cider-repl-mode-hook 'evil-insert-state)
   (dawran/localleader-keys
     :keymaps '(clojure-mode-map clojurescript-mode-map)
-    "," 'cider)
+    "e" '(:ignore t :which-key "eval")
+    "eb" 'cider-eval-buffer
+    "ef" 'cider-eval-defun-at-point
+    "ee" 'cider-eval-last-sexp
+    "t" '(:ignore t :which-key "test")
+    "tt" 'cider-test-run-test
+    "tn" 'cider-test-run-ns-tests))
 
-  (use-package clj-refactor
-    :hook (clojure-mode . clj-refactor-mode))
+(dawran/localleader-keys
+  :keymaps '(clojure-mode-map clojurescript-mode-map)
+  "," 'cider)
+
+(use-package clj-refactor
+  :hook (clojure-mode . clj-refactor-mode))
 
 #+end_src
 
@@ -1711,11 +1720,11 @@ primarily with Emacs' built-in libraries:
 
 #+begin_src emacs-lisp
 
-  (use-package markdown-mode
-    :mode "\\.md\\'"
-    :hook (markdown-mode . dawran/visual-fill)
-    :config
-    (setq markdown-command "marked"))
+(use-package markdown-mode
+  :mode "\\.md\\'"
+  :hook (markdown-mode . dawran/visual-fill)
+  :config
+  (setq markdown-command "marked"))
 
 #+end_src
 
@@ -1723,12 +1732,12 @@ primarily with Emacs' built-in libraries:
 
 #+begin_src emacs-lisp
 
-  (use-package flycheck
-    :defer t
-    ;; :hook ((clojure-mode . flycheck-mode)
-    ;;        (clojurec-mode . flycheck-mode)
-    ;;        (clojurescript-mode . flycheck-mode))
-  )
+(use-package flycheck
+  :defer t
+  ;; :hook ((clojure-mode . flycheck-mode)
+  ;;        (clojurec-mode . flycheck-mode)
+  ;;        (clojurescript-mode . flycheck-mode))
+)
 
 #+end_src
 
@@ -1736,9 +1745,9 @@ primarily with Emacs' built-in libraries:
 
 #+begin_src emacs-lisp
 
-  (use-package eldoc
-    :defer t
-    :blackout t)
+(use-package eldoc
+  :defer t
+  :blackout t)
 
 #+end_src
 
@@ -1746,12 +1755,12 @@ primarily with Emacs' built-in libraries:
 
 #+begin_src emacs-lisp
 
-  (use-package flyspell
-    :blackout t
-    :straight nil
-    :hook
-    (prog-mode . flyspell-prog-mode)
-    (text-mode . flyspell-mode))
+(use-package flyspell
+  :blackout t
+  :straight nil
+  :hook
+  (prog-mode . flyspell-prog-mode)
+  (text-mode . flyspell-mode))
 
 #+end_src
 * Extras
@@ -1762,12 +1771,12 @@ My extra lisp stuffs. Credits to:
 
 #+begin_src emacs-lisp
 
-  (use-package extras
-    :straight nil
-    :load-path "lisp/"
-    :bind
-    (("M-y" . yank-pop+)
-     ("C-x C-r" . recentf-open-files+)))
+(use-package extras
+  :straight nil
+  :load-path "lisp/"
+  :bind
+  (("M-y" . yank-pop+)
+   ("C-x C-r" . recentf-open-files+)))
 
 #+end_src
 * App
@@ -1775,44 +1784,44 @@ My extra lisp stuffs. Credits to:
 
 #+begin_src emacs-lisp
 
-  (use-package time
-    :commands display-time-world
-    :straight nil
-    :custom
-    (display-time-world-list '(("Asia/Taipei" "Taipei")
-                               ("America/Toronto" "Toronto")
-                               ("America/Los_Angeles" "San Francisco")
-                               ("Europe/Berlin" "Düsseldorf")
-                               ("Europe/London" "GMT"))))
+(use-package time
+  :commands display-time-world
+  :straight nil
+  :custom
+  (display-time-world-list '(("Asia/Taipei" "Taipei")
+                             ("America/Toronto" "Toronto")
+                             ("America/Los_Angeles" "San Francisco")
+                             ("Europe/Berlin" "Düsseldorf")
+                             ("Europe/London" "GMT"))))
 
-  (dawran/leader-keys
-    "tc" #'display-time-world)
+(dawran/leader-keys
+  "tc" #'display-time-world)
 
 #+end_src
 ** RSS
 
 #+begin_src emacs-lisp
 
-  (use-package elfeed
-    :commands elfeed
-    :custom
-    (elfeed-feeds '(("https://planet.emacslife.com/atom.xml" emacs)
-                    ("http://planet.clojure.in/atom.xml" clojure)
-                    ("https://www.reddit.com/r/programming.rss" programming)
-                    ("https://news.ycombinator.com/rss" news)
-                    ("https://css-tricks.com/feed/" css)
-                    ("https://www.reddit.com/r/emacs.rss" emacs)
-                    ("https://www.reddit.com/r/clojure.rss" clojure))))
+(use-package elfeed
+  :commands elfeed
+  :custom
+  (elfeed-feeds '(("https://planet.emacslife.com/atom.xml" emacs)
+                  ("http://planet.clojure.in/atom.xml" clojure)
+                  ("https://www.reddit.com/r/programming.rss" programming)
+                  ("https://news.ycombinator.com/rss" news)
+                  ("https://css-tricks.com/feed/" css)
+                  ("https://www.reddit.com/r/emacs.rss" emacs)
+                  ("https://www.reddit.com/r/clojure.rss" clojure))))
 
-  (dawran/leader-keys
-    "R" '(elfeed :which-key "RSS"))
+(dawran/leader-keys
+  "R" '(elfeed :which-key "RSS"))
 
 #+end_src
 ** Gemini
 
 #+begin_src emacs-lisp
 
-  (use-package elpher
-    :commands elpher)
+(use-package elpher
+  :commands elpher)
 
 #+end_src

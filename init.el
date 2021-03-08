@@ -645,6 +645,11 @@
 (defun dawran/org-mode-setup ()
   ;; hide title / author ... keywords
   (setq-local org-hidden-keywords '(title author date))
+  (setq-local electric-pair-inhibit-predicate
+              `(lambda (c)
+                 (if (char-equal c ?<)
+                     t
+                   (,electric-pair-inhibit-predicate c))))
 
   ;; Indentation
   ;; (org-indent-mode)
@@ -662,13 +667,17 @@
   (setq org-hide-emphasis-markers t
         org-src-fontify-natively t
         org-src-tab-acts-natively t
-        org-edit-src-content-indentation 2
+        org-edit-src-content-indentation 0
+        org-src-window-setup 'current-window
+        org-indirect-buffer-display 'current-window
         org-hide-block-startup nil
         org-src-preserve-indentation nil
         ;; org-startup-folded 'content
         org-cycle-separator-lines 2
         org-log-done 'time
-        org-log-into-drawer t))
+        org-log-into-drawer t
+        org-image-actual-width 640
+        org-attach-auto-tag "attachment"))
 
 (use-package org-tempo
   :straight nil
