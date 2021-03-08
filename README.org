@@ -83,7 +83,6 @@ A recent screenshot:
   - [[#saveplace][Saveplace]]
 - [[#org-mode][Org Mode]]
   - [[#basic-config][Basic Config]]
-  - [[#nicer-heading-bullets][Nicer Heading Bullets]]
   - [[#auto-tangle-configuration-files][Auto-tangle Configuration Files]]
   - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
   - [[#journal][Journal]]
@@ -1222,7 +1221,7 @@ When you visit a file, point goes to the last place where it was when you previo
     (setq-local org-hidden-keywords '(title author date))
 
     ;; Indentation
-    (org-indent-mode)
+    ;; (org-indent-mode)
     (blackout 'org-indent-mode)
 
     ;; (variable-pitch-mode 1)
@@ -1234,8 +1233,7 @@ When you visit a file, point goes to the last place where it was when you previo
   (use-package org
     :hook (org-mode . dawran/org-mode-setup)
     :config
-    (setq org-ellipsis " ▾"
-          org-hide-emphasis-markers t
+    (setq org-hide-emphasis-markers t
           org-src-fontify-natively t
           org-src-tab-acts-natively t
           org-edit-src-content-indentation 2
@@ -1257,17 +1255,6 @@ When you visit a file, point goes to the last place where it was when you previo
     :blackout t
     :after evil
     :hook (org-mode . evil-org-mode))
-
-#+end_src
-
-** Nicer Heading Bullets
-
-#+begin_src emacs-lisp
-
-  (use-package org-bullets
-    :hook (org-mode . org-bullets-mode)
-    :custom
-    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 #+end_src
 

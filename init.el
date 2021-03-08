@@ -647,7 +647,7 @@
   (setq-local org-hidden-keywords '(title author date))
 
   ;; Indentation
-  (org-indent-mode)
+  ;; (org-indent-mode)
   (blackout 'org-indent-mode)
 
   ;; (variable-pitch-mode 1)
@@ -659,8 +659,7 @@
 (use-package org
   :hook (org-mode . dawran/org-mode-setup)
   :config
-  (setq org-ellipsis " ▾"
-        org-hide-emphasis-markers t
+  (setq org-hide-emphasis-markers t
         org-src-fontify-natively t
         org-src-tab-acts-natively t
         org-edit-src-content-indentation 2
@@ -682,11 +681,6 @@
   :blackout t
   :after evil
   :hook (org-mode . evil-org-mode))
-
-(use-package org-bullets
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
 (defun dawran/org-babel-tangle-config ()
   "Automatically tangle our Emacs.org config file when we save it."
