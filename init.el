@@ -413,6 +413,9 @@
 (use-package rainbow-mode
   :commands rainbow-mode)
 
+(use-package hide-mode-line
+  :commands hide-mode-line-mode)
+
 (setq enable-recursive-minibuffers t)
 
 ;; Package `selectrum' is an incremental completion and narrowing

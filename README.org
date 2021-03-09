@@ -61,6 +61,7 @@ A recent screenshot:
   - [[#emoji-and-unicode][Emoji and Unicode]]
   - [[#native-titlebar][Native Titlebar]]
   - [[#rainbow-mode][Rainbow Mode]]
+  - [[#hide-mode-line][Hide Mode Line]]
 - [[#completion][Completion]]
   - [[#selectrum][Selectrum]]
   - [[#marginalia][Marginalia]]
@@ -854,6 +855,15 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 (use-package rainbow-mode
   :commands rainbow-mode)
+
+#+end_src
+
+** Hide Mode Line
+
+#+begin_src emacs-lisp
+
+(use-package hide-mode-line
+  :commands hide-mode-line-mode)
 
 #+end_src
 
