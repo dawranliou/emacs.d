@@ -764,6 +764,7 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 #+begin_src emacs-lisp
 
 (use-package paren-blink
+  :disabled t
   :straight nil
   :load-path "lisp/")
 
