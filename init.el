@@ -772,7 +772,7 @@
 (use-package dired
   :straight nil
   :commands (dired)
-  :hook (dired-mode . dired-hide-details-mode)
+  ;; :hook (dired-mode . dired-hide-details-mode)
   :bind ("C-x C-j" . dired-jump)
   :custom
   (dired-auto-revert-buffer t)
