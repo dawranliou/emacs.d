@@ -1066,7 +1066,7 @@ Default to an indentation size of 2 spaces since it’s the norm for pretty much
 
 #+begin_src emacs-lisp
 
-(setq-default tab-width 2)
+(setq-default tab-width 4)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)
 

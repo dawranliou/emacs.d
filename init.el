@@ -543,12 +543,12 @@
   :config
   (recentf-mode +1))
 
-(setq-default tab-width 2)
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+(setq-default tab-width 4)
 (setq-default evil-shift-width tab-width)
 (setq-default indent-tabs-mode nil)
 
