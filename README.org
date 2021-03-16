@@ -1178,7 +1178,8 @@ Automatically close brackets, parens, etc. Bundled with Emacs.
 
 (use-package elec-pair
   :straight nil
-  :hook (prog-mode . electric-pair-mode))
+  :config
+  (electric-pair-mode 1))
 
 #+end_src
 

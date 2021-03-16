@@ -619,7 +619,8 @@
 
 (use-package elec-pair
   :straight nil
-  :hook (prog-mode . electric-pair-mode))
+  :config
+  (electric-pair-mode 1))
 
 (use-package expand-region
   :bind
