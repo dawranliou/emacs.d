@@ -673,21 +673,23 @@
 
 (use-package org
   :hook (org-mode . dawran/org-mode-setup)
-  :config
-  (setq org-hide-emphasis-markers t
-        org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-edit-src-content-indentation 0
-        org-src-window-setup 'current-window
-        org-indirect-buffer-display 'current-window
-        org-hide-block-startup nil
-        org-src-preserve-indentation nil
-        ;; org-startup-folded 'content
-        org-cycle-separator-lines 2
-        org-log-done 'time
-        org-log-into-drawer t
-        org-image-actual-width 640
-        org-attach-auto-tag "attachment"))
+  :custom
+  (org-hide-emphasis-markers t)
+  (org-src-fontify-natively t)
+  (org-src-tab-acts-natively t)
+  (org-src-window-setup 'current-window)
+  (org-cycle-separator-lines 1)
+  (org-edit-src-content-indentation 0)
+  (org-src-window-setup 'current-window)
+  (org-indirect-buffer-display 'current-window)
+  (org-hide-block-startup nil)
+  (org-src-preserve-indentation nil)
+  (org-adapt-indentation nil)
+  ;; (org-startup-folded 'content)
+  (org-log-done 'time)
+  (org-log-into-drawer t)
+  (org-image-actual-width 640)
+  (org-attach-auto-tag "attachment"))
 
 (use-package org-tempo
   :straight nil
