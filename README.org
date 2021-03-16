@@ -479,6 +479,7 @@ Some tips can be found here:
 #+end_src
 
 * UI
+
 ** Blackout Mode Line Lighters
 
 [[https://github.com/raxod502/blackout][Blackout]] is an easy way to turn off mode line lighters. It's similar to
@@ -869,6 +870,7 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 #+end_src
 
 * Completion
+
 ** Selectrum
 
 - https://github.com/raxod502/selectrum
@@ -1049,6 +1051,7 @@ It is very useful for figuring out how things work in Emacs.
 #+end_src
 
 * Editing
+
 ** UTF-8
 
 #+begin_src emacs-lisp
@@ -1236,6 +1239,7 @@ When you visit a file, point goes to the last place where it was when you previo
 #+end_src
 
 * Org Mode
+
 ** Basic Config
 
 #+begin_src emacs-lisp
@@ -1471,6 +1475,7 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 #+end_src
 
 * Shell
+
 ** Exec-path
 
 #+begin_src emacs-lisp
@@ -1565,6 +1570,7 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 #+end_src
 
 * Development
+
 ** Project
 
 #+begin_src emacs-lisp
@@ -1789,6 +1795,7 @@ primarily with Emacs' built-in libraries:
   (text-mode . flyspell-mode))
 
 #+end_src
+
 * Extras
 
 My extra lisp stuffs. Credits to:
@@ -1805,7 +1812,9 @@ My extra lisp stuffs. Credits to:
    ("C-x C-r" . recentf-open-files+)))
 
 #+end_src
+
 * App
+
 ** World Time
 
 #+begin_src emacs-lisp
