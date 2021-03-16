@@ -1076,14 +1076,12 @@
 
 (use-package elfeed
   :commands elfeed
+  :hook (elfeed-show-mode . dawran/visual-fill)
   :custom
-  (elfeed-feeds '(("https://planet.emacslife.com/atom.xml" emacs)
-                  ("http://planet.clojure.in/atom.xml" clojure)
-                  ("https://www.reddit.com/r/programming.rss" programming)
-                  ("https://news.ycombinator.com/rss" news)
-                  ("https://css-tricks.com/feed/" css)
-                  ("https://www.reddit.com/r/emacs.rss" emacs)
-                  ("https://www.reddit.com/r/clojure.rss" clojure))))
+  (elfeed-feeds '(("https://css-tricks.com/feed/")
+                  ("https://dawranliou.com/atom.xml")
+                  ("http://irreal.org/blog/?feed=rss2" emacs)
+                  ("https://emacsredux.com/atom.xml" emacs))))
 
 (dawran/leader-keys
   "R" '(elfeed :which-key "RSS"))
