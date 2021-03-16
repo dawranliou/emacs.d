@@ -397,7 +397,7 @@
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
-  :defer t)
+  :commands visual-fill-column-mode)
 
 (use-package unicode-fonts
   :defer t

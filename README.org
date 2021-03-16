@@ -823,7 +823,7 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
-  :defer t)
+  :commands visual-fill-column-mode)
 
 #+end_src
 
