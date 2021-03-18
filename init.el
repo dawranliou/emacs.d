@@ -1039,6 +1039,9 @@
   :config
   (setq markdown-command "marked"))
 
+(use-package markdown-toc
+  :commands (markdown-toc-generate-toc))
+
 (use-package yaml-mode
   :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
 

@@ -1628,6 +1628,7 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 #+end_src
 
 ** LSP
+
 *** lsp-mode.el
 
 For sentimental reason I actually prefer to use eglot.el over lsp-mode. However,
@@ -1699,6 +1700,7 @@ primarily with Emacs' built-in libraries:
 #+end_src
 
 ** Languages
+
 *** Clojure
 
 #+begin_src emacs-lisp
@@ -1768,6 +1770,11 @@ primarily with Emacs' built-in libraries:
   :hook (markdown-mode . dawran/visual-fill)
   :config
   (setq markdown-command "marked"))
+
+(use-package markdown-toc
+  :commands (markdown-toc-generate-toc))
+
+#+end_src
 
 *** Yaml
 
