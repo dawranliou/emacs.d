@@ -678,9 +678,6 @@
 
 (use-package org
   :hook (org-mode . dawran/org-mode-setup)
-  :bind (:map org-mode-map
-              ("C-j" . org-next-visible-heading)
-              ("C-k" . org-previous-visible-heading))
   :custom
   (org-hide-emphasis-markers t)
   (org-src-fontify-natively t)
