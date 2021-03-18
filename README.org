@@ -106,6 +106,7 @@ A recent screenshot:
     - [[#eglot-disabled][Eglot (disabled)]]
   - [[#languages][Languages]]
     - [[#clojure][Clojure]]
+    - [[#go][Go]]
     - [[#markdown][Markdown]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
   - [[#eldoc][Eldoc]]
@@ -1745,6 +1746,15 @@ primarily with Emacs' built-in libraries:
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
+
+#+end_src
+
+*** Go
+
+#+begin_src emacs-lisp
+
+(use-package go-mode
+  :mode "\\.go\\'")
 
 #+end_src
 

@@ -1030,6 +1030,9 @@
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
 
+(use-package go-mode
+  :mode "\\.go\\'")
+
 (use-package markdown-mode
   :mode "\\.md\\'"
   :hook (markdown-mode . dawran/visual-fill)
