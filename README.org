@@ -108,6 +108,7 @@ A recent screenshot:
     - [[#clojure][Clojure]]
     - [[#go][Go]]
     - [[#markdown][Markdown]]
+    - [[#yaml][Yaml]]
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
   - [[#eldoc][Eldoc]]
   - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
@@ -1767,6 +1768,13 @@ primarily with Emacs' built-in libraries:
   :hook (markdown-mode . dawran/visual-fill)
   :config
   (setq markdown-command "marked"))
+
+*** Yaml
+
+#+begin_src emacs-lisp
+
+(use-package yaml-mode
+  :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
 
 #+end_src
 

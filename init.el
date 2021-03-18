@@ -1039,6 +1039,9 @@
   :config
   (setq markdown-command "marked"))
 
+(use-package yaml-mode
+  :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
+
 (use-package flycheck
   :defer t
   ;; :hook ((clojure-mode . flycheck-mode)
