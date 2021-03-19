@@ -1874,6 +1874,7 @@ My extra lisp stuffs. Credits to:
   :custom
   (elfeed-feeds '(("https://css-tricks.com/feed/")
                   ("https://dawranliou.com/atom.xml")
+                  "https://ambrevar.xyz/atom.xml"
                   ("http://irreal.org/blog/?feed=rss2" emacs)
                   ("https://emacsredux.com/atom.xml" emacs))))
 
