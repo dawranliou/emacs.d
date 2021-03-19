@@ -383,10 +383,11 @@
   :bind (:map evil-window-map
               ("u" . winner-undo)
               ("U" . winner-redo))
+  :general
+  (dawran/leader-keys
+    "w" 'evil-window-map)
   :config
   (winner-mode))
-
-(dawran/leader-keys "w" 'evil-window-map)
 
 (use-package hl-fill-column
   :hook (prog-mode . hl-fill-column-mode))
@@ -722,7 +723,11 @@
   :hook (org-mode . org-make-toc-mode))
 
 (use-package org-journal
-  :commands (org-journal-new-entry org-journal-open-current-journal-file)
+  :general
+  (dawran/leader-keys
+    "n" '(:ignore t :which-key "notes")
+    "nj" '(org-journal-open-current-journal-file :which-key "journal")
+    "nJ" '(org-journal-new-entry :which-key "new journal entry"))
   :custom
   (org-journal-date-format "%A, %d/%m/%Y")
   (org-journal-date-prefix "* ")
@@ -731,26 +736,18 @@
   (org-journal-file-type 'weekly)
   (org-journal-find-file #'find-file))
 
-(dawran/leader-keys
-  "n" '(:ignore t :which-key "notes")
-  "nj" '(org-journal-open-current-journal-file :which-key "journal")
-  "nJ" '(org-journal-new-entry :which-key "new journal entry"))
-
 (use-package org-roam
-  :commands org-roam-find-file
   :custom
   (org-roam-directory "~/org/roam/")
-  :config
+  :general
   (dawran/leader-keys
+    "nf" 'org-roam-find-file
     :keymaps 'org-roam-mode-map
     "nl" 'org-roam
     "ng" 'org-roam-graph-show
     :keymaps 'org-mode-map
     "ni" 'org-roam-insert
     "nI" 'org-roam-insert-immediate))
-
-(dawran/leader-keys
-  "nf" 'org-roam-find-file)
 
 (use-package org-tree-slide
   :commands (org-tree-slide-mode)
@@ -784,9 +781,11 @@
 
 (use-package dired
   :straight nil
-  :commands (dired)
   ;; :hook (dired-mode . dired-hide-details-mode)
   :bind ("C-x C-j" . dired-jump)
+  :general
+  (dawran/leader-keys
+    "d" '(dired-jump :which-key "dired"))
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
@@ -798,9 +797,6 @@
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     (kbd "C-c C-e") 'wdired-change-to-wdired-mode))
-
-(dawran/leader-keys
-  "d" '(dired-jump :which-key "dired"))
 
 (use-package dired-x
   :after dired
@@ -834,12 +830,11 @@
   :after dired)
 
 (use-package dired-toggle
-  :commands dired-toggle
+  :general
+  (dawran/leader-keys
+    "td" 'dired-toggle)
   :straight nil
   :load-path "lisp/")
-
-(dawran/leader-keys
-  "td" 'dired-toggle)
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
@@ -884,7 +879,10 @@
         eshell-scroll-to-bottom-on-input t))
 
 (use-package eshell
-  :hook (eshell-first-time-mode . dawran/configure-eshell))
+  :hook (eshell-first-time-mode . dawran/configure-eshell)
+  :general
+  (dawran/leader-keys
+    "e" 'eshell))
 
 (use-package exec-path-from-shell
   :defer 1
@@ -897,18 +895,15 @@
 (with-eval-after-load 'esh-opt
   (setq eshell-destroy-buffer-when-process-dies t))
 
-(dawran/leader-keys
-  "e" 'eshell)
-
 (use-package eshell-toggle
   :custom
   (eshell-toggle-use-git-root t)
   (eshell-toggle-run-command nil)
   :bind
-  ("C-M-'" . eshell-toggle))
-
-(dawran/leader-keys
-  "te" 'eshell-toggle)
+  ("C-M-'" . eshell-toggle)
+  :general
+  (dawran/leader-keys
+    "te" 'eshell-toggle))
 
 (use-package project
   :commands project-root
@@ -931,15 +926,15 @@
   :bind ("s-g" . magit-status)
   :custom
   (magit-diff-refine-hunk 'all)
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-(dawran/leader-keys
-  "g"   '(:ignore t :which-key "git")
-  "gg"  'magit-status
-  "gb"  'magit-blame-addition
-  "gd"  'magit-diff-unstaged
-  "gf"  'magit-file-dispatch
-  "gl"  'magit-log-buffer-file)
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  :general
+  (dawran/leader-keys
+    "g"   '(:ignore t :which-key "git")
+    "gg"  'magit-status
+    "gb"  'magit-blame-addition
+    "gd"  'magit-diff-unstaged
+    "gf"  'magit-file-dispatch
+    "gl"  'magit-log-buffer-file))
 
 (use-package rg
   :bind ("s-F" . rg-project)
@@ -1008,7 +1003,6 @@
   :blackout t)
 
 (use-package cider
-  :commands cider
   :custom
   (cider-repl-display-help-banner nil)
   (cider-repl-display-in-current-window nil)
@@ -1023,14 +1017,16 @@
     "e" '(:ignore t :which-key "eval")
     "eb" 'cider-eval-buffer
     "ef" 'cider-eval-defun-at-point
+    "eF" 'cider-pprint-eval-defun-to-comment
     "ee" 'cider-eval-last-sexp
+    "eE" 'cider-pprint-eval-last-sexp-to-comment
     "t" '(:ignore t :which-key "test")
     "tt" 'cider-test-run-test
-    "tn" 'cider-test-run-ns-tests))
-
-(dawran/localleader-keys
-  :keymaps '(clojure-mode-map clojurescript-mode-map)
-  "," 'cider)
+    "tn" 'cider-test-run-ns-tests)
+  :general
+  (dawran/localleader-keys
+    :keymaps '(clojure-mode-map clojurescript-mode-map)
+    "," 'cider))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
@@ -1076,30 +1072,28 @@
    ("C-x C-r" . recentf-open-files+)))
 
 (use-package time
-  :commands display-time-world
   :straight nil
   :custom
   (display-time-world-list '(("Asia/Taipei" "Taipei")
                              ("America/Toronto" "Toronto")
                              ("America/Los_Angeles" "San Francisco")
                              ("Europe/Berlin" "Düsseldorf")
-                             ("Europe/London" "GMT"))))
-
-(dawran/leader-keys
-  "tc" #'display-time-world)
+                             ("Europe/London" "GMT")))
+  :general
+  (dawran/leader-keys
+    "tc" #'display-time-world))
 
 (use-package elfeed
-  :commands elfeed
   :hook (elfeed-show-mode . dawran/visual-fill)
   :custom
   (elfeed-feeds '(("https://css-tricks.com/feed/")
                   ("https://dawranliou.com/atom.xml")
                   "https://ambrevar.xyz/atom.xml"
                   ("http://irreal.org/blog/?feed=rss2" emacs)
-                  ("https://emacsredux.com/atom.xml" emacs))))
-
-(dawran/leader-keys
-  "R" '(elfeed :which-key "RSS"))
+                  ("https://emacsredux.com/atom.xml" emacs)))
+  :general
+  (dawran/leader-keys
+    "R" '(elfeed :which-key "RSS")))
 
 (use-package elpher
   :commands elpher)

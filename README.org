@@ -800,10 +800,11 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   :bind (:map evil-window-map
               ("u" . winner-undo)
               ("U" . winner-redo))
+  :general
+  (dawran/leader-keys
+    "w" 'evil-window-map)
   :config
   (winner-mode))
-
-(dawran/leader-keys "w" 'evil-window-map)
 
 #+end_src
 
@@ -1334,7 +1335,11 @@ When you visit a file, point goes to the last place where it was when you previo
 #+begin_src emacs-lisp
 
 (use-package org-journal
-  :commands (org-journal-new-entry org-journal-open-current-journal-file)
+  :general
+  (dawran/leader-keys
+    "n" '(:ignore t :which-key "notes")
+    "nj" '(org-journal-open-current-journal-file :which-key "journal")
+    "nJ" '(org-journal-new-entry :which-key "new journal entry"))
   :custom
   (org-journal-date-format "%A, %d/%m/%Y")
   (org-journal-date-prefix "* ")
@@ -1343,11 +1348,6 @@ When you visit a file, point goes to the last place where it was when you previo
   (org-journal-file-type 'weekly)
   (org-journal-find-file #'find-file))
 
-(dawran/leader-keys
-  "n" '(:ignore t :which-key "notes")
-  "nj" '(org-journal-open-current-journal-file :which-key "journal")
-  "nJ" '(org-journal-new-entry :which-key "new journal entry"))
-
 #+end_src
 
 ** Roam
@@ -1355,20 +1355,17 @@ When you visit a file, point goes to the last place where it was when you previo
 #+begin_src emacs-lisp
 
 (use-package org-roam
-  :commands org-roam-find-file
   :custom
   (org-roam-directory "~/org/roam/")
-  :config
+  :general
   (dawran/leader-keys
+    "nf" 'org-roam-find-file
     :keymaps 'org-roam-mode-map
     "nl" 'org-roam
     "ng" 'org-roam-graph-show
     :keymaps 'org-mode-map
     "ni" 'org-roam-insert
     "nI" 'org-roam-insert-immediate))
-
-(dawran/leader-keys
-  "nf" 'org-roam-find-file)
 
 #+end_src
 
@@ -1422,9 +1419,11 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 (use-package dired
   :straight nil
-  :commands (dired)
   ;; :hook (dired-mode . dired-hide-details-mode)
   :bind ("C-x C-j" . dired-jump)
+  :general
+  (dawran/leader-keys
+    "d" '(dired-jump :which-key "dired"))
   :custom
   (dired-auto-revert-buffer t)
   (dired-dwim-target t)
@@ -1436,9 +1435,6 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     (kbd "C-c C-e") 'wdired-change-to-wdired-mode))
-
-(dawran/leader-keys
-  "d" '(dired-jump :which-key "dired"))
 
 (use-package dired-x
   :after dired
@@ -1472,12 +1468,11 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
   :after dired)
 
 (use-package dired-toggle
-  :commands dired-toggle
+  :general
+  (dawran/leader-keys
+    "td" 'dired-toggle)
   :straight nil
   :load-path "lisp/")
-
-(dawran/leader-keys
-  "td" 'dired-toggle)
 
 #+end_src
 
@@ -1542,7 +1537,10 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
         eshell-scroll-to-bottom-on-input t))
 
 (use-package eshell
-  :hook (eshell-first-time-mode . dawran/configure-eshell))
+  :hook (eshell-first-time-mode . dawran/configure-eshell)
+  :general
+  (dawran/leader-keys
+    "e" 'eshell))
 
 (use-package exec-path-from-shell
   :defer 1
@@ -1555,9 +1553,6 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 (with-eval-after-load 'esh-opt
   (setq eshell-destroy-buffer-when-process-dies t))
 
-(dawran/leader-keys
-  "e" 'eshell)
-
 #+end_src
 
 *** Toggling eshell
@@ -1569,10 +1564,10 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
   (eshell-toggle-use-git-root t)
   (eshell-toggle-run-command nil)
   :bind
-  ("C-M-'" . eshell-toggle))
-
-(dawran/leader-keys
-  "te" 'eshell-toggle)
+  ("C-M-'" . eshell-toggle)
+  :general
+  (dawran/leader-keys
+    "te" 'eshell-toggle))
 
 #+end_src
 
@@ -1609,15 +1604,15 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
   :bind ("s-g" . magit-status)
   :custom
   (magit-diff-refine-hunk 'all)
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-(dawran/leader-keys
-  "g"   '(:ignore t :which-key "git")
-  "gg"  'magit-status
-  "gb"  'magit-blame-addition
-  "gd"  'magit-diff-unstaged
-  "gf"  'magit-file-dispatch
-  "gl"  'magit-log-buffer-file)
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  :general
+  (dawran/leader-keys
+    "g"   '(:ignore t :which-key "git")
+    "gg"  'magit-status
+    "gb"  'magit-blame-addition
+    "gd"  'magit-diff-unstaged
+    "gf"  'magit-file-dispatch
+    "gl"  'magit-log-buffer-file))
 
 #+end_src
 
@@ -1728,7 +1723,6 @@ primarily with Emacs' built-in libraries:
   :blackout t)
 
 (use-package cider
-  :commands cider
   :custom
   (cider-repl-display-help-banner nil)
   (cider-repl-display-in-current-window nil)
@@ -1743,14 +1737,16 @@ primarily with Emacs' built-in libraries:
     "e" '(:ignore t :which-key "eval")
     "eb" 'cider-eval-buffer
     "ef" 'cider-eval-defun-at-point
+    "eF" 'cider-pprint-eval-defun-to-comment
     "ee" 'cider-eval-last-sexp
+    "eE" 'cider-pprint-eval-last-sexp-to-comment
     "t" '(:ignore t :which-key "test")
     "tt" 'cider-test-run-test
-    "tn" 'cider-test-run-ns-tests))
-
-(dawran/localleader-keys
-  :keymaps '(clojure-mode-map clojurescript-mode-map)
-  "," 'cider)
+    "tn" 'cider-test-run-ns-tests)
+  :general
+  (dawran/localleader-keys
+    :keymaps '(clojure-mode-map clojurescript-mode-map)
+    "," 'cider))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
@@ -1850,17 +1846,16 @@ My extra lisp stuffs. Credits to:
 #+begin_src emacs-lisp
 
 (use-package time
-  :commands display-time-world
   :straight nil
   :custom
   (display-time-world-list '(("Asia/Taipei" "Taipei")
                              ("America/Toronto" "Toronto")
                              ("America/Los_Angeles" "San Francisco")
                              ("Europe/Berlin" "Düsseldorf")
-                             ("Europe/London" "GMT"))))
-
-(dawran/leader-keys
-  "tc" #'display-time-world)
+                             ("Europe/London" "GMT")))
+  :general
+  (dawran/leader-keys
+    "tc" #'display-time-world))
 
 #+end_src
 
@@ -1869,17 +1864,16 @@ My extra lisp stuffs. Credits to:
 #+begin_src emacs-lisp
 
 (use-package elfeed
-  :commands elfeed
   :hook (elfeed-show-mode . dawran/visual-fill)
   :custom
   (elfeed-feeds '(("https://css-tricks.com/feed/")
                   ("https://dawranliou.com/atom.xml")
                   "https://ambrevar.xyz/atom.xml"
                   ("http://irreal.org/blog/?feed=rss2" emacs)
-                  ("https://emacsredux.com/atom.xml" emacs))))
-
-(dawran/leader-keys
-  "R" '(elfeed :which-key "RSS"))
+                  ("https://emacsredux.com/atom.xml" emacs)))
+  :general
+  (dawran/leader-keys
+    "R" '(elfeed :which-key "RSS")))
 
 #+end_src
 
