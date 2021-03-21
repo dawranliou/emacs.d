@@ -63,6 +63,7 @@ A recent screenshot:
   - [[#rainbow-mode][Rainbow Mode]]
   - [[#hide-mode-line][Hide Mode Line]]
 - [[#completion][Completion]]
+  - [[#orderless][Orderless]]
   - [[#selectrum][Selectrum]]
   - [[#marginalia][Marginalia]]
   - [[#ctrlf][CtrlF]]
@@ -873,6 +874,18 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 #+end_src
 
 * Completion
+
+** Orderless
+
+#+begin_src emacs-lisp
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless))
+  (orderless-skip-highlighting (lambda () selectrum-is-active))
+  (selectrum-highlight-candidates-function #'orderless-highlight-matches))
+
+#+end_src
 
 ** Selectrum
 

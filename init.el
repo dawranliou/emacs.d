@@ -417,6 +417,12 @@
 (use-package hide-mode-line
   :commands hide-mode-line-mode)
 
+(use-package orderless
+  :custom
+  (completion-styles '(orderless))
+  (orderless-skip-highlighting (lambda () selectrum-is-active))
+  (selectrum-highlight-candidates-function #'orderless-highlight-matches))
+
 (setq enable-recursive-minibuffers t)
 
 ;; Package `selectrum' is an incremental completion and narrowing
