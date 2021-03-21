@@ -65,6 +65,7 @@ A recent screenshot:
 - [[#completion][Completion]]
   - [[#orderless][Orderless]]
   - [[#selectrum][Selectrum]]
+  - [[#prescient][Prescient]]
   - [[#marginalia][Marginalia]]
   - [[#ctrlf][CtrlF]]
   - [[#embark][Embark]]
@@ -914,6 +915,12 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   :init
   ;; This doesn't actually load Selectrum.
   (selectrum-mode +1))
+
+#+end_src
+
+** Prescient
+
+#+begin_src emacs-lisp
 
 ;; Package `prescient' is a library for intelligent sorting and
 ;; filtering in various contexts.
