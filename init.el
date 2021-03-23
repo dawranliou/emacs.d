@@ -1094,6 +1094,7 @@
   :custom
   (elfeed-feeds '(("https://css-tricks.com/feed/")
                   ("https://dawranliou.com/atom.xml")
+                  "https://ruzkuku.com/all.atom"
                   "https://ambrevar.xyz/atom.xml"
                   ("http://irreal.org/blog/?feed=rss2" emacs)
                   ("https://emacsredux.com/atom.xml" emacs)))
