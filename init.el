@@ -532,7 +532,7 @@
   :defer 1
   :custom
   ;; Increase recent entries list from default (20)
-  (recentf-max-saved-items 100)
+  (recentf-max-saved-items 200)
   :config
   (recentf-mode +1))
 
