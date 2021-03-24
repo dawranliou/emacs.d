@@ -445,25 +445,6 @@
   ;; This doesn't actually load Selectrum.
   (selectrum-mode +1))
 
-;; Package `prescient' is a library for intelligent sorting and
-;; filtering in various contexts.
-(use-package prescient
-  :config
-  ;; Remember usage statistics across Emacs sessions.
-  (prescient-persist-mode +1)
-  ;; The default settings seem a little forgetful to me. Let's try
-  ;; this out.
-  (setq prescient-history-length 1000))
-
-;; Package `selectrum-prescient' provides intelligent sorting and
-;; filtering for candidates in Selectrum menus.
-(use-package selectrum-prescient
-  :straight (:host github :repo "raxod502/prescient.el"
-                   :files ("selectrum-prescient.el"))
-  :after selectrum
-  :config
-  (selectrum-prescient-mode +1))
-
 (use-package marginalia
   :bind (:map minibuffer-local-map
               ("C-M-a" . marginalia-cycle))
