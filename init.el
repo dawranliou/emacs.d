@@ -1077,6 +1077,8 @@
                   ("https://dawranliou.com/atom.xml")
                   "https://ruzkuku.com/all.atom"
                   "https://ambrevar.xyz/atom.xml"
+                  "https://www.murilopereira.com/index.xml"
+                  "https://protesilaos.com/codelog.xml"
                   ("http://irreal.org/blog/?feed=rss2" emacs)
                   ("https://emacsredux.com/atom.xml" emacs)))
   :general
