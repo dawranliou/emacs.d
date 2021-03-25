@@ -289,11 +289,11 @@
 
 (dawran/load-theme-action "sketch-white")
 
-;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
+;; Use the same font as default
+(set-face-attribute 'fixed-pitch nil :font "Monolisa")
 
-;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height 170)
+;; Scale up the variable-pitch mode
+(set-face-attribute 'variable-pitch nil :height 1.2)
 
 ;;;; Mode line
 
@@ -1084,6 +1084,17 @@
   :general
   (dawran/leader-keys
     "R" '(elfeed :which-key "RSS")))
+
+(use-package shr
+  :straight nil
+  :custom
+  (shr-use-colors nil)
+  ;(shr-use-fonts t)
+  (shr-max-image-proportion 0.6)
+  (shr-image-animate nil)
+  (shr-width 72)
+  (shr-discard-aria-hidden t)
+  (shr-cookie-policy nil))
 
 (use-package elpher
   :commands elpher)
