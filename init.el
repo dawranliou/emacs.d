@@ -1071,7 +1071,6 @@
     "tc" #'display-time-world))
 
 (use-package elfeed
-  :hook (elfeed-show-mode . dawran/visual-fill)
   :custom
   (elfeed-feeds '(("https://css-tricks.com/feed/")
                   ("https://dawranliou.com/atom.xml")
@@ -1090,7 +1089,7 @@
   :custom
   (shr-use-colors nil)
   ;(shr-use-fonts t)
-  (shr-max-image-proportion 0.6)
+  (shr-max-image-proportion 0.5)
   (shr-image-animate nil)
   (shr-width 72)
   (shr-discard-aria-hidden t)
