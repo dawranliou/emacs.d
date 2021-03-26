@@ -1576,18 +1576,17 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
   :commands project-root
   :bind
   (("s-p" . project-find-file)
-   ("s-P" . project-switch-project))
+   ("s-P" . project-switch-project)
+   :map project-prefix-map
+   ("m" . project-magit-status+))
   :init
   (defun project-magit-status+ ()
     ""
     (interactive)
     (magit-status (project-root (project-current t))))
-  :custom
-  (project-switch-commands '((project-find-file "Find file")
-                             (project-find-regexp "Find regexp")
-                             (project-dired "Dired")
-                             (project-magit-status+ "Magit" ?m)
-                             (project-eshell "Eshell"))))
+  :config
+  (add-to-list 'project-switch-commands
+               '(project-magit-status+ "Magit")))
 
 #+end_src
 
