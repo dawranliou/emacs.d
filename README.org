@@ -322,7 +322,8 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 
 #+begin_src emacs-lisp
 
-(mac-auto-operator-composition-mode)
+(if (fboundp 'mac-auto-operator-composition-mode)
+    (mac-auto-operator-composition-mode))
 
 (setq-default delete-by-moving-to-trash t)
 

@@ -74,7 +74,8 @@
 (straight-use-package 'use-package)
 (setq use-package-verbose t)
 
-(mac-auto-operator-composition-mode)
+(if (fboundp 'mac-auto-operator-composition-mode)
+    (mac-auto-operator-composition-mode))
 
 (setq-default delete-by-moving-to-trash t)
 
