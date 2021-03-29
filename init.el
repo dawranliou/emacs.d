@@ -899,12 +899,11 @@
    ("s-P" . project-switch-project)
    :map project-prefix-map
    ("m" . project-magit-status+))
-  :init
+  :config
   (defun project-magit-status+ ()
     ""
     (interactive)
     (magit-status (project-root (project-current t))))
-  :config
   (add-to-list 'project-switch-commands
                '(project-magit-status+ "Magit")))
 
