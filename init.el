@@ -490,7 +490,12 @@
         (lambda (map)
           (which-key--show-keymap "Embark" map nil nil 'no-paging)
           #'which-key--hide-popup-ignore-command)
-        embark-become-indicator embark-action-indicator))
+        embark-become-indicator embark-action-indicator)
+  :config
+  ;; Refresh candidate list after action
+  (defun refresh-selectrum ()
+    (setq selectrum--previous-input-string nil))
+  (add-hook 'embark-pre-action-hook #'refresh-selectrum))
 
 (use-package helpful
   :bind (;; Remap standard commands.
