@@ -931,8 +931,8 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
   (advice-add #'marginalia-cycle :after
               (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
-  (setq marginalia-annotators '(marginalia-annotators-heavy
-                                marginalia-annotators-light nil)))
+  (setq marginalia-annotators '(marginalia-annotators-light
+                                marginalia-annotators-heavy nil)))
 
 #+end_src
 

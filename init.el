@@ -454,8 +454,8 @@
   ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
   (advice-add #'marginalia-cycle :after
               (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
-  (setq marginalia-annotators '(marginalia-annotators-heavy
-                                marginalia-annotators-light nil)))
+  (setq marginalia-annotators '(marginalia-annotators-light
+                                marginalia-annotators-heavy nil)))
 
 ;; Package `ctrlf' provides a replacement for `isearch' that is more
 ;; similar to the tried-and-true text search interfaces in web
