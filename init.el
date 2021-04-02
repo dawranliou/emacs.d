@@ -1056,8 +1056,7 @@
 
 (use-package elfeed
   :custom
-  (elfeed-feeds '(("https://css-tricks.com/feed/")
-                  ("https://dawranliou.com/atom.xml")
+  (elfeed-feeds '(("https://dawranliou.com/atom.xml")
                   "https://ruzkuku.com/all.atom"
                   "https://ambrevar.xyz/atom.xml"
                   "https://www.murilopereira.com/index.xml"
