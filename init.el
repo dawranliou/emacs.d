@@ -1075,6 +1075,7 @@
     "R" '(elfeed :which-key "RSS")))
 
 (use-package shr
+  :defer t
   :straight nil
   :custom
   (shr-use-colors nil)
