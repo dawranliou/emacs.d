@@ -455,7 +455,7 @@
   (advice-add #'marginalia-cycle :after
               (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
   (setq marginalia-annotators '(marginalia-annotators-light
-                                marginalia-annotators-heavy nil)))
+                                marginalia-annotators-heavy)))
 
 ;; Package `ctrlf' provides a replacement for `isearch' that is more
 ;; similar to the tried-and-true text search interfaces in web

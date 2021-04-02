@@ -932,7 +932,7 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
   (advice-add #'marginalia-cycle :after
               (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
   (setq marginalia-annotators '(marginalia-annotators-light
-                                marginalia-annotators-heavy nil)))
+                                marginalia-annotators-heavy)))
 
 #+end_src
 
