@@ -481,10 +481,10 @@
 
 (use-package embark
   :bind
-  (("C-S-a" . embark-act)
+  (("C-," . embark-act)
    ("C-h B" . embark-bindings)
    :map minibuffer-local-map
-   ("C-d" . embark-act))
+   ("C-," . embark-act))
   :init
   (setq embark-action-indicator
         (lambda (map)
@@ -651,6 +651,9 @@
 
 (use-package org
   :hook (org-mode . dawran/org-mode-setup)
+  :bind
+  (:map org-mode-map
+        ("C-," . nil))
   :custom
   (org-hide-emphasis-markers t)
   (org-src-fontify-natively t)
@@ -1031,6 +1034,9 @@
 (use-package flyspell
   :blackout t
   :straight nil
+  :bind
+  (:map flyspell-mode-map
+        ("C-," . nil))
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))

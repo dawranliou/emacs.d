@@ -970,10 +970,10 @@ Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-pa
 
 (use-package embark
   :bind
-  (("C-S-a" . embark-act)
+  (("C-," . embark-act)
    ("C-h B" . embark-bindings)
    :map minibuffer-local-map
-   ("C-d" . embark-act))
+   ("C-," . embark-act))
   :init
   (setq embark-action-indicator
         (lambda (map)
@@ -1253,6 +1253,9 @@ When you visit a file, point goes to the last place where it was when you previo
 
 (use-package org
   :hook (org-mode . dawran/org-mode-setup)
+  :bind
+  (:map org-mode-map
+        ("C-," . nil))
   :custom
   (org-hide-emphasis-markers t)
   (org-src-fontify-natively t)
@@ -1795,6 +1798,9 @@ primarily with Emacs' built-in libraries:
 (use-package flyspell
   :blackout t
   :straight nil
+  :bind
+  (:map flyspell-mode-map
+        ("C-," . nil))
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
