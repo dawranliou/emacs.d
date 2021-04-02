@@ -1046,6 +1046,20 @@
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
 
+(use-package compile
+  :straight nil
+  :defer t
+  :custom
+  (compilation-scroll-output t)
+  :hook
+  (compilation-filter . colorize-compilation-buffer)
+  :config
+  (require 'ansi-color)
+
+  (defun colorize-compilation-buffer ()
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region (point-min) (point-max)))))
+
 (use-package extras
   :straight nil
   :load-path "lisp/"

@@ -113,6 +113,7 @@ A recent screenshot:
   - [[#syntax-checking-with-flycheck][Syntax Checking with Flycheck]]
   - [[#eldoc][Eldoc]]
   - [[#spell-checking-comments-and-text][Spell Checking Comments and Text]]
+  - [[#compilation-mode][Compilation mode]]
 - [[#extras][Extras]]
 - [[#app][App]]
   - [[#world-time][World Time]]
@@ -1809,6 +1810,26 @@ primarily with Emacs' built-in libraries:
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
+
+#+end_src
+
+** Compilation mode
+
+#+begin_src emacs-lisp
+
+(use-package compile
+  :straight nil
+  :defer t
+  :custom
+  (compilation-scroll-output t)
+  :hook
+  (compilation-filter . colorize-compilation-buffer)
+  :config
+  (require 'ansi-color)
+
+  (defun colorize-compilation-buffer ()
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region (point-min) (point-max)))))
 
 #+end_src
 
