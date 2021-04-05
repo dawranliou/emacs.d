@@ -597,13 +597,9 @@
 
 (use-package elec-pair
   :straight nil
-  :hook
-  (minibuffer-setup . electric-pair-disable)
   :config
   (electric-pair-mode 1)
-  (defun electric-pair-disable ()
-    "Dsiable electric-pair-mode"
-    (electric-pair-local-mode 0)))
+  (add-hook 'minibuffer-setup-hook (lambda () (electric-pair-mode 0))))
 
 (use-package expand-region
   :bind
