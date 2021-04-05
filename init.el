@@ -700,6 +700,7 @@
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
 (use-package org-make-toc
+  :disabled t
   :hook (org-mode . org-make-toc-mode))
 
 (use-package org-journal
