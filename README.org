@@ -6,7 +6,6 @@ This is an ongoing evolution of my original Emacs configuration files, inspired
 by a bunch of resources I’ve found online:
 
 - https://github.com/hlissner/doom-emacs
-- [[https://github.com/daviwil/dotfiles/blob/master/Emacs.org]]
 - https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org
 - https://github.com/meqif/.emacs.d
 - https://github.com/raxod502/radian/blob/develop/emacs/radian.el
@@ -16,16 +15,11 @@ by a bunch of resources I’ve found online:
 Style guide:
 - [[https://github.com/bbatsov/emacs-lisp-style-guide][bbatsov's emacs-lisp-style-guide]]
 
-A recent screenshot:
-
-[[file:screenshot.png]]
-
-* Table of Contents
+* COMMENT Table of Contents
 :PROPERTIES:
 :TOC:      :include all
 :END:
 :CONTENTS:
-- [[#table-of-contents][Table of Contents]]
 - [[#early-initel][Early-init.el]]
 - [[#startup-performance][Startup Performance]]
   - [[#gc][GC]]
