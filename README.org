@@ -1803,3 +1803,11 @@ My extra lisp stuffs. Credits to:
   :commands elpher)
 
 #+end_src
+
+** Diff tool
+
+#+begin_src emacs-lisp
+
+(setq ediff-window-setup-function #'ediff-setup-windows-plain)
+
+#+end_src

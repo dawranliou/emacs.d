@@ -1107,3 +1107,5 @@
 
 (use-package elpher
   :commands elpher)
+
+(setq ediff-window-setup-function #'ediff-setup-windows-plain)
