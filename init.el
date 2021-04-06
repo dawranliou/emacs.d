@@ -386,8 +386,8 @@
   :config
   (winner-mode))
 
-(use-package hl-fill-column
-  :hook (prog-mode . hl-fill-column-mode))
+(use-package display-fill-column-indicator
+  :hook (prog-mode . display-fill-column-indicator-mode))
 
 (defun dawran/visual-fill ()
   (setq visual-fill-column-width 100
