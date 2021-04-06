@@ -987,7 +987,6 @@
   (cider-repl-pop-to-buffer-on-connect nil)
   (cider-repl-use-pretty-printing t)
   (cider-repl-buffer-size-limit 100000)
-  (cider-repl-result-prefix ";; => ")
   :config
   (add-hook 'cider-repl-mode-hook 'evil-insert-state)
   (dawran/localleader-keys
