@@ -481,10 +481,10 @@
 
 (use-package embark
   :bind
-  (("C-," . embark-act)
+  (("C-M-," . embark-act)
    ("C-h B" . embark-bindings)
    :map minibuffer-local-map
-   ("C-," . embark-act))
+   ("C-M-," . embark-act))
   :init
   (setq embark-action-indicator
         (lambda (map)
@@ -550,12 +550,19 @@
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
          (cider-repl-mode . lispy-mode))
+  :bind
+  (:map lispy-mode-map
+        ;; Unbind 'lispy-mark
+        ("C-M-," . nil))
   :custom
-  (lispy-close-quotes-at-end-p t))
+  (lispy-close-quotes-at-end-p t)
+  :config
+  (lispy-set-key-theme '(lispy)))
 
 (use-package lispyville
   :blackout t
-  :hook ((lispy-mode . lispyville-mode))
+  :after lispy
+  :hook (lispy-mode . lispyville-mode)
   :custom
   (lispyville-key-theme '(operators
                           c-w
@@ -568,7 +575,6 @@
                           commentary
                           slurp/barf-cp))
   :config
-  (lispy-set-key-theme '(lispy c-digits))
   (lispyville-set-key-theme))
 
 (use-package evil-multiedit
