@@ -365,11 +365,6 @@
 (use-package paren
   :hook (prog-mode . show-paren-mode))
 
-(use-package paren-blink
-  :disabled t
-  :straight nil
-  :load-path "lisp/")
-
 (use-package paren-face
   :hook
   (lispy-mode . paren-face-mode))

@@ -661,17 +661,6 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
-Implementing [[https://with-emacs.com/posts/ui-hacks/show-matching-lines-when-parentheses-go-off-screen/][Show matching lines when parentheses go off-screen by Clemens Radermacher]]
-
-#+begin_src emacs-lisp
-
-(use-package paren-blink
-  :disabled t
-  :straight nil
-  :load-path "lisp/")
-
-#+end_src
-
 ** Paren Face
 
 [[https://github.com/tarsius/paren-face][paren-face]] dims the parentheses to reduce visual distractions.
