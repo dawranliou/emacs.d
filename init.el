@@ -186,6 +186,7 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
 (global-set-key (kbd "M-:") 'pp-eval-expression)
+(global-set-key (kbd "M-/") #'hippie-expand)
 
 (use-package blackout
   :straight (:host github :repo "raxod502/blackout"))
