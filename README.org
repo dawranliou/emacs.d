@@ -208,7 +208,7 @@ Emacs has a built in package manager but it doesn’t make it easy to automatica
 #+begin_src emacs-lisp
 
 (straight-use-package 'use-package)
-(setq use-package-verbose t)
+;; (setq use-package-verbose t)
 
 #+end_src
 
