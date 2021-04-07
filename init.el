@@ -885,23 +885,17 @@
     "te" 'eshell-toggle))
 
 (use-package project
-  :commands project-root
   :bind
   (("s-p" . project-find-file)
    ("s-P" . project-switch-project)
    :map project-prefix-map
-   ("m" . project-magit-status+))
-  :init
-  (defun project-magit-status+ ()
-    ""
-    (interactive)
-    (magit-status (project-root (project-current t))))
+   ("m" . magit-project-status))
   :config
-  (add-to-list 'project-switch-commands
-               '(project-magit-status+ "Magit")))
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit")))
 
 (use-package magit
   :bind ("s-g" . magit-status)
+  :commands (magit-project-status)
   :custom
   (magit-diff-refine-hunk 'all)
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
