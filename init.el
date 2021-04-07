@@ -1077,6 +1077,7 @@
                   "https://ruzkuku.com/all.atom"
                   "https://ambrevar.xyz/atom.xml"
                   "https://erick.navarro.io/index.xml"
+                  "https://endlessparentheses.com/atom.xml"
                   "https://www.murilopereira.com/index.xml"
                   "https://drewdevault.com/blog/index.xml"
                   "https://protesilaos.com/codelog.xml"
