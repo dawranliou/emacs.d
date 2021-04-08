@@ -902,7 +902,8 @@
 
 (use-package magit
   :bind (("s-g" . magit-status)
-         ("C-x g" . magit-status))
+         ("C-x g" . magit-status)
+         ("C-c g" . migit-file-dispatch))
   :commands (magit-project-status)
   :custom
   (magit-diff-refine-hunk 'all)
