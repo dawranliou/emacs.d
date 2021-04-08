@@ -894,7 +894,6 @@
 (use-package project
   :bind
   (("s-p" . project-find-file)
-   ("s-P" . project-switch-project)
    :map project-prefix-map
    ("m" . magit-project-status))
   :config
