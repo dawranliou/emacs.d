@@ -6,7 +6,7 @@
       gc-cons-percentage 0.6)
 
 (add-hook 'emacs-startup-hook
-          (lambda ()
+          (defun dawran/set-default-gc ()
             (setq gc-cons-threshold 16777216 ; 16mb
                   gc-cons-percentage 0.1)))
 
@@ -32,7 +32,7 @@
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
-          (lambda ()
+          (defun dawran/print-start-up-stats ()
             (message "*** Emacs loaded in %s with %d garbage collections."
                      (format "%.2f seconds"
                              (float-time
@@ -41,7 +41,7 @@
 
 (add-hook
  'after-init-hook
- (lambda ()
+ (defun dawran/load-private-lisp ()
    (let ((private-file (concat user-emacs-directory "private.el")))
      (when (file-exists-p private-file)
        (load-file private-file)))))
@@ -176,7 +176,10 @@
     :non-normal-prefix "C-,")
 
   (dawran/leader-keys
-    "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
+    "fd" `(,(defun dawran/find-config ()
+            (interactive)
+            (find-file (expand-file-name "~/.emacs.d/README.org")))
+          :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(dawran/load-theme :which-key "choose theme")
     "tw" 'whitespace-mode
@@ -252,7 +255,7 @@
 (column-number-mode)
 
 ;; Enable line numbers for prog modes only
-(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (use-package hl-line
   :disabled t
@@ -601,7 +604,9 @@
   :straight nil
   :config
   (electric-pair-mode 1)
-  (add-hook 'minibuffer-setup-hook (lambda () (electric-pair-mode 0))))
+  (add-hook 'minibuffer-setup-hook
+            (defun disable-electric-pair-mode ()
+              (electric-pair-mode 0))))
 
 (use-package expand-region
   :bind
@@ -695,7 +700,9 @@
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
+(add-hook 'org-mode-hook
+          (defun dawran/tangle-config-on-save ()
+            (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
 (use-package org-make-toc
   :disabled t

@@ -78,7 +78,7 @@ default.
 #+begin_src emacs-lisp
 
 (add-hook 'emacs-startup-hook
-          (lambda ()
+          (defun dawran/set-default-gc ()
             (setq gc-cons-threshold 16777216 ; 16mb
                   gc-cons-percentage 0.1)))
 
@@ -132,7 +132,7 @@ none of them are (typically) necessary at startup, so we disable them
 
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
-          (lambda ()
+          (defun dawran/print-start-up-stats ()
             (message "*** Emacs loaded in %s with %d garbage collections."
                      (format "%.2f seconds"
                              (float-time
@@ -149,7 +149,7 @@ Load =private.el= after init.
 
 (add-hook
  'after-init-hook
- (lambda ()
+ (defun dawran/load-private-lisp ()
    (let ((private-file (concat user-emacs-directory "private.el")))
      (when (file-exists-p private-file)
        (load-file private-file)))))
@@ -358,7 +358,10 @@ Some tips can be found here:
     :non-normal-prefix "C-,")
 
   (dawran/leader-keys
-    "fd" '((lambda () (interactive) (find-file (expand-file-name "~/.emacs.d/README.org"))) :which-key "edit config")
+    "fd" `(,(defun dawran/find-config ()
+            (interactive)
+            (find-file (expand-file-name "~/.emacs.d/README.org")))
+          :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(dawran/load-theme :which-key "choose theme")
     "tw" 'whitespace-mode
@@ -483,7 +486,7 @@ possible key bindings in the mode of your current buffer.
 (column-number-mode)
 
 ;; Enable line numbers for prog modes only
-(add-hook 'prog-mode-hook (lambda () (display-line-numbers-mode 1)))
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 #+end_src
 
@@ -1061,7 +1064,9 @@ Automatically close brackets, parens, etc. Bundled with Emacs.
   :straight nil
   :config
   (electric-pair-mode 1)
-  (add-hook 'minibuffer-setup-hook (lambda () (electric-pair-mode 0))))
+  (add-hook 'minibuffer-setup-hook
+            (defun disable-electric-pair-mode ()
+              (electric-pair-mode 0))))
 
 #+end_src
 
@@ -1191,7 +1196,9 @@ When you visit a file, point goes to the last place where it was when you previo
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
+(add-hook 'org-mode-hook
+          (defun dawran/tangle-config-on-save ()
+            (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
 
 #+end_src
 
