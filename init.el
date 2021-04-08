@@ -115,6 +115,7 @@
   :custom
   (evil-undo-system 'undo-fu)
   (evil-symbol-word-search t)
+  (evil-want-fine-undo t)
   :config
   (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
