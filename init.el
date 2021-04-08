@@ -901,7 +901,8 @@
   (add-to-list 'project-switch-commands '(magit-project-status "Magit")))
 
 (use-package magit
-  :bind ("s-g" . magit-status)
+  :bind (("s-g" . magit-status)
+         ("C-x g" . magit-status))
   :commands (magit-project-status)
   :custom
   (magit-diff-refine-hunk 'all)
