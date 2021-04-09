@@ -6,11 +6,13 @@ This is an ongoing evolution of my original Emacs configuration files, inspired
 by a bunch of resources I’ve found online:
 
 - https://github.com/hlissner/doom-emacs
-- https://github.com/daviwil/emacs-from-scratch/blob/master/Emacs.org
+- https://github.com/daviwil/dotfiles/blob/master/Emacs.org
 - https://github.com/meqif/.emacs.d
 - https://github.com/raxod502/radian/blob/develop/emacs/radian.el
 - https://github.com/oantolin/emacs-config
 - https://github.com/mpereira/.emacs.d
+- https://git.sr.ht/~technomancy/dotfiles/tree/master/item/.emacs.d
+- https://luca.cambiaghi.me/vanilla-emacs/readme.html
 
 Style guide:
 - [[https://github.com/bbatsov/emacs-lisp-style-guide][bbatsov's emacs-lisp-style-guide]]
