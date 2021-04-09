@@ -767,6 +767,31 @@ Display highlighting on whatever paren matches the one before or after point.
 
 * Completion
 
+** Hippie-exp
+
+I replaced the default ="M-/"= binding command from =dabbrev-expand= to
+=hippie-expand= for all naive completions. Removing =try-expand-list= and
+=try-expand-line= to avoid unbalanced parentheses.
+
+#+begin_src emacs-lisp
+
+(use-package hippie-exp
+  :straight nil
+  :custom
+  (hippie-expand-try-functions-list
+   '(try-complete-file-name-partially
+     try-complete-file-name
+     try-expand-all-abbrevs
+     ;; try-expand-list
+     ;; try-expand-line
+     try-expand-dabbrev
+     try-expand-dabbrev-all-buffers
+     try-expand-dabbrev-from-kill
+     try-complete-lisp-symbol-partially
+     try-complete-lisp-symbol)))
+
+#+end_src
+
 ** Orderless
 
 #+begin_src emacs-lisp
