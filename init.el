@@ -1050,8 +1050,6 @@
 (use-package compile
   :straight nil
   :defer t
-  :custom
-  (compilation-scroll-output t)
   :hook
   (compilation-filter . colorize-compilation-buffer)
   :config
