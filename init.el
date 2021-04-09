@@ -542,8 +542,7 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
-(setq-default tab-width 4)
-(setq-default evil-shift-width tab-width)
+(setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 
 (use-package evil-nerd-commenter

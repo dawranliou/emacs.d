@@ -971,12 +971,11 @@ It is very useful for figuring out how things work in Emacs.
 
 ** Tabs
 
-Default to an indentation size of 2 spaces since it’s the norm for pretty much every language I use.
+I like the exaggerated tab width of 8 characters.
 
 #+begin_src emacs-lisp
 
-(setq-default tab-width 4)
-(setq-default evil-shift-width tab-width)
+(setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 
 #+end_src
