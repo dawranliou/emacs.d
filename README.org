@@ -13,6 +13,7 @@ by a bunch of resources I’ve found online:
 - https://github.com/mpereira/.emacs.d
 - https://git.sr.ht/~technomancy/dotfiles/tree/master/item/.emacs.d
 - https://luca.cambiaghi.me/vanilla-emacs/readme.html
+- https://github.com/purcell/emacs.d
 
 Style guide:
 - [[https://github.com/bbatsov/emacs-lisp-style-guide][bbatsov's emacs-lisp-style-guide]]
@@ -771,7 +772,8 @@ Display highlighting on whatever paren matches the one before or after point.
 
 I replaced the default ="M-/"= binding command from =dabbrev-expand= to
 =hippie-expand= for all naive completions. Removing =try-expand-list= and
-=try-expand-line= to avoid unbalanced parentheses.
+=try-expand-line= to avoid unbalanced parentheses. I can use =completion-at-point=
+(="C-M-i"=) for lisp symbol completions.
 
 #+begin_src emacs-lisp
 
@@ -781,14 +783,15 @@ I replaced the default ="M-/"= binding command from =dabbrev-expand= to
   (hippie-expand-try-functions-list
    '(try-complete-file-name-partially
      try-complete-file-name
-     try-expand-all-abbrevs
+     ;; try-expand-all-abbrevs
      ;; try-expand-list
      ;; try-expand-line
      try-expand-dabbrev
      try-expand-dabbrev-all-buffers
      try-expand-dabbrev-from-kill
-     try-complete-lisp-symbol-partially
-     try-complete-lisp-symbol)))
+     ;; try-complete-lisp-symbol-partially
+     ;; try-complete-lisp-symbol
+     )))
 
 #+end_src
 
