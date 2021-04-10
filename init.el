@@ -56,7 +56,11 @@
 (load custom-file 'noerror)
 
 (setq straight-use-package-by-default t
-      straight-build-dir (format "build-%s" emacs-version))
+      straight-build-dir (format "build-%s" emacs-version)
+      ;; Lazy modification detection speeds up the startup time. I don't often
+      ;; modify packages anyway. When I do, I can build the package manually, I
+      ;; think.
+      straight-check-for-modifications '(check-on-save find-when-checking))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
