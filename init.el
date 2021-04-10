@@ -102,6 +102,8 @@
 (global-set-key (kbd "s-z") 'undo)
 (global-set-key (kbd "s-=") 'text-scale-adjust)
 (global-set-key (kbd "s-+") 'text-scale-increase)
+(global-set-key (kbd "s--") 'text-scale-decrease)
+(global-set-key (kbd "s-<backspace>") 'kill-whole-line)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
