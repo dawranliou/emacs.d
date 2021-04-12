@@ -954,6 +954,7 @@
   (lsp-keymap-prefix "s-l")
   (lsp-enable-indentation nil)
   (lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp"))
+  (lsp-completion-provider :none)
   :config
   (lsp-enable-which-key-integration t))
 
