@@ -1109,6 +1109,8 @@
                   "https://www.murilopereira.com/index.xml"
                   "https://drewdevault.com/blog/index.xml"
                   "https://protesilaos.com/codelog.xml"
+                  "https://technomancy.us/atom.xml"
+                  "https://worace.works/atom.xml"
                   ("http://irreal.org/blog/?feed=rss2" emacs)
                   ("https://emacsredux.com/atom.xml" emacs)))
   :general
