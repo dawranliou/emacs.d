@@ -1080,6 +1080,11 @@
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region (point-min) (point-max)))))
 
+(use-package fennel-mode
+  :straight (:host gitlab :repo "technomancy/fennel-mode")
+  :mode "\\.fnl\\'"
+  :hook (fennel-mode . lispy-mode))
+
 (use-package extras
   :straight nil
   :load-path "lisp/"
