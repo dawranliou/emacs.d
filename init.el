@@ -298,7 +298,7 @@
                                         (custom-available-themes)))))
     (dawran/load-theme-action theme)))
 
-(dawran/load-theme-action "sketch-white")
+(dawran/load-theme-action "sketch-black")
 
 ;; Use the same font as default
 (set-face-attribute 'fixed-pitch nil :font "Monolisa")
