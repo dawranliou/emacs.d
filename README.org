@@ -1688,6 +1688,22 @@ primarily with Emacs' built-in libraries:
 
 #+end_src
 
+*** Web
+
+[[https://github.com/smihica/emmet-mode][Emmet-mode]] is a neat way to write markup quickly in Emacs. Use =emmet-expand-line=
+(bound to =C-j= by default) to expand the emmet snippets. See the [[https://docs.emmet.io/cheat-sheet/][cheat-sheet]] to
+find the full list of aliases/keywords.
+
+#+begin_src emacs-lisp
+
+(use-package emmet-mode
+  :blackout t
+  :hook
+  (html-mode . emmet-mode)
+  (css-mode . emmet-mode))
+
+#+end_src
+
 *** Yaml
 
 #+begin_src emacs-lisp

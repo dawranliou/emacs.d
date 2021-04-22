@@ -1044,6 +1044,12 @@
 (use-package markdown-toc
   :commands (markdown-toc-generate-toc))
 
+(use-package emmet-mode
+  :blackout t
+  :hook
+  (html-mode . emmet-mode)
+  (css-mode . emmet-mode))
+
 (use-package yaml-mode
   :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
 
