@@ -197,15 +197,7 @@
 (global-set-key (kbd "M-:") 'pp-eval-expression)
 (global-set-key (kbd "M-/") #'hippie-expand)
 
-(use-package blackout
-  :straight (:host github :repo "raxod502/blackout"))
-
-(use-package autorevert
-  :defer t
-  :blackout auto-revert-mode)
-
 (use-package which-key
-  :blackout t
   :hook (after-init . which-key-mode)
   :diminish which-key-mode
   :config
@@ -269,7 +261,6 @@
   (prog-mode . hl-line-mode))
 
 (use-package idle-highlight-mode
-  :blackout t
   :hook
   (prog-mode . idle-highlight-mode))
 
@@ -554,7 +545,6 @@
   :bind ("s-/" . evilnc-comment-or-uncomment-lines))
 
 (use-package ws-butler
-  :blackout t
   :hook ((text-mode . ws-butler-mode)
          (prog-mode . ws-butler-mode))
   :custom
@@ -565,7 +555,6 @@
   (ws-butler-keep-whitespace-before-point nil))
 
 (use-package lispy
-  :blackout t
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
@@ -580,7 +569,6 @@
   (lispy-set-key-theme '(lispy)))
 
 (use-package lispyville
-  :blackout t
   :after lispy
   :hook (lispy-mode . lispyville-mode)
   :custom
@@ -670,12 +658,9 @@
 
   ;; Indentation
   ;; (org-indent-mode)
-  (blackout 'org-indent-mode)
 
   ;; (variable-pitch-mode 1)
-  (blackout 'buffer-face-mode)
   (visual-line-mode 1)
-  (blackout 'visual-line-mode)
   (dawran/visual-fill))
 
 (use-package org
@@ -709,7 +694,6 @@
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 (use-package evil-org
-  :blackout t
   :after evil
   :hook (org-mode . evil-org-mode))
 
@@ -982,11 +966,6 @@
   (advice-add 'eglot--guess-contact :around
               #'my/eglot--guess-contact-clojure-project-monorepo))
 
-(use-package flymake
-  :disabled t
-  :defer t
-  :blackout t)
-
 (use-package flycheck-clj-kondo
   :disabled t
   :defer t)
@@ -999,10 +978,6 @@
   ;; (require 'flycheck-clj-kondo)
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
-
-(use-package clj-refactor
-  :defer t
-  :blackout t)
 
 (use-package cider
   :custom
@@ -1045,7 +1020,6 @@
   :commands (markdown-toc-generate-toc))
 
 (use-package emmet-mode
-  :blackout t
   :hook
   (html-mode . emmet-mode)
   (css-mode . emmet-mode))
@@ -1059,13 +1033,7 @@
   ;;        (clojurec-mode . flycheck-mode)
   ;;        (clojurescript-mode . flycheck-mode))
 )
-
-(use-package eldoc
-  :defer t
-  :blackout t)
-
 (use-package flyspell
-  :blackout t
   :straight nil
   :bind
   (:map flyspell-mode-map
