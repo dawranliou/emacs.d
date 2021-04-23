@@ -1605,19 +1605,6 @@ find the full list of aliases/keywords.
 
 #+end_src
 
-** Syntax Checking with Flycheck
-
-#+begin_src emacs-lisp
-
-(use-package flycheck
-  :defer t
-  ;; :hook ((clojure-mode . flycheck-mode)
-  ;;        (clojurec-mode . flycheck-mode)
-  ;;        (clojurescript-mode . flycheck-mode))
-)
-
-#+end_src
-
 ** Spell Checking Comments and Text
 
 #+begin_src emacs-lisp

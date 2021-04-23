@@ -961,12 +961,6 @@
 (use-package yaml-mode
   :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
 
-(use-package flycheck
-  :defer t
-  ;; :hook ((clojure-mode . flycheck-mode)
-  ;;        (clojurec-mode . flycheck-mode)
-  ;;        (clojurescript-mode . flycheck-mode))
-)
 (use-package flyspell
   :straight nil
   :bind
