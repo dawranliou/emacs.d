@@ -599,22 +599,19 @@
 
 (defun dawran/org-mode-setup ()
   ;; hide title / author ... keywords
+  (setq-local evil-auto-indent nil)
   (setq-local org-hidden-keywords '(title author date))
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
                  (if (char-equal c ?<)
                      t
-                   (,electric-pair-inhibit-predicate c))))
-
-  ;; Indentation
-  ;; (org-indent-mode)
-
-  ;; (variable-pitch-mode 1)
-  (visual-line-mode 1)
-  (dawran/visual-fill))
+                   (,electric-pair-inhibit-predicate c)))))
 
 (use-package org
-  :hook (org-mode . dawran/org-mode-setup)
+  :hook ((org-mode . dawran/org-mode-setup)
+         (org-mode . visual-line-mode)
+         (org-mode . dawran/visual-fill)
+         (org-mode . auto-fill-mode))
   :bind
   (:map org-mode-map
         ("C-," . nil))
