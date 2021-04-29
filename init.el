@@ -719,7 +719,8 @@
 
 (use-package dired
   :straight nil
-  ;; :hook (dired-mode . dired-hide-details-mode)
+  :hook (;; (dired-mode . dired-hide-details-mode)
+         (dired-mode . hl-line-mode))
   :bind ("C-x C-j" . dired-jump)
   :general
   (dawran/leader-keys
