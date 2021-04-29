@@ -625,6 +625,28 @@ Display highlighting on whatever paren matches the one before or after point.
 
 #+end_src
 
+** Mode line
+
+Pretty much the default mode line but here's the twist: no git branch info.
+
+#+begin_src emacs-lisp
+(setq-default mode-line-format
+              '("%e"
+                mode-line-front-space
+                mode-line-mule-info
+                mode-line-client
+                mode-line-modified
+                mode-line-remote
+                mode-line-frame-identification
+                mode-line-buffer-identification
+                "   "
+                mode-line-position
+                evil-mode-line-tag
+                ;; (vc-mode vc-mode)
+                "  "
+                mode-line-modes mode-line-misc-info mode-line-end-spaces))
+#+end_src
+
 ** Center Buffers
 
 #+begin_src emacs-lisp
