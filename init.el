@@ -960,7 +960,8 @@
 
 (use-package markdown-mode
   :mode "\\.md\\'"
-  :hook (markdown-mode . dawran/visual-fill)
+  :hook ((markdown-mode . dawran/visual-fill)
+         (markdown-mode . auto-fill-mode))
   :config
   (setq markdown-command "marked"))
 
