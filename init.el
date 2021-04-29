@@ -874,6 +874,10 @@
   :config
   (rg-enable-default-bindings))
 
+(use-package flycheck
+  :ensure t
+  :hook (prog-init . flycheck-mode))
+
 (use-package lsp-mode
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)

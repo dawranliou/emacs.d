@@ -1460,6 +1460,16 @@ Inspired by [[https://github.com/mpereira/.emacs.d][mpereira's config]].
 
 #+end_src
 
+** Flycheck
+
+#+begin_src emacs-lisp
+
+(use-package flycheck
+  :ensure t
+  :hook (prog-init . flycheck-mode))
+
+#+end_src
+
 ** LSP
 
 *** lsp-mode.el
