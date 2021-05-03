@@ -292,10 +292,10 @@
 (dawran/load-theme-action "sketch-black")
 
 ;; Use the same font as default
-(set-face-attribute 'fixed-pitch nil :font "Monolisa")
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
 
 ;; Scale up the variable-pitch mode
-(set-face-attribute 'variable-pitch nil :height 1.2)
+(set-face-attribute 'variable-pitch nil :height 160)
 
 (use-package paren
   :hook (prog-mode . show-paren-mode))

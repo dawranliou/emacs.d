@@ -565,10 +565,10 @@ This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/co
 #+begin_src emacs-lisp
 
 ;; Use the same font as default
-(set-face-attribute 'fixed-pitch nil :font "Monolisa")
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
 
 ;; Scale up the variable-pitch mode
-(set-face-attribute 'variable-pitch nil :height 1.2)
+(set-face-attribute 'variable-pitch nil :height 160)
 
 #+end_src
 
