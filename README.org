@@ -145,6 +145,14 @@ none of them are (typically) necessary at startup, so we disable them
 
 #+end_src
 
+* Emacs Defaults
+
+Enable narrowing by default.
+
+#+begin_src emacs-lisp
+(put 'narrow-to-region 'disabled nil)
+#+end_src
+
 * Private Lisp
 
 Load =private.el= after init.

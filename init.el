@@ -39,6 +39,8 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+(put 'narrow-to-region 'disabled nil)
+
 (add-hook
  'after-init-hook
  (defun dawran/load-private-lisp ()
