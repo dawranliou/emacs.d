@@ -960,14 +960,24 @@ I prefer to use [[https://github.com/abo-abo/lispy][lispy]] and [[https://github
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
          (cider-repl-mode . lispy-mode))
-  :bind
-  (:map lispy-mode-map
-        ;; Unbind 'lispy-mark
-        ("C-M-," . nil))
   :custom
   (lispy-close-quotes-at-end-p t)
   :config
-  (lispy-set-key-theme '(lispy)))
+  ;; Disable all non-evil lispy mappings.
+  ;; NOTE: setting `lispy-key-theme' to nil during :init or :custom doesn't work
+  ;; to achieve this.
+  (lispy-set-key-theme nil)
+
+  (general-define-key
+   :keymaps 'lispy-mode-map
+   :state '(insert)
+   "<backspace>" 'lispy-delete-backward
+   ")" 'lispy-right-nostring
+   "\"" 'lispy-doublequote
+   "[" 'lispy-brackets
+   "]" 'lispy-close-square
+   "{" 'lispy-braces
+   "}" 'lispy-close-curly))
 
 (use-package lispyville
   :after lispy
