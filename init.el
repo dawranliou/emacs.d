@@ -521,8 +521,15 @@
 
   (general-define-key
    :keymaps 'lispy-mode-map
+   :state '(normal visual)
+   "C-a" 'lispy-move-beginning-of-line
+   "C-e" 'lispy-move-end-of-line)
+
+  (general-define-key
+   :keymaps 'lispy-mode-map
    :state '(insert)
    "<backspace>" 'lispy-delete-backward
+   "(" 'lispy-parens
    ")" 'lispy-right-nostring
    "\"" 'lispy-doublequote
    "[" 'lispy-brackets
