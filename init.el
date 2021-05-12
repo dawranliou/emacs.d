@@ -1000,6 +1000,11 @@
 (use-package yaml-mode
   :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
 
+(use-package fennel-mode
+  :straight (:host gitlab :repo "technomancy/fennel-mode")
+  :mode "\\.fnl\\'"
+  :hook (fennel-mode . lispy-mode))
+
 (use-package flyspell
   :straight nil
   :bind
@@ -1021,10 +1026,8 @@
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region (point-min) (point-max)))))
 
-(use-package fennel-mode
-  :straight (:host gitlab :repo "technomancy/fennel-mode")
-  :mode "\\.fnl\\'"
-  :hook (fennel-mode . lispy-mode))
+(use-package autorevert
+  :mode ("\\.log\\'" . auto-revert-mode))
 
 (use-package extras
   :straight nil

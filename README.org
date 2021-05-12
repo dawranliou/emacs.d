@@ -403,7 +403,6 @@ Some tips can be found here:
 
 * UI
 
-
 ** Keybinding Panel (which-key)
 
 [[https://github.com/justbur/emacs-which-key][which-key]] is a useful UI panel that appears when you start pressing any key
@@ -1664,6 +1663,17 @@ find the full list of aliases/keywords.
 
 #+end_src
 
+*** Fennel mode
+
+#+begin_src emacs-lisp
+
+(use-package fennel-mode
+  :straight (:host gitlab :repo "technomancy/fennel-mode")
+  :mode "\\.fnl\\'"
+  :hook (fennel-mode . lispy-mode))
+
+#+end_src
+
 ** Spell Checking Comments and Text
 
 #+begin_src emacs-lisp
@@ -1697,15 +1707,11 @@ find the full list of aliases/keywords.
 
 #+end_src
 
-** Fennel mode
+** Auto-revert
 
 #+begin_src emacs-lisp
-
-(use-package fennel-mode
-  :straight (:host gitlab :repo "technomancy/fennel-mode")
-  :mode "\\.fnl\\'"
-  :hook (fennel-mode . lispy-mode))
-
+(use-package autorevert
+  :mode ("\\.log\\'" . auto-revert-mode))
 #+end_src
 
 * Extras
