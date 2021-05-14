@@ -655,7 +655,7 @@
   (:map org-mode-map
         ("C-," . nil))
   :custom
-  (org-hide-emphasis-markers t)
+  ;; (org-hide-emphasis-markers t)
   (org-src-fontify-natively t)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
