@@ -50,13 +50,15 @@ Several OSX native keybindings that utilizes the command key (which is also the
 =super= key) are added to make context-switching to other native apps easier,
 e.g. Chrome, Firefox.
 
-- =s-t= - open scratch buffer
-- =s-/= - commenting line
-- =s-'= - er/expand-region
-- =s-\= - er/contract-region
-- =s-p= - project-find-file
-- =s-g= - magit-status
-- =s-F= - rg-project
+| Key   | Binding             |
+|-------+---------------------|
+| =s-t= | open scratch buffer |
+| =s-/= | commenting line     |
+| =s-'= | er/expand-region    |
+| =s-\= | er/contract-region  |
+| =s-p= | project-find-file   |
+| =s-g= | magit-status        |
+| =s-F= | rg-project          |
 
 * Evil (Vim-style) keybindings
 
@@ -68,45 +70,48 @@ This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil
 which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs
 modes with Vi-like keybindings for evil-mode.
 
-- =SPC w= - evil window map
-- =SPC n j= - org-journal-open-current-journal-file
-- =SPC n J= - org-journal-new-entry
-- =SPC n f= - org-roam-find-file
-- =SPC d= - dired-jump
-- =SPC e= - eshell
-- =SPC g g= - magit-status
-- =SPC g b= - magit-blame-addition
-- =SPC g d= - magit-diff-unstaged
-- =SPC g f= - magit-file-dispatch
-- =SPC g l= - magit-log-buffer-file
-- =SPC t c= - display-time-world
-- =SPC R= - elfeed
+| Key       | Binding                               |
+|-----------+---------------------------------------|
+| =SPC w=   | evil window map                       |
+| =SPC n j= | org-journal-open-current-journal-file |
+| =SPC n J= | org-journal-new-entry                 |
+| =SPC n f= | org-roam-find-file                    |
+| =SPC d=   | dired-jump                            |
+| =SPC e=   | eshell                                |
+| =SPC g g= | magit-status                          |
+| =SPC g b= | magit-blame-addition                  |
+| =SPC g d= | magit-diff-unstaged                   |
+| =SPC g f= | magit-file-dispatch                   |
+| =SPC g l= | magit-log-buffer-file                 |
+| =SPC t c= | display-time-world                    |
+| =SPC R=   | elfeed                                |
 
 * Emacs-style keybindings
 
 However, there are some cases where I prefer emacs style keybindings. I either
 bind them to something else or just overrides them:
 
-- Universal argument =C-u= - this is bound to =C-M-u= because I prefer =C-u= for
-  scrolling.
-- =C-e= - end-of-line
-- =C-y= - yank
-- =C-k= - kill-line
-- =M-.= - xref-find-definition
-- =M-,= - xref-pop-marker-stack
-- =C-x C-b= - ibuffer
-- =C-M-j= - switch-to-buffer
-- =M-:= : pp-eval-expression
-- =M-/= : hippie-expand
-- =M-o= - ace-window
-- =C-M-,= - embark-act
-- =C-h B= - embark-bindings
-- =C-c C-d= - helpful-at-point
-- =C-h C= - helpful-command
-- =C-h F= - describe-face
-- =C-x C-j= - dired-jump
-- =C-M-'= - eshell-toggle
-- =C-x g= - magit-status
-- =C-c g= - magit-file-dispatch
-- =M-y= - yank-pop+
-- =C-x C-r= - recentf-open-files+
+| Key       | Binding               |
+|-----------+-----------------------|
+| ~C-M-u~   | universal argument    |
+| ~C-e~     | end-of-line           |
+| ~C-y~     | yank                  |
+| ~C-k~     | kill-line             |
+| ~M-.~     | xref-find-definition  |
+| ~M-,~     | xref-pop-marker-stack |
+| ~C-x C-b~ | ibuffer               |
+| ~C-M-j~   | switch-to-buffer      |
+| ~M-:~     | pp-eval-expression    |
+| ~M-/~     | hippie-expand         |
+| ~M-o~     | ace-window            |
+| ~C-M-,~   | embark-act            |
+| ~C-h B~   | embark-bindings       |
+| ~C-c C-d~ | helpful-at-point      |
+| ~C-h C~   | helpful-command       |
+| ~C-h F~   | describe-face         |
+| ~C-x C-j~ | dired-jump            |
+| ~C-M-'~   | eshell-toggle         |
+| ~C-x g~   | magit-status          |
+| ~C-c g~   | magit-file-dispatch   |
+| ~M-y~     | yank-pop+             |
+| ~C-x C-r~ | recentf-open-files+   |
