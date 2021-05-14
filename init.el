@@ -1,6 +1,13 @@
-;; -*- lexical-binding: t; -*-
-;; NOTE: init.el is now generated from Emacs.org.  Please edit that file in
-;;       Emacs and init.el will be generated automatically!
+;;; init.el --- Daw-Ran Liou's emacs configuration -*- lexical-binding: t; -*-
+
+;; Author: Daw-Ran Liou <hi@dawranliou.com>
+;; URL: https://github.com/dawranliou/emacs.d
+
+;;; Commentary:
+
+;;
+
+;;; Code:
 
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
@@ -1081,3 +1088,7 @@
 
 (setq ediff-window-setup-function #'ediff-setup-windows-plain)
 (setq ediff-split-window-function #'split-window-horizontally)
+
+(provide 'init)
+
+;;; init.el ends here
