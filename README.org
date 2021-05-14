@@ -22,55 +22,27 @@ by a bunch of resources I’ve found online:
 Style guide:
 - [[https://github.com/bbatsov/emacs-lisp-style-guide][bbatsov's emacs-lisp-style-guide]]
 
-* early-init.el
+* Startup performance
 
-From [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][The Early Init File:]]
+The startup time is ~0.5 seconds on my machine. I'm using a couple of techniques
+from Doom. (See: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]) I also sets
+=straight-check-for-modifications= to ='(check-on-save find-when-checking)= because
+I don't usually tweak my dependencies often.
 
-#+begin_quote
-Most customizations for Emacs should be put in the normal init file. See Init
-File. However, it is sometimes desirable to have customizations that take effect
-during Emacs startup earlier than the normal init file is processed. Such
-customizations can be put in the early init file, ~/.config/emacs/early-init.el
-or ~/.emacs.d/early-init.el. This file is loaded before the package system and
-GUI is initialized, so in it you can customize variables that affect frame
-appearance as well as the package initialization process, such as
-package-enable-at-startup, package-load-list, and package-user-dir.
-#+end_quote
+* Configuration structure
 
-* Startup Performance
+- =early-init.el= - see [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][The Early Init File]]
+- =init.el= - main configuration
+- =lisp/extras.el= - Credits to [[https://github.com/raxod502/selectrum/wiki/Useful-Commands][selectrum's wiki]]
 
-See: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]
+These are kept out of git's version control:
 
-* private.el
+- =private.el= - The file is loaded after init.
+- =custom.el= - The file is for the custom settings.
+- =backups= - The folder is for backups.
+- =auto-save-list= - The folder is for the auto save files.
 
-The =private.el= file is kept out of the git version control. The file is loaded
-after init.
-
-* lisp/extras.el
-
-My extra lisp stuffs. Credits to:
-
-- https://github.com/raxod502/selectrum/wiki/Useful-Commands
-
-* Keep .emacs.d Clean
-
-Put backups and auto-save files in their own folders.
-
-- =backups= folder is for backups.
-- =auto-save-list= folder is for the auto save files.
-- =custom.el= file is for the custom settings.
-
-* straight.el
-
-[[https://github.com/raxod502/straight.el][straight.el]] for reproducible package management.
-
-Emacs has a built in package manager but it doesn’t make it easy to
-automatically install packages on a new system the first time you pull down your
-configuration. [[https://github.com/jwiegley/use-package][use-package]] is a really helpful package used in this
-configuration to make it a lot easier to automate the installation and
-configuration of everything else we use.
-
-* Mac (OSX) ergonomics Keybindings
+* Mac (OSX) ergonomics keybindings
 
 Several OSX native keybindings that utilizes the command key (which is also the
 =super= key) are added to make context-switching to other native apps easier,
@@ -84,7 +56,7 @@ e.g. Chrome, Firefox.
 - =s-g=: magit-status
 - =s-F=: rg-project
 
-* Evil (Vim) Keybindings
+* Evil (Vim-style) keybindings
 
 - https://github.com/noctuid/evil-guide
 - https://nathantypanski.com/blog/2014-08-03-a-vim-like-emacs-config.html
@@ -108,7 +80,7 @@ modes with Vi-like keybindings for evil-mode.
 - =SPC t c=: display-time-world
 - =SPC R=: elfeed
 
-* Emacs Keybindings
+* Emacs-style keybindings
 
 However, there are some cases where I prefer emacs style keybindings. I either
 bind them to something else or just overrides them:
@@ -136,38 +108,3 @@ bind them to something else or just overrides them:
 - =C-c g=: magit-file-dispatch
 - =M-y=: yank-pop+
 - =C-x C-r=: recentf-open-files+
-
-** Themes
-
-Loading themes on top of one another usually have unwanted side effects of
-residual faces from the previous ones. I like to keep multiple themes at
-disposal at the same time. Each one of them have different emphasis and
-philosophy behind. Rather than making sure the themes overrides the leftover
-faces properly, the simpler way to address this is by disabling all other
-enabled themes.
-
-This is inspired by abo-abo's [[https://github.com/abo-abo/swiper/blob/master/counsel.el][counsel-load-theme-action]].
-
-** Mode line
-
-Pretty much the default mode line but here's the twist: no git branch info.
-
-* Completion
-
-I use selectrum + orderless + marginalia + ctrlf + embark
-
-** Hippie-exp
-
-I replaced the default ="M-/"= binding command from =dabbrev-expand= to
-=hippie-expand= for all naive completions. Removing =try-expand-list= and
-=try-expand-line= to avoid unbalanced parentheses. I can use =completion-at-point=
-(="C-M-i"=) for lisp symbol completions.
-
-* Tabs
-
-I like the exaggerated tab width of 8 characters.
-
-* Multiple Cursor Editing
-
-I really like [[https://github.com/hlissner/evil-multiedit][evil-multiedit]] to do multiple cursor edits.
-

@@ -342,6 +342,7 @@
 (use-package display-fill-column-indicator
   :hook (prog-mode . display-fill-column-indicator-mode))
 
+;; Pretty much the default mode line but here's the twist: no git branch info.
 (setq-default mode-line-format
               '("%e"
                 mode-line-front-space
@@ -390,6 +391,7 @@
    '(try-complete-file-name-partially
      try-complete-file-name
      ;; try-expand-all-abbrevs
+     ;; Avoid unbalanced parentheses.
      ;; try-expand-list
      ;; try-expand-line
      try-expand-dabbrev
@@ -507,6 +509,7 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+;; I like the exaggerated tab width of 8 characters.
 (setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 
