@@ -39,7 +39,11 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+;; Enable narrowing by default.
 (put 'narrow-to-region 'disabled nil)
+
+;; Switch to help buffer when it's opened.
+(setq help-window-select t)
 
 (add-hook
  'after-init-hook
@@ -54,7 +58,7 @@
       auto-save-file-name-transforms
       `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
 
-(setq custom-file (concat user-emacs-directory "custom.el"))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
 (setq straight-use-package-by-default t
@@ -78,7 +82,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-;; (setq use-package-verbose t)
+(setq use-package-verbose t)
 
 (if (fboundp 'mac-auto-operator-composition-mode)
     (mac-auto-operator-composition-mode))
@@ -292,6 +296,12 @@
     (dawran/load-theme-action theme)))
 
 (dawran/load-theme-action "sketch-black")
+
+(defun font-lock-mode-disable ()
+  (interactive)
+  (font-lock-mode -1))
+
+;(add-hook 'prog-mode-hook #'font-lock-mode-disable)
 
 ;; Use the same font as default
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
