@@ -190,7 +190,7 @@
   (dawran/leader-keys
     "fd" `(,(defun dawran/find-config ()
             (interactive)
-            (find-file (expand-file-name "~/.emacs.d/README.org")))
+            (find-file (expand-file-name "~/.emacs.d/init.el")))
           :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(dawran/load-theme :which-key "choose theme")
