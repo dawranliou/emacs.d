@@ -673,18 +673,6 @@
   :after evil
   :hook (org-mode . evil-org-mode))
 
-(defun dawran/org-babel-tangle-config ()
-  "Automatically tangle our Emacs.org config file when we save it."
-  (when (string-equal (buffer-file-name)
-                      (expand-file-name "./README.org"))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-
-(add-hook 'org-mode-hook
-          (defun dawran/tangle-config-on-save ()
-            (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
-
 (use-package org-make-toc
   :disabled t
   :hook (org-mode . org-make-toc-mode))

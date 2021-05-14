@@ -1182,24 +1182,6 @@ When you visit a file, point goes to the last place where it was when you previo
 
 #+end_src
 
-** Auto-tangle Configuration Files
-
-#+begin_src emacs-lisp
-
-(defun dawran/org-babel-tangle-config ()
-  "Automatically tangle our Emacs.org config file when we save it."
-  (when (string-equal (buffer-file-name)
-                      (expand-file-name "./README.org"))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
-
-(add-hook 'org-mode-hook
-          (defun dawran/tangle-config-on-save ()
-            (add-hook 'after-save-hook #'dawran/org-babel-tangle-config)))
-
-#+end_src
-
 ** Update Table of Contents on Save
 
 #+begin_src emacs-lisp
