@@ -50,15 +50,28 @@ Several OSX native keybindings that utilizes the command key (which is also the
 =super= key) are added to make context-switching to other native apps easier,
 e.g. Chrome, Firefox.
 
-| Key   | Binding             |
-|-------+---------------------|
-| =s-t= | open scratch buffer |
-| =s-/= | commenting line     |
-| =s-'= | er/expand-region    |
-| =s-\= | er/contract-region  |
-| =s-p= | project-find-file   |
-| =s-g= | magit-status        |
-| =s-F= | rg-project          |
+| Key             | Binding                 |
+|-----------------+-------------------------|
+| =s-s=           | save-buffer             |
+| =s-S=           | write-file              |
+| =s-q=           | save-buffers-kill-emacs |
+| =s-k=           | kill-this-buffer        |
+| =s-v=           | yank                    |
+| =s-c=           | kill-ring-save          |
+| =s-z=           | undo                    |
+| =s-==           | text-scale-adjust       |
+| =s--=           | text-scale-decrease     |
+| =s-<backspace>= | kill-whole-line         |
+| =s-w=           | evil-window-delete      |
+| =s-t=           | open scratch buffer     |
+| =s-f=           | ctrlf-forward-fuzzy     |
+| =s-F=           | rg-project              |
+| =s-p=           | project-find-file       |
+| =s-g=           | magit-status            |
+| =s-l=           | lsp-keymap              |
+| =s-/=           | commenting line         |
+| =s-'=           | er/expand-region        |
+| =s-\=           | er/contract-region      |
 
 * Evil (Vim-style) keybindings
 
@@ -73,7 +86,17 @@ A good read about evil keybindings (and emacs keymaps in general):
 
 | Key       | Binding                               |
 |-----------+---------------------------------------|
+| =SPC f=   | Find...                               |
+| =SPC f d= | find config                           |
+| =SPC t=   | Toggles...                            |
+| =SPC t t= | load theme                            |
+| =SPC t w= | whitespace-mode                       |
+| =SPC t m= | toggle-frame-maximized                |
+| =SPC t M= | toggle-frame-fullscreen               |
+| =SPC t d= | dired-toggle                          |
+| =SPC t e= | eshell-toggle                         |
 | =SPC w=   | evil window map                       |
+| =SPC n=   | Notes...                              |
 | =SPC n j= | org-journal-open-current-journal-file |
 | =SPC n J= | org-journal-new-entry                 |
 | =SPC n f= | org-roam-find-file                    |
@@ -91,27 +114,29 @@ A good read about evil keybindings (and emacs keymaps in general):
 
 There are some cases where I prefer emacs style keybindings.
 
-| Key       | Binding               |
-|-----------+-----------------------|
-| =C-M-u=   | universal argument    |
-| =C-e=     | end-of-line           |
-| =C-y=     | yank                  |
-| =C-k=     | kill-line             |
-| =M-.=     | xref-find-definition  |
-| =M-,=     | xref-pop-marker-stack |
-| =C-x C-b= | ibuffer               |
-| =C-M-j=   | switch-to-buffer      |
-| =M-:=     | pp-eval-expression    |
-| =M-/=     | hippie-expand         |
-| =M-o=     | ace-window            |
-| =C-M-,=   | embark-act            |
-| =C-h B=   | embark-bindings       |
-| =C-c C-d= | helpful-at-point      |
-| =C-h C=   | helpful-command       |
-| =C-h F=   | describe-face         |
-| =C-x C-j= | dired-jump            |
-| =C-M-'=   | eshell-toggle         |
-| =C-x g=   | magit-status          |
-| =C-c g=   | magit-file-dispatch   |
-| =M-y=     | yank-pop+             |
-| =C-x C-r= | recentf-open-files+   |
+| Key        | Binding               |
+|------------+-----------------------|
+| =<escape>= | keyboard-escape-quit  |
+| =C-M-u=    | universal argument    |
+| =C-e=      | end-of-line           |
+| =C-y=      | yank                  |
+| =C-k=      | kill-line             |
+| =M-.=      | xref-find-definition  |
+| =M-,=      | xref-pop-marker-stack |
+| =C-x C-b=  | ibuffer               |
+| =C-M-j=    | switch-to-buffer      |
+| =M-:=      | pp-eval-expression    |
+| =M-/=      | hippie-expand         |
+| =M-o=      | ace-window            |
+| =C-M-,=    | embark-act            |
+| =C-h B=    | embark-bindings       |
+| =C-c C-d=  | helpful-at-point      |
+| =C-h C=    | helpful-command       |
+| =C-h F=    | describe-face         |
+| =C-x C-j=  | dired-jump            |
+| =C-M-'=    | eshell-toggle         |
+| =C-x g=    | magit-status          |
+| =C-c g=    | magit-file-dispatch   |
+| =M-y=      | yank-pop+             |
+| =C-x C-r=  | recentf-open-files+   |
+| =C-M-r=    | selectrum-repeat      |
