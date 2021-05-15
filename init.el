@@ -563,6 +563,7 @@
   :custom
   (lispyville-key-theme '(operators
                           c-w
+                          text-objects
                           (prettify insert)
                           additional
                           additional-insert
