@@ -62,13 +62,14 @@ e.g. Chrome, Firefox.
 
 * Evil (Vim-style) keybindings
 
-- https://github.com/noctuid/evil-guide
-- https://nathantypanski.com/blog/2014-08-03-a-vim-like-emacs-config.html
+I used to use Spacemacs and then Doom Emacs and I like the idea of using =SPC=
+as the prefix. What I dislike about it is that many keybindings are too many
+keystrokes away. So I try to be conservative about what I added to the
+=SPC=-prefixed keymap.
 
-This configuration uses [[https://evil.readthedocs.io/en/latest/index.html][evil-mode]] for a Vi-like modal editing experience.
-[[https://github.com/noctuid/general.el][general.el]] is used for easy keybinding configuration that integrates well with
-which-key.  [[https://github.com/emacs-evil/evil-collection][evil-collection]] is used to automatically configure various Emacs
-modes with Vi-like keybindings for evil-mode.
+A good read about evil keybindings (and emacs keymaps in general):
+
+- https://github.com/noctuid/evil-guide
 
 | Key       | Binding                               |
 |-----------+---------------------------------------|
@@ -88,30 +89,29 @@ modes with Vi-like keybindings for evil-mode.
 
 * Emacs-style keybindings
 
-However, there are some cases where I prefer emacs style keybindings. I either
-bind them to something else or just overrides them:
+There are some cases where I prefer emacs style keybindings.
 
 | Key       | Binding               |
 |-----------+-----------------------|
-| ~C-M-u~   | universal argument    |
-| ~C-e~     | end-of-line           |
-| ~C-y~     | yank                  |
-| ~C-k~     | kill-line             |
-| ~M-.~     | xref-find-definition  |
-| ~M-,~     | xref-pop-marker-stack |
-| ~C-x C-b~ | ibuffer               |
-| ~C-M-j~   | switch-to-buffer      |
-| ~M-:~     | pp-eval-expression    |
-| ~M-/~     | hippie-expand         |
-| ~M-o~     | ace-window            |
-| ~C-M-,~   | embark-act            |
-| ~C-h B~   | embark-bindings       |
-| ~C-c C-d~ | helpful-at-point      |
-| ~C-h C~   | helpful-command       |
-| ~C-h F~   | describe-face         |
-| ~C-x C-j~ | dired-jump            |
-| ~C-M-'~   | eshell-toggle         |
-| ~C-x g~   | magit-status          |
-| ~C-c g~   | magit-file-dispatch   |
-| ~M-y~     | yank-pop+             |
-| ~C-x C-r~ | recentf-open-files+   |
+| =C-M-u=   | universal argument    |
+| =C-e=     | end-of-line           |
+| =C-y=     | yank                  |
+| =C-k=     | kill-line             |
+| =M-.=     | xref-find-definition  |
+| =M-,=     | xref-pop-marker-stack |
+| =C-x C-b= | ibuffer               |
+| =C-M-j=   | switch-to-buffer      |
+| =M-:=     | pp-eval-expression    |
+| =M-/=     | hippie-expand         |
+| =M-o=     | ace-window            |
+| =C-M-,=   | embark-act            |
+| =C-h B=   | embark-bindings       |
+| =C-c C-d= | helpful-at-point      |
+| =C-h C=   | helpful-command       |
+| =C-h F=   | describe-face         |
+| =C-x C-j= | dired-jump            |
+| =C-M-'=   | eshell-toggle         |
+| =C-x g=   | magit-status          |
+| =C-c g=   | magit-file-dispatch   |
+| =M-y=     | yank-pop+             |
+| =C-x C-r= | recentf-open-files+   |
