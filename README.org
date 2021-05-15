@@ -55,6 +55,7 @@ e.g. Chrome, Firefox.
 | =s-s=           | save-buffer             |
 | =s-S=           | write-file              |
 | =s-q=           | save-buffers-kill-emacs |
+| =s-a=           | mark-whole-buffer       |
 | =s-k=           | kill-this-buffer        |
 | =s-v=           | yank                    |
 | =s-c=           | kill-ring-save          |
