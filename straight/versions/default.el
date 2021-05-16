@@ -31,7 +31,6 @@
  ("evil-multiedit" . "9f271e0e6048297692f80ed6c5ae8994ac523abc")
  ("evil-nerd-commenter" . "9e7e96971900a2840fe2f7e8d6774c92fed2ccba")
  ("evil-org-mode" . "80ef38fb378541937f6ddfe836809e76eda1e355")
- ("evil-visualstar" . "06c053d8f7381f91c53311b1234872ca96ced752")
  ("exec-path-from-shell" . "bf4bdc8b8911e7a2c04e624b9a343164c3878282")
  ("expand-region.el" . "4b8322774d9c1d8b64a0049d1dbbc1e7ce80c1a0")
  ("f.el" . "c4dbf8c8e83df834f5d6f72cd5649b9d8a8812ec")

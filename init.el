@@ -169,16 +169,6 @@
   :config
   (evil-collection-init))
 
-;; Allows you to use the selection for * and #
-(use-package evil-visualstar
-  :commands (evil-visualstar/begin-search
-             evil-visualstar/begin-search-forward
-             evil-visualstar/begin-search-backward)
-  :init
-  (evil-define-key 'visual 'global
-    "*" #'evil-visualstar/begin-search-forward
-    "#" #'evil-visualstar/begin-search-backward))
-
 (use-package general
   :config
   (general-create-definer dawran/leader-def
@@ -461,7 +451,12 @@
           (if (eq ctrlf--style 'fuzzy) 'literal 'fuzzy)))
 
   (add-to-list 'ctrlf-minibuffer-bindings
-               '("s-f" . ctrlf-toggle-fuzzy)))
+               '("s-f" . ctrlf-toggle-fuzzy))
+
+  :general
+  (:states '(motion)
+           "*" 'ctrlf-forward-symbol-at-point
+           "#" 'ctrlf-forward-symbol-at-point))
 
 (use-package embark
   :bind
