@@ -181,24 +181,25 @@
 
 (use-package general
   :config
-  (general-create-definer dawran/leader-keys
+  (general-create-definer dawran/leader-def
     :states '(normal insert visual emacs)
     :keymaps 'override
     :prefix "SPC"
     :global-prefix "M-SPC")
 
-  (general-create-definer dawran/localleader-keys
+  (general-create-definer dawran/local-leader-def
     :states '(normal insert visual emacs)
     :keymaps 'override
     :major-modes t
     :prefix ","
     :non-normal-prefix "C-,")
 
-  (dawran/leader-keys
+  (dawran/leader-def
+    "f"  '(:ignore t :which-key "file")
     "fd" `(,(defun dawran/find-config ()
-            (interactive)
-            (find-file (expand-file-name "~/.emacs.d/init.el")))
-          :which-key "edit config")
+              (interactive)
+              (find-file (expand-file-name "~/.emacs.d/init.el")))
+           :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
     "tt" '(dawran/load-theme :which-key "choose theme")
     "tw" 'whitespace-mode
@@ -308,7 +309,7 @@
   (interactive)
   (font-lock-mode -1))
 
-;(add-hook 'prog-mode-hook #'font-lock-mode-disable)
+;;(add-hook 'prog-mode-hook #'font-lock-mode-disable)
 
 ;; Use the same font as default
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
@@ -334,7 +335,7 @@
               ("u" . winner-undo)
               ("U" . winner-redo))
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "w" 'evil-window-map)
   :config
   (winner-mode))
@@ -690,7 +691,7 @@
 
 (use-package org-journal
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "n" '(:ignore t :which-key "notes")
     "nj" '(org-journal-open-current-journal-file :which-key "journal")
     "nJ" '(org-journal-new-entry :which-key "new journal entry"))
@@ -706,7 +707,7 @@
   :custom
   (org-roam-directory "~/org/roam/")
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "nf" 'org-roam-find-file
     :keymaps 'org-roam-mode-map
     "nl" 'org-roam
@@ -751,7 +752,7 @@
          (dired-mode . hl-line-mode))
   :bind ("C-x C-j" . dired-jump)
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "d" '(dired-jump :which-key "dired"))
   :custom
   (dired-auto-revert-buffer t)
@@ -798,7 +799,7 @@
 
 (use-package dired-toggle
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "td" 'dired-toggle)
   :straight nil
   :load-path "lisp/")
@@ -848,7 +849,7 @@
 (use-package eshell
   :hook (eshell-first-time-mode . dawran/configure-eshell)
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "e" 'eshell))
 
 (use-package exec-path-from-shell
@@ -869,7 +870,7 @@
   :bind
   ("C-M-'" . eshell-toggle)
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "te" 'eshell-toggle))
 
 (use-package project
@@ -889,7 +890,7 @@
   (magit-diff-refine-hunk 'all)
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "g"   '(:ignore t :which-key "git")
     "gg"  'magit-status
     "gb"  'magit-blame-addition
@@ -967,10 +968,12 @@
   (cider-repl-pop-to-buffer-on-connect nil)
   (cider-repl-use-pretty-printing t)
   (cider-repl-buffer-size-limit 100000)
-  :config
-  (add-hook 'cider-repl-mode-hook 'evil-insert-state)
-  (dawran/localleader-keys
+  :hook
+  (cider-repl-mode . evil-insert-state)
+  :general
+  (dawran/local-leader-def
     :keymaps '(clojure-mode-map clojurescript-mode-map)
+    "," 'cider
     "e" '(:ignore t :which-key "eval")
     "eb" 'cider-eval-buffer
     "ef" 'cider-eval-defun-at-point
@@ -979,11 +982,7 @@
     "eE" 'cider-pprint-eval-last-sexp-to-comment
     "t" '(:ignore t :which-key "test")
     "tt" 'cider-test-run-test
-    "tn" 'cider-test-run-ns-tests)
-  :general
-  (dawran/localleader-keys
-    :keymaps '(clojure-mode-map clojurescript-mode-map)
-    "," 'cider))
+    "tn" 'cider-test-run-ns-tests))
 
 (use-package clj-refactor
   :hook (clojure-mode . clj-refactor-mode))
@@ -1054,7 +1053,7 @@
                              ("Europe/Berlin" "Düsseldorf")
                              ("Europe/London" "GMT")))
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "tc" #'display-time-world))
 
 (use-package elfeed
@@ -1072,7 +1071,7 @@
                   ("http://irreal.org/blog/?feed=rss2" emacs)
                   ("https://emacsredux.com/atom.xml" emacs)))
   :general
-  (dawran/leader-keys
+  (dawran/leader-def
     "R" '(elfeed :which-key "RSS")))
 
 (use-package shr
@@ -1080,7 +1079,7 @@
   :straight nil
   :custom
   (shr-use-colors nil)
-  ;(shr-use-fonts t)
+  ;;(shr-use-fonts t)
   (shr-max-image-proportion 0.5)
   (shr-image-animate nil)
   (shr-width 72)
