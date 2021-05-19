@@ -537,13 +537,14 @@
 
   (general-define-key
    :keymaps 'lispy-mode-map
-   :state '(normal visual)
+   :states '(normal visual)
    "C-a" 'lispy-move-beginning-of-line
    "C-e" 'lispy-move-end-of-line)
 
   (general-define-key
    :keymaps 'lispy-mode-map
-   :state '(insert)
+   :states '(insert)
+   "RET" 'lispy-newline-and-indent-plain
    "<backspace>" 'lispy-delete-backward
    "(" 'lispy-parens
    ")" 'lispy-right-nostring
