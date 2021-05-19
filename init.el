@@ -52,6 +52,8 @@
 ;; Switch to help buffer when it's opened.
 (setq help-window-select t)
 
+(setq tramp-default-method "ssh")
+
 (add-hook
  'after-init-hook
  (defun dawran/load-private-lisp ()
