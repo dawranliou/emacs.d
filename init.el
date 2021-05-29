@@ -383,6 +383,7 @@
 
 (use-package hippie-exp
   :straight nil
+  :commands hippie-expand
   :custom
   (hippie-expand-try-functions-list
    '(try-complete-file-name-partially
@@ -399,6 +400,7 @@
      )))
 
 (use-package orderless
+  :after selectrum
   :custom
   (completion-styles '(orderless))
   (orderless-skip-highlighting (lambda () selectrum-is-active))
