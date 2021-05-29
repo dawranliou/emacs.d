@@ -106,6 +106,10 @@
 (setq mac-option-modifier 'meta)
 (setq mac-right-option-modifier 'meta)
 
+;; Mouse Scroll
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 3) ((control))))
+(setq mouse-wheel-progressive-speed nil)
+
 ;; Make keybindings feel natural on mac
 (global-set-key (kbd "s-s") 'save-buffer)             ;; save
 (global-set-key (kbd "s-S") 'write-file)              ;; save as
