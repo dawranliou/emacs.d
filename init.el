@@ -585,11 +585,10 @@
               ("R" . evil-multiedit-match-all)
               ("M-d" . evil-multiedit-match-and-next)
               ("M-D" . evil-multiedit-match-and-prev)
-              ("C-M-d" . evil-multiedit-restore)
+              ("C-M-D" . evil-multiedit-restore)
               :map evil-normal-state-map
               ("M-d" . evil-multiedit-match-symbol-and-next)
               ("M-D" . evil-multiedit-match-symbol-and-prev)
-              ("C-M-d" . evil-multiedit-restore)
               :map evil-insert-state-map
               ("M-d" . evil-multiedit-toggle-marker-here)
               :map evil-motion-state-map
