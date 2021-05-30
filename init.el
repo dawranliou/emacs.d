@@ -1025,6 +1025,13 @@
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
 
+(setq inferior-lisp-program "sbcl")
+
+(use-package slime
+  :commands slime
+  :config
+  (load (expand-file-name "~/.quicklisp/slime-helper.el")))
+
 (use-package compile
   :straight nil
   :defer t
