@@ -265,11 +265,6 @@
 ;; Enable line numbers for prog modes only
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
-(use-package hl-line
-  :disabled t
-  :hook
-  (prog-mode . hl-line-mode))
-
 (use-package idle-highlight-mode
   :hook
   (prog-mode . idle-highlight-mode))
@@ -684,10 +679,6 @@
 (use-package evil-org
   :after evil
   :hook (org-mode . evil-org-mode))
-
-(use-package org-make-toc
-  :disabled t
-  :hook (org-mode . org-make-toc-mode))
 
 (use-package org-journal
   :general
