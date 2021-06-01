@@ -923,31 +923,6 @@
   :config
   (lsp-enable-which-key-integration t))
 
-(use-package eglot
-  :disabled t
-  :hook ((clojure-mode . eglot-ensure)
-         (clojurec-mode . eglot-ensure)
-         (clojurescript-mode . eglot-ensure))
-  :custom
-  (eglot-connect-timeout 6000)
-  :config
-  (add-to-list 'eglot-server-programs
-               '((clojure-mode clojurescript-mode) . ("bash" "-c" "clojure-lsp")))
-
-  (defun my/project-try-clojure (dir)
-    "Try to locate a clojure project."
-    (when-let ((found (clojure-project-dir)))
-      (cons 'transient found)))
-
-  (defun my/eglot--guess-contact-clojure-project-monorepo (orig-fun &rest args)
-    "Fix project-root for clojure monorepos."
-    (let ((project-find-functions
-           (cons 'my/project-try-clojure project-find-functions)))
-      (apply orig-fun args)))
-
-  (advice-add 'eglot--guess-contact :around
-              #'my/eglot--guess-contact-clojure-project-monorepo))
-
 (use-package flycheck-clj-kondo
   :disabled t
   :defer t)
