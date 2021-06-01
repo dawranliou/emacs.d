@@ -920,6 +920,8 @@
   (lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp"))
   (lsp-completion-provider :none)
   (lsp-eldoc-enable-hover nil)
+  (lsp-modeline-diagnostics-scope :file)
+  (lsp-modeline-code-actions-enable nil)
   :config
   (lsp-enable-which-key-integration t))
 
