@@ -517,9 +517,6 @@
 (setq-default tab-width 8)
 (setq-default indent-tabs-mode nil)
 
-(use-package evil-nerd-commenter
-  :bind ("s-/" . evilnc-comment-or-uncomment-lines))
-
 (use-package ws-butler
   :hook ((text-mode . ws-butler-mode)
          (prog-mode . ws-butler-mode))
