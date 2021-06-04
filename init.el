@@ -266,6 +266,8 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (use-package idle-highlight-mode
+  :custom-face
+  (idle-highlight ((t (:inherit lazy-highlight))))
   :hook
   (prog-mode . idle-highlight-mode))
 
@@ -903,6 +905,8 @@
          (clojurec-mode . lsp)
          (clojurescript-mode . lsp)
          (lsp-mode . (lambda () (setq-local idle-highlight-mode nil))))
+  :custom-face
+  (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
   :custom
   (lsp-enable-file-watchers nil)
   (lsp-headerline-breadcrumb-enable nil)
