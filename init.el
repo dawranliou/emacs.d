@@ -572,7 +572,9 @@
                           commentary
                           slurp/barf-cp))
   :config
-  (lispyville-set-key-theme))
+  (lispyville-set-key-theme)
+  (lispyville--define-key '(motion normal)
+    "Q" 'lispy-ace-paren))
 
 (use-package evil-multiedit
   :bind (:map evil-visual-state-map
