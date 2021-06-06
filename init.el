@@ -1049,6 +1049,7 @@
                   "https://protesilaos.com/codelog.xml"
                   "https://technomancy.us/atom.xml"
                   "https://worace.works/atom.xml"
+                  "https://clojure.org/feed.xml"
                   ("http://irreal.org/blog/?feed=rss2" emacs)
                   ("https://emacsredux.com/atom.xml" emacs)))
   :general
