@@ -14,7 +14,7 @@
 
 (add-hook 'emacs-startup-hook
           (defun dawran/set-default-gc ()
-            (setq gc-cons-threshold 16777216 ; 16mb
+            (setq gc-cons-threshold (* 100 1024 1024) ; 100mb
                   gc-cons-percentage 0.1)))
 
 (defun doom-defer-garbage-collection-h ()
@@ -24,7 +24,7 @@
   ;; Defer it so that commands launched immediately after will enjoy the
   ;; benefits.
   (run-at-time
-   1 nil (lambda () (setq gc-cons-threshold 16777216)))) ; 16mb
+   1 nil (lambda () (setq gc-cons-threshold (* 100 1024 1024))))) ; 100mb
 
 (add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
 (add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
@@ -906,6 +906,7 @@
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
          (clojurescript-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . (lambda () (setq-local idle-highlight-mode nil))))
   :custom-face
   (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
@@ -920,7 +921,7 @@
   (lsp-modeline-diagnostics-scope :file)
   (lsp-modeline-code-actions-enable nil)
   :config
-  (lsp-enable-which-key-integration t))
+  (setq-default read-process-output-max (* 1024 1024)))
 
 (use-package flycheck-clj-kondo
   :disabled t
