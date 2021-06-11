@@ -24,7 +24,7 @@
   ;; Defer it so that commands launched immediately after will enjoy the
   ;; benefits.
   (run-at-time
-   1 nil (lambda () (setq gc-cons-threshold (* 100 1024 1024))))) ; 100mb
+   1 nil (lambda () (setq gc-cons-threshold (* 100 1024 1024)))))
 
 (add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
 (add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
@@ -111,10 +111,10 @@
 (setq mouse-wheel-progressive-speed nil)
 
 ;; Make keybindings feel natural on mac
-(global-set-key (kbd "s-s") 'save-buffer)             ;; save
-(global-set-key (kbd "s-S") 'write-file)              ;; save as
-(global-set-key (kbd "s-q") 'save-buffers-kill-emacs) ;; quit
-(global-set-key (kbd "s-a") 'mark-whole-buffer)       ;; select all
+(global-set-key (kbd "s-s") 'save-buffer)
+(global-set-key (kbd "s-S") 'write-file)
+(global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
+(global-set-key (kbd "s-a") 'mark-whole-buffer)
 (global-set-key (kbd "s-k") 'kill-this-buffer)
 (global-set-key (kbd "s-v") 'yank)
 (global-set-key (kbd "s-c") 'kill-ring-save)
