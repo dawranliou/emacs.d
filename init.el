@@ -169,7 +169,14 @@
   (define-key evil-normal-state-map (kbd "M-.") nil)
   (define-key evil-normal-state-map (kbd "M-,") nil)
 
-  (global-set-key (kbd "s-w") 'evil-window-delete))
+  (global-set-key (kbd "s-w") 'evil-window-delete)
+
+  ;; https://blog.meain.io/2020/emacs-highlight-yanked/
+  (defun dawran/evil-yank-advice (orig-fn beg end &rest args)
+    "Pulse momentary on yank text"
+    (pulse-momentary-highlight-region beg end)
+    (apply orig-fn beg end args))
+  (advice-add 'evil-yank :around 'dawran/evil-yank-advice))
 
 (use-package evil-collection
   :config
@@ -586,7 +593,8 @@
   (diminish 'lispyville-mode)
   (lispyville-set-key-theme)
   (lispyville--define-key '(motion normal)
-    "Q" 'lispy-ace-paren))
+    "Q" 'lispy-ace-paren)
+  (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
 
 (use-package evil-multiedit
   :bind (:map evil-visual-state-map
