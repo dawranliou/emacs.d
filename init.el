@@ -581,12 +581,9 @@
   (lispyville-key-theme '(operators
                           c-w
                           text-objects
-                          (prettify insert)
-                          additional
                           additional-insert
                           additional-movement
                           additional-wrap
-                          (atom-movement normal visual)
                           commentary
                           slurp/barf-cp))
   :config
@@ -594,6 +591,9 @@
   (lispyville-set-key-theme)
   (lispyville--define-key '(motion normal)
     "Q" 'lispy-ace-paren)
+  (lispyville--define-key 'normal
+    (kbd "M-j") #'lispyville-drag-forward
+    (kbd "M-k") #'lispyville-drag-backward)
   (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
 
 (use-package evil-multiedit
