@@ -209,8 +209,8 @@
 
 (use-package which-key
   :hook (after-init . which-key-mode)
-  :diminish which-key-mode
   :config
+  (diminish 'which-key-mode)
   (setq which-key-idle-delay 1))
 
 (setq inhibit-startup-message t)
@@ -352,6 +352,14 @@
                 ;; (vc-mode vc-mode)
                 "  "
                 mode-line-modes mode-line-misc-info mode-line-end-spaces))
+
+;; Inspired by diminish.el
+;; https://github.com/myrjola/diminish.el/blob/master/diminish.el
+(defun diminish (mode)
+  "Diminish minor mode MODE."
+  (let ((minor (assq mode minor-mode-alist)))
+    (when minor
+      (setcdr minor (list "")))))
 
 (defun dawran/visual-fill ()
   (setq visual-fill-column-width 100
@@ -522,7 +530,9 @@
   ;; the written file). While sometimes convenient, this behavior is not
   ;; intuitive. To the average user it looks like whitespace cleanup is failing,
   ;; which causes folks to redundantly install their own.
-  (ws-butler-keep-whitespace-before-point nil))
+  (ws-butler-keep-whitespace-before-point nil)
+  :config
+  (diminish 'ws-butler-mode))
 
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
@@ -532,6 +542,7 @@
   :custom
   (lispy-close-quotes-at-end-p t)
   :config
+  (diminish 'lispy-mode)
   ;; Disable all non-evil lispy mappings.
   ;; NOTE: setting `lispy-key-theme' to nil during :init or :custom doesn't work
   ;; to achieve this.
@@ -572,6 +583,7 @@
                           commentary
                           slurp/barf-cp))
   :config
+  (diminish 'lispyville-mode)
   (lispyville-set-key-theme)
   (lispyville--define-key '(motion normal)
     "Q" 'lispy-ace-paren))
@@ -935,6 +947,11 @@
   ;; (require 'flycheck-clj-kondo)
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
+
+(use-package clj-refactor
+  :defer t
+  :config
+  (diminish 'clj-refactor-mode))
 
 (use-package cider
   :custom
