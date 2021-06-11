@@ -1034,7 +1034,7 @@
       (ansi-color-apply-on-region (point-min) (point-max)))))
 
 (use-package autorevert
-  :mode ("\\.log\\'" . auto-revert-mode))
+  :mode ("\\.log\\'" . auto-revert-tail-mode))
 
 (use-package extras
   :straight nil
