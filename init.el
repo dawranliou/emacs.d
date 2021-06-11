@@ -278,6 +278,25 @@
   :hook
   (prog-mode . idle-highlight-mode))
 
+(use-package pulse
+  :straight nil
+  :custom-face
+  (pulse-highlight-start-face ((t (:inherit highlight))))
+  :config
+  ;;https://karthinks.com/software/batteries-included-with-emacs/
+  (defun dawran/pulse-line (&rest _)
+    "Pulse the current line."
+    (pulse-momentary-highlight-one-line (point)))
+
+  (dolist (command '(scroll-up-command
+                     scroll-down-command
+                     evil-scroll-up
+                     evil-scroll-down
+                     recenter-top-bottom
+                     reposition-window
+                     other-window))
+    (advice-add command :after #'dawran/pulse-line)))
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 (use-package sketch-themes
