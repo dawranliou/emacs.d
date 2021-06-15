@@ -270,7 +270,7 @@
 (column-number-mode)
 
 ;; Enable line numbers for prog modes only
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+;; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (use-package idle-highlight-mode
   :custom-face
