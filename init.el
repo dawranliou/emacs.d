@@ -823,7 +823,7 @@ lispyville-beginning-of-defun does."
     "l" 'dired-single-buffer))
 
 (use-package dired-hide-dotfiles
-  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :after dired
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
