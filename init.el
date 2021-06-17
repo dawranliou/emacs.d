@@ -387,6 +387,9 @@
     (when minor
       (setcdr minor (list "")))))
 
+(with-eval-after-load "eldoc"
+  (diminish 'eldoc-mode))
+
 (defun dawran/visual-fill ()
   (setq visual-fill-column-width 100
         visual-fill-column-center-text t)
