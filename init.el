@@ -180,7 +180,8 @@
 
 (use-package evil-collection
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  (diminish 'evil-collection-unimpaired-mode))
 
 (use-package general
   :config
@@ -510,7 +511,7 @@
    ("C-M-," . embark-act))
   :init
   (setq embark-action-indicator
-        (lambda (map)
+        (lambda (map _target)
           (which-key--show-keymap "Embark" map nil nil 'no-paging)
           #'which-key--hide-popup-ignore-command)
         embark-become-indicator embark-action-indicator)
