@@ -628,26 +628,21 @@ lispyville-beginning-of-defun does."
               :before #'dawran/lispyville-end-of-defun-advice)
   (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
 
-(use-package evil-multiedit
-  :bind (:map evil-visual-state-map
-              ("R" . evil-multiedit-match-all)
-              ("M-d" . evil-multiedit-match-and-next)
-              ("M-D" . evil-multiedit-match-and-prev)
-              ("C-M-D" . evil-multiedit-restore)
-              :map evil-normal-state-map
-              ("M-d" . evil-multiedit-match-symbol-and-next)
-              ("M-D" . evil-multiedit-match-symbol-and-prev)
-              :map evil-insert-state-map
-              ("M-d" . evil-multiedit-toggle-marker-here)
-              :map evil-motion-state-map
-              ("RET" . evil-multiedit-toggle-or-restrict-region)
-              :map evil-multiedit-state-map
-              ("RET" . evil-multiedit-toggle-or-restrict-region)
-              ("C-n" . evil-multiedit-next)
-              ("C-p" . evil-multiedit-prev)
-              :map evil-multiedit-insert-state-map
-              ("C-n" . evil-multiedit-next)
-              ("C-p" . evil-multiedit-prev)))
+(use-package iedit
+  :bind
+  (:map evil-visual-state-map
+        ("R" . iedit-mode))
+  (:map iedit-mode-occurrence-keymap
+        ("RET" . iedit-toggle-selection))
+  :config
+  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
+    (kbd "C-n") 'iedit-next-occurrence)
+  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
+    (kbd "C-p") 'iedit-prev-occurrence)
+  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
+    [remap keyboard-escape-quit] 'iedit--quit)
+  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
+    [remap keyboard-quit] 'iedit--quit))
 
 (use-package undo-fu)
 
@@ -1057,7 +1052,8 @@ lispyville-beginning-of-defun does."
   :straight nil
   :bind
   (:map flyspell-mode-map
-        ("C-," . nil))
+        ("C-," . nil)
+        ("C-;" . nil))
   :hook
   (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
