@@ -853,6 +853,12 @@ lispyville-beginning-of-defun does."
   :straight nil
   :load-path "lisp/")
 
+(use-package find-dired
+  :straight nil
+  :defer t
+  :custom
+  (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
+
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
 (use-package vterm
