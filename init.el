@@ -360,7 +360,9 @@
   (winner-mode))
 
 (use-package display-fill-column-indicator
-  :hook (prog-mode . display-fill-column-indicator-mode))
+  :hook (prog-mode . display-fill-column-indicator-mode)
+  :config
+  (diminish 'auto-fill-function))
 
 ;; Pretty much the default mode line but here's the twist: no git branch info.
 (setq-default mode-line-format
@@ -732,7 +734,9 @@ lispyville-beginning-of-defun does."
 
 (use-package evil-org
   :after evil
-  :hook (org-mode . evil-org-mode))
+  :hook (org-mode . evil-org-mode)
+  :config
+  (diminish 'evil-org-mode))
 
 (use-package org-journal
   :general
