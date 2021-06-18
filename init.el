@@ -180,8 +180,7 @@
 
 (use-package evil-collection
   :config
-  (evil-collection-init)
-  (diminish 'evil-collection-unimpaired-mode))
+  (evil-collection-init))
 
 (use-package general
   :config
@@ -392,6 +391,9 @@
 
 (with-eval-after-load "eldoc"
   (diminish 'eldoc-mode))
+
+(with-eval-after-load "evil-collection-unimpaired"
+  (diminish 'evil-collection-unimpaired-mode))
 
 (defun dawran/visual-fill ()
   (setq visual-fill-column-width 100
