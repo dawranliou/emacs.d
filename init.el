@@ -280,6 +280,7 @@
 
 (use-package pulse
   :straight nil
+  :defer 2
   :custom-face
   (pulse-highlight-start-face ((t (:inherit highlight))))
   :config
@@ -524,6 +525,7 @@
   (add-hook 'embark-pre-action-hook #'refresh-selectrum))
 
 (use-package helpful
+  :defer 2
   :bind (;; Remap standard commands.
          ([remap describe-function] . #'helpful-callable)
          ([remap describe-variable] . #'helpful-variable)
@@ -649,10 +651,12 @@ lispyville-beginning-of-defun does."
   (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
     [remap evil-force-normal-state] 'iedit--quit))
 
-(use-package undo-fu)
+(use-package undo-fu
+  :defer t)
 
 (use-package elec-pair
   :straight nil
+  :defer 2
   :config
   (electric-pair-mode 1)
   (add-hook 'minibuffer-setup-hook
@@ -686,6 +690,7 @@ lispyville-beginning-of-defun does."
   (history-length 20000))
 
 (use-package saveplace
+  :defer 2
   :config
   (save-place-mode t))
 
