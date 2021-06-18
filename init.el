@@ -643,7 +643,9 @@ lispyville-beginning-of-defun does."
   (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
     [remap keyboard-escape-quit] 'iedit--quit)
   (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
-    [remap keyboard-quit] 'iedit--quit))
+    [remap keyboard-quit] 'iedit--quit)
+  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
+    [remap evil-force-normal-state] 'iedit--quit))
 
 (use-package undo-fu)
 
