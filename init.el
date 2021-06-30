@@ -827,19 +827,6 @@ lispyville-beginning-of-defun does."
   :config
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
-(use-package dired-single
-  :after dired
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    "h" 'dired-single-up-directory
-    "l" 'dired-single-buffer))
-
-(use-package dired-hide-dotfiles
-  :after dired
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    "H" 'dired-hide-dotfiles-mode))
-
 (use-package dired-ranger
   :after dired
   :config
@@ -847,9 +834,6 @@ lispyville-beginning-of-defun does."
     "y" 'dired-ranger-copy
     "X" 'dired-ranger-move
     "p" 'dired-ranger-paste))
-
-(use-package dired-subtree
-  :after dired)
 
 (use-package dired-toggle
   :general
