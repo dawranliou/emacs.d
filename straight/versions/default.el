@@ -45,7 +45,7 @@
  ("jump.el" . "55caa66a7cc6e0b1a76143fd40eff38416928941")
  ("let-alist" . "6708ec0b2e6dff80ff5b64698aa009d9070a2ed2")
  ("lispy" . "38a7df4cbb16cfe3d62dc8ea98b50e2d9a572e58")
- ("lispyville" . "89316f01822b2135e52ca27fd308d207ef618052")
+ ("lispyville" . "9c14bed0359f659e246d345c706f895737c3d172")
  ("list-utils" . "ca9654cd1418e874c876c6b3b7d4cd8339bfde77")
  ("lsp-mode" . "52048d47014b03a5de32b19f9a307af92e465192")
  ("macrostep" . "424e3734a1ee526a1bd7b5c3cd1d3ef19d184267")

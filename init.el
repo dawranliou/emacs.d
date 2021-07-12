@@ -623,14 +623,6 @@
   (lispyville--define-key 'normal
     (kbd "M-j") #'lispyville-drag-forward
     (kbd "M-k") #'lispyville-drag-backward)
-  (defun dawran/lispyville-end-of-defun-advice (_)
-    "lispyville-end-of-defun doesn't go to the next defun when
-point is already at the end of a defun, whereas
-lispyville-beginning-of-defun does."
-    (when (<= (- (line-end-position) (point)) 1)
-      (forward-line)))
-  (advice-add #'lispyville-end-of-defun
-              :before #'dawran/lispyville-end-of-defun-advice)
   (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
 
 (use-package iedit
