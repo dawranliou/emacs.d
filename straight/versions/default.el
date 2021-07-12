@@ -9,8 +9,6 @@
  ("ctrlf" . "dbe83710d06bc39315f1455f6f21479f3747c0aa")
  ("dash.el" . "88d799595e8f1b4154637ce8a3f81b97b0520c1a")
  ("dired-hacks" . "7c0ef09d57a80068a11edc74c3568e5ead5cc15a")
- ("dired-hide-dotfiles" . "6a379f23f64045f5950d229254ce6f32dbbf5364")
- ("dired-single" . "98c2102429fcac6fbfdba9198c126eb1b3dcc4e5")
  ("el-get" . "ec135b5353867ce3564a675e99024944b834395d")
  ("elfeed" . "243add9e74003cd5718f33482b7bb8b4fe140fb5")
  ("elisp-refs" . "fdde21e34b1272783d566d8230b5ed2dc4749048")
