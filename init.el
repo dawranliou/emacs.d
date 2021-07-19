@@ -759,11 +759,17 @@
 (use-package org-roam
   :custom
   (org-roam-directory "~/org/roam/")
-  :init
-  (setq org-roam-v2-ack t)
   :general
   (dawran/leader-def
-    "nf" 'org-roam-node-find))
+    "nf" 'org-roam-node-find
+    "nl" 'org-roam-buffer-toggle
+    "ng" 'org-roam-graph
+    "ni" 'org-roam-node-insert
+    "nc" 'org-roam-capture)
+  :init
+  (setq org-roam-v2-ack t)
+  :config
+  (org-roam-setup))
 
 (use-package org-tree-slide
   :commands (org-tree-slide-mode)
