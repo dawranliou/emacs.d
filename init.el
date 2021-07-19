@@ -1048,7 +1048,7 @@
         ("C-," . nil)
         ("C-;" . nil))
   :hook
-  (prog-mode . flyspell-prog-mode)
+  ;; (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
 
 (setq inferior-lisp-program "sbcl")
