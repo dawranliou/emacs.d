@@ -687,9 +687,7 @@
   (save-place-mode t))
 
 (defun dawran/org-mode-setup ()
-  ;; hide title / author ... keywords
   (setq-local evil-auto-indent nil)
-  (setq-local org-hidden-keywords '(title author date))
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
                  (if (char-equal c ?<)
@@ -709,7 +707,7 @@
   (org-src-fontify-natively t)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
-  (org-cycle-separator-lines 1)
+  (org-cycle-separator-lines 2)
   (org-edit-src-content-indentation 0)
   (org-src-window-setup 'current-window)
   (org-indirect-buffer-display 'current-window)
