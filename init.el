@@ -46,8 +46,11 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
-;; Enable narrowing by default.
+;; Enable useful features by default.
 (put 'narrow-to-region 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
 
 ;; Switch to help buffer when it's opened.
 (setq help-window-select t)
