@@ -268,11 +268,12 @@
 (defun jump-to-scratch-buffer ()
   "Jump to the existing *scratch* buffer or create a new one."
   (interactive)
-  (let ((scratch-buffer (get-buffer-create "*scratch*")))
-    (unless (derived-mode-p 'scratch-mode)
-      (with-current-buffer scratch-buffer
-        (scratch-mode)))
-    (switch-to-buffer scratch-buffer)))
+  (if-let (existing-scratch-buffer (get-buffer "*sratch*"))
+      (switch-to-buffer existing-scratch-buffer)
+    (let ((new-scratch-buffer (generate-new-buffer "*scratch*")))
+      (with-current-buffer new-scratch-buffer
+        (scratch-mode))
+      (switch-to-buffer new-scratch-buffer))))
 
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 
