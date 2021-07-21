@@ -226,6 +226,25 @@
 (global-set-key (kbd "M-:") 'pp-eval-expression)
 (global-set-key (kbd "M-/") #'hippie-expand)
 
+(use-package ibuffer
+  :commands ibuffer
+  :init
+  (setq ibuffer-expert t
+        ibuffer-show-empty-filter-groups nil
+        ibuffer-saved-filter-groups
+        '(("default"
+           ("Eww"   (mode . eww-mode))
+           ("Dired" (mode . dired-mode))
+           ("Meta"  (name . "\\*"))
+           ("Emacs Config" (filename . ".emacs.d"))
+           ("Help" (or (name . "\*Help\*")
+                       (name . "\*Apropos\*")
+                       (name . "\*Info\*"))))))
+  :config
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-switch-to-saved-filter-groups "default"))))
+
 (use-package which-key
   :straight t
   :defer 2
