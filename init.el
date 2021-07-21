@@ -796,12 +796,9 @@
   (setq insert-directory-program "gls")
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
-    (kbd "C-c C-e") 'wdired-change-to-wdired-mode))
-
-(use-package dired-x
-  :after dired
-  :init (setq-default dired-omit-files-p t)
-  :config
+    (kbd "C-c C-e") 'wdired-change-to-wdired-mode)
+  (setq-default dired-omit-files-p t)
+  (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 (use-package find-dired
