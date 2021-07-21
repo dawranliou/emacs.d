@@ -72,7 +72,6 @@
  ("swiper" . "56139df678d9886d0612c0a192cce2cf6f156628")
  ("transient" . "e90481000f071e9a26a1cc0f40d347f7d3e2201e")
  ("use-package" . "a7422fb8ab1baee19adb2717b5b47b9c3812a84c")
- ("visual-fill-column" . "6fa9e7912af412533aec0da8b8f62c227f9f3f54")
  ("with-editor" . "5519b6a67ecd66865b4fdd5447425eee900c54f4")
  ("ws-butler" . "e3a38d93e01014cd47bf5af4924459bd145fd7c4")
  ("xref" . "16d655ef944c6e9299698b52731f1014ecff6bff")

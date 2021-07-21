@@ -396,15 +396,6 @@
 (with-eval-after-load "evil-collection-unimpaired"
   (diminish 'evil-collection-unimpaired-mode))
 
-(defun dawran/visual-fill ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
-
-(use-package visual-fill-column
-  :straight t
-  :commands visual-fill-column-mode)
-
 (use-package ns-auto-titlebar
   :straight t
   :hook (after-init . ns-auto-titlebar-mode))
@@ -702,7 +693,6 @@
   :straight t
   :hook ((org-mode . dawran/org-mode-setup)
          (org-mode . visual-line-mode)
-         (org-mode . dawran/visual-fill)
          (org-mode . auto-fill-mode))
   :bind
   (:map org-mode-map
@@ -985,8 +975,7 @@
 (use-package markdown-mode
   :straight t
   :mode "\\.md\\'"
-  :hook ((markdown-mode . dawran/visual-fill)
-         (markdown-mode . auto-fill-mode))
+  :hook ((markdown-mode . auto-fill-mode))
   :config
   (setq markdown-command "marked"))
 
