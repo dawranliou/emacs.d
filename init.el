@@ -814,21 +814,10 @@
   :config
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
-(use-package dired-ranger
-  :straight t
-  :after dired
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    "y" 'dired-ranger-copy
-    "X" 'dired-ranger-move
-    "p" 'dired-ranger-paste))
-
 (use-package find-dired
-  :defer t
+  :commands find-name-dired
   :custom
   (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
-
-(setq exec-path (append exec-path '("/usr/local/bin")))
 
 (defun dawran/eshell-history ()
   "Browse eshell history."
@@ -870,15 +859,6 @@
   :general
   (dawran/leader-def
     "e" 'eshell))
-
-(use-package exec-path-from-shell
-  :straight t
-  :defer 1
-  :init
-  (setq exec-path-from-shell-check-startup-files nil)
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
 
 (with-eval-after-load 'esh-opt
   (setq eshell-destroy-buffer-when-process-dies t))
