@@ -354,22 +354,6 @@
   :hook
   (lispy-mode . paren-face-mode))
 
-(use-package ace-window
-  :bind (("M-o" . ace-window))
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
-
-(use-package winner-mode
-  :straight nil
-  :bind (:map evil-window-map
-              ("u" . winner-undo)
-              ("U" . winner-redo))
-  :general
-  (dawran/leader-def
-    "w" 'evil-window-map)
-  :config
-  (winner-mode))
-
 (use-package display-fill-column-indicator
   :hook (prog-mode . display-fill-column-indicator-mode)
   :config
@@ -414,11 +398,6 @@
 (use-package visual-fill-column
   :commands visual-fill-column-mode)
 
-(use-package unicode-fonts
-  :defer t
-  :config
-  (unicode-fonts-setup))
-
 (use-package ns-auto-titlebar
   :hook (after-init . ns-auto-titlebar-mode))
 
@@ -427,9 +406,6 @@
 
 (use-package rainbow-mode
   :commands rainbow-mode)
-
-(use-package hide-mode-line
-  :commands hide-mode-line-mode)
 
 (use-package hippie-exp
   :straight nil
@@ -772,16 +748,6 @@
   :config
   (org-roam-setup))
 
-(use-package org-tree-slide
-  :commands (org-tree-slide-mode)
-  :custom
-  (org-image-actual-width nil)
-  (org-tree-slide-slide-in-effect nil)
-  (org-tree-slide-activate-message "Presentation started.")
-  (org-tree-slide-deactivate-message "Presentation ended.")
-  (org-tree-slide-breadcrumbs " > ")
-  (org-tree-slide-header t))
-
 (defvar org-paste-clipboard-image-dir "img")
 
 (defun dawran/org-paste-clipboard-image ()
@@ -837,13 +803,6 @@
     "X" 'dired-ranger-move
     "p" 'dired-ranger-paste))
 
-(use-package dired-toggle
-  :general
-  (dawran/leader-def
-    "td" 'dired-toggle)
-  :straight nil
-  :load-path "lisp/")
-
 (use-package find-dired
   :straight nil
   :defer t
@@ -851,11 +810,6 @@
   (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
 
 (setq exec-path (append exec-path '("/usr/local/bin")))
-
-(use-package vterm
-  :commands vterm
-  :config
-  (setq vterm-max-scrollback 10000))
 
 (defun dawran/eshell-history ()
   "Browse eshell history."
@@ -1015,9 +969,6 @@
     "tt" 'cider-test-run-test
     "tn" 'cider-test-run-ns-tests))
 
-(use-package clj-refactor
-  :hook (clojure-mode . clj-refactor-mode))
-
 (use-package go-mode
   :mode "\\.go\\'")
 
@@ -1027,9 +978,6 @@
          (markdown-mode . auto-fill-mode))
   :config
   (setq markdown-command "marked"))
-
-(use-package markdown-toc
-  :commands (markdown-toc-generate-toc))
 
 (use-package emmet-mode
   :hook
