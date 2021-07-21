@@ -228,7 +228,7 @@
 
 (use-package which-key
   :straight t
-  :hook (after-init . which-key-mode)
+  :defer 2
   :config
   (diminish 'which-key-mode)
   (setq which-key-idle-delay 1))
@@ -352,7 +352,6 @@
 (set-face-attribute 'variable-pitch nil :height 160)
 
 (use-package paren
-  :straight t
   :hook (prog-mode . show-paren-mode))
 
 (use-package paren-face
@@ -896,6 +895,7 @@
     "te" 'eshell-toggle))
 
 (use-package project
+  :straight t
   :bind
   (("s-p" . project-find-file)
    :map project-prefix-map
