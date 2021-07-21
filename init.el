@@ -73,8 +73,7 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-(setq straight-use-package-by-default t
-      straight-build-dir (format "build-%s" emacs-version)
+(setq straight-build-dir (format "build-%s" emacs-version)
       ;; Lazy modification detection speeds up the startup time. I don't often
       ;; modify packages anyway. When I do, I can build the package manually, I
       ;; think.
@@ -133,6 +132,7 @@
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
 (use-package evil
+  :straight t
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
@@ -188,10 +188,13 @@
   (advice-add 'evil-yank :around #'dawran/evil-yank-advice))
 
 (use-package evil-collection
+  :straight t
+  :after evil
   :config
   (evil-collection-init))
 
 (use-package general
+  :straight t
   :config
   (general-create-definer dawran/leader-def
     :states '(normal insert visual emacs)
@@ -224,6 +227,7 @@
 (global-set-key (kbd "M-/") #'hippie-expand)
 
 (use-package which-key
+  :straight t
   :hook (after-init . which-key-mode)
   :config
   (diminish 'which-key-mode)
@@ -283,13 +287,13 @@
 ;; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 
 (use-package idle-highlight-mode
+  :straight t
   :custom-face
   (idle-highlight ((t (:inherit lazy-highlight))))
   :hook
   (prog-mode . idle-highlight-mode))
 
 (use-package pulse
-  :straight nil
   :defer 2
   :custom-face
   (pulse-highlight-start-face ((t (:inherit highlight))))
@@ -348,13 +352,16 @@
 (set-face-attribute 'variable-pitch nil :height 160)
 
 (use-package paren
+  :straight t
   :hook (prog-mode . show-paren-mode))
 
 (use-package paren-face
+  :straight t
   :hook
   (lispy-mode . paren-face-mode))
 
 (use-package display-fill-column-indicator
+  :straight t
   :hook (prog-mode . display-fill-column-indicator-mode)
   :config
   (diminish 'auto-fill-function))
@@ -396,19 +403,21 @@
   (visual-fill-column-mode 1))
 
 (use-package visual-fill-column
+  :straight t
   :commands visual-fill-column-mode)
 
 (use-package ns-auto-titlebar
+  :straight t
   :hook (after-init . ns-auto-titlebar-mode))
 
 (setq ns-use-proxy-icon nil
       frame-title-format nil)
 
 (use-package rainbow-mode
+  :straight t
   :commands rainbow-mode)
 
 (use-package hippie-exp
-  :straight nil
   :commands hippie-expand
   :custom
   (hippie-expand-try-functions-list
@@ -426,6 +435,7 @@
      )))
 
 (use-package orderless
+  :straight t
   :after selectrum
   :custom
   (completion-styles '(orderless))
@@ -455,6 +465,7 @@
   (selectrum-mode +1))
 
 (use-package marginalia
+  :straight t
   :bind (:map minibuffer-local-map
               ("C-M-a" . marginalia-cycle))
   :init
@@ -493,6 +504,7 @@
            "#" 'ctrlf-forward-symbol-at-point))
 
 (use-package embark
+  :straight t
   :bind
   (("C-M-," . embark-act)
    ("C-h B" . embark-bindings)
@@ -511,6 +523,7 @@
   (add-hook 'embark-pre-action-hook #'refresh-selectrum))
 
 (use-package helpful
+  :straight t
   :defer 2
   :bind (;; Remap standard commands.
          ([remap describe-function] . #'helpful-callable)
@@ -522,6 +535,7 @@
          ("C-h F"   . #'describe-face)))
 
 (use-package persistent-scratch
+  :straight t
   :custom
   (persistent-scratch-autosave-interval 60)
   :config
@@ -545,6 +559,7 @@
 (setq-default indent-tabs-mode nil)
 
 (use-package ws-butler
+  :straight t
   :hook ((text-mode . ws-butler-mode)
          (prog-mode . ws-butler-mode))
   :custom
@@ -557,6 +572,7 @@
   (diminish 'ws-butler-mode))
 
 (use-package lispy
+  :straight t
   :hook ((emacs-lisp-mode . lispy-mode)
          (clojure-mode . lispy-mode)
          (clojurescript-mode . lispy-mode)
@@ -590,6 +606,7 @@
    "}" 'lispy-close-curly))
 
 (use-package lispyville
+  :straight t
   :after lispy
   :hook (lispy-mode . lispyville-mode)
   :custom
@@ -612,6 +629,7 @@
   (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
 
 (use-package iedit
+  :straight t
   :bind
   (:map evil-visual-state-map
         ("R" . iedit-mode))
@@ -630,10 +648,10 @@
     [remap evil-force-normal-state] 'iedit--quit))
 
 (use-package undo-fu
+  :straight t
   :defer t)
 
 (use-package elec-pair
-  :straight nil
   :defer 2
   :config
   (electric-pair-mode 1)
@@ -642,6 +660,7 @@
               (electric-pair-mode 0))))
 
 (use-package expand-region
+  :straight t
   :bind
   ("s-'" .  er/expand-region)
   ("s-\"" .  er/contract-region)
@@ -681,6 +700,7 @@
                    (,electric-pair-inhibit-predicate c)))))
 
 (use-package org
+  :straight t
   :hook ((org-mode . dawran/org-mode-setup)
          (org-mode . visual-line-mode)
          (org-mode . dawran/visual-fill)
@@ -707,19 +727,20 @@
   (org-attach-auto-tag "attachment"))
 
 (use-package org-tempo
-  :straight nil
   :after org
   :config
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 (use-package evil-org
+  :straight t
   :after evil
   :hook (org-mode . evil-org-mode)
   :config
   (diminish 'evil-org-mode))
 
 (use-package org-journal
+  :straight t
   :general
   (dawran/leader-def
     "n" '(:ignore t :which-key "notes")
@@ -734,6 +755,7 @@
   (org-journal-find-file #'find-file))
 
 (use-package org-roam
+  :straight t
   :custom
   (org-roam-directory "~/org/roam/")
   :general
@@ -769,7 +791,6 @@
   (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
 
 (use-package dired
-  :straight nil
   :hook (;; (dired-mode . dired-hide-details-mode)
          (dired-mode . hl-line-mode))
   :bind ("C-x C-j" . dired-jump)
@@ -790,12 +811,12 @@
 
 (use-package dired-x
   :after dired
-  :straight nil
   :init (setq-default dired-omit-files-p t)
   :config
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 (use-package dired-ranger
+  :straight t
   :after dired
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
@@ -804,7 +825,6 @@
     "p" 'dired-ranger-paste))
 
 (use-package find-dired
-  :straight nil
   :defer t
   :custom
   (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
@@ -853,6 +873,7 @@
     "e" 'eshell))
 
 (use-package exec-path-from-shell
+  :straight t
   :defer 1
   :init
   (setq exec-path-from-shell-check-startup-files nil)
@@ -864,6 +885,7 @@
   (setq eshell-destroy-buffer-when-process-dies t))
 
 (use-package eshell-toggle
+  :straight t
   :custom
   (eshell-toggle-use-git-root t)
   (eshell-toggle-run-command nil)
@@ -882,6 +904,7 @@
   (add-to-list 'project-switch-commands '(magit-project-status "Magit")))
 
 (use-package magit
+  :straight t
   :bind (("s-g" . magit-status)
          ("C-x g" . magit-status)
          ("C-c g" . magit-file-dispatch))
@@ -899,15 +922,18 @@
     "gl"  'magit-log-buffer-file))
 
 (use-package rg
+  :straight t
   :bind ("s-F" . rg-project)
   :config
   (rg-enable-default-bindings))
 
 (use-package flycheck
+  :straight t
   :ensure t
   :hook (prog-init . flycheck-mode))
 
 (use-package lsp-mode
+  :straight t
   :hook ((clojure-mode . lsp)
          (clojurec-mode . lsp)
          (clojurescript-mode . lsp)
@@ -933,6 +959,7 @@
   :defer t)
 
 (use-package clojure-mode
+  :straight t
   :defer t
   :custom
   (cljr-magic-requires nil)
@@ -942,11 +969,13 @@
         clojure-align-forms-automatically t))
 
 (use-package clj-refactor
+  :straight t
   :defer t
   :config
   (diminish 'clj-refactor-mode))
 
 (use-package cider
+  :straight t
   :custom
   (cider-repl-display-help-banner nil)
   (cider-repl-display-in-current-window nil)
@@ -970,9 +999,11 @@
     "tn" 'cider-test-run-ns-tests))
 
 (use-package go-mode
+  :straight t
   :mode "\\.go\\'")
 
 (use-package markdown-mode
+  :straight t
   :mode "\\.md\\'"
   :hook ((markdown-mode . dawran/visual-fill)
          (markdown-mode . auto-fill-mode))
@@ -980,11 +1011,13 @@
   (setq markdown-command "marked"))
 
 (use-package emmet-mode
+  :straight t
   :hook
   (html-mode . emmet-mode)
   (css-mode . emmet-mode))
 
 (use-package yaml-mode
+  :straight t
   :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
 
 (use-package fennel-mode
@@ -993,7 +1026,6 @@
   :hook (fennel-mode . lispy-mode))
 
 (use-package flyspell
-  :straight nil
   :bind
   (:map flyspell-mode-map
         ("C-," . nil)
@@ -1005,12 +1037,12 @@
 (setq inferior-lisp-program "sbcl")
 
 (use-package slime
+  :straight t
   :commands slime
   :config
   (load (expand-file-name "~/.quicklisp/slime-helper.el")))
 
 (use-package compile
-  :straight nil
   :defer t
   :hook
   (compilation-filter . colorize-compilation-buffer)
@@ -1025,14 +1057,12 @@
   :mode ("\\.log\\'" . auto-revert-tail-mode))
 
 (use-package extras
-  :straight nil
   :load-path "lisp/"
   :bind
   (("M-y" . yank-pop+)
    ("C-x C-r" . recentf-open-files+)))
 
 (use-package time
-  :straight nil
   :custom
   (display-time-world-list '(("Asia/Taipei" "Taipei")
                              ("America/Toronto" "Toronto")
@@ -1044,6 +1074,7 @@
     "tc" #'display-time-world))
 
 (use-package elfeed
+  :straight t
   :custom
   (elfeed-feeds '(("https://dawranliou.com/atom.xml")
                   "https://ruzkuku.com/all.atom"
@@ -1064,7 +1095,6 @@
 
 (use-package shr
   :defer t
-  :straight nil
   :custom
   (shr-use-colors nil)
   ;;(shr-use-fonts t)
@@ -1075,10 +1105,21 @@
   (shr-cookie-policy nil))
 
 (use-package elpher
+  :straight t
   :commands elpher)
 
 (setq ediff-window-setup-function #'ediff-setup-windows-plain)
 (setq ediff-split-window-function #'split-window-horizontally)
+
+;; ERC
+(setq erc-server "irc.libera.chat"
+      erc-nick "dawranliou"
+      erc-user-full-name "Daw-Ran Liou"
+      erc-track-shorten-start 8
+      erc-kill-buffer-on-part t
+      ;; erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
+      ;; erc-auto-query 'bury
+      )
 
 (provide 'init)
 
