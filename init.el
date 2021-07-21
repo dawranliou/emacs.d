@@ -233,6 +233,7 @@
         ibuffer-show-empty-filter-groups nil
         ibuffer-saved-filter-groups
         '(("default"
+           ("Scratch" (name . "*scratch*"))
            ("Eww"   (mode . eww-mode))
            ("Dired" (mode . dired-mode))
            ("Meta"  (name . "\\*"))
@@ -289,14 +290,25 @@
 (setq initial-scratch-message nil)
 
 (defun jump-to-scratch-buffer ()
-  "Jump to the existing *scratch* buffer or create a new one."
+  "Jump to the existing *scratch* buffer or create a new
+one. Repeating this command will prompt the user for the name
+used to create a new scratch buffer."
   (interactive)
-  (if-let (existing-scratch-buffer (get-buffer "*sratch*"))
-      (switch-to-buffer existing-scratch-buffer)
-    (let ((new-scratch-buffer (generate-new-buffer "*scratch*")))
-      (with-current-buffer new-scratch-buffer
-        (scratch-mode))
-      (switch-to-buffer new-scratch-buffer))))
+  (if (eq last-command this-command)
+      (let ((new-buffer (generate-new-buffer
+                         (format
+                          "*scratch*<%s>"
+                          (read-string
+                           "New scratch buffer name for *scratch*<NAME>: ")))))
+        (with-current-buffer new-buffer
+          (scratch-mode))
+        (switch-to-buffer new-buffer))
+    (if-let (existing-scratch-buffer (get-buffer "*scratch*"))
+        (switch-to-buffer existing-scratch-buffer)
+      (let ((new-scratch-buffer (get-buffer-create "*scratch*")))
+        (with-current-buffer new-scratch-buffer
+          (scratch-mode))
+        (switch-to-buffer new-scratch-buffer)))))
 
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 
