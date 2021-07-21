@@ -131,6 +131,34 @@
 
 (global-set-key (kbd "C-M-u") 'universal-argument)
 
+(use-package general
+  :straight t
+  :config
+  (general-create-definer dawran/leader-def
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "M-SPC")
+
+  (general-create-definer dawran/local-leader-def
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :major-modes t
+    :prefix ","
+    :non-normal-prefix "C-,")
+
+  (dawran/leader-def
+    "f"  '(:ignore t :which-key "file")
+    "fd" `(,(defun dawran/find-config ()
+              (interactive)
+              (find-file (expand-file-name "~/.emacs.d/init.el")))
+           :which-key "edit config")
+    "t"  '(:ignore t :which-key "toggles")
+    "tt" '(dawran/load-theme :which-key "choose theme")
+    "tw" 'whitespace-mode
+    "tm" 'toggle-frame-maximized
+    "tM" 'toggle-frame-fullscreen))
+
 (use-package evil
   :straight t
   :init
@@ -192,34 +220,6 @@
   :after evil
   :config
   (evil-collection-init))
-
-(use-package general
-  :straight t
-  :config
-  (general-create-definer dawran/leader-def
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "M-SPC")
-
-  (general-create-definer dawran/local-leader-def
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :major-modes t
-    :prefix ","
-    :non-normal-prefix "C-,")
-
-  (dawran/leader-def
-    "f"  '(:ignore t :which-key "file")
-    "fd" `(,(defun dawran/find-config ()
-              (interactive)
-              (find-file (expand-file-name "~/.emacs.d/init.el")))
-           :which-key "edit config")
-    "t"  '(:ignore t :which-key "toggles")
-    "tt" '(dawran/load-theme :which-key "choose theme")
-    "tw" 'whitespace-mode
-    "tm" 'toggle-frame-maximized
-    "tM" 'toggle-frame-fullscreen))
 
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
