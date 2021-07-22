@@ -310,6 +310,7 @@ used to create a new scratch buffer."
 
 (straight-use-package 'use-package)
 ;; (setq use-package-verbose t)
+;; (setq use-package-compute-statistics t)
 (setq use-package-expand-minimally t)
 
 
@@ -615,9 +616,8 @@ used to create a new scratch buffer."
 
 
 (use-package sketch-themes
-  :straight (:host github :repo "dawranliou/sketch-themes")
-  :config
-  (dawran/load-theme-action "sketch-black"))
+  :defer t
+  :straight (:host github :repo "dawranliou/sketch-themes"))
 
 
 (use-package paren-face
@@ -1043,14 +1043,9 @@ used to create a new scratch buffer."
   :config
   ;; (require 'flycheck-clj-kondo)
   (setq clojure-indent-style 'align-arguments
-        clojure-align-forms-automatically t))
-
-
-(use-package clj-refactor
-  :straight t
-  :defer t
-  :config
-  (diminish 'clj-refactor-mode))
+        clojure-align-forms-automatically t)
+  (with-eval-after-load 'clj-refactor
+    (diminish 'clj-refactor-mode)))
 
 
 (use-package cider
