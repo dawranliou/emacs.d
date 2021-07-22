@@ -752,10 +752,7 @@ used to create a new scratch buffer."
 
 (use-package lispy
   :straight t
-  :hook ((emacs-lisp-mode . lispy-mode)
-         (clojure-mode . lispy-mode)
-         (clojurescript-mode . lispy-mode)
-         (cider-repl-mode . lispy-mode))
+  :hook ((emacs-lisp-mode . lispy-mode))
   :custom
   (lispy-close-quotes-at-end-p t)
   :config
@@ -1004,10 +1001,7 @@ used to create a new scratch buffer."
 
 (use-package lsp-mode
   :straight t
-  :hook ((clojure-mode . lsp)
-         (clojurec-mode . lsp)
-         (clojurescript-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration)
+  :hook ((lsp-mode . lsp-enable-which-key-integration)
          (lsp-mode . (lambda () (setq-local idle-highlight-mode nil))))
   :custom-face
   (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
@@ -1038,6 +1032,13 @@ used to create a new scratch buffer."
 (use-package clojure-mode
   :straight t
   :defer t
+  :hook
+  ((clojure-mode . lispy-mode)
+   (clojurescript-mode . lispy-mode)
+   (cider-repl-mode . lispy-mode)
+   (clojure-mode . lsp)
+   (clojurec-mode . lsp)
+   (clojurescript-mode . lsp))
   :custom
   (cljr-magic-requires nil)
   :config
