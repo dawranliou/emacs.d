@@ -9,6 +9,9 @@
 
 ;;; Code:
 
+
+;;; - Performance
+
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
@@ -46,6 +49,17 @@
                               (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
+(add-hook
+ 'after-init-hook
+ (defun dawran/load-private-lisp ()
+   (let ((private-file (concat user-emacs-directory "private.el")))
+     (when (file-exists-p private-file)
+       (load-file private-file)))))
+
+
+;;; - Emacs
+
+
 ;; Enable useful features by default.
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
@@ -55,14 +69,8 @@
 ;; Switch to help buffer when it's opened.
 (setq help-window-select t)
 
+;; Tramp setting
 (setq tramp-default-method "ssh")
-
-(add-hook
- 'after-init-hook
- (defun dawran/load-private-lisp ()
-   (let ((private-file (concat user-emacs-directory "private.el")))
-     (when (file-exists-p private-file)
-       (load-file private-file)))))
 
 ;; Keep backup files and auto-save files in the backups directory
 (setq backup-directory-alist
@@ -73,185 +81,40 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-(setq straight-build-dir (format "build-%s" emacs-version)
-      ;; Lazy modification detection speeds up the startup time. I don't often
-      ;; modify packages anyway. When I do, I can build the package manually, I
-      ;; think.
-      straight-check-for-modifications '(check-on-save find-when-checking))
-
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
-
-(straight-use-package 'use-package)
-;; (setq use-package-verbose t)
-(setq use-package-expand-minimally t)
-
-(if (fboundp 'mac-auto-operator-composition-mode)
-    (mac-auto-operator-composition-mode))
-
-(setq-default delete-by-moving-to-trash t)
-
-;; Both command keys are 'Super'
-(setq mac-right-command-modifier 'super)
-(setq mac-command-modifier 'super)
-
-;; Option or Alt is naturally 'Meta'
-(setq mac-option-modifier 'meta)
-(setq mac-right-option-modifier 'meta)
-
 ;; Mouse Scroll
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 3) ((control))))
 (setq mouse-wheel-progressive-speed nil)
 
-;; Make keybindings feel natural on mac
-(global-set-key (kbd "s-s") 'save-buffer)
-(global-set-key (kbd "s-S") 'write-file)
-(global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
-(global-set-key (kbd "s-a") 'mark-whole-buffer)
-(global-set-key (kbd "s-k") 'kill-this-buffer)
-(global-set-key (kbd "s-v") 'yank)
-(global-set-key (kbd "s-c") 'kill-ring-save)
-(global-set-key (kbd "s-z") 'undo)
-(global-set-key (kbd "s-=") 'text-scale-adjust)
-(global-set-key (kbd "s--") 'text-scale-decrease)
-(global-set-key (kbd "s-<backspace>") 'kill-whole-line)
+(setq-default delete-by-moving-to-trash t)
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-(global-set-key (kbd "C-M-u") 'universal-argument)
-
-(use-package general
-  :straight t
-  :config
-  (general-create-definer dawran/leader-def
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "M-SPC")
-
-  (general-create-definer dawran/local-leader-def
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :major-modes t
-    :prefix ","
-    :non-normal-prefix "C-,")
-
-  (dawran/leader-def
-    "f"  '(:ignore t :which-key "file")
-    "fd" `(,(defun dawran/find-config ()
-              (interactive)
-              (find-file (expand-file-name "~/.emacs.d/init.el")))
-           :which-key "edit config")
-    "t"  '(:ignore t :which-key "toggles")
-    "tt" '(dawran/load-theme :which-key "choose theme")
-    "tw" 'whitespace-mode
-    "tm" 'toggle-frame-maximized
-    "tM" 'toggle-frame-fullscreen))
-
-(use-package evil
-  :straight t
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump t)
-  (setq evil-move-beyond-eol t)
-  (setq evil-move-cursor-back nil)
-  :custom
-  (evil-undo-system 'undo-fu)
-  (evil-symbol-word-search t)
-  (evil-want-fine-undo t)
-  :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-insert-state-map "\C-e" 'end-of-line)
-  (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-normal-state-map "\C-y" 'yank)
-  (define-key evil-insert-state-map "\C-y" 'yank)
-  (define-key evil-visual-state-map "\C-y" 'yank)
-  (define-key evil-normal-state-map "\C-k" 'kill-line)
-  (define-key evil-insert-state-map "\C-k" 'kill-line)
-  (define-key evil-visual-state-map "\C-k" 'kill-line)
-
-  ;; Get around faster
-  (define-key evil-motion-state-map "gs" 'evil-avy-goto-symbol-1)
-  (define-key evil-motion-state-map "gS" 'evil-avy-goto-char-timer)
-
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal)
-
-  ;; Let emacs bindings for M-. and M-, take over
-  (define-key evil-normal-state-map (kbd "M-.") nil)
-  (define-key evil-normal-state-map (kbd "M-,") nil)
-
-  (define-key evil-normal-state-map (kbd "C-n") nil)
-  (define-key evil-normal-state-map (kbd "C-p") nil)
-  (define-key evil-insert-state-map (kbd "C-n") nil)
-  (define-key evil-insert-state-map (kbd "C-p") nil)
-
-  (global-set-key (kbd "s-w") 'evil-window-delete)
-
-  ;; https://blog.meain.io/2020/emacs-highlight-yanked/
-  (defun dawran/evil-yank-advice (orig-fn beg end &rest args)
-    "Pulse momentary on yank text"
-    (pulse-momentary-highlight-region beg end)
-    (apply orig-fn beg end args))
-  (advice-add 'evil-yank :around #'dawran/evil-yank-advice))
-
-(use-package evil-collection
-  :straight t
-  :after evil
-  :config
-  (evil-collection-init))
 
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
 (global-set-key (kbd "M-:") 'pp-eval-expression)
 (global-set-key (kbd "M-/") #'hippie-expand)
 
-(use-package ibuffer
-  :commands ibuffer
-  :init
-  (setq ibuffer-expert t
-        ibuffer-show-empty-filter-groups nil
-        ibuffer-saved-filter-groups
-        '(("default"
-           ("Scratch" (name . "*scratch*"))
-           ("Eww"   (mode . eww-mode))
-           ("Dired" (mode . dired-mode))
-           ("Meta"  (name . "\\*"))
-           ("Emacs Config" (filename . ".emacs.d"))
-           ("Help" (or (name . "\*Help\*")
-                       (name . "\*Apropos\*")
-                       (name . "\*Info\*"))))))
-  :config
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-switch-to-saved-filter-groups "default"))))
+;; ibuffer
 
-(use-package which-key
-  :straight t
-  :defer 2
-  :config
-  (diminish 'which-key-mode)
-  (setq which-key-idle-delay 1))
+(setq ibuffer-expert t
+      ibuffer-show-empty-filter-groups nil
+      ibuffer-saved-filter-groups
+      '(("default"
+         ("Scratch" (name . "*scratch*"))
+         ("Eww"   (mode . eww-mode))
+         ("Kira" (filename . "/kira/"))
+         ("Projects" (filename . "/projects/"))
+         ("Dired" (mode . dired-mode))
+         ("Meta"  (name . "\\*"))
+         ("Emacs Config" (filename . ".emacs.d"))
+         ("Help" (or (name . "\*Help\*")
+                     (name . "\*Apropos\*")
+                     (name . "\*Info\*"))))))
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-auto-mode 1)
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
 (setq inhibit-startup-message t)
 
@@ -260,9 +123,10 @@
 (setq default-frame-alist
       (append (list
                '(font . "Monolisa-14")
-               '(min-height . 1) '(height     . 45)
-               '(min-width  . 1) '(width      . 81)
-               )))
+               ;; '(min-height . 1)
+               ;; '(height . 45)
+               '(min-width . 1)
+               '(width . 81))))
 
 ;; No beeping nor visible bell
 (setq ring-bell-function #'ignore
@@ -314,39 +178,7 @@ used to create a new scratch buffer."
 
 (column-number-mode)
 
-;; Enable line numbers for prog modes only
-;; (add-hook 'prog-mode-hook #'display-line-numbers-mode)
-
-(use-package idle-highlight-mode
-  :straight t
-  :custom-face
-  (idle-highlight ((t (:inherit lazy-highlight))))
-  :hook
-  (prog-mode . idle-highlight-mode))
-
-(use-package pulse
-  :defer 2
-  :custom-face
-  (pulse-highlight-start-face ((t (:inherit highlight))))
-  :config
-  ;;https://karthinks.com/software/batteries-included-with-emacs/
-  (defun dawran/pulse-line (&rest _)
-    "Pulse the current line."
-    (pulse-momentary-highlight-one-line (point)))
-
-  (dolist (command '(scroll-up-command
-                     scroll-down-command
-                     evil-scroll-up
-                     evil-scroll-down
-                     recenter-top-bottom
-                     reposition-window
-                     other-window))
-    (advice-add command :after #'dawran/pulse-line)))
-
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-
-(use-package sketch-themes
-  :straight (:host github :repo "dawranliou/sketch-themes"))
 
 (defvar dawran/after-load-theme-hook nil
   "Hook run after a color theme is loaded using `load-theme'.")
@@ -368,33 +200,12 @@ used to create a new scratch buffer."
                                         (custom-available-themes)))))
     (dawran/load-theme-action theme)))
 
-(dawran/load-theme-action "sketch-black")
-
-(defun font-lock-mode-disable ()
-  (interactive)
-  (font-lock-mode -1))
-
-;;(add-hook 'prog-mode-hook #'font-lock-mode-disable)
 
 ;; Use the same font as default
 (set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
 
 ;; Scale up the variable-pitch mode
 (set-face-attribute 'variable-pitch nil :height 160)
-
-(use-package paren
-  :hook (prog-mode . show-paren-mode))
-
-(use-package paren-face
-  :straight t
-  :hook
-  (lispy-mode . paren-face-mode))
-
-(use-package display-fill-column-indicator
-  :straight t
-  :hook (prog-mode . display-fill-column-indicator-mode)
-  :config
-  (diminish 'auto-fill-function))
 
 ;; Pretty much the default mode line but here's the twist: no git branch info.
 (setq-default mode-line-format
@@ -427,16 +238,107 @@ used to create a new scratch buffer."
 (with-eval-after-load "evil-collection-unimpaired"
   (diminish 'evil-collection-unimpaired-mode))
 
-(use-package ns-auto-titlebar
-  :straight t
-  :hook (after-init . ns-auto-titlebar-mode))
-
 (setq ns-use-proxy-icon nil
       frame-title-format nil)
 
-(use-package rainbow-mode
-  :straight t
-  :commands rainbow-mode)
+(setq enable-recursive-minibuffers t)
+
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+;; I like the exaggerated tab width of 8 characters.
+(setq-default tab-width 8)
+(setq-default indent-tabs-mode nil)
+
+
+;;; - Mac
+
+
+(when (eq system-type 'darwin)
+  ;; Both command keys are 'Super'
+  (setq mac-right-command-modifier 'super)
+  (setq mac-command-modifier 'super)
+
+  ;; Option or Alt is naturally 'Meta'
+  (setq mac-option-modifier 'meta)
+  (setq mac-right-option-modifier 'meta)
+
+  (setq insert-directory-program "gls"
+        dired-listing-switches "-AFhlv --group-directories-first")
+
+  (if (fboundp 'mac-auto-operator-composition-mode)
+      (mac-auto-operator-composition-mode))
+
+  ;; Make keybindings feel natural on mac
+  (global-set-key (kbd "s-s") 'save-buffer)
+  (global-set-key (kbd "s-S") 'write-file)
+  (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
+  (global-set-key (kbd "s-a") 'mark-whole-buffer)
+  (global-set-key (kbd "s-k") 'kill-this-buffer)
+  (global-set-key (kbd "s-v") 'yank)
+  (global-set-key (kbd "s-c") 'kill-ring-save)
+  (global-set-key (kbd "s-z") 'undo)
+  (global-set-key (kbd "s-=") 'text-scale-adjust)
+  (global-set-key (kbd "s--") 'text-scale-decrease)
+  (global-set-key (kbd "s-<backspace>") 'kill-whole-line))
+
+
+;;; - Package manager
+
+
+(setq straight-build-dir (format "build-%s" emacs-version)
+      ;; Lazy modification detection speeds up the startup time. I don't often
+      ;; modify packages anyway. When I do, I can build the package manually, I
+      ;; think.
+      straight-check-for-modifications '(check-on-save find-when-checking))
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'use-package)
+;; (setq use-package-verbose t)
+(setq use-package-expand-minimally t)
+
+
+;;; - Built-in Packages
+
+
+(use-package pulse
+  :defer 2
+  :custom-face
+  (pulse-highlight-start-face ((t (:inherit highlight))))
+  :config
+  ;;https://karthinks.com/software/batteries-included-with-emacs/
+  (defun dawran/pulse-line (&rest _)
+    "Pulse the current line."
+    (pulse-momentary-highlight-one-line (point)))
+
+  (dolist (command '(scroll-up-command
+                     scroll-down-command
+                     evil-scroll-up
+                     evil-scroll-down
+                     recenter-top-bottom
+                     reposition-window
+                     other-window))
+    (advice-add command :after #'dawran/pulse-line)))
+
+
+(use-package paren
+  :hook (prog-mode . show-paren-mode))
+
 
 (use-package hippie-exp
   :commands hippie-expand
@@ -455,22 +357,292 @@ used to create a new scratch buffer."
      ;; try-complete-lisp-symbol
      )))
 
-(use-package orderless
-  :straight t
-  :after selectrum
+
+(use-package recentf
+  :defer 1
   :custom
-  (completion-styles '(orderless))
-  (orderless-skip-highlighting (lambda () selectrum-is-active))
-  (selectrum-highlight-candidates-function #'orderless-highlight-matches))
+  ;; Increase recent entries list from default (20)
+  (recentf-max-saved-items 200)
+  :config
+  (recentf-mode +1))
 
-(setq enable-recursive-minibuffers t)
 
-;; Package `selectrum' is an incremental completion and narrowing
-;; framework. Like Ivy and Helm, which it improves on, Selectrum
-;; provides a user interface for choosing from a list of options by
-;; typing a query to narrow the list, and then selecting one of the
-;; remaining candidates. This offers a significant improvement over
-;; the default Emacs interface for candidate selection.
+(use-package elec-pair
+  :defer 2
+  :config
+  (electric-pair-mode 1)
+  (add-hook 'minibuffer-setup-hook
+            (defun disable-electric-pair-mode ()
+              (electric-pair-mode 0))))
+
+
+(use-package savehist
+  :hook (after-init . savehist-mode)
+  :custom
+  (savehist-file "~/.emacs.d/savehist")
+  (savehist-save-minibuffer-history t)
+  (savehist-additional-variables
+   '(kill-ring
+     mark-ring global-mark-ring
+     search-ring regexp-search-ring))
+  (history-length 20000))
+
+
+(use-package saveplace
+  :defer 2
+  :config
+  (save-place-mode t))
+
+
+(use-package dired
+  :hook (;; (dired-mode . dired-hide-details-mode)
+         (dired-mode . hl-line-mode))
+  :bind ("C-x C-j" . dired-jump)
+  :custom
+  (dired-auto-revert-buffer t)
+  (dired-dwim-target t)
+  (dired-recursive-copies 'always)
+  (dired-recursive-deletes 'always)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    (kbd "C-c C-e") 'wdired-change-to-wdired-mode)
+  (setq-default dired-omit-files-p t)
+  (require 'dired-x)
+  (add-to-list 'dired-omit-extensions ".DS_Store"))
+
+
+(use-package find-dired
+  :commands find-name-dired
+  :custom
+  (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
+
+
+(defun dawran/eshell-history ()
+  "Browse eshell history."
+  (interactive)
+  (let ((candidates (cl-remove-duplicates
+                     (ring-elements eshell-history-ring)
+                     :test #'equal :from-end t))
+        (input (let ((input-start (save-excursion (eshell-bol)))
+                     (input-end (save-excursion (end-of-line) (point))))
+                 (buffer-substring-no-properties input-start input-end))))
+    (let ((selected (completing-read "Eshell history:"
+                                     candidates nil nil input)))
+      (end-of-line)
+      (eshell-kill-input)
+      (insert (string-trim selected)))))
+
+
+(defun dawran/configure-eshell ()
+  ;; Save command history when commands are entered
+  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
+
+  ;; Truncate buffer for performance
+  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
+
+  ;; Use Ivy to provide completions in eshell
+  (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
+
+  ;; Bind some useful keys for evil-mode
+  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
+  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
+
+  (setq eshell-history-size          10000
+        eshell-buffer-maximum-lines  10000
+        eshell-hist-ignoredups           t
+        eshell-highlight-prompt          t
+        eshell-scroll-to-bottom-on-input t))
+
+
+(use-package eshell
+  :hook (eshell-first-time-mode . dawran/configure-eshell))
+
+
+(with-eval-after-load 'esh-opt
+  (setq eshell-destroy-buffer-when-process-dies t))
+
+
+;; Although emacs ships with project.el, the latest version project.el is nicer.
+(use-package project
+  :straight t
+  :bind
+  (("s-p" . project-find-file)
+   :map project-prefix-map
+   ("m" . magit-project-status))
+  :config
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit")))
+
+
+(use-package compile
+  :defer t
+  :hook
+  (compilation-filter . colorize-compilation-buffer)
+  :config
+  (require 'ansi-color)
+
+  (defun colorize-compilation-buffer ()
+    (let ((inhibit-read-only t))
+      (ansi-color-apply-on-region (point-min) (point-max)))))
+
+
+(use-package autorevert
+  :mode ("\\.log\\'" . auto-revert-tail-mode))
+
+
+(use-package time
+  :custom
+  (display-time-world-list '(("Asia/Taipei" "Taipei")
+                             ("America/Toronto" "Toronto")
+                             ("America/Los_Angeles" "San Francisco")
+                             ("Europe/Berlin" "Düsseldorf")
+                             ("Europe/London" "GMT"))))
+
+
+;;; - 3rd Party Packages
+
+
+(use-package general
+  :straight t
+  :config
+  (general-create-definer dawran/leader-def
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC"
+    :global-prefix "M-SPC")
+
+  (general-create-definer dawran/local-leader-def
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :major-modes t
+    :prefix ","
+    :non-normal-prefix "C-,")
+
+  (dawran/leader-def
+    "d" '(dired-jump :which-key "dired")
+    "e" 'eshell
+    "f"  '(:ignore t :which-key "file")
+    "fd" `(,(defun dawran/find-config ()
+              (interactive)
+              (find-file (expand-file-name "~/.emacs.d/init.el")))
+           :which-key "edit config")
+    "t"  '(:ignore t :which-key "toggles")
+    "tc" #'display-time-world
+    "tt" '(dawran/load-theme :which-key "choose theme")
+    "tw" 'whitespace-mode
+    "tm" 'toggle-frame-maximized
+    "tM" 'toggle-frame-fullscreen))
+
+
+(use-package evil
+  :straight t
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (global-set-key (kbd "C-M-u") 'universal-argument)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump t)
+  (setq evil-move-beyond-eol t)
+  (setq evil-move-cursor-back nil)
+  :custom
+  (evil-undo-system 'undo-fu)
+  (evil-symbol-word-search t)
+  (evil-want-fine-undo t)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-insert-state-map "\C-e" 'end-of-line)
+  (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
+  (define-key evil-normal-state-map "\C-y" 'yank)
+  (define-key evil-insert-state-map "\C-y" 'yank)
+  (define-key evil-visual-state-map "\C-y" 'yank)
+  (define-key evil-normal-state-map "\C-k" 'kill-line)
+  (define-key evil-insert-state-map "\C-k" 'kill-line)
+  (define-key evil-visual-state-map "\C-k" 'kill-line)
+
+  ;; Get around faster
+  (define-key evil-motion-state-map "gs" 'evil-avy-goto-symbol-1)
+  (define-key evil-motion-state-map "gS" 'evil-avy-goto-char-timer)
+
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal)
+
+  ;; Let emacs bindings for M-. and M-, take over
+  (define-key evil-normal-state-map (kbd "M-.") nil)
+  (define-key evil-normal-state-map (kbd "M-,") nil)
+
+  (define-key evil-normal-state-map (kbd "C-n") nil)
+  (define-key evil-normal-state-map (kbd "C-p") nil)
+  (define-key evil-insert-state-map (kbd "C-n") nil)
+  (define-key evil-insert-state-map (kbd "C-p") nil)
+
+  (global-set-key (kbd "s-w") 'evil-window-delete)
+
+  ;; https://blog.meain.io/2020/emacs-highlight-yanked/
+  (defun dawran/evil-yank-advice (orig-fn beg end &rest args)
+    "Pulse momentary on yank text"
+    (pulse-momentary-highlight-region beg end)
+    (apply orig-fn beg end args))
+  (advice-add 'evil-yank :around #'dawran/evil-yank-advice))
+
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :config
+  (evil-collection-init))
+
+
+(use-package which-key
+  :straight t
+  :defer 2
+  :config
+  (diminish 'which-key-mode)
+  (setq which-key-idle-delay 1))
+
+
+(use-package idle-highlight-mode
+  :straight t
+  :custom-face
+  (idle-highlight ((t (:inherit lazy-highlight))))
+  :hook
+  (prog-mode . idle-highlight-mode))
+
+
+(use-package sketch-themes
+  :straight (:host github :repo "dawranliou/sketch-themes")
+  :config
+  (dawran/load-theme-action "sketch-black"))
+
+
+(use-package paren-face
+  :straight t
+  :hook
+  (lispy-mode . paren-face-mode))
+
+
+(use-package display-fill-column-indicator
+  :straight t
+  :hook (prog-mode . display-fill-column-indicator-mode)
+  :config
+  (diminish 'auto-fill-function))
+
+
+(use-package ns-auto-titlebar
+  :straight t
+  :hook (after-init . ns-auto-titlebar-mode))
+
+
+(use-package rainbow-mode
+  :straight t
+  :commands rainbow-mode)
+
+
 (use-package selectrum
   :straight (:host github :repo "raxod502/selectrum")
   :bind (("C-M-r" . selectrum-repeat)
@@ -482,8 +654,17 @@ used to create a new scratch buffer."
   (selectrum-count-style 'current/matches)
   (selectrum-fix-minibuffer-height t)
   :init
-  ;; This doesn't actually load Selectrum.
   (selectrum-mode +1))
+
+
+(use-package orderless
+  :straight t
+  :after selectrum
+  :custom
+  (completion-styles '(orderless))
+  (orderless-skip-highlighting (lambda () selectrum-is-active))
+  (selectrum-highlight-candidates-function #'orderless-highlight-matches))
+
 
 (use-package marginalia
   :straight t
@@ -491,24 +672,18 @@ used to create a new scratch buffer."
               ("C-M-a" . marginalia-cycle))
   :init
   (marginalia-mode)
-  ;; When using Selectrum, ensure that Selectrum is refreshed when cycling annotations.
   (advice-add #'marginalia-cycle :after
               (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
   (setq marginalia-annotators '(marginalia-annotators-light
                                 marginalia-annotators-heavy)))
 
-;; Package `ctrlf' provides a replacement for `isearch' that is more
-;; similar to the tried-and-true text search interfaces in web
-;; browsers and other programs (think of what happens when you type
-;; ctrl+F).
+
 (use-package ctrlf
   :straight (:host github :repo "raxod502/ctrlf")
   :bind
   ("s-f" . ctrlf-forward-fuzzy)
-
   :init
   (ctrlf-mode +1)
-
   :config
   (defun ctrlf-toggle-fuzzy ()
     "Toggle CTRLF style to `fuzzy' or back to `literal'."
@@ -518,11 +693,11 @@ used to create a new scratch buffer."
 
   (add-to-list 'ctrlf-minibuffer-bindings
                '("s-f" . ctrlf-toggle-fuzzy))
-
   :general
   (:states '(motion)
            "*" 'ctrlf-forward-symbol-at-point
            "#" 'ctrlf-forward-symbol-at-point))
+
 
 (use-package embark
   :straight t
@@ -543,6 +718,7 @@ used to create a new scratch buffer."
     (setq selectrum--previous-input-string nil))
   (add-hook 'embark-pre-action-hook #'refresh-selectrum))
 
+
 (use-package helpful
   :straight t
   :defer 2
@@ -555,6 +731,7 @@ used to create a new scratch buffer."
          ("C-h C"   . #'helpful-command)
          ("C-h F"   . #'describe-face)))
 
+
 (use-package persistent-scratch
   :straight t
   :custom
@@ -562,35 +739,16 @@ used to create a new scratch buffer."
   :config
   (persistent-scratch-setup-default))
 
-(use-package recentf
-  :defer 1
-  :custom
-  ;; Increase recent entries list from default (20)
-  (recentf-max-saved-items 200)
-  :config
-  (recentf-mode +1))
-
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-
-;; I like the exaggerated tab width of 8 characters.
-(setq-default tab-width 8)
-(setq-default indent-tabs-mode nil)
 
 (use-package ws-butler
   :straight t
   :hook ((text-mode . ws-butler-mode)
          (prog-mode . ws-butler-mode))
   :custom
-  ;; ws-butler normally preserves whitespace in the buffer (but strips it from
-  ;; the written file). While sometimes convenient, this behavior is not
-  ;; intuitive. To the average user it looks like whitespace cleanup is failing,
-  ;; which causes folks to redundantly install their own.
   (ws-butler-keep-whitespace-before-point nil)
   :config
   (diminish 'ws-butler-mode))
+
 
 (use-package lispy
   :straight t
@@ -626,6 +784,7 @@ used to create a new scratch buffer."
    "{" 'lispy-braces
    "}" 'lispy-close-curly))
 
+
 (use-package lispyville
   :straight t
   :after lispy
@@ -649,6 +808,7 @@ used to create a new scratch buffer."
     (kbd "M-k") #'lispyville-drag-backward)
   (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
 
+
 (use-package iedit
   :straight t
   :bind
@@ -668,17 +828,11 @@ used to create a new scratch buffer."
   (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
     [remap evil-force-normal-state] 'iedit--quit))
 
+
 (use-package undo-fu
   :straight t
   :defer t)
 
-(use-package elec-pair
-  :defer 2
-  :config
-  (electric-pair-mode 1)
-  (add-hook 'minibuffer-setup-hook
-            (defun disable-electric-pair-mode ()
-              (electric-pair-mode 0))))
 
 (use-package expand-region
   :straight t
@@ -686,9 +840,9 @@ used to create a new scratch buffer."
   ("s-'" .  er/expand-region)
   ("s-\"" .  er/contract-region)
   :hook
-  (prog-mode . my/greedy-expansion-list)
+  (prog-mode . dawran/greedy-expansion-list)
   :config
-  (defun my/greedy-expansion-list ()
+  (defun dawran/greedy-expansion-list ()
     "Skip marking words or inside quotes and pairs"
     (setq-local er/try-expand-list
                 (cl-set-difference er/try-expand-list
@@ -696,21 +850,6 @@ used to create a new scratch buffer."
                                      er/mark-inside-quotes
                                      er/mark-inside-pairs)))))
 
-(use-package savehist
-  :hook (after-init . savehist-mode)
-  :custom
-  (savehist-file "~/.emacs.d/savehist")
-  (savehist-save-minibuffer-history t)
-  (savehist-additional-variables
-   '(kill-ring
-     mark-ring global-mark-ring
-     search-ring regexp-search-ring))
-  (history-length 20000))
-
-(use-package saveplace
-  :defer 2
-  :config
-  (save-place-mode t))
 
 (defun dawran/org-mode-setup ()
   (setq-local evil-auto-indent nil)
@@ -719,6 +858,7 @@ used to create a new scratch buffer."
                  (if (char-equal c ?<)
                      t
                    (,electric-pair-inhibit-predicate c)))))
+
 
 (use-package org
   :straight t
@@ -746,11 +886,13 @@ used to create a new scratch buffer."
   (org-image-actual-width 640)
   (org-attach-auto-tag "attachment"))
 
+
 (use-package org-tempo
   :after org
   :config
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
+
 
 (use-package evil-org
   :straight t
@@ -758,6 +900,7 @@ used to create a new scratch buffer."
   :hook (org-mode . evil-org-mode)
   :config
   (diminish 'evil-org-mode))
+
 
 (use-package org-journal
   :straight t
@@ -773,6 +916,7 @@ used to create a new scratch buffer."
   (org-journal-dir "~/org/journal/")
   (org-journal-file-type 'weekly)
   (org-journal-find-file #'find-file))
+
 
 (use-package org-roam
   :straight t
@@ -790,7 +934,9 @@ used to create a new scratch buffer."
   :config
   (org-roam-setup))
 
+
 (defvar org-paste-clipboard-image-dir "img")
+
 
 (defun dawran/org-paste-clipboard-image ()
   "Paste clipboard image to org file."
@@ -807,79 +953,10 @@ used to create a new scratch buffer."
       (insert (format "[[file:%s]]" image-file))
       (org-display-inline-images))))
 
+
 (with-eval-after-load "org"
   (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
 
-(use-package dired
-  :hook (;; (dired-mode . dired-hide-details-mode)
-         (dired-mode . hl-line-mode))
-  :bind ("C-x C-j" . dired-jump)
-  :general
-  (dawran/leader-def
-    "d" '(dired-jump :which-key "dired"))
-  :custom
-  (dired-auto-revert-buffer t)
-  (dired-dwim-target t)
-  (dired-recursive-copies 'always)
-  (dired-recursive-deletes 'always)
-  (dired-listing-switches "-AFhlv --group-directories-first")
-  :init
-  (setq insert-directory-program "gls")
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    (kbd "C-c C-e") 'wdired-change-to-wdired-mode)
-  (setq-default dired-omit-files-p t)
-  (require 'dired-x)
-  (add-to-list 'dired-omit-extensions ".DS_Store"))
-
-(use-package find-dired
-  :commands find-name-dired
-  :custom
-  (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
-
-(defun dawran/eshell-history ()
-  "Browse eshell history."
-  (interactive)
-  (let ((candidates (cl-remove-duplicates
-                     (ring-elements eshell-history-ring)
-                     :test #'equal :from-end t))
-        (input (let ((input-start (save-excursion (eshell-bol)))
-                     (input-end (save-excursion (end-of-line) (point))))
-                 (buffer-substring-no-properties input-start input-end))))
-    (let ((selected (completing-read "Eshell history:"
-                                     candidates nil nil input)))
-      (end-of-line)
-      (eshell-kill-input)
-      (insert (string-trim selected)))))
-
-(defun dawran/configure-eshell ()
-  ;; Save command history when commands are entered
-  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
-
-  ;; Truncate buffer for performance
-  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
-
-  ;; Use Ivy to provide completions in eshell
-  (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
-
-  ;; Bind some useful keys for evil-mode
-  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
-  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
-
-  (setq eshell-history-size          10000
-        eshell-buffer-maximum-lines  10000
-        eshell-hist-ignoredups           t
-        eshell-highlight-prompt          t
-        eshell-scroll-to-bottom-on-input t))
-
-(use-package eshell
-  :hook (eshell-first-time-mode . dawran/configure-eshell)
-  :general
-  (dawran/leader-def
-    "e" 'eshell))
-
-(with-eval-after-load 'esh-opt
-  (setq eshell-destroy-buffer-when-process-dies t))
 
 (use-package eshell-toggle
   :straight t
@@ -892,14 +969,6 @@ used to create a new scratch buffer."
   (dawran/leader-def
     "te" 'eshell-toggle))
 
-(use-package project
-  :straight t
-  :bind
-  (("s-p" . project-find-file)
-   :map project-prefix-map
-   ("m" . magit-project-status))
-  :config
-  (add-to-list 'project-switch-commands '(magit-project-status "Magit")))
 
 (use-package magit
   :straight t
@@ -919,16 +988,19 @@ used to create a new scratch buffer."
     "gf"  'magit-file-dispatch
     "gl"  'magit-log-buffer-file))
 
+
 (use-package rg
   :straight t
   :bind ("s-F" . rg-project)
   :config
   (rg-enable-default-bindings))
 
+
 (use-package flycheck
   :straight t
   :ensure t
   :hook (prog-init . flycheck-mode))
+
 
 (use-package lsp-mode
   :straight t
@@ -952,9 +1024,16 @@ used to create a new scratch buffer."
   :config
   (setq-default read-process-output-max (* 1024 1024)))
 
-(use-package flycheck-clj-kondo
-  :disabled t
-  :defer t)
+
+(use-package extras
+  :load-path "lisp/"
+  :bind
+  (("M-y" . yank-pop+)
+   ("C-x C-r" . recentf-open-files+)))
+
+
+;;; - Language major modes
+
 
 (use-package clojure-mode
   :straight t
@@ -966,11 +1045,13 @@ used to create a new scratch buffer."
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t))
 
+
 (use-package clj-refactor
   :straight t
   :defer t
   :config
   (diminish 'clj-refactor-mode))
+
 
 (use-package cider
   :straight t
@@ -996,9 +1077,11 @@ used to create a new scratch buffer."
     "tt" 'cider-test-run-test
     "tn" 'cider-test-run-ns-tests))
 
+
 (use-package go-mode
   :straight t
   :mode "\\.go\\'")
+
 
 (use-package markdown-mode
   :straight t
@@ -1007,20 +1090,24 @@ used to create a new scratch buffer."
   :config
   (setq markdown-command "marked"))
 
+
 (use-package emmet-mode
   :straight t
   :hook
   (html-mode . emmet-mode)
   (css-mode . emmet-mode))
 
+
 (use-package yaml-mode
   :straight t
   :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
+
 
 (use-package fennel-mode
   :straight (:host gitlab :repo "technomancy/fennel-mode")
   :mode "\\.fnl\\'"
   :hook (fennel-mode . lispy-mode))
+
 
 (use-package flyspell
   :bind
@@ -1031,44 +1118,18 @@ used to create a new scratch buffer."
   ;; (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
 
-(setq inferior-lisp-program "sbcl")
 
 (use-package slime
   :straight t
   :commands slime
+  :init
+  (setq inferior-lisp-program "sbcl")
   :config
   (load (expand-file-name "~/.quicklisp/slime-helper.el")))
 
-(use-package compile
-  :defer t
-  :hook
-  (compilation-filter . colorize-compilation-buffer)
-  :config
-  (require 'ansi-color)
 
-  (defun colorize-compilation-buffer ()
-    (let ((inhibit-read-only t))
-      (ansi-color-apply-on-region (point-min) (point-max)))))
+;;; - Elfeed
 
-(use-package autorevert
-  :mode ("\\.log\\'" . auto-revert-tail-mode))
-
-(use-package extras
-  :load-path "lisp/"
-  :bind
-  (("M-y" . yank-pop+)
-   ("C-x C-r" . recentf-open-files+)))
-
-(use-package time
-  :custom
-  (display-time-world-list '(("Asia/Taipei" "Taipei")
-                             ("America/Toronto" "Toronto")
-                             ("America/Los_Angeles" "San Francisco")
-                             ("Europe/Berlin" "Düsseldorf")
-                             ("Europe/London" "GMT")))
-  :general
-  (dawran/leader-def
-    "tc" #'display-time-world))
 
 (use-package elfeed
   :straight t
@@ -1090,16 +1151,18 @@ used to create a new scratch buffer."
   (dawran/leader-def
     "R" '(elfeed :which-key "RSS")))
 
-(use-package shr
-  :defer t
-  :custom
-  (shr-use-colors nil)
-  ;;(shr-use-fonts t)
-  (shr-max-image-proportion 0.5)
-  (shr-image-animate nil)
-  (shr-width 72)
-  (shr-discard-aria-hidden t)
-  (shr-cookie-policy nil))
+
+;;; - EWW
+
+
+(setq shr-use-colors nil
+      shr-use-fonts nil
+      shr-indentation 0
+      shr-max-image-proportion 0.5
+      shr-image-animate nil
+      shr-width 72
+      shr-discard-aria-hidden t
+      shr-cookie-policy nil)
 
 (use-package elpher
   :straight t
@@ -1108,7 +1171,9 @@ used to create a new scratch buffer."
 (setq ediff-window-setup-function #'ediff-setup-windows-plain)
 (setq ediff-split-window-function #'split-window-horizontally)
 
-;; ERC
+
+;;; - ERC
+
 (setq erc-server "irc.libera.chat"
       erc-nick "dawranliou"
       erc-user-full-name "Daw-Ran Liou"
