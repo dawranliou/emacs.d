@@ -581,6 +581,8 @@ used to create a new scratch buffer."
   (define-key evil-normal-state-map (kbd "C-p") nil)
   (define-key evil-insert-state-map (kbd "C-n") nil)
   (define-key evil-insert-state-map (kbd "C-p") nil)
+  (define-key evil-motion-state-map (kbd "C-f") nil)
+  (define-key evil-motion-state-map (kbd "C-b") nil)
 
   (global-set-key (kbd "s-w") 'evil-window-delete)
 
@@ -601,7 +603,8 @@ used to create a new scratch buffer."
 
 (use-package which-key
   :straight t
-  :defer 2
+  :hook
+  (after-init . which-key-mode)
   :config
   (diminish 'which-key-mode)
   (setq which-key-idle-delay 1))
