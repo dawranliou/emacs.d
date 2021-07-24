@@ -345,10 +345,9 @@ used to create a new scratch buffer."
   :commands hippie-expand
   :custom
   (hippie-expand-try-functions-list
-   '(try-complete-file-name-partially
+   '(;; try-complete-file-name-partially
      try-complete-file-name
-     ;; try-expand-all-abbrevs
-     ;; Avoid unbalanced parentheses.
+     try-expand-all-abbrevs
      ;; try-expand-list
      ;; try-expand-line
      try-expand-dabbrev
@@ -1042,6 +1041,13 @@ used to create a new scratch buffer."
    (clojure-mode . lsp)
    (clojurec-mode . lsp)
    (clojurescript-mode . lsp))
+  :init
+  (add-hook 'clojure-mode-hook
+            (lambda ()
+              (setq-local hippie-expand-try-functions-list
+                          '(try-expand-dabbrev
+                            try-expand-dabbrev-all-buffers
+                            try-expand-dabbrev-from-kill))))
   :custom
   (cljr-magic-requires nil)
   :config
