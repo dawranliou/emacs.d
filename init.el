@@ -273,6 +273,7 @@ used to create a new scratch buffer."
       (mac-auto-operator-composition-mode))
 
   ;; Make keybindings feel natural on mac
+  (global-set-key (kbd "s-i") 'imenu)
   (global-set-key (kbd "s-s") 'save-buffer)
   (global-set-key (kbd "s-S") 'write-file)
   (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
@@ -523,7 +524,9 @@ used to create a new scratch buffer."
     "f"  '(:ignore t :which-key "file")
     "fd" `(,(defun dawran/find-config ()
               (interactive)
-              (find-file (expand-file-name "~/.emacs.d/init.el")))
+              (find-file (expand-file-name "~/.emacs.d/init.el"))
+              (add-to-list 'imenu-generic-expression
+                           '("Packages" "^(use-package\\s-+\\(.+\\)" 1)))
            :which-key "edit config")
     "t"  '(:ignore t :which-key "toggles")
     "tc" #'display-time-world
