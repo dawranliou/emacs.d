@@ -541,7 +541,7 @@ used to create a new scratch buffer."
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
-  (global-set-key (kbd "C-M-u") 'universal-argument)
+  (global-set-key (kbd "s-u") 'universal-argument)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump t)
   (setq evil-move-beyond-eol t)
