@@ -586,6 +586,8 @@ used to create a new scratch buffer."
   (define-key evil-motion-state-map (kbd "C-f") nil)
   (define-key evil-motion-state-map (kbd "C-b") nil)
 
+  (define-key evil-normal-state-map (kbd "C-.") nil)
+
   (global-set-key (kbd "s-w") 'evil-window-delete)
 
   ;; https://blog.meain.io/2020/emacs-highlight-yanked/
@@ -707,10 +709,8 @@ used to create a new scratch buffer."
 (use-package embark
   :straight t
   :bind
-  (("C-M-," . embark-act)
-   ("C-h B" . embark-bindings)
-   :map minibuffer-local-map
-   ("C-M-," . embark-act))
+  (("C-." . embark-act)
+   ("C-h B" . embark-bindings))
   :init
   (setq embark-action-indicator
         (lambda (map _target)
