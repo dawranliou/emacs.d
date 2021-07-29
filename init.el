@@ -176,6 +176,12 @@ used to create a new scratch buffer."
 
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 
+(defun dawran/find-config ()
+  (interactive)
+  (find-file (expand-file-name "~/.emacs.d/init.el"))
+  (add-to-list 'imenu-generic-expression
+               '("Packages" "^(use-package\\s-+\\(.+\\)" 1)))
+
 (column-number-mode)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -491,6 +497,7 @@ used to create a new scratch buffer."
 
 
 (use-package time
+  :defer t
   :custom
   (display-time-world-list '(("Asia/Taipei" "Taipei")
                              ("America/Toronto" "Toronto")
@@ -521,11 +528,7 @@ used to create a new scratch buffer."
   (dawran/leader-def
     "d" #'dired-jump
     "e" #'eshell
-    "fd" `(,(defun dawran/find-config ()
-              (interactive)
-              (find-file (expand-file-name "~/.emacs.d/init.el"))
-              (add-to-list 'imenu-generic-expression
-                           '("Packages" "^(use-package\\s-+\\(.+\\)" 1))))
+    "fd" #'dawran/find-config
     "tc" #'display-time-world
     "tt" #'dawran/load-theme
     "tw" #'whitespace-mode
@@ -989,6 +992,7 @@ used to create a new scratch buffer."
 
 (use-package lsp-mode
   :straight t
+  :defer t
   :hook (lsp-mode . (lambda () (setq-local idle-highlight-mode nil)))
   :custom-face
   (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
