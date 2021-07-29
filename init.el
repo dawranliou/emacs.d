@@ -802,21 +802,17 @@ used to create a new scratch buffer."
 (use-package iedit
   :straight t
   :bind
-  (:map evil-visual-state-map
-        ("R" . iedit-mode))
-  (:map iedit-mode-occurrence-keymap
-        ("RET" . iedit-toggle-selection))
-  :config
-  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
-    (kbd "C-n") 'iedit-next-occurrence)
-  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
-    (kbd "C-p") 'iedit-prev-occurrence)
-  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
-    [remap keyboard-escape-quit] 'iedit--quit)
-  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
-    [remap keyboard-quit] 'iedit--quit)
-  (evil-define-minor-mode-key 'normal 'iedit-mode-keymap
-    [remap evil-force-normal-state] 'iedit--quit))
+  (:map
+   evil-visual-state-map
+   ("R" . iedit-mode)
+   :map iedit-mode-occurrence-keymap
+   ("RET" . iedit-toggle-selection)
+   :map iedit-mode-keymap
+   ("C-n" . iedit-next-occurrence)
+   ("C-p" . iedit-prev-occurrence)
+   ([remap keyboard-escape-quit] . iedit--quit)
+   ([remap keyboard-quit] . iedit--quit)
+   ([remap evil-force-normal-state] . iedit--quit)))
 
 
 (use-package undo-fu
