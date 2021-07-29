@@ -710,6 +710,8 @@ used to create a new scratch buffer."
   :straight t
   :bind
   (("C-." . embark-act)
+   ("s-," . xref-pop-marker-stack)
+   ("s-." . embark-dwim)
    ("C-h B" . embark-bindings))
   :init
   (setq embark-action-indicator
