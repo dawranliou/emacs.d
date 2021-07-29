@@ -807,8 +807,8 @@ used to create a new scratch buffer."
   (lispyville--define-key '(motion normal)
     "Q" 'lispy-ace-paren)
   (lispyville--define-key 'normal
-    (kbd "M-j") #'lispyville-drag-forward
-    (kbd "M-k") #'lispyville-drag-backward)
+    (kbd "M-n") #'lispyville-drag-forward
+    (kbd "M-p") #'lispyville-drag-backward)
   (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
 
 
