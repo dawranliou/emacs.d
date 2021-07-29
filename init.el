@@ -519,21 +519,18 @@ used to create a new scratch buffer."
     :non-normal-prefix "C-,")
 
   (dawran/leader-def
-    "d" '(dired-jump :which-key "dired")
-    "e" 'eshell
-    "f"  '(:ignore t :which-key "file")
+    "d" #'dired-jump
+    "e" #'eshell
     "fd" `(,(defun dawran/find-config ()
               (interactive)
               (find-file (expand-file-name "~/.emacs.d/init.el"))
               (add-to-list 'imenu-generic-expression
-                           '("Packages" "^(use-package\\s-+\\(.+\\)" 1)))
-           :which-key "edit config")
-    "t"  '(:ignore t :which-key "toggles")
+                           '("Packages" "^(use-package\\s-+\\(.+\\)" 1))))
     "tc" #'display-time-world
-    "tt" '(dawran/load-theme :which-key "choose theme")
-    "tw" 'whitespace-mode
-    "tm" 'toggle-frame-maximized
-    "tM" 'toggle-frame-fullscreen))
+    "tt" #'dawran/load-theme
+    "tw" #'whitespace-mode
+    "tm" #'toggle-frame-maximized
+    "tM" #'toggle-frame-fullscreen))
 
 
 (use-package evil
@@ -603,15 +600,6 @@ used to create a new scratch buffer."
   :after evil
   :config
   (evil-collection-init))
-
-
-(use-package which-key
-  :straight t
-  :hook
-  (after-init . which-key-mode)
-  :config
-  (diminish 'which-key-mode)
-  (setq which-key-idle-delay 1))
 
 
 (use-package idle-highlight-mode
@@ -714,11 +702,7 @@ used to create a new scratch buffer."
    ("s-." . embark-dwim)
    ("C-h B" . embark-bindings))
   :init
-  (setq embark-action-indicator
-        (lambda (map _target)
-          (which-key--show-keymap "Embark" map nil nil 'no-paging)
-          #'which-key--hide-popup-ignore-command)
-        embark-become-indicator embark-action-indicator)
+  (setq prefix-help-command #'embark-prefix-help-command)
   :config
   ;; Refresh candidate list after action
   (defun refresh-selectrum ()
@@ -909,9 +893,8 @@ used to create a new scratch buffer."
   :straight t
   :general
   (dawran/leader-def
-    "n" '(:ignore t :which-key "notes")
-    "nj" '(org-journal-open-current-journal-file :which-key "journal")
-    "nJ" '(org-journal-new-entry :which-key "new journal entry"))
+    "nj" #'org-journal-open-current-journal-file
+    "nJ" #'org-journal-new-entry)
   :custom
   (org-journal-date-format "%A, %d/%m/%Y")
   (org-journal-date-prefix "* ")
@@ -927,11 +910,11 @@ used to create a new scratch buffer."
   (org-roam-directory "~/org/roam/")
   :general
   (dawran/leader-def
-    "nf" 'org-roam-node-find
-    "nl" 'org-roam-buffer-toggle
-    "ng" 'org-roam-graph
-    "ni" 'org-roam-node-insert
-    "nc" 'org-roam-capture)
+    "nf" #'org-roam-node-find
+    "nl" #'org-roam-buffer-toggle
+    "ng" #'org-roam-graph
+    "ni" #'org-roam-node-insert
+    "nc" #'org-roam-capture)
   :init
   (setq org-roam-v2-ack t)
   :config
@@ -970,7 +953,7 @@ used to create a new scratch buffer."
   ("C-M-'" . eshell-toggle)
   :general
   (dawran/leader-def
-    "te" 'eshell-toggle))
+    "te" #'eshell-toggle))
 
 
 (use-package magit
@@ -984,12 +967,11 @@ used to create a new scratch buffer."
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :general
   (dawran/leader-def
-    "g"   '(:ignore t :which-key "git")
-    "gg"  'magit-status
-    "gb"  'magit-blame-addition
-    "gd"  'magit-diff-unstaged
-    "gf"  'magit-file-dispatch
-    "gl"  'magit-log-buffer-file))
+    "gg"  #'magit-status
+    "gb"  #'magit-blame-addition
+    "gd"  #'magit-diff-unstaged
+    "gf"  #'magit-file-dispatch
+    "gl"  #'magit-log-buffer-file))
 
 
 (use-package rg
@@ -1007,8 +989,7 @@ used to create a new scratch buffer."
 
 (use-package lsp-mode
   :straight t
-  :hook ((lsp-mode . lsp-enable-which-key-integration)
-         (lsp-mode . (lambda () (setq-local idle-highlight-mode nil))))
+  :hook (lsp-mode . (lambda () (setq-local idle-highlight-mode nil)))
   :custom-face
   (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
   :custom
@@ -1075,16 +1056,14 @@ used to create a new scratch buffer."
   :general
   (dawran/local-leader-def
     :keymaps '(clojure-mode-map clojurescript-mode-map)
-    "," 'cider
-    "e" '(:ignore t :which-key "eval")
-    "eb" 'cider-eval-buffer
-    "ef" 'cider-eval-defun-at-point
-    "eF" 'cider-pprint-eval-defun-to-comment
-    "ee" 'cider-eval-last-sexp
-    "eE" 'cider-pprint-eval-last-sexp-to-comment
-    "t" '(:ignore t :which-key "test")
-    "tt" 'cider-test-run-test
-    "tn" 'cider-test-run-ns-tests))
+    "," #'cider
+    "eb" #'cider-eval-buffer
+    "ef" #'cider-eval-defun-at-point
+    "eF" #'cider-pprint-eval-defun-to-comment
+    "ee" #'cider-eval-last-sexp
+    "eE" #'cider-pprint-eval-last-sexp-to-comment
+    "tt" #'cider-test-run-test
+    "tn" #'cider-test-run-ns-tests))
 
 
 (use-package go-mode
@@ -1158,7 +1137,7 @@ used to create a new scratch buffer."
                   ("https://emacsredux.com/atom.xml" emacs)))
   :general
   (dawran/leader-def
-    "R" '(elfeed :which-key "RSS")))
+    "R" #'elfeed))
 
 
 ;;; - EWW
