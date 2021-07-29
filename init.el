@@ -798,7 +798,6 @@ used to create a new scratch buffer."
                           c-w
                           text-objects
                           additional-insert
-                          additional-movement
                           additional-wrap
                           commentary
                           slurp/barf-cp))
