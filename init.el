@@ -277,7 +277,7 @@ used to create a new scratch buffer."
 
   (when (fboundp 'mac-application-state)
     (add-hook
-     after-init-hook
+     'after-init-hook
      (lambda ()
        (load-theme
         (if (equal "NSAppearanceNameDarkAqua"
