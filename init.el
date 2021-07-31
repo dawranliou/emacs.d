@@ -597,6 +597,7 @@ used to create a new scratch buffer."
   (define-key evil-motion-state-map (kbd "C-f") nil)
   (define-key evil-motion-state-map (kbd "C-b") nil)
 
+  (define-key evil-insert-state-map (kbd "C-a") nil)
   (define-key evil-normal-state-map (kbd "C-.") nil)
 
   (global-set-key (kbd "s-w") 'evil-window-delete)
