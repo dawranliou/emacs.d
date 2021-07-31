@@ -275,6 +275,17 @@ used to create a new scratch buffer."
   (setq insert-directory-program "gls"
         dired-listing-switches "-AFhlv --group-directories-first")
 
+  (when (fboundp 'mac-application-state)
+    (add-hook
+     after-init-hook
+     (lambda ()
+       (load-theme
+        (if (equal "NSAppearanceNameDarkAqua"
+                   (plist-get (mac-application-state) :appearance))
+            'sketch-black
+          'sketch-white)
+        t))))
+
   (if (fboundp 'mac-auto-operator-composition-mode)
       (mac-auto-operator-composition-mode))
 
