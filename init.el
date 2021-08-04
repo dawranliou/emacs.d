@@ -497,9 +497,10 @@ used to create a new scratch buffer."
   (setq eshell-destroy-buffer-when-process-dies t))
 
 
-;; Although emacs ships with project.el, the latest version project.el is nicer.
+;; although emacs ships with project.el, the latest version project.el is nicer.
+(when (version< emacs-version "28")
+  (straight-use-package 'project))
 (use-package project
-  :straight t
   :bind
   (("s-p" . project-find-file)
    :map project-prefix-map
