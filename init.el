@@ -260,6 +260,23 @@ used to create a new scratch buffer."
 (setq-default indent-tabs-mode nil)
 
 
+(defun dawran/quick-edit ()
+  "Util function for use with hammerspoon quick edit functionality."
+  (interactive)
+  (let ((qed-buffer (generate-new-buffer "*quick-edit*")))
+    (switch-to-buffer qed-buffer)
+    (evil-paste-after 1)
+    (gfm-mode)))
+
+
+(defun dawran/quick-edit-end ()
+  "Util function to be executed on qed completion."
+  (interactive)
+  (mark-whole-buffer)
+  (call-interactively 'kill-ring-save)
+  (kill-current-buffer))
+
+
 ;;; - Mac
 
 
