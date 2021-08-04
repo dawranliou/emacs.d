@@ -653,27 +653,25 @@ used to create a new scratch buffer."
   :commands rainbow-mode)
 
 
-(use-package selectrum
-  :straight (:host github :repo "raxod502/selectrum")
-  :bind (("C-M-r" . selectrum-repeat)
-         :map selectrum-minibuffer-map
-         ("C-r" . selectrum-select-from-history)
-         ("C-j" . selectrum-next-candidate)
-         ("C-k" . selectrum-previous-candidate))
-  :custom
-  (selectrum-count-style 'current/matches)
-  (selectrum-fix-minibuffer-height t)
-  :init
-  (selectrum-mode +1))
-
-
 (use-package orderless
   :straight t
-  :after selectrum
   :custom
   (completion-styles '(orderless))
-  (orderless-skip-highlighting (lambda () selectrum-is-active))
-  (selectrum-highlight-candidates-function #'orderless-highlight-matches))
+  (completion-category-overrides '((file (styles partial-completion))))
+  :init
+  (setq completion-category-defaults nil))
+
+
+(use-package corfu
+  :straight t
+  :init
+  (corfu-global-mode))
+
+
+(use-package vertico
+  :straight t
+  :init
+  (vertico-mode))
 
 
 (use-package marginalia
@@ -682,8 +680,6 @@ used to create a new scratch buffer."
               ("C-M-a" . marginalia-cycle))
   :init
   (marginalia-mode)
-  (advice-add #'marginalia-cycle :after
-              (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit))))
   (setq marginalia-annotators '(marginalia-annotators-light
                                 marginalia-annotators-heavy)))
 
@@ -717,12 +713,7 @@ used to create a new scratch buffer."
    ("s-." . embark-dwim)
    ("C-h B" . embark-bindings))
   :init
-  (setq prefix-help-command #'embark-prefix-help-command)
-  :config
-  ;; Refresh candidate list after action
-  (defun refresh-selectrum ()
-    (setq selectrum--previous-input-string nil))
-  (add-hook 'embark-pre-action-hook #'refresh-selectrum))
+  (setq prefix-help-command #'embark-prefix-help-command))
 
 
 (use-package helpful
