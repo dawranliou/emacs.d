@@ -1065,6 +1065,10 @@ used to create a new scratch buffer."
   (cider-repl-buffer-size-limit 100000)
   :hook
   (cider-repl-mode . evil-insert-state)
+  :bind
+  (:map cider-mode-map
+        ("M-," . nil)                   ; Prefer xref + clojure-lsp
+        ("M-." . nil))                  ; Prefer xref + clojure-lsp
   :general
   (dawran/local-leader-def
     :keymaps '(clojure-mode-map clojurescript-mode-map)
