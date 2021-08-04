@@ -813,6 +813,8 @@ used to create a new scratch buffer."
 
 (use-package iedit
   :straight t
+  :custom
+  (iedit-toggle-key-default nil)
   :bind
   (:map
    evil-visual-state-map
