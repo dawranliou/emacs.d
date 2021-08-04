@@ -703,20 +703,11 @@ used to create a new scratch buffer."
 
 
 (use-package ctrlf
-  :straight (:host github :repo "raxod502/ctrlf")
+  :straight (:host github :repo "dawranliou/ctrlf")
   :bind
   ("s-f" . ctrlf-forward-fuzzy)
   :init
   (ctrlf-mode +1)
-  :config
-  (defun ctrlf-toggle-fuzzy ()
-    "Toggle CTRLF style to `fuzzy' or back to `literal'."
-    (interactive)
-    (setq ctrlf--style
-          (if (eq ctrlf--style 'fuzzy) 'literal 'fuzzy)))
-
-  (add-to-list 'ctrlf-minibuffer-bindings
-               '("s-f" . ctrlf-toggle-fuzzy))
   :general
   (:states '(motion)
            "*" 'ctrlf-forward-symbol-at-point
