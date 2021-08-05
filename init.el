@@ -40,78 +40,96 @@
 ;;; - Emacs
 
 
-;; Enable useful features by default.
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+
+(setq inhibit-startup-message t
+      initial-major-mode 'scratch-mode
+      initial-scratch-message nil
+      tramp-default-method "ssh"
+      backup-directory-alist
+      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
+      auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t))
+      default-frame-alist (append (list
+                                   '(font . "Monolisa-14")
+                                   ;; '(min-height . 1)
+                                   ;; '(height . 45)
+                                   '(min-width . 1)
+                                   '(width . 81)))
+      ring-bell-function #'ignore
+      visible-bell nil
+      line-spacing 1
+      ns-use-proxy-icon nil
+      frame-title-format nil
+      enable-recursive-minibuffers t
+      custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+
+(load custom-file 'noerror)
+
+
+(setq-default delete-by-moving-to-trash t
+              fill-column 80
+              tab-width 8
+              indent-tabs-mode nil
+              mode-line-format
+              '("%e"
+                mode-line-front-space
+                mode-line-mule-info
+                mode-line-client
+                mode-line-modified
+                mode-line-remote
+                mode-line-frame-identification
+                mode-line-buffer-identification
+                "   "
+                mode-line-position
+                evil-mode-line-tag
+                ;; (vc-mode vc-mode)
+                "  "
+                mode-line-modes mode-line-misc-info mode-line-end-spaces))
+
+
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-;; Switch to help buffer when it's opened.
-(setq help-window-select t)
 
-;; Tramp setting
-(setq tramp-default-method "ssh")
-
-;; Keep backup files and auto-save files in the backups directory
-(setq backup-directory-alist
-      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
-      auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t)))
-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
-
-(setq-default delete-by-moving-to-trash t)
-
-;; Make ESC quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-(global-set-key (kbd "C-x C-b") #'ibuffer)
+(global-set-key (kbd "<escape>") #'keyboard-escape-quit)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
-(global-set-key (kbd "M-:") 'pp-eval-expression)
+(global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "M-/") #'hippie-expand)
+(global-set-key (kbd "M-:") #'pp-eval-expression)
+(global-set-key (kbd "s--") #'text-scale-decrease)
+(global-set-key (kbd "s-<backspace>") #'kill-whole-line)
+(global-set-key (kbd "s-=") #'text-scale-adjust)
+(global-set-key (kbd "s-S") #'write-file)
+(global-set-key (kbd "s-a") #'mark-whole-buffer)
+(global-set-key (kbd "s-c") #'kill-ring-save)
+(global-set-key (kbd "s-i") #'imenu)
+(global-set-key (kbd "s-k") #'kill-this-buffer)
+(global-set-key (kbd "s-q") #'save-buffers-kill-emacs)
+(global-set-key (kbd "s-s") #'save-buffer)
+(global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
+(global-set-key (kbd "s-u") #'universal-argument)
+(global-set-key (kbd "s-v") #'yank)
+(global-set-key (kbd "s-w") #'evil-window-delete)
+(global-set-key (kbd "s-z") #'undo)
 
-;; ibuffer
 
-(setq ibuffer-expert t
-      ibuffer-show-empty-filter-groups nil
-      ibuffer-saved-filter-groups
-      '(("default"
-         ("Scratch" (name . "*scratch*"))
-         ("Eww"   (mode . eww-mode))
-         ("Kira" (filename . "/kira/"))
-         ("Projects" (filename . "/projects/"))
-         ("Dired" (mode . dired-mode))
-         ("Meta"  (name . "\\*"))
-         ("Emacs Config" (filename . ".emacs.d"))
-         ("Help" (or (name . "\*Help\*")
-                     (name . "\*Apropos\*")
-                     (name . "\*Info\*"))))))
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-auto-mode 1)
-            (ibuffer-switch-to-saved-filter-groups "default")))
+(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
+(set-face-attribute 'variable-pitch nil :height 160)
 
-(setq inhibit-startup-message t)
 
-(setq frame-inhibit-implied-resize t)
-
-(setq default-frame-alist
-      (append (list
-               '(font . "Monolisa-14")
-               ;; '(min-height . 1)
-               ;; '(height . 45)
-               '(min-width . 1)
-               '(width . 81))))
-
-;; No beeping nor visible bell
-(setq ring-bell-function #'ignore
-      visible-bell nil)
-
+(column-number-mode)
 (blink-cursor-mode 0)
 
-(setq-default fill-column 80)
-(setq-default line-spacing 1)
+
+;; Scratch mode
 
 (defvar scratch-mode-map
   (let ((map (make-sparse-keymap)))
@@ -125,9 +143,6 @@
   "Scratch"
   "Major mode for the *scratch* buffer.\\{scratch-mode-map}"
   (setq-local indent-line-function 'indent-relative))
-
-(setq initial-major-mode 'scratch-mode)
-(setq initial-scratch-message nil)
 
 (defun jump-to-scratch-buffer ()
   "Jump to the existing *scratch* buffer or create a new
@@ -150,15 +165,11 @@ used to create a new scratch buffer."
           (scratch-mode))
         (switch-to-buffer new-scratch-buffer)))))
 
-(global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
-
 (defun dawran/find-config ()
   (interactive)
   (find-file (expand-file-name "~/.emacs.d/init.el"))
   (add-to-list 'imenu-generic-expression
                '("Packages" "^(use-package\\s-+\\(.+\\)" 1)))
-
-(column-number-mode)
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
@@ -183,29 +194,6 @@ used to create a new scratch buffer."
     (dawran/load-theme-action theme)))
 
 
-;; Use the same font as default
-(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
-
-;; Scale up the variable-pitch mode
-(set-face-attribute 'variable-pitch nil :height 160)
-
-;; Pretty much the default mode line but here's the twist: no git branch info.
-(setq-default mode-line-format
-              '("%e"
-                mode-line-front-space
-                mode-line-mule-info
-                mode-line-client
-                mode-line-modified
-                mode-line-remote
-                mode-line-frame-identification
-                mode-line-buffer-identification
-                "   "
-                mode-line-position
-                evil-mode-line-tag
-                ;; (vc-mode vc-mode)
-                "  "
-                mode-line-modes mode-line-misc-info mode-line-end-spaces))
-
 ;; Inspired by diminish.el
 ;; https://github.com/myrjola/diminish.el/blob/master/diminish.el
 (defun diminish (mode)
@@ -219,21 +207,6 @@ used to create a new scratch buffer."
 
 (with-eval-after-load "evil-collection-unimpaired"
   (diminish 'evil-collection-unimpaired-mode))
-
-(setq ns-use-proxy-icon nil
-      frame-title-format nil)
-
-(setq enable-recursive-minibuffers t)
-
-
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-
-;; I like the exaggerated tab width of 8 characters.
-(setq-default tab-width 8)
-(setq-default indent-tabs-mode nil)
 
 
 (defun dawran/quick-edit ()
@@ -257,17 +230,14 @@ used to create a new scratch buffer."
 
 
 (when (eq system-type 'darwin)
-  ;; Both command keys are 'Super'
-  (setq mac-right-command-modifier 'super)
-  (setq mac-command-modifier 'super)
-
-  ;; Option or Alt is naturally 'Meta'
-  (setq mac-option-modifier 'meta)
-  (setq mac-right-option-modifier 'meta)
-
-  (setq insert-directory-program "gls"
+  (setq mac-right-command-modifier 'super
+        mac-command-modifier 'super
+        mac-option-modifier 'meta
+        mac-right-option-modifier 'meta
+        insert-directory-program "gls"
         dired-listing-switches "-AFhlv --group-directories-first")
 
+  ;; Detect system theme
   (when (fboundp 'mac-application-state)
     (add-hook
      'after-init-hook
@@ -279,22 +249,9 @@ used to create a new scratch buffer."
           'sketch-white)
         t))))
 
+  ;; Ligature
   (if (fboundp 'mac-auto-operator-composition-mode)
-      (mac-auto-operator-composition-mode))
-
-  ;; Make keybindings feel natural on mac
-  (global-set-key (kbd "s-i") 'imenu)
-  (global-set-key (kbd "s-s") 'save-buffer)
-  (global-set-key (kbd "s-S") 'write-file)
-  (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
-  (global-set-key (kbd "s-a") 'mark-whole-buffer)
-  (global-set-key (kbd "s-k") 'kill-this-buffer)
-  (global-set-key (kbd "s-v") 'yank)
-  (global-set-key (kbd "s-c") 'kill-ring-save)
-  (global-set-key (kbd "s-z") 'undo)
-  (global-set-key (kbd "s-=") 'text-scale-adjust)
-  (global-set-key (kbd "s--") 'text-scale-decrease)
-  (global-set-key (kbd "s-<backspace>") 'kill-whole-line))
+      (mac-auto-operator-composition-mode)))
 
 
 ;;; - Package manager
@@ -326,6 +283,28 @@ used to create a new scratch buffer."
 
 
 ;;; - Built-in Packages
+
+
+;; ibuffer
+(setq ibuffer-expert t
+      ibuffer-show-empty-filter-groups nil
+      ibuffer-saved-filter-groups
+      '(("default"
+         ("Scratch" (name . "*scratch*"))
+         ("Eww"   (mode . eww-mode))
+         ("Kira" (filename . "/kira/"))
+         ("Projects" (filename . "/projects/"))
+         ("Dired" (mode . dired-mode))
+         ("Meta"  (name . "\\*"))
+         ("Emacs Config" (filename . ".emacs.d"))
+         ("Help" (or (name . "\*Help\*")
+                     (name . "\*Apropos\*")
+                     (name . "\*Info\*"))))))
+
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-auto-mode 1)
+            (ibuffer-switch-to-saved-filter-groups "default")))
 
 
 (use-package pulse
@@ -546,7 +525,6 @@ used to create a new scratch buffer."
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
-  (global-set-key (kbd "s-u") 'universal-argument)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump t)
   (setq evil-move-beyond-eol t)
@@ -593,8 +571,6 @@ used to create a new scratch buffer."
 
   (define-key evil-insert-state-map (kbd "C-a") nil)
   (define-key evil-normal-state-map (kbd "C-.") nil)
-
-  (global-set-key (kbd "s-w") 'evil-window-delete)
 
   ;; https://blog.meain.io/2020/emacs-highlight-yanked/
   (defun dawran/evil-yank-advice (orig-fn beg end &rest args)
