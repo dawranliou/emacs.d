@@ -61,10 +61,6 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-;; Mouse Scroll
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 3) ((control))))
-(setq mouse-wheel-progressive-speed nil)
-
 (setq-default delete-by-moving-to-trash t)
 
 ;; Make ESC quit prompts
