@@ -20,26 +20,6 @@
             (setq gc-cons-threshold (* 100 1024 1024) ; 100mb
                   gc-cons-percentage 0.1)))
 
-(defun doom-defer-garbage-collection-h ()
-  (setq gc-cons-threshold most-positive-fixnum))
-
-(defun doom-restore-garbage-collection-h ()
-  ;; Defer it so that commands launched immediately after will enjoy the
-  ;; benefits.
-  (run-at-time
-   1 nil (lambda () (setq gc-cons-threshold (* 100 1024 1024)))))
-
-(add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
-(add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
-
-(defvar doom--file-name-handler-alist file-name-handler-alist)
-(setq file-name-handler-alist nil)
-
-;; Alternatively, restore it even later:
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq file-name-handler-alist doom--file-name-handler-alist)))
-
 ;; Profile emacs startup
 (add-hook 'emacs-startup-hook
           (defun dawran/print-start-up-stats ()
