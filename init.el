@@ -144,6 +144,9 @@
 (set-face-attribute 'variable-pitch nil :height 160)
 
 
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
+
 (column-number-mode)
 (blink-cursor-mode 0)
 (show-paren-mode)
@@ -180,9 +183,6 @@ used to create a new scratch buffer."
   (find-file (expand-file-name "~/.emacs.d/init.el"))
   (add-to-list 'imenu-generic-expression
                '("Packages" "^(use-package\\s-+\\(.+\\)" 1)))
-
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 
 (defun dawran/load-theme-action (theme)
