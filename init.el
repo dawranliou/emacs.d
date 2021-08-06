@@ -570,6 +570,7 @@ used to create a new scratch buffer."
   (define-key evil-motion-state-map (kbd "C-b") nil)
 
   (define-key evil-insert-state-map (kbd "C-a") nil)
+  (define-key evil-insert-state-map (kbd "C-d") nil)
   (define-key evil-normal-state-map (kbd "C-.") nil)
 
   ;; https://blog.meain.io/2020/emacs-highlight-yanked/
