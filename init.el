@@ -498,28 +498,17 @@ used to create a new scratch buffer."
 (use-package general
   :straight t
   :config
-  (general-create-definer dawran/leader-def
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :prefix "SPC"
-    :global-prefix "M-SPC")
-
-  (general-create-definer dawran/local-leader-def
-    :states '(normal insert visual emacs)
-    :keymaps 'override
-    :major-modes t
-    :prefix ","
-    :non-normal-prefix "C-,")
-
-  (dawran/leader-def
-    "d" #'dired-jump
-    "e" #'eshell
-    "fd" #'dawran/find-config
-    "tc" #'display-time-world
-    "tt" #'dawran/load-theme
-    "tw" #'whitespace-mode
-    "tm" #'toggle-frame-maximized
-    "tM" #'toggle-frame-fullscreen))
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "d" #'dired-jump
+   "e" #'eshell
+   "fd" #'dawran/find-config
+   "tc" #'display-time-world
+   "tt" #'dawran/load-theme
+   "tw" #'whitespace-mode
+   "tm" #'toggle-frame-maximized
+   "tM" #'toggle-frame-fullscreen))
 
 
 (use-package evil
@@ -546,10 +535,6 @@ used to create a new scratch buffer."
   (define-key evil-insert-state-map "\C-y" 'yank)
   (define-key evil-visual-state-map "\C-y" 'yank)
 
-  ;; Get around faster
-  (define-key evil-motion-state-map "gs" 'evil-avy-goto-symbol-1)
-  (define-key evil-motion-state-map "gS" 'evil-avy-goto-char-timer)
-
   ;; Use visual line motions even outside of visual-line-mode buffers
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
@@ -557,20 +542,18 @@ used to create a new scratch buffer."
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)
 
-  ;; Let emacs bindings for M-. and M-, take over
-  (define-key evil-normal-state-map (kbd "M-.") nil)
-  (define-key evil-normal-state-map (kbd "M-,") nil)
-
-  (define-key evil-normal-state-map (kbd "C-n") nil)
-  (define-key evil-normal-state-map (kbd "C-p") nil)
-  (define-key evil-insert-state-map (kbd "C-n") nil)
-  (define-key evil-insert-state-map (kbd "C-p") nil)
-  (define-key evil-motion-state-map (kbd "C-f") nil)
-  (define-key evil-motion-state-map (kbd "C-b") nil)
-
   (define-key evil-insert-state-map (kbd "C-a") nil)
   (define-key evil-insert-state-map (kbd "C-d") nil)
+  (define-key evil-insert-state-map (kbd "C-n") nil)
+  (define-key evil-insert-state-map (kbd "C-p") nil)
+  (define-key evil-motion-state-map (kbd ",") nil)
+  (define-key evil-motion-state-map (kbd "C-b") nil)
+  (define-key evil-motion-state-map (kbd "C-f") nil)
   (define-key evil-normal-state-map (kbd "C-.") nil)
+  (define-key evil-normal-state-map (kbd "C-n") nil)
+  (define-key evil-normal-state-map (kbd "C-p") nil)
+  (define-key evil-normal-state-map (kbd "M-,") nil)
+  (define-key evil-normal-state-map (kbd "M-.") nil)
 
   ;; https://blog.meain.io/2020/emacs-highlight-yanked/
   (defun dawran/evil-yank-advice (orig-fn beg end &rest args)
@@ -814,9 +797,11 @@ used to create a new scratch buffer."
 (use-package org-journal
   :straight t
   :general
-  (dawran/leader-def
-    "nj" #'org-journal-open-current-journal-file
-    "nJ" #'org-journal-new-entry)
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "nj" #'org-journal-open-current-journal-file
+   "nJ" #'org-journal-new-entry)
   :custom
   (org-journal-date-format "%A, %d/%m/%Y")
   (org-journal-date-prefix "* ")
@@ -831,12 +816,14 @@ used to create a new scratch buffer."
   :custom
   (org-roam-directory "~/org/roam/")
   :general
-  (dawran/leader-def
-    "nf" #'org-roam-node-find
-    "nl" #'org-roam-buffer-toggle
-    "ng" #'org-roam-graph
-    "ni" #'org-roam-node-insert
-    "nc" #'org-roam-capture)
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "nf" #'org-roam-node-find
+   "nl" #'org-roam-buffer-toggle
+   "ng" #'org-roam-graph
+   "ni" #'org-roam-node-insert
+   "nc" #'org-roam-capture)
   :init
   (setq org-roam-v2-ack t)
   :config
@@ -874,8 +861,10 @@ used to create a new scratch buffer."
   :bind
   ("C-M-'" . eshell-toggle)
   :general
-  (dawran/leader-def
-    "te" #'eshell-toggle))
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "te" #'eshell-toggle))
 
 
 (use-package magit
@@ -888,12 +877,14 @@ used to create a new scratch buffer."
   (magit-diff-refine-hunk 'all)
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   :general
-  (dawran/leader-def
-    "gg"  #'magit-status
-    "gb"  #'magit-blame-addition
-    "gd"  #'magit-diff-unstaged
-    "gf"  #'magit-file-dispatch
-    "gl"  #'magit-log-buffer-file))
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "gg"  #'magit-status
+   "gb"  #'magit-blame-addition
+   "gd"  #'magit-diff-unstaged
+   "gf"  #'magit-file-dispatch
+   "gl"  #'magit-log-buffer-file))
 
 
 (use-package rg
@@ -981,16 +972,18 @@ used to create a new scratch buffer."
         ("M-," . nil)                   ; Prefer xref + clojure-lsp
         ("M-." . nil))                  ; Prefer xref + clojure-lsp
   :general
-  (dawran/local-leader-def
-    :keymaps '(clojure-mode-map clojurescript-mode-map)
-    "," #'cider
-    "eb" #'cider-eval-buffer
-    "ef" #'cider-eval-defun-at-point
-    "eF" #'cider-pprint-eval-defun-to-comment
-    "ee" #'cider-eval-last-sexp
-    "eE" #'cider-pprint-eval-last-sexp-to-comment
-    "tt" #'cider-test-run-test
-    "tn" #'cider-test-run-ns-tests))
+  (general-define-key
+   :state 'normal
+   :prefix ","
+   :keymaps '(clojure-mode-map clojurescript-mode-map)
+   "," #'cider
+   "eb" #'cider-eval-buffer
+   "ef" #'cider-eval-defun-at-point
+   "eF" #'cider-pprint-eval-defun-to-comment
+   "ee" #'cider-eval-last-sexp
+   "eE" #'cider-pprint-eval-last-sexp-to-comment
+   "tt" #'cider-test-run-test
+   "tn" #'cider-test-run-ns-tests))
 
 
 (use-package go-mode
@@ -1064,8 +1057,10 @@ used to create a new scratch buffer."
                   ("http://irreal.org/blog/?feed=rss2" emacs)
                   ("https://emacsredux.com/atom.xml" emacs)))
   :general
-  (dawran/leader-def
-    "R" #'elfeed))
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "R" #'elfeed))
 
 
 ;;; - EWW
