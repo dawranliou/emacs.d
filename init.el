@@ -104,6 +104,8 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "M-/") #'hippie-expand)
 (global-set-key (kbd "M-:") #'pp-eval-expression)
+(global-set-key (kbd "M-z") #'zap-up-to-char)
+(global-set-key (kbd "M-Z") #'zap-to-char)
 (global-set-key (kbd "s--") #'text-scale-decrease)
 (global-set-key (kbd "s-<backspace>") #'kill-whole-line)
 (global-set-key (kbd "s-=") #'text-scale-adjust)
