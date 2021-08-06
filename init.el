@@ -543,9 +543,6 @@ used to create a new scratch buffer."
   (define-key evil-normal-state-map "\C-y" 'yank)
   (define-key evil-insert-state-map "\C-y" 'yank)
   (define-key evil-visual-state-map "\C-y" 'yank)
-  (define-key evil-normal-state-map "\C-k" 'kill-line)
-  (define-key evil-insert-state-map "\C-k" 'kill-line)
-  (define-key evil-visual-state-map "\C-k" 'kill-line)
 
   ;; Get around faster
   (define-key evil-motion-state-map "gs" 'evil-avy-goto-symbol-1)
@@ -712,6 +709,11 @@ used to create a new scratch buffer."
 (use-package paredit
   :straight t
   :hook (emacs-lisp-mode . enable-paredit-mode)
+  :bind
+  (:map paredit-mode-map
+        ("M-s" . nil)
+        ("C-M-s" . paredit-splice-sexp)
+        ("M-?" . nil))
   :config
   (diminish 'paredit-mode))
 
