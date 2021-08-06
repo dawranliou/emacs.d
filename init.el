@@ -147,10 +147,10 @@
 (column-number-mode)
 (blink-cursor-mode 0)
 (show-paren-mode)
-(recentf-mode +1)
 (electric-pair-mode 1)
 (save-place-mode t)
-(savehist-mode)
+(add-hook 'after-init-hook (lambda () (recentf-mode 1)))
+(add-hook 'after-init-hook #'savehist-mode)
 
 
 ;;; Custom functions
@@ -584,7 +584,7 @@ used to create a new scratch buffer."
 
 (use-package helpful
   :straight t
-  :defer 2
+  :defer t
   :bind (;; Remap standard commands.
          ([remap describe-function] . #'helpful-callable)
          ([remap describe-variable] . #'helpful-variable)
