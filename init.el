@@ -47,25 +47,41 @@
 
 
 (setq inhibit-startup-message t
-      initial-major-mode 'scratch-mode
+      initial-major-mode 'fundamental-mode
       initial-scratch-message nil
       tramp-default-method "ssh"
-      backup-directory-alist
-      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
-      auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t))
-      default-frame-alist (append (list
-                                   '(font . "Monolisa-14")
-                                   ;; '(min-height . 1)
-                                   ;; '(height . 45)
-                                   '(min-width . 1)
-                                   '(width . 81)))
+      backup-directory-alist `(("." . ,(expand-file-name
+                                        "backups"
+                                        user-emacs-directory)))
+      auto-save-file-name-transforms `((".*" ,(expand-file-name
+                                               "auto-save-list/"
+                                               user-emacs-directory) t))
+      default-frame-alist  '((menu-bar-lines . 0)
+                             (tool-bar-lines . 0)
+                             (vertical-scroll-bars . nil)
+                             (font . "Monolisa-14")
+                             (min-width . 1)
+                             (width . 81))
       ring-bell-function #'ignore
       visible-bell nil
       line-spacing 1
       ns-use-proxy-icon nil
       frame-title-format nil
       enable-recursive-minibuffers t
+      recentf-max-saved-items 200
+      savehist-file "~/.emacs.d/savehist"
+      savehist-save-minibuffer-history t
+      savehist-additional-variables '(kill-ring
+                                      mark-ring
+                                      global-mark-ring
+                                      search-ring
+                                      regexp-search-ring)
+      history-length 20000
+      display-time-world-list '(("Asia/Taipei" "Taipei")
+                                ("America/Toronto" "Toronto")
+                                ("America/Los_Angeles" "San Francisco")
+                                ("Europe/Berlin" "Düsseldorf")
+                                ("Europe/London" "GMT"))
       custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 
@@ -76,21 +92,22 @@
               fill-column 80
               tab-width 8
               indent-tabs-mode nil
-              mode-line-format
-              '("%e"
-                mode-line-front-space
-                mode-line-mule-info
-                mode-line-client
-                mode-line-modified
-                mode-line-remote
-                mode-line-frame-identification
-                mode-line-buffer-identification
-                "   "
-                mode-line-position
-                evil-mode-line-tag
-                ;; (vc-mode vc-mode)
-                "  "
-                mode-line-modes mode-line-misc-info mode-line-end-spaces))
+              mode-line-format '("%e"
+                                 mode-line-front-space
+                                 mode-line-mule-info
+                                 mode-line-client
+                                 mode-line-modified
+                                 mode-line-remote
+                                 mode-line-frame-identification
+                                 mode-line-buffer-identification
+                                 "   "
+                                 mode-line-position
+                                 evil-mode-line-tag
+                                 ;; (vc-mode vc-mode)
+                                 "  "
+                                 mode-line-modes
+                                 mode-line-misc-info
+                                 mode-line-end-spaces))
 
 
 (put 'narrow-to-region 'disabled nil)
@@ -104,8 +121,8 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "M-/") #'hippie-expand)
 (global-set-key (kbd "M-:") #'pp-eval-expression)
-(global-set-key (kbd "M-z") #'zap-up-to-char)
 (global-set-key (kbd "M-Z") #'zap-to-char)
+(global-set-key (kbd "M-z") #'zap-up-to-char)
 (global-set-key (kbd "s--") #'text-scale-decrease)
 (global-set-key (kbd "s-<backspace>") #'kill-whole-line)
 (global-set-key (kbd "s-=") #'text-scale-adjust)
@@ -129,22 +146,15 @@
 
 (column-number-mode)
 (blink-cursor-mode 0)
+(show-paren-mode)
+(recentf-mode +1)
+(electric-pair-mode 1)
+(save-place-mode t)
+(savehist-mode)
 
 
-;; Scratch mode
+;;; Custom functions
 
-(defvar scratch-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c c") 'lisp-interaction-mode)
-    (define-key map (kbd "C-c C-c") 'lisp-interaction-mode)
-    map)
-  "Keymap for `scratch-mode'.")
-
-(define-derived-mode scratch-mode
-  fundamental-mode
-  "Scratch"
-  "Major mode for the *scratch* buffer.\\{scratch-mode-map}"
-  (setq-local indent-line-function 'indent-relative))
 
 (defun jump-to-scratch-buffer ()
   "Jump to the existing *scratch* buffer or create a new
@@ -157,15 +167,12 @@ used to create a new scratch buffer."
                           "*scratch*<%s>"
                           (read-string
                            "New scratch buffer name for *scratch*<NAME>: ")))))
-        (with-current-buffer new-buffer
-          (scratch-mode))
         (switch-to-buffer new-buffer))
     (if-let (existing-scratch-buffer (get-buffer "*scratch*"))
         (switch-to-buffer existing-scratch-buffer)
       (let ((new-scratch-buffer (get-buffer-create "*scratch*")))
-        (with-current-buffer new-scratch-buffer
-          (scratch-mode))
         (switch-to-buffer new-scratch-buffer)))))
+
 
 (defun dawran/find-config ()
   (interactive)
@@ -173,19 +180,16 @@ used to create a new scratch buffer."
   (add-to-list 'imenu-generic-expression
                '("Packages" "^(use-package\\s-+\\(.+\\)" 1)))
 
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(defvar dawran/after-load-theme-hook nil
-  "Hook run after a color theme is loaded using `load-theme'.")
 
 (defun dawran/load-theme-action (theme)
   "Disable current themes and load theme THEME."
-  (condition-case nil
-      (progn
-        (mapc #'disable-theme custom-enabled-themes)
-        (load-theme (intern theme) t)
-        (run-hooks 'dawran/after-load-theme-hook))
-    (error "Problem loading theme %s" theme)))
+  (progn
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme (intern theme) t)))
+
 
 (defun dawran/load-theme ()
   "Disable current themes and load theme from the completion list."
@@ -204,8 +208,10 @@ used to create a new scratch buffer."
     (when minor
       (setcdr minor (list "")))))
 
+
 (with-eval-after-load "eldoc"
   (diminish 'eldoc-mode))
+
 
 (with-eval-after-load "evil-collection-unimpaired"
   (diminish 'evil-collection-unimpaired-mode))
@@ -303,87 +309,11 @@ used to create a new scratch buffer."
                      (name . "\*Apropos\*")
                      (name . "\*Info\*"))))))
 
+
 (add-hook 'ibuffer-mode-hook
           (lambda ()
             (ibuffer-auto-mode 1)
             (ibuffer-switch-to-saved-filter-groups "default")))
-
-
-(use-package pulse
-  :defer 2
-  :custom-face
-  (pulse-highlight-start-face ((t (:inherit highlight))))
-  :config
-  ;;https://karthinks.com/software/batteries-included-with-emacs/
-  (defun dawran/pulse-line (&rest _)
-    "Pulse the current line."
-    (pulse-momentary-highlight-one-line (point)))
-
-  (dolist (command '(scroll-up-command
-                     scroll-down-command
-                     evil-scroll-up
-                     evil-scroll-down
-                     recenter-top-bottom
-                     reposition-window
-                     other-window))
-    (advice-add command :after #'dawran/pulse-line)))
-
-
-(use-package paren
-  :hook (prog-mode . show-paren-mode))
-
-
-(use-package hippie-exp
-  :commands hippie-expand
-  :custom
-  (hippie-expand-try-functions-list
-   '(;; try-complete-file-name-partially
-     try-complete-file-name
-     try-expand-all-abbrevs
-     ;; try-expand-list
-     ;; try-expand-line
-     try-expand-dabbrev
-     try-expand-dabbrev-all-buffers
-     try-expand-dabbrev-from-kill
-     ;; try-complete-lisp-symbol-partially
-     ;; try-complete-lisp-symbol
-     )))
-
-
-(use-package recentf
-  :defer 1
-  :custom
-  ;; Increase recent entries list from default (20)
-  (recentf-max-saved-items 200)
-  :config
-  (recentf-mode +1))
-
-
-(use-package elec-pair
-  :defer 2
-  :config
-  (electric-pair-mode 1)
-  (add-hook 'minibuffer-setup-hook
-            (defun disable-electric-pair-mode ()
-              (electric-pair-mode 0))))
-
-
-(use-package savehist
-  :hook (after-init . savehist-mode)
-  :custom
-  (savehist-file "~/.emacs.d/savehist")
-  (savehist-save-minibuffer-history t)
-  (savehist-additional-variables
-   '(kill-ring
-     mark-ring global-mark-ring
-     search-ring regexp-search-ring))
-  (history-length 20000))
-
-
-(use-package saveplace
-  :defer 2
-  :config
-  (save-place-mode t))
 
 
 (use-package dired
@@ -454,10 +384,12 @@ used to create a new scratch buffer."
   (setq eshell-destroy-buffer-when-process-dies t))
 
 
-;; although emacs ships with project.el, the latest version project.el is nicer.
-(when (version< emacs-version "28")
-  (straight-use-package 'project))
 (use-package project
+  :preface
+  ;; although emacs ships with project.el, the latest version project.el is
+  ;; nicer.
+  (when (version< emacs-version "28")
+    (straight-use-package 'project))
   :bind
   (("s-p" . project-find-file)
    :map project-prefix-map
@@ -480,16 +412,6 @@ used to create a new scratch buffer."
 
 (use-package autorevert
   :mode ("\\.log\\'" . auto-revert-tail-mode))
-
-
-(use-package time
-  :defer t
-  :custom
-  (display-time-world-list '(("Asia/Taipei" "Taipei")
-                             ("America/Toronto" "Toronto")
-                             ("America/Los_Angeles" "San Francisco")
-                             ("Europe/Berlin" "Düsseldorf")
-                             ("Europe/London" "GMT"))))
 
 
 ;;; - 3rd Party Packages
@@ -1042,7 +964,7 @@ used to create a new scratch buffer."
 (use-package elfeed
   :straight t
   :custom
-  (elfeed-feeds '(("https://dawranliou.com/atom.xml")
+  (elfeed-feeds '("https://dawranliou.com/atom.xml"
                   "https://ruzkuku.com/all.atom"
                   "https://ambrevar.xyz/atom.xml"
                   "https://erick.navarro.io/index.xml"
@@ -1054,8 +976,8 @@ used to create a new scratch buffer."
                   "https://technomancy.us/atom.xml"
                   "https://worace.works/atom.xml"
                   "https://clojure.org/feed.xml"
-                  ("http://irreal.org/blog/?feed=rss2" emacs)
-                  ("https://emacsredux.com/atom.xml" emacs)))
+                  "http://irreal.org/blog/?feed=rss2"
+                  "https://emacsredux.com/atom.xml"))
   :general
   (general-define-key
    :states 'normal
