@@ -148,6 +148,7 @@
 (blink-cursor-mode 0)
 (show-paren-mode)
 (electric-pair-mode 1)
+(add-hook 'minibuffer-setup-hook (lambda () (electric-pair-mode 0)))
 (save-place-mode t)
 (add-hook 'after-init-hook (lambda () (recentf-mode 1)))
 (add-hook 'after-init-hook #'savehist-mode)
