@@ -604,7 +604,7 @@ used to create a new scratch buffer."
 (use-package paren-face
   :straight t
   :hook
-  (lispy-mode . paren-face-mode))
+  (emacs-lisp-mode . paren-face-mode))
 
 
 (use-package display-fill-column-indicator
@@ -709,59 +709,11 @@ used to create a new scratch buffer."
   (diminish 'ws-butler-mode))
 
 
-(use-package lispy
+(use-package paredit
   :straight t
-  :hook ((emacs-lisp-mode . lispy-mode))
-  :custom
-  (lispy-close-quotes-at-end-p t)
+  :hook (emacs-lisp-mode . enable-paredit-mode)
   :config
-  (diminish 'lispy-mode)
-  ;; Disable all non-evil lispy mappings.
-  ;; NOTE: setting `lispy-key-theme' to nil during :init or :custom doesn't work
-  ;; to achieve this.
-  (lispy-set-key-theme nil)
-
-  (general-define-key
-   :keymaps 'lispy-mode-map
-   :states '(normal visual)
-   "C-a" 'lispy-move-beginning-of-line
-   "C-e" 'lispy-move-end-of-line)
-
-  (general-define-key
-   :keymaps 'lispy-mode-map
-   :states '(insert)
-   "RET" 'lispy-newline-and-indent-plain
-   "<backspace>" 'lispy-delete-backward
-   "(" 'lispy-parens
-   ")" 'lispy-right-nostring
-   "\"" 'lispy-doublequote
-   "[" 'lispy-brackets
-   "]" 'lispy-close-square
-   "{" 'lispy-braces
-   "}" 'lispy-close-curly))
-
-
-(use-package lispyville
-  :straight t
-  :after lispy
-  :hook (lispy-mode . lispyville-mode)
-  :custom
-  (lispyville-key-theme '(operators
-                          c-w
-                          text-objects
-                          additional-insert
-                          additional-wrap
-                          commentary
-                          slurp/barf-cp))
-  :config
-  (diminish 'lispyville-mode)
-  (lispyville-set-key-theme)
-  (lispyville--define-key '(motion normal)
-    "Q" 'lispy-ace-paren)
-  (lispyville--define-key 'normal
-    (kbd "M-n") #'lispyville-drag-forward
-    (kbd "M-p") #'lispyville-drag-backward)
-  (advice-add 'lispyville-yank :around 'dawran/evil-yank-advice))
+  (diminish 'paredit-mode))
 
 
 (use-package iedit
@@ -987,9 +939,9 @@ used to create a new scratch buffer."
   :straight t
   :defer t
   :hook
-  ((clojure-mode . lispy-mode)
-   (clojurescript-mode . lispy-mode)
-   (cider-repl-mode . lispy-mode)
+  ((clojure-mode . enable-paredit-mode)
+   (clojurescript-mode . enable-paredit-mode)
+   (cider-repl-mode . enable-paredit-mode)
    (clojure-mode . lsp)
    (clojurec-mode . lsp)
    (clojurescript-mode . lsp))
