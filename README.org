@@ -5,23 +5,25 @@
 This is an ongoing evolution of my original Emacs configuration files, inspired
 by a bunch of resources I’ve found online:
 
-- https://github.com/hlissner/doom-emacs
-- https://github.com/daviwil/dotfiles/blob/master/Emacs.org
-- https://github.com/meqif/.emacs.d
-- https://github.com/raxod502/radian/blob/develop/emacs/radian.el
-- https://github.com/oantolin/emacs-config
-- https://github.com/mpereira/.emacs.d
-- https://git.sr.ht/~technomancy/dotfiles/tree/master/item/.emacs.d
-- https://luca.cambiaghi.me/vanilla-emacs/readme.html
-- https://github.com/purcell/emacs.d
-- https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
-- https://github.com/ianpan870102/.wsl-emacs.d
 - http://sriramkswamy.github.io/dotemacs/
-- https://github.com/bcmertz/dotfiles/tree/main/.emacs.d
 - https://ambrevar.xyz/emacs/
-- https://gitlab.com/ambrevar/dotfiles/-/tree/master/.emacs.d
+- https://git.sr.ht/~technomancy/dotfiles/tree/master/item/.emacs.d
+- https://github.com/bbatsov/prelude
+- https://github.com/bcmertz/dotfiles/tree/main/.emacs.d
+- https://github.com/daviwil/dotfiles/blob/master/Emacs.org
+- https://github.com/hlissner/doom-emacs
+- https://github.com/ianpan870102/.wsl-emacs.d
+- https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
+- https://github.com/magnars/.emacs.d
 - https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el
+- https://github.com/meqif/.emacs.d
+- https://github.com/mpereira/.emacs.d
+- https://github.com/oantolin/emacs-config
+- https://github.com/purcell/emacs.d
+- https://github.com/raxod502/radian/blob/develop/emacs/radian.el
+- https://gitlab.com/ambrevar/dotfiles/-/tree/master/.emacs.d
 - https://karthinks.com/software/batteries-included-with-emacs/
+- https://luca.cambiaghi.me/vanilla-emacs/readme.html
 
 Style guide:
 
@@ -29,10 +31,11 @@ Style guide:
 
 * Startup performance
 
-The startup time is ~0.5 seconds on my machine. I apply a couple of techniques
-from Doom (see: [[https://github.com/hlissner/doom-emacs/blob/develop/docs/faq.org#how-does-doom-start-up-so-quickly][How does Doom start up so quickly?]]). I also set
+The startup time is ~0.9 seconds on my machine. I only tweak the startup GC
+threshold and defer loading package loading. Nothing too fancy here. I also set
 =straight-check-for-modifications= to =(check-on-save find-when-checking)=
-because I don't usually tweak my dependencies.
+because I don't usually tweak my dependencies. If I do, I know how to rebuild
+them when needed.
 
 * Configuration structure
 
@@ -72,7 +75,7 @@ e.g. Chrome, Firefox.
 | =s-f=           | ctrlf-forward-fuzzy     |
 | =s-F=           | rg-project              |
 | =s-p=           | project-find-file       |
-| =s-g=           | magit-status            |
+| =s-g=           | magit-status          |
 | =s-l=           | lsp-keymap              |
 | =s-/=           | commenting line         |
 | =s-'=           | er/expand-region        |
