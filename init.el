@@ -472,6 +472,8 @@ used to create a new scratch buffer."
   (define-key evil-motion-state-map (kbd ",") nil)
   (define-key evil-motion-state-map (kbd "C-b") nil)
   (define-key evil-motion-state-map (kbd "C-f") nil)
+  (define-key evil-normal-state-map (kbd "<") nil)
+  (define-key evil-normal-state-map (kbd ">") nil)
   (define-key evil-normal-state-map (kbd "C-.") nil)
   (define-key evil-normal-state-map (kbd "C-n") nil)
   (define-key evil-normal-state-map (kbd "C-p") nil)
@@ -622,6 +624,13 @@ used to create a new scratch buffer."
         ("M-s" . nil)
         ("C-M-s" . paredit-splice-sexp)
         ("M-?" . nil))
+  :general
+  (general-define-key
+   :states 'normal
+   ">" #'paredit-forward-slurp-sexp
+   "<" #'paredit-backward-slurp-sexp
+   "C->" #'paredit-backward-barf-sexp
+   "C-<" #'paredit-forward-barf-sexp)
   :config
   (diminish 'paredit-mode))
 
