@@ -392,9 +392,9 @@ used to create a new scratch buffer."
   (when (version< emacs-version "28")
     (straight-use-package 'project))
   :bind
-  (("s-p" . project-find-file)
-   :map project-prefix-map
-   ("m" . magit-project-status))
+  ("s-p" . project-find-file)
+  (:map project-prefix-map
+        ("m" . magit-project-status))
   :config
   (add-to-list 'project-switch-commands '(magit-project-status "Magit")))
 
@@ -637,20 +637,17 @@ used to create a new scratch buffer."
 
 (use-package iedit
   :straight t
-  :custom
-  (iedit-toggle-key-default nil)
   :bind
-  (:map
-   evil-visual-state-map
-   ("R" . iedit-mode)
-   :map iedit-mode-occurrence-keymap
-   ("RET" . iedit-toggle-selection)
-   :map iedit-mode-keymap
-   ("C-n" . iedit-next-occurrence)
-   ("C-p" . iedit-prev-occurrence)
-   ([remap keyboard-escape-quit] . iedit--quit)
-   ([remap keyboard-quit] . iedit--quit)
-   ([remap evil-force-normal-state] . iedit--quit)))
+  (:map evil-visual-state-map
+        ("R" . iedit-mode))
+  (:map iedit-mode-occurrence-keymap
+        ("RET" . iedit-toggle-selection))
+  (:map iedit-mode-keymap
+        ("C-n" . iedit-next-occurrence)
+        ("C-p" . iedit-prev-occurrence)
+        ([remap keyboard-escape-quit] . iedit--quit)
+        ([remap keyboard-quit] . iedit--quit)
+        ([remap evil-force-normal-state] . iedit--quit)))
 
 
 (use-package undo-fu
