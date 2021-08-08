@@ -628,9 +628,9 @@ used to create a new scratch buffer."
   (general-define-key
    :states 'normal
    ">" #'paredit-forward-slurp-sexp
-   "<" #'paredit-backward-slurp-sexp
+   "<" #'paredit-forward-barf-sexp
    "C->" #'paredit-backward-barf-sexp
-   "C-<" #'paredit-forward-barf-sexp)
+   "C-<" #'paredit-backward-slurp-sexp)
   :config
   (diminish 'paredit-mode))
 
