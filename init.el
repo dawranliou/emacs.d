@@ -562,16 +562,6 @@ used to create a new scratch buffer."
                                 marginalia-annotators-heavy)))
 
 
-(use-package ctrlf
-  :straight (:host github :repo "dawranliou/ctrlf")
-  :bind
-  ("s-f" . ctrlf-forward-fuzzy)
-  :init
-  (ctrlf-mode +1)
-  :general
-  (:states '(motion)
-           "*" 'ctrlf-forward-symbol-at-point
-           "#" 'ctrlf-forward-symbol-at-point))
 
 
 (use-package embark
