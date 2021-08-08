@@ -594,6 +594,21 @@ used to create a new scratch buffer."
                                 marginalia-annotators-heavy)))
 
 
+(use-package anzu
+  :straight t
+  :after isearch
+  :custom
+  (anzu-mode-lighter "")
+  (anzu-replace-to-string-separator " => ")
+  :custom-face
+  (anzu-mode-line ((t (:inherit bold))))
+  :config
+  (global-anzu-mode +1)
+  :bind
+  (([remap query-replace] . 'anzu-query-replace)
+   ([remap query-replace-regexp] . 'anzu-query-replace-regexp)
+   ([remap isearch-query-replace] . 'anzu-isearch-query-replace)
+   ([remap isearch-query-replace-regexp] . 'anzu-isearch-query-replace-regexp)))
 
 
 (use-package embark
