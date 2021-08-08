@@ -415,6 +415,35 @@ used to create a new scratch buffer."
   :mode ("\\.log\\'" . auto-revert-tail-mode))
 
 
+(use-package isearch
+  :custom
+  (search-whitespace-regexp ".*?")      ; Fuzzy search
+  :bind
+  ("s-f" . isearch-forward)
+  (:map isearch-mode-map
+        ("C-o" . isearch-occur)
+        ("<C-backspace>" . isearch-delete-wrong)
+        ;; DEL during isearch should edit the search string, not jump back to
+        ;; the previous result
+        ([remap isearch-delete-char] . isearch-del-char))
+  :hook
+  (isearch-mode-end . isearch-exit-at-start)
+  :config
+  ;; https://www.emacswiki.org/emacs/IncrementalSearch#h5o-4
+  (defun isearch-exit-at-start ()
+    "Exit search at the beginning of the current match."
+    (when (and isearch-forward
+               isearch-other-end
+               (not isearch-mode-end-hook-quit))
+      (goto-char isearch-other-end)))
+  (defun isearch-delete-wrong ()
+    "Revert to previous successful search."
+    (interactive)
+    (while (or (not isearch-success) isearch-error)
+      (isearch-pop-state))
+    (isearch-update)))
+
+
 ;;; - 3rd Party Packages
 
 
@@ -479,6 +508,9 @@ used to create a new scratch buffer."
   (define-key evil-normal-state-map (kbd "C-p") nil)
   (define-key evil-normal-state-map (kbd "M-,") nil)
   (define-key evil-normal-state-map (kbd "M-.") nil)
+
+  (define-key evil-normal-state-map "*" #'isearch-forward-symbol-at-point)
+  (define-key evil-normal-state-map "#" #'isearch-forward-symbol-at-point)
 
   ;; https://blog.meain.io/2020/emacs-highlight-yanked/
   (defun dawran/evil-yank-advice (orig-fn beg end &rest args)
