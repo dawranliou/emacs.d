@@ -594,23 +594,6 @@ used to create a new scratch buffer."
                                 marginalia-annotators-heavy)))
 
 
-(use-package anzu
-  :straight t
-  :after isearch
-  :custom
-  (anzu-mode-lighter "")
-  (anzu-replace-to-string-separator " => ")
-  :custom-face
-  (anzu-mode-line ((t (:inherit bold))))
-  :config
-  (global-anzu-mode +1)
-  :bind
-  (([remap query-replace] . 'anzu-query-replace)
-   ([remap query-replace-regexp] . 'anzu-query-replace-regexp)
-   ([remap isearch-query-replace] . 'anzu-isearch-query-replace)
-   ([remap isearch-query-replace-regexp] . 'anzu-isearch-query-replace-regexp)))
-
-
 (use-package embark
   :straight t
   :bind
@@ -675,16 +658,10 @@ used to create a new scratch buffer."
 (use-package iedit
   :straight t
   :bind
-  (:map evil-visual-state-map
-        ("R" . iedit-mode))
-  (:map iedit-mode-occurrence-keymap
-        ("RET" . iedit-toggle-selection))
+  ("C-;" . iedit-mode)
   (:map iedit-mode-keymap
         ("C-n" . iedit-next-occurrence)
-        ("C-p" . iedit-prev-occurrence)
-        ([remap keyboard-escape-quit] . iedit--quit)
-        ([remap keyboard-quit] . iedit--quit)
-        ([remap evil-force-normal-state] . iedit--quit)))
+        ("C-p" . iedit-prev-occurrence)))
 
 
 (use-package undo-fu
@@ -765,6 +742,7 @@ used to create a new scratch buffer."
   :general
   (general-define-key
    :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "nj" #'org-journal-open-current-journal-file
    "nJ" #'org-journal-new-entry)
@@ -784,6 +762,7 @@ used to create a new scratch buffer."
   :general
   (general-define-key
    :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "nf" #'org-roam-node-find
    "nl" #'org-roam-buffer-toggle
@@ -829,6 +808,7 @@ used to create a new scratch buffer."
   :general
   (general-define-key
    :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "te" #'eshell-toggle))
 
@@ -845,6 +825,7 @@ used to create a new scratch buffer."
   :general
   (general-define-key
    :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "gg"  #'magit-status
    "gb"  #'magit-blame-addition
@@ -1025,6 +1006,7 @@ used to create a new scratch buffer."
   :general
   (general-define-key
    :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "R" #'elfeed))
 
