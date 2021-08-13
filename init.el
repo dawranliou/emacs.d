@@ -480,6 +480,7 @@ used to create a new scratch buffer."
   :config
   (general-define-key
    :states 'normal
+   :keymaps 'override
    :prefix "SPC"
    "d" #'dired-jump
    "e" #'eshell
