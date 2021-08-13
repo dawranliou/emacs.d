@@ -340,7 +340,7 @@ used to create a new scratch buffer."
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
   :config
-  (evil-collection-define-key 'normal 'dired-mode-map
+  (evil-define-key 'normal 'dired-mode-map
     (kbd "C-c C-e") 'wdired-change-to-wdired-mode)
   (setq-default dired-omit-files-p t)
   (require 'dired-x)
