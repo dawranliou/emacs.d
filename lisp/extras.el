@@ -7,6 +7,7 @@
                    "Choose font:"
                    (cl-remove-duplicates (x-list-fonts "*") :test #'equal))))
 
+
 (defun yank-pop+ ()
   "If there is a recent yank act like `yank-pop'.
 Otherwise choose text from the kill ring and insert it."
@@ -23,10 +24,33 @@ Otherwise choose text from the kill ring and insert it."
       (setq this-command 'yank)
       nil)))
 
+
 (defun recentf-open-files+ ()
   "Use `completing-read' to open a recent file."
   (interactive)
   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
     (find-file (completing-read "Find recent file: " files nil t))))
+
+
+(defun +move-beginning-of-line (arg)
+  "Move point to beginning of current line or the first non whitespace char."
+  (interactive "^p")
+  (or arg (setq arg 1))
+  ;; Move by lines, if ARG is not 1 (the default).
+  (if (/= arg 1)
+      (let ((line-move-visual nil))
+        (line-move (1- arg) t)))
+
+  (if (bolp)
+      (back-to-indentation)
+    (move-beginning-of-line 1)))
+
+
+(defun +newline-at-end-of-line ()
+  "Move to end of line, enter a newline, and reindent."
+  (interactive)
+  (move-end-of-line 1)
+  (newline-and-indent))
+
 
 (provide 'extras)

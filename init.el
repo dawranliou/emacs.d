@@ -444,6 +444,18 @@ used to create a new scratch buffer."
     (isearch-update)))
 
 
+;;; - My extras lisp
+
+
+(use-package extras
+  :load-path "lisp/"
+  :bind
+  (([remap move-beginning-of-line] . +move-beginning-of-line)
+   ("S-<return>" . +newline-at-end-of-line)
+   ("M-y" . yank-pop+)
+   ("C-x C-r" . recentf-open-files+)))
+
+
 ;;; - 3rd Party Packages
 
 
@@ -868,13 +880,6 @@ used to create a new scratch buffer."
   (lsp-modeline-code-actions-enable nil)
   :config
   (setq-default read-process-output-max (* 1024 1024)))
-
-
-(use-package extras
-  :load-path "lisp/"
-  :bind
-  (("M-y" . yank-pop+)
-   ("C-x C-r" . recentf-open-files+)))
 
 
 ;;; - Language major modes
