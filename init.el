@@ -81,6 +81,11 @@
                                 ("America/Los_Angeles" "San Francisco")
                                 ("Europe/Berlin" "Düsseldorf")
                                 ("Europe/London" "GMT"))
+      hippie-expand-try-functions-list '(try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill)
       custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 
