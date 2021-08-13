@@ -629,6 +629,7 @@ used to create a new scratch buffer."
 (use-package helpful
   :straight t
   :defer t
+  :custom (helpful-switch-buffer-function #'+helpful-switch-to-buffer)
   :bind (;; Remap standard commands.
          ([remap describe-function] . #'helpful-callable)
          ([remap describe-variable] . #'helpful-variable)
@@ -636,7 +637,17 @@ used to create a new scratch buffer."
          ([remap describe-symbol]   . #'helpful-symbol)
          ("C-c C-d" . #'helpful-at-point)
          ("C-h C"   . #'helpful-command)
-         ("C-h F"   . #'describe-face)))
+         ("C-h F"   . #'describe-face))
+  :config
+  ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
+  (defun +helpful-switch-to-buffer (buffer-or-name)
+    "Switch to helpful BUFFER-OR-NAME.
+
+The logic is simple, if we are currently in the helpful buffer,
+reuse it's window, otherwise create new one."
+    (if (eq major-mode 'helpful-mode)
+        (switch-to-buffer buffer-or-name)
+      (pop-to-buffer buffer-or-name))))
 
 
 (use-package persistent-scratch
