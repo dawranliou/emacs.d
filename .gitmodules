@@ -1,0 +1,207 @@
+[submodule "straight/repos/Emacs-wgrep"]
+	path = straight/repos/Emacs-wgrep
+	url = https://github.com/mhayashi1120/Emacs-wgrep.git
+[submodule "straight/repos/a.el"]
+	path = straight/repos/a.el
+	url = https://github.com/plexus/a.el.git
+[submodule "straight/repos/annalist.el"]
+	path = straight/repos/annalist.el
+	url = https://github.com/noctuid/annalist.el.git
+[submodule "straight/repos/cider"]
+	path = straight/repos/cider
+	url = https://github.com/clojure-emacs/cider.git
+[submodule "straight/repos/clojure-mode"]
+	path = straight/repos/clojure-mode
+	url = https://github.com/clojure-emacs/clojure-mode.git
+[submodule "straight/repos/corfu"]
+	path = straight/repos/corfu
+	url = https://github.com/emacs-straight/corfu.git
+[submodule "straight/repos/dash.el"]
+	path = straight/repos/dash.el
+	url = https://github.com/magnars/dash.el.git
+[submodule "straight/repos/el-get"]
+	path = straight/repos/el-get
+	url = https://github.com/dimitri/el-get.git
+[submodule "straight/repos/elfeed"]
+	path = straight/repos/elfeed
+	url = https://github.com/skeeto/elfeed.git
+[submodule "straight/repos/elisp-refs"]
+	path = straight/repos/elisp-refs
+	url = https://github.com/Wilfred/elisp-refs.git
+[submodule "straight/repos/elpher"]
+	path = straight/repos/elpher
+	url = https://thelambdalab.xyz/git/elpher.git
+[submodule "straight/repos/emacs-undo-fu"]
+	path = straight/repos/emacs-undo-fu
+	url = https://gitlab.com/ideasman42/emacs-undo-fu.git
+[submodule "straight/repos/emacsmirror-mirror"]
+	path = straight/repos/emacsmirror-mirror
+	url = https://github.com/emacs-straight/emacsmirror-mirror.git
+[submodule "straight/repos/emacsql"]
+	path = straight/repos/emacsql
+	url = https://github.com/skeeto/emacsql.git
+[submodule "straight/repos/embark"]
+	path = straight/repos/embark
+	url = https://github.com/oantolin/embark.git
+[submodule "straight/repos/emmet-mode"]
+	path = straight/repos/emmet-mode
+	url = https://github.com/smihica/emmet-mode.git
+[submodule "straight/repos/epl"]
+	path = straight/repos/epl
+	url = https://github.com/cask/epl.git
+[submodule "straight/repos/eshell-toggle"]
+	path = straight/repos/eshell-toggle
+	url = https://github.com/4DA/eshell-toggle.git
+[submodule "straight/repos/evil"]
+	path = straight/repos/evil
+	url = https://github.com/emacs-evil/evil.git
+[submodule "straight/repos/evil-collection"]
+	path = straight/repos/evil-collection
+	url = https://github.com/emacs-evil/evil-collection.git
+[submodule "straight/repos/evil-org-mode"]
+	path = straight/repos/evil-org-mode
+	url = https://github.com/Somelauw/evil-org-mode.git
+[submodule "straight/repos/expand-region.el"]
+	path = straight/repos/expand-region.el
+	url = https://github.com/magnars/expand-region.el.git
+[submodule "straight/repos/f.el"]
+	path = straight/repos/f.el
+	url = https://github.com/rejeep/f.el.git
+[submodule "straight/repos/fennel-mode"]
+	path = straight/repos/fennel-mode
+	url = https://gitlab.com/technomancy/fennel-mode.git
+[submodule "straight/repos/flycheck"]
+	path = straight/repos/flycheck
+	url = https://github.com/flycheck/flycheck.git
+[submodule "straight/repos/general.el"]
+	path = straight/repos/general.el
+	url = https://github.com/noctuid/general.el.git
+[submodule "straight/repos/gnu-elpa-mirror"]
+	path = straight/repos/gnu-elpa-mirror
+	url = https://github.com/emacs-straight/gnu-elpa-mirror.git
+[submodule "straight/repos/go-mode.el"]
+	path = straight/repos/go-mode.el
+	url = https://github.com/dominikh/go-mode.el.git
+[submodule "straight/repos/goto-chg"]
+	path = straight/repos/goto-chg
+	url = https://github.com/emacs-evil/goto-chg.git
+[submodule "straight/repos/helpful"]
+	path = straight/repos/helpful
+	url = https://github.com/Wilfred/helpful.git
+[submodule "straight/repos/ht.el"]
+	path = straight/repos/ht.el
+	url = https://github.com/Wilfred/ht.el.git
+[submodule "straight/repos/hydra"]
+	path = straight/repos/hydra
+	url = https://github.com/abo-abo/hydra.git
+[submodule "straight/repos/idle-highlight-mode"]
+	path = straight/repos/idle-highlight-mode
+	url = https://github.com/nonsequitur/idle-highlight-mode.git
+[submodule "straight/repos/iedit"]
+	path = straight/repos/iedit
+	url = https://github.com/victorhge/iedit.git
+[submodule "straight/repos/let-alist"]
+	path = straight/repos/let-alist
+	url = https://github.com/emacs-straight/let-alist.git
+[submodule "straight/repos/lsp-mode"]
+	path = straight/repos/lsp-mode
+	url = https://github.com/emacs-lsp/lsp-mode.git
+[submodule "straight/repos/macrostep"]
+	path = straight/repos/macrostep
+	url = https://github.com/joddie/macrostep.git
+[submodule "straight/repos/magit"]
+	path = straight/repos/magit
+	url = https://github.com/magit/magit.git
+[submodule "straight/repos/marginalia"]
+	path = straight/repos/marginalia
+	url = https://github.com/minad/marginalia.git
+[submodule "straight/repos/markdown-mode"]
+	path = straight/repos/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode.git
+[submodule "straight/repos/melpa"]
+	path = straight/repos/melpa
+	url = https://github.com/melpa/melpa.git
+[submodule "straight/repos/ns-auto-titlebar"]
+	path = straight/repos/ns-auto-titlebar
+	url = https://github.com/purcell/ns-auto-titlebar.git
+[submodule "straight/repos/orderless"]
+	path = straight/repos/orderless
+	url = https://github.com/oantolin/orderless.git
+[submodule "straight/repos/org"]
+	path = straight/repos/org
+	url = https://code.orgmode.org/bzg/org-mode.git
+[submodule "straight/repos/org-journal"]
+	path = straight/repos/org-journal
+	url = https://github.com/bastibe/org-journal.git
+[submodule "straight/repos/org-roam"]
+	path = straight/repos/org-roam
+	url = https://github.com/org-roam/org-roam.git
+[submodule "straight/repos/paredit"]
+	path = straight/repos/paredit
+	url = https://mumble.net/~campbell/git/paredit.git
+[submodule "straight/repos/paren-face"]
+	path = straight/repos/paren-face
+	url = https://github.com/tarsius/paren-face.git
+[submodule "straight/repos/parseclj"]
+	path = straight/repos/parseclj
+	url = https://github.com/clojure-emacs/parseclj.git
+[submodule "straight/repos/parseedn"]
+	path = straight/repos/parseedn
+	url = https://github.com/clojure-emacs/parseedn.git
+[submodule "straight/repos/persistent-scratch"]
+	path = straight/repos/persistent-scratch
+	url = https://github.com/Fanael/persistent-scratch.git
+[submodule "straight/repos/pkg-info"]
+	path = straight/repos/pkg-info
+	url = https://github.com/emacsorphanage/pkg-info.git
+[submodule "straight/repos/project"]
+	path = straight/repos/project
+	url = https://github.com/emacs-straight/project.git
+[submodule "straight/repos/queue"]
+	path = straight/repos/queue
+	url = https://github.com/emacs-straight/queue.git
+[submodule "straight/repos/rainbow-mode"]
+	path = straight/repos/rainbow-mode
+	url = https://github.com/emacs-straight/rainbow-mode.git
+[submodule "straight/repos/rg.el"]
+	path = straight/repos/rg.el
+	url = https://github.com/dajva/rg.el.git
+[submodule "straight/repos/s.el"]
+	path = straight/repos/s.el
+	url = https://github.com/magnars/s.el.git
+[submodule "straight/repos/sesman"]
+	path = straight/repos/sesman
+	url = https://github.com/vspinu/sesman.git
+[submodule "straight/repos/sketch-themes"]
+	path = straight/repos/sketch-themes
+	url = https://github.com/dawranliou/sketch-themes.git
+[submodule "straight/repos/slime"]
+	path = straight/repos/slime
+	url = https://github.com/slime/slime.git
+[submodule "straight/repos/spinner"]
+	path = straight/repos/spinner
+	url = https://github.com/emacs-straight/spinner.git
+[submodule "straight/repos/straight.el"]
+	path = straight/repos/straight.el
+	url = https://github.com/raxod502/straight.el.git
+[submodule "straight/repos/transient"]
+	path = straight/repos/transient
+	url = https://github.com/magit/transient.git
+[submodule "straight/repos/use-package"]
+	path = straight/repos/use-package
+	url = https://github.com/jwiegley/use-package.git
+[submodule "straight/repos/vertico"]
+	path = straight/repos/vertico
+	url = https://github.com/emacs-straight/vertico.git
+[submodule "straight/repos/with-editor"]
+	path = straight/repos/with-editor
+	url = https://github.com/magit/with-editor.git
+[submodule "straight/repos/ws-butler"]
+	path = straight/repos/ws-butler
+	url = https://github.com/lewang/ws-butler.git
+[submodule "straight/repos/xref"]
+	path = straight/repos/xref
+	url = https://github.com/emacs-straight/xref.git
+[submodule "straight/repos/yaml-mode"]
+	path = straight/repos/yaml-mode
+	url = https://github.com/yoshiki/yaml-mode.git
