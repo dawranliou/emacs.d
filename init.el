@@ -86,6 +86,7 @@
                                          try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
                                          try-expand-dabbrev-from-kill)
+      whitespace-style '(face tabs empty lines-tail)
       custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 
@@ -145,8 +146,10 @@
 (global-set-key (kbd "s-w") #'delete-window)
 
 
-(set-face-attribute 'fixed-pitch nil :font "Monolisa" :height 140)
-(set-face-attribute 'variable-pitch nil :height 160)
+(custom-set-faces
+ '(fixed-pitch ((t (:inherit default :height 140))))
+ '(variable-pitch ((t (:height 160))))
+ '(whitespace-line ((t (:inherit link)))))
 
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -160,6 +163,7 @@
 (save-place-mode t)
 (add-hook 'after-init-hook (lambda () (recentf-mode 1)))
 (add-hook 'after-init-hook #'savehist-mode)
+(add-hook 'prog-mode-hook #'whitespace-mode)
 
 
 ;;; Custom functions
@@ -215,12 +219,16 @@ used to create a new scratch buffer."
       (setcdr minor (list "")))))
 
 
-(with-eval-after-load "eldoc"
+(with-eval-after-load 'eldoc
   (diminish 'eldoc-mode))
 
 
-(with-eval-after-load "evil-collection-unimpaired"
+(with-eval-after-load 'evil-collection-unimpaired
   (diminish 'evil-collection-unimpaired-mode))
+
+
+(with-eval-after-load 'whitespace
+  (diminish 'whitespace-mode))
 
 
 (defun dawran/quick-edit ()
@@ -564,13 +572,6 @@ used to create a new scratch buffer."
   :straight t
   :hook
   (emacs-lisp-mode . paren-face-mode))
-
-
-(use-package display-fill-column-indicator
-  :straight t
-  :hook (prog-mode . display-fill-column-indicator-mode)
-  :config
-  (diminish 'auto-fill-function))
 
 
 (use-package ns-auto-titlebar
