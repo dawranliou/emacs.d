@@ -64,7 +64,6 @@
                              (width . 81))
       ring-bell-function #'ignore
       visible-bell nil
-      line-spacing 1
       ns-use-proxy-icon nil
       frame-title-format nil
       enable-recursive-minibuffers t
@@ -91,6 +90,7 @@
 (setq-default delete-by-moving-to-trash t
               fill-column 80
               tab-width 8
+              line-spacing 1
               indent-tabs-mode nil
               mode-line-format '("%e"
                                  mode-line-front-space
