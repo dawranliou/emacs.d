@@ -751,12 +751,10 @@ reuse it's window, otherwise create new one."
   (org-log-done 'time)
   (org-log-into-drawer t)
   (org-image-actual-width 640)
-  (org-attach-auto-tag "attachment"))
-
-
-(use-package org-tempo
-  :after org
+  (org-attach-auto-tag "attachment")
   :config
+  (require 'ox-md)
+  (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
