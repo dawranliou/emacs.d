@@ -88,6 +88,7 @@
 
 
 (setq-default delete-by-moving-to-trash t
+              scroll-preserve-screen-position 'always
               fill-column 80
               tab-width 8
               line-spacing 1
@@ -134,7 +135,6 @@
 (global-set-key (kbd "s-q") #'save-buffers-kill-emacs)
 (global-set-key (kbd "s-s") #'save-buffer)
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
-(global-set-key (kbd "s-u") #'universal-argument)
 (global-set-key (kbd "s-v") #'yank)
 (global-set-key (kbd "s-w") #'evil-window-delete)
 (global-set-key (kbd "s-z") #'undo)
@@ -468,11 +468,12 @@ used to create a new scratch buffer."
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump t)
   (setq evil-move-beyond-eol t)
   (setq evil-move-cursor-back nil)
   :custom
+  (evil-want-C-d-scroll nil)
+  (evil-want-C-u-scroll nil)
+  (evil-want-C-i-jump nil)
   (evil-undo-system 'undo-fu)
   (evil-symbol-word-search t)
   (evil-want-fine-undo t)
@@ -501,6 +502,8 @@ used to create a new scratch buffer."
   (define-key evil-motion-state-map (kbd ",") nil)
   (define-key evil-motion-state-map (kbd "C-b") nil)
   (define-key evil-motion-state-map (kbd "C-f") nil)
+  (define-key evil-motion-state-map (kbd "C-v") nil)
+  (define-key evil-motion-state-map (kbd "C-S-v") #'evil-visual-block)
   (define-key evil-normal-state-map (kbd "<") nil)
   (define-key evil-normal-state-map (kbd ">") nil)
   (define-key evil-normal-state-map (kbd "C-.") nil)
