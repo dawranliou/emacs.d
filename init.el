@@ -430,6 +430,7 @@ used to create a new scratch buffer."
 
 (use-package isearch
   :custom
+  (isearch-allow-scroll t)
   (search-whitespace-regexp ".*?")      ; Fuzzy search
   :bind
   ("s-f" . isearch-forward)
