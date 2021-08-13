@@ -425,7 +425,9 @@ used to create a new scratch buffer."
 
 
 (use-package autorevert
-  :mode ("\\.log\\'" . auto-revert-tail-mode))
+  :mode ("\\.log\\'" . auto-revert-tail-mode)
+  :config
+  (diminish 'auto-revert-mode))
 
 
 (use-package isearch
