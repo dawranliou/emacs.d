@@ -29,6 +29,12 @@ Style guide:
 
 - [[https://github.com/bbatsov/emacs-lisp-style-guide][bbatsov's emacs-lisp-style-guide]]
 
+* Installation
+
+#+begin_src shell
+git clone --recursive git@github.com:dawranliou/emacs.d.git
+#+end_src
+
 * Startup performance
 
 The startup time is ~0.9 seconds on my machine. I only tweak the startup GC
