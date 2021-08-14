@@ -676,6 +676,7 @@ reuse it's window, otherwise create new one."
   :general
   (general-define-key
    :states 'normal
+   :keymaps 'paredit-mode-map
    ">" #'paredit-forward-slurp-sexp
    "<" #'paredit-forward-barf-sexp
    "C->" #'paredit-backward-barf-sexp
