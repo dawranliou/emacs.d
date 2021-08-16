@@ -670,6 +670,9 @@ reuse it's window, otherwise create new one."
   (:map paredit-mode-map
         ("M-s" . nil)
         ("C-M-s" . paredit-splice-sexp)
+        (")" . nil)
+        ("C-d" . nil)
+        ("DEL" . nil)
         ("M-?" . nil)
         ("M-{" . paredit-wrap-curly)
         ("M-[" . paredit-wrap-square))
