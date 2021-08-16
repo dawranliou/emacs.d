@@ -59,7 +59,7 @@
       default-frame-alist  '((menu-bar-lines . 0)
                              (tool-bar-lines . 0)
                              (vertical-scroll-bars . nil)
-                             (font . "Inconsolata-15")
+                             (font . "Inconsolata-16")
                              (min-width . 1)
                              (width . 81))
       ring-bell-function #'ignore
