@@ -922,12 +922,24 @@ reuse it's window, otherwise create new one."
                             try-expand-dabbrev-from-kill))))
   :custom
   (cljr-magic-requires nil)
+  :general
+  (general-define-key
+   :state 'normal
+   :prefix ","
+   :keymaps '(clojure-mode-map clojurescript-mode-map)
+   "yn" #'+clojure-ns-kill-ring-save)
   :config
   ;; (require 'flycheck-clj-kondo)
   (setq clojure-indent-style 'align-arguments
         clojure-align-forms-automatically t)
   (with-eval-after-load 'clj-refactor
-    (diminish 'clj-refactor-mode)))
+    (diminish 'clj-refactor-mode))
+  (defun +clojure-ns-kill-ring-save ()
+    "Save the current clojure ns to the kill ring."
+    (interactive)
+    (let ((ns (funcall clojure-expected-ns-function)))
+      (kill-new ns)
+      (message (format "Saved to kill-ring: %s" ns)))))
 
 
 (use-package cider
