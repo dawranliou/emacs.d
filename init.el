@@ -86,7 +86,6 @@
                                          try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
                                          try-expand-dabbrev-from-kill)
-      whitespace-style '(face tabs empty lines-tail)
       custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 
@@ -148,8 +147,7 @@
 
 (custom-set-faces
  '(fixed-pitch ((t (:inherit default :height 140))))
- '(variable-pitch ((t (:height 160))))
- '(whitespace-line ((t (:inherit link)))))
+ '(variable-pitch ((t (:height 160)))))
 
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -163,7 +161,6 @@
 (save-place-mode t)
 (add-hook 'after-init-hook (lambda () (recentf-mode 1)))
 (add-hook 'after-init-hook #'savehist-mode)
-(add-hook 'prog-mode-hook #'whitespace-mode)
 
 
 ;;; Custom functions
@@ -225,10 +222,6 @@ used to create a new scratch buffer."
 
 (with-eval-after-load 'evil-collection-unimpaired
   (diminish 'evil-collection-unimpaired-mode))
-
-
-(with-eval-after-load 'whitespace
-  (diminish 'whitespace-mode))
 
 
 (defun dawran/quick-edit ()
