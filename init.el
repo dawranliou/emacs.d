@@ -917,8 +917,9 @@ reuse it's window, otherwise create new one."
   (cljr-magic-requires nil)
   :general
   (general-define-key
-   :state 'normal
+   :states 'normal
    :prefix ","
+   :non-normal-prefix "C-c ,"
    :keymaps '(clojure-mode-map clojurescript-mode-map)
    "yn" #'+clojure-ns-kill-ring-save)
   :config
@@ -951,8 +952,9 @@ reuse it's window, otherwise create new one."
         ("M-." . nil))                  ; Prefer xref + clojure-lsp
   :general
   (general-define-key
-   :state 'normal
+   :states 'normal
    :prefix ","
+   :non-normal-prefix "C-c ,"
    :keymaps '(clojure-mode-map clojurescript-mode-map)
    "," #'cider
    "eb" #'cider-eval-buffer
