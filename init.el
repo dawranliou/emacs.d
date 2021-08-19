@@ -96,7 +96,7 @@
               scroll-preserve-screen-position 'always
               fill-column 80
               tab-width 8
-              line-spacing 1
+              line-spacing 3
               indent-tabs-mode nil
               mode-line-format '("%e"
                                  mode-line-front-space
