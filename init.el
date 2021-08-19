@@ -1072,17 +1072,6 @@ reuse it's window, otherwise create new one."
 (setq ediff-split-window-function #'split-window-horizontally)
 
 
-;;; - ERC
-
-(setq erc-server "irc.libera.chat"
-      erc-nick "dawranliou"
-      erc-user-full-name "Daw-Ran Liou"
-      erc-track-shorten-start 8
-      erc-kill-buffer-on-part t
-      ;; erc-autojoin-channels-alist '(("irc.libera.chat" "#systemcrafters" "#emacs"))
-      ;; erc-auto-query 'bury
-      )
-
 (provide 'init)
 
 ;;; init.el ends here
