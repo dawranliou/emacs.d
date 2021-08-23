@@ -88,9 +88,6 @@
 [submodule "straight/repos/hydra"]
 	path = straight/repos/hydra
 	url = https://github.com/abo-abo/hydra.git
-[submodule "straight/repos/idle-highlight-mode"]
-	path = straight/repos/idle-highlight-mode
-	url = https://github.com/nonsequitur/idle-highlight-mode.git
 [submodule "straight/repos/iedit"]
 	path = straight/repos/iedit
 	url = https://github.com/victorhge/iedit.git
@@ -115,9 +112,6 @@
 [submodule "straight/repos/melpa"]
 	path = straight/repos/melpa
 	url = https://github.com/melpa/melpa.git
-[submodule "straight/repos/ns-auto-titlebar"]
-	path = straight/repos/ns-auto-titlebar
-	url = https://github.com/purcell/ns-auto-titlebar.git
 [submodule "straight/repos/orderless"]
 	path = straight/repos/orderless
 	url = https://github.com/oantolin/orderless.git

@@ -535,14 +535,6 @@ used to create a new scratch buffer."
   (evil-collection-init))
 
 
-(use-package idle-highlight-mode
-  :straight t
-  :custom-face
-  (idle-highlight ((t (:inherit lazy-highlight))))
-  :hook
-  (prog-mode . idle-highlight-mode))
-
-
 (use-package sketch-themes
   :defer t
   :straight (:host github :repo "dawranliou/sketch-themes"))
@@ -552,11 +544,6 @@ used to create a new scratch buffer."
   :straight t
   :hook
   (emacs-lisp-mode . paren-face-mode))
-
-
-(use-package ns-auto-titlebar
-  :straight t
-  :hook (after-init . ns-auto-titlebar-mode))
 
 
 (use-package rainbow-mode
@@ -852,7 +839,6 @@ reuse it's window, otherwise create new one."
 (use-package lsp-mode
   :straight t
   :defer t
-  :hook (lsp-mode . (lambda () (setq-local idle-highlight-mode nil)))
   :custom-face
   (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
   :custom
