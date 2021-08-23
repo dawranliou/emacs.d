@@ -508,6 +508,7 @@ used to create a new scratch buffer."
 
   (define-key evil-insert-state-map (kbd "C-a") nil)
   (define-key evil-insert-state-map (kbd "C-d") nil)
+  (define-key evil-insert-state-map (kbd "C-k") nil)
   (define-key evil-insert-state-map (kbd "C-n") nil)
   (define-key evil-insert-state-map (kbd "C-p") nil)
   (define-key evil-motion-state-map (kbd ",") nil)
