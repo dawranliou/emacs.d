@@ -50,18 +50,10 @@
       initial-major-mode 'fundamental-mode
       initial-scratch-message nil
       tramp-default-method "ssh"
-      backup-directory-alist `(("." . ,(expand-file-name
-                                        "backups"
-                                        user-emacs-directory)))
-      auto-save-file-name-transforms `((".*" ,(expand-file-name
-                                               "auto-save-list/"
-                                               user-emacs-directory) t))
-      default-frame-alist  '((menu-bar-lines . 0)
-                             (tool-bar-lines . 0)
-                             (vertical-scroll-bars . nil)
-                             (font . "Inconsolata-16")
-                             (min-width . 1)
-                             (width . 81))
+      backup-directory-alist
+      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
+      auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t))
       ring-bell-function #'ignore
       visible-bell nil
       ns-use-proxy-icon nil
