@@ -12,26 +12,18 @@
 
 ;;; - Performance
 
+
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6)
 
-(add-hook 'emacs-startup-hook
-          (defun dawran/set-default-gc ()
-            (setq gc-cons-threshold (* 100 1024 1024) ; 100mb
-                  gc-cons-percentage 0.1)))
-
-;; Profile emacs startup
-(add-hook 'emacs-startup-hook
-          (defun dawran/print-start-up-stats ()
-            (message "*** Emacs loaded in %s with %d garbage collections."
-                     (format "%.2f seconds"
-                             (float-time
-                              (time-subtract after-init-time before-init-time)))
-                     gcs-done)))
-
 (add-hook
- 'after-init-hook
- (defun dawran/load-private-lisp ()
+ 'emacs-startup-hook
+ (lambda ()
+   (setq gc-cons-threshold (* 100 1024 1024) ; 100mb
+         gc-cons-percentage 0.1)
+   (message "*** Emacs loaded in %.2f seconds with %d garbage collections."
+            (float-time (time-subtract after-init-time before-init-time))
+            gcs-done)
    (let ((private-file (concat user-emacs-directory "private.el")))
      (when (file-exists-p private-file)
        (load-file private-file)))))
@@ -152,7 +144,7 @@
 (electric-pair-mode 1)
 (add-hook 'minibuffer-setup-hook (lambda () (electric-pair-mode 0)))
 (save-place-mode t)
-(add-hook 'after-init-hook (lambda () (recentf-mode 1)))
+(add-hook 'after-init-hook #'recentf-mode)
 (add-hook 'after-init-hook #'savehist-mode)
 
 
@@ -355,8 +347,10 @@ used to create a new scratch buffer."
   (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
   ;; Bind some useful keys for evil-mode
-  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
-  (evil-define-key '(normal insert visual) eshell-mode-map (kbd "C-a") 'eshell-bol)
+  (evil-define-key '(normal insert visual)
+    eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
+  (evil-define-key '(normal insert visual)
+    eshell-mode-map (kbd "C-a") 'eshell-bol)
 
   (setq eshell-history-size          10000
         eshell-buffer-maximum-lines  10000
@@ -556,8 +550,6 @@ used to create a new scratch buffer."
   :custom
   (completion-styles '(orderless))
   (completion-category-overrides '((file (styles partial-completion))))
-  (orderless-skip-highlighting (lambda () selectrum-is-active))
-  (selectrum--highlighted-candidates #'orderless-highlight-matches)
   :init
   (setq completion-category-defaults nil))
 
@@ -566,6 +558,9 @@ used to create a new scratch buffer."
   :straight t
   :bind
   ("C-x C-z" . #'selectrum-repeat)
+  :custom
+  (orderless-skip-highlighting (lambda () selectrum-is-active))
+  (selectrum-highlight-candidates-function #'orderless-highlight-matches)
   :init
   (selectrum-mode +1))
 
@@ -810,7 +805,8 @@ reuse it's window, otherwise create new one."
   :commands (magit-project-status)
   :custom
   (magit-diff-refine-hunk 'all)
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  (magit-display-buffer-function
+   #'magit-display-buffer-same-window-except-diff-v1)
   :general
   (general-define-key
    :states 'normal
@@ -846,7 +842,6 @@ reuse it's window, otherwise create new one."
   (lsp-headerline-breadcrumb-enable nil)
   (lsp-keymap-prefix "s-l")
   (lsp-enable-indentation nil)
-  (lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp"))
   (lsp-completion-provider :none)
   (lsp-eldoc-enable-hover nil)
   (lsp-modeline-diagnostics-scope :file)
