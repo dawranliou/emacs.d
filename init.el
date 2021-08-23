@@ -143,6 +143,7 @@
 (global-set-key (kbd "s-s") #'save-buffer)
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 (global-set-key (kbd "s-w") #'delete-window)
+(global-set-key (kbd "s-v") #'yank)
 
 
 (custom-set-faces
@@ -819,13 +820,7 @@ reuse it's window, otherwise create new one."
   (eshell-toggle-use-git-root t)
   (eshell-toggle-run-command nil)
   :bind
-  ("C-M-'" . eshell-toggle)
-  :general
-  (general-define-key
-   :states 'normal
-   :keymaps 'override
-   :prefix "SPC"
-   "te" #'eshell-toggle))
+  ("C-M-'" . eshell-toggle))
 
 
 (use-package magit
