@@ -751,14 +751,6 @@ reuse it's window, otherwise create new one."
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 
-(use-package evil-org
-  :straight t
-  :after evil
-  :hook (org-mode . evil-org-mode)
-  :config
-  (diminish 'evil-org-mode))
-
-
 (use-package org-journal
   :straight t
   :general
@@ -999,7 +991,7 @@ reuse it's window, otherwise create new one."
         ("C-," . nil)
         ("C-;" . nil))
   :hook
-  ;; (prog-mode . flyspell-prog-mode)
+  (prog-mode . flyspell-prog-mode)
   (text-mode . flyspell-mode))
 
 

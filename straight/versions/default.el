@@ -17,7 +17,6 @@
  ("eshell-toggle" . "7160518ca56444fead841b8acff59aeffc7cebb3")
  ("evil" . "dceb73603d397f7e42a541976d8ec0711248d38c")
  ("evil-collection" . "dbbe017404b9346b4bc02a0106c02f9564ab1828")
- ("evil-org-mode" . "80ef38fb378541937f6ddfe836809e76eda1e355")
  ("expand-region.el" . "95a773bd8f557cbd43d3b2dab2fa4417ec5927ab")
  ("f.el" . "50af874cd19042f17c8686813d52569b1025c76a")
  ("fennel-mode" . "26f7a3adeec1f84c13b8dfdefd8a1f70a5ba1aaf")

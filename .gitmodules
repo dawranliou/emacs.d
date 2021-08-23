@@ -55,9 +55,6 @@
 [submodule "straight/repos/evil-collection"]
 	path = straight/repos/evil-collection
 	url = https://github.com/emacs-evil/evil-collection.git
-[submodule "straight/repos/evil-org-mode"]
-	path = straight/repos/evil-org-mode
-	url = https://github.com/Somelauw/evil-org-mode.git
 [submodule "straight/repos/expand-region.el"]
 	path = straight/repos/expand-region.el
 	url = https://github.com/magnars/expand-region.el.git
