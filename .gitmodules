@@ -13,9 +13,6 @@
 [submodule "straight/repos/clojure-mode"]
 	path = straight/repos/clojure-mode
 	url = https://github.com/clojure-emacs/clojure-mode.git
-[submodule "straight/repos/corfu"]
-	path = straight/repos/corfu
-	url = https://github.com/emacs-straight/corfu.git
 [submodule "straight/repos/dash.el"]
 	path = straight/repos/dash.el
 	url = https://github.com/magnars/dash.el.git
@@ -169,6 +166,9 @@
 [submodule "straight/repos/s.el"]
 	path = straight/repos/s.el
 	url = https://github.com/magnars/s.el.git
+[submodule "straight/repos/selectrum"]
+	path = straight/repos/selectrum
+	url = https://github.com/raxod502/selectrum.git
 [submodule "straight/repos/sesman"]
 	path = straight/repos/sesman
 	url = https://github.com/vspinu/sesman.git
@@ -190,9 +190,6 @@
 [submodule "straight/repos/use-package"]
 	path = straight/repos/use-package
 	url = https://github.com/jwiegley/use-package.git
-[submodule "straight/repos/vertico"]
-	path = straight/repos/vertico
-	url = https://github.com/emacs-straight/vertico.git
 [submodule "straight/repos/with-editor"]
 	path = straight/repos/with-editor
 	url = https://github.com/magit/with-editor.git

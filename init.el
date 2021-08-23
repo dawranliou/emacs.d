@@ -575,20 +575,18 @@ used to create a new scratch buffer."
   :custom
   (completion-styles '(orderless))
   (completion-category-overrides '((file (styles partial-completion))))
+  (orderless-skip-highlighting (lambda () selectrum-is-active))
+  (selectrum--highlighted-candidates #'orderless-highlight-matches)
   :init
   (setq completion-category-defaults nil))
 
 
-(use-package corfu
+(use-package selectrum
   :straight t
+  :bind
+  ("C-x C-z" . #'selectrum-repeat)
   :init
-  (corfu-global-mode))
-
-
-(use-package vertico
-  :straight t
-  :init
-  (vertico-mode))
+  (selectrum-mode +1))
 
 
 (use-package marginalia
