@@ -139,10 +139,8 @@
 
 
 (column-number-mode)
-(blink-cursor-mode 0)
 (show-paren-mode)
 (electric-pair-mode 1)
-(add-hook 'minibuffer-setup-hook (lambda () (electric-pair-mode 0)))
 (save-place-mode t)
 (add-hook 'after-init-hook #'recentf-mode)
 (add-hook 'after-init-hook #'savehist-mode)
@@ -203,10 +201,6 @@ used to create a new scratch buffer."
 
 (with-eval-after-load 'eldoc
   (diminish 'eldoc-mode))
-
-
-(with-eval-after-load 'evil-collection-unimpaired
-  (diminish 'evil-collection-unimpaired-mode))
 
 
 (defun dawran/quick-edit ()
@@ -526,7 +520,9 @@ used to create a new scratch buffer."
   :straight t
   :after evil
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  (with-eval-after-load 'evil-collection-unimpaired
+    (diminish 'evil-collection-unimpaired-mode)))
 
 
 (use-package sketch-themes
