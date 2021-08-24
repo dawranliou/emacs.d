@@ -631,6 +631,8 @@ reuse it's window, otherwise create new one."
   (:map paredit-mode-map
         ("M-s" . nil)
         ("C-M-s" . paredit-splice-sexp)
+        ("M-r" . nil)
+        ("C-M-r" . paredit-raise-sexp)
         (")" . nil)
         ("C-d" . nil)
         ("M-d" . nil)
