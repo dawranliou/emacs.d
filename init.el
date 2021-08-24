@@ -51,6 +51,8 @@
       ns-use-proxy-icon nil
       frame-title-format nil
       enable-recursive-minibuffers t
+      recentf-save-file
+      (expand-file-name "var/recentf-save.el" user-emacs-directory)
       recentf-max-saved-items 200
       savehist-file (expand-file-name "var/savehist.el" user-emacs-directory)
       savehist-save-minibuffer-history t
@@ -142,7 +144,6 @@
 (show-paren-mode)
 (electric-pair-mode 1)
 (save-place-mode t)
-(add-hook 'after-init-hook #'recentf-mode)
 (add-hook 'after-init-hook #'savehist-mode)
 
 
@@ -241,11 +242,7 @@ used to create a new scratch buffer."
                    (plist-get (mac-application-state) :appearance))
             'sketch-black
           'sketch-white)
-        t))))
-
-  ;; Ligature
-  (if (fboundp 'mac-auto-operator-composition-mode)
-      (mac-auto-operator-composition-mode)))
+        t)))))
 
 
 ;;; - Package manager

@@ -28,6 +28,8 @@ Otherwise choose text from the kill ring and insert it."
 (defun recentf-open-files+ ()
   "Use `completing-read' to open a recent file."
   (interactive)
+  (unless recentf-mode
+    (recentf-mode +1))
   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
     (find-file (completing-read "Find recent file: " files nil t))))
 
