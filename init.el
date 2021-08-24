@@ -43,16 +43,16 @@
       initial-scratch-message nil
       tramp-default-method "ssh"
       backup-directory-alist
-      `(("." . ,(expand-file-name "backups" user-emacs-directory)))
-      auto-save-file-name-transforms
-      `((".*" ,(expand-file-name "auto-save-list/" user-emacs-directory) t))
+      (list (cons "." (expand-file-name "var/backup/" user-emacs-directory)))
+      auto-save-list-file-prefix
+      (expand-file-name "var/auto-save/" user-emacs-directory)
       ring-bell-function #'ignore
       visible-bell nil
       ns-use-proxy-icon nil
       frame-title-format nil
       enable-recursive-minibuffers t
       recentf-max-saved-items 200
-      savehist-file "~/.emacs.d/savehist"
+      savehist-file (expand-file-name "var/savehist.el" user-emacs-directory)
       savehist-save-minibuffer-history t
       savehist-additional-variables '(kill-ring
                                       mark-ring
