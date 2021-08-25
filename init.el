@@ -459,6 +459,7 @@ used to create a new scratch buffer."
   (setq evil-want-keybinding nil)
   (setq evil-move-beyond-eol t)
   (setq evil-move-cursor-back nil)
+  (setq evil-emacs-state-cursor 'bar)
   :custom
   (evil-want-C-d-scroll nil)
   (evil-want-C-u-scroll nil)
