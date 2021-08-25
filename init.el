@@ -483,7 +483,7 @@ used to create a new scratch buffer."
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal)
+  (evil-set-initial-state 'git-commit-mode 'insert)
 
   (define-key evil-insert-state-map (kbd "C-a") nil)
   (define-key evil-insert-state-map (kbd "C-d") nil)
