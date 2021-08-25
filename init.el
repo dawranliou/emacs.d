@@ -364,6 +364,8 @@ used to create a new scratch buffer."
   ;; nicer.
   (when (version< emacs-version "28")
     (straight-use-package 'project))
+  :custom
+  (project-list-file (expand-file-name "var/projects.el" user-emacs-directory))
   :bind
   ("s-p" . project-find-file)
   (:map project-prefix-map
