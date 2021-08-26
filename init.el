@@ -954,7 +954,7 @@ reuse it's window, otherwise create new one."
 (use-package fennel-mode
   :straight (:host gitlab :repo "technomancy/fennel-mode")
   :mode "\\.fnl\\'"
-  :hook (fennel-mode . lispy-mode))
+  :hook (fennel-mode . paredit-mode))
 
 
 (use-package flyspell
