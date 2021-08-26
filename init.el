@@ -453,7 +453,8 @@ used to create a new scratch buffer."
    "tt" #'dawran/load-theme
    "tw" #'whitespace-mode
    "tm" #'toggle-frame-maximized
-   "tM" #'toggle-frame-fullscreen))
+   "tM" #'toggle-frame-fullscreen
+   "t$" #'toggle-truncate-lines))
 
 
 (use-package evil
