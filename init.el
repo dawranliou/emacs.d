@@ -81,6 +81,7 @@
 (setq-default delete-by-moving-to-trash t
               scroll-preserve-screen-position 'always
               fill-column 80
+              x-stretch-cursor t
               tab-width 8
               line-spacing 3
               indent-tabs-mode nil
