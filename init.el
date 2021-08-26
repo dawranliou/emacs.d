@@ -113,6 +113,7 @@
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x k") #'kill-this-buffer)
+(global-set-key (kbd "M-SPC") #'cycle-spacing)
 (global-set-key (kbd "M-/") #'hippie-expand)
 (global-set-key (kbd "M-:") #'pp-eval-expression)
 (global-set-key (kbd "M-Z") #'zap-to-char)
