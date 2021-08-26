@@ -429,6 +429,7 @@ used to create a new scratch buffer."
 
 (use-package extras
   :load-path "lisp/"
+  :commands (+uuid)
   :bind
   (([remap move-beginning-of-line] . +move-beginning-of-line)
    ("S-<return>" . +newline-at-end-of-line)

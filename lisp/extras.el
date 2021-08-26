@@ -55,4 +55,10 @@ Otherwise choose text from the kill ring and insert it."
   (newline-and-indent))
 
 
+(defun +uuid ()
+  "Generate a new UUID and insert."
+  (interactive)
+  (insert (downcase (string-trim (shell-command-to-string "uuidgen")))))
+
+
 (provide 'extras)
