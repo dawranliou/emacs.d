@@ -53,7 +53,7 @@
  ("s.el" . "08661efb075d1c6b4fa812184c1e5e90c08795a9")
  ("selectrum" . "97693d0aea2c548197e9d1de3bdedf8e703775a4")
  ("sesman" . "edee869c209c016e5f0c5cbb8abb9f3ccd2d1e05")
- ("sketch-themes" . "8c4b4ef49fbb059ad00ab9fb76f22c2cdd780e7c")
+ ("sketch-themes" . "50fd9fe9caf24f42dc481560e1f41addc3a06dbb")
  ("slime" . "8aa055b9ad4a8b5f1b24ff29c9c7009e9475ee2c")
  ("spinner" . "34905eae12a236753fa88abc831eff1e41e8576e")
  ("straight.el" . "1e27b0590df77a5d478970ca58fd6606971692f5")
