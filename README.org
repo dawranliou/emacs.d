@@ -22,6 +22,7 @@ by a bunch of resources I’ve found online:
 - https://github.com/oantolin/emacs-config
 - https://github.com/purcell/emacs.d
 - https://github.com/raxod502/radian/blob/develop/emacs/radian.el
+- https://github.com/sam217pa/emacs-config
 - https://gitlab.com/ambrevar/dotfiles/-/tree/master/.emacs.d
 - https://karthinks.com/software/batteries-included-with-emacs/
 - https://luca.cambiaghi.me/vanilla-emacs/readme.html
@@ -38,25 +39,23 @@ git clone --recursive git@github.com:dawranliou/emacs.d.git
 
 * Startup performance
 
-The startup time is ~0.9 seconds on my machine. I only tweak the startup GC
-threshold and defer loading package loading. Nothing too fancy here. I also set
-=straight-check-for-modifications= to =(check-on-save find-when-checking)=
-because I don't usually tweak my dependencies. If I do, I know how to rebuild
-them when needed.
+The startup time is ~0.9 seconds on my machine.  (It's ~0.4 seconds when things
+are warm. Whatever that means.)  The only tricks I use is to increase the
+startup GC threshold and defer loading package loading.  Nothing too fancy here.
+I also set =straight-check-for-modifications= to =(check-on-save
+find-when-checking)= because I don't usually tweak my dependencies.  If I do, I
+know how to rebuild them when needed.
 
 * Configuration structure
 
 - =early-init.el= - See [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][The Early Init File]]
 - =init.el= - The majority of the configuration
-- =lisp/extras.el= - Couple of things I found online. Credits to:
-  - [[https://github.com/raxod502/selectrum/wiki/Useful-Commands][selectrum's wiki]]
+- =lisp/extras.el= - Couple of things I found online.
 
 These are kept out of git's version control:
 
 - =private.el= - The file is loaded after init.
 - =custom.el= - The file is for the custom settings.
-- =backups= - The folder is for backups.
-- =auto-save-list= - The folder is for the auto save files.
 
 * Mac (OSX) ergonomics keybindings
 
@@ -64,93 +63,79 @@ Several OSX native keybindings that utilizes the command key (which is also the
 =super= key) are added to make context-switching to other native apps easier,
 e.g. Chrome, Firefox.
 
-| Key             | Binding                 |
-|-----------------+-------------------------|
-| =s-'=           | er/expand-region        |
-| =s-\=           | er/contract-region      |
-| =s-==           | text-scale-adjust       |
-| =s--=           | text-scale-decrease     |
-| =s-<backspace>= | kill-whole-line         |
-| =s-F=           | rg-project              |
-| =s-S=           | write-file              |
-| =s-a=           | mark-whole-buffer       |
-| =s-f=           | isearch-forward         |
-| =s-g=           | magit-status            |
-| =s-k=           | kill-this-buffer        |
-| =s-l=           | lsp-keymap              |
-| =s-p=           | project-find-file       |
-| =s-q=           | save-buffers-kill-emacs |
-| =s-s=           | save-buffer             |
-| =s-t=           | open scratch buffer     |
-| =s-v=           | yank                    |
-| =s-w=           | delete-window           |
+| Key           | Binding                 |
+|---------------+-------------------------|
+| s-'           | er/expand-region        |
+| s-\           | er/contract-region      |
+| s-=           | text-scale-adjust       |
+| s--           | text-scale-decrease     |
+| s-<backspace> | kill-whole-line         |
+| s-F           | rg-project              |
+| s-S           | write-file              |
+| s-a           | mark-whole-buffer       |
+| s-f           | isearch-forward         |
+| s-g           | magit-status            |
+| s-k           | kill-this-buffer        |
+| s-l           | lsp-keymap              |
+| s-p           | project-find-file       |
+| s-q           | save-buffers-kill-emacs |
+| s-s           | save-buffer             |
+| s-t           | open scratch buffer     |
+| s-v           | yank (paste)            |
+| s-w           | delete-window           |
 
-* Evil (Vim-style) keybindings
+* Modal (Vim-style) keybindings
 
 I used to use Spacemacs and then Doom Emacs and I like the idea of using =SPC=
-as the prefix. What I dislike about it is that many keybindings are too many
-keystrokes away. So I try to be conservative about what I added to the
+as the prefix.  What I dislike about it is that many keybindings are too many
+keystrokes away.  So I try to be conservative about what I added to the
 =SPC=-prefixed keymap.
 
 A good read about evil keybindings (and emacs keymaps in general):
 
 - https://github.com/noctuid/evil-guide
 
-| Key       | Binding                               |
-|-----------+---------------------------------------|
-| =SPC f=   | Find...                               |
-| =SPC f d= | find config                           |
-| =SPC t=   | Toggles...                            |
-| =SPC t c= | display-time-world                    |
-| =SPC t t= | load theme                            |
-| =SPC t w= | whitespace-mode                       |
-| =SPC t m= | toggle-frame-maximized                |
-| =SPC t M= | toggle-frame-fullscreen               |
-| =SPC n=   | Notes...                              |
-| =SPC n j= | org-journal-open-current-journal-file |
-| =SPC n J= | org-journal-new-entry                 |
-| =SPC n f= | org-roam-find-file                    |
-| =SPC d=   | dired-jump                            |
-| =SPC e=   | eshell                                |
-| =SPC g g= | magit-status                          |
-| =SPC g b= | magit-blame-addition                  |
-| =SPC g d= | magit-diff-unstaged                   |
-| =SPC g f= | magit-file-dispatch                   |
-| =SPC g l= | magit-log-buffer-file                 |
-| =SPC R=   | elfeed                                |
+| Key     | Binding                               |
+|---------+---------------------------------------|
+| SPC f d | find config                           |
+| SPC t c | display-time-world                    |
+| SPC t t | load theme                            |
+| SPC t w | whitespace-mode                       |
+| SPC t m | toggle-frame-maximized                |
+| SPC t M | toggle-frame-fullscreen               |
 
 * Emacs-style keybindings
 
 There are some cases where I prefer emacs style keybindings.
 
-| Key        | Binding               |
-|------------+-----------------------|
-| =<escape>= | keyboard-escape-quit  |
-| =C-e=      | end-of-line           |
-| =C-y=      | yank                  |
-| =C-k=      | kill-line             |
-| =M-.=      | xref-find-definition  |
-| =M-,=      | xref-pop-marker-stack |
-| =s-.=      | embark-dwim           |
-| =s-,=      | xref-pop-marker-stack |
-| =C-x C-b=  | ibuffer               |
-| =C-M-j=    | switch-to-buffer      |
-| =M-:=      | pp-eval-expression    |
-| =M-/=      | hippie-expand         |
-| =M-o=      | ace-window            |
-| =M-n=      | scroll up 1 line      |
-| =M-p=      | scroll down 1 line    |
-| =C-.=      | embark-act            |
-| =C-h B=    | embark-bindings       |
-| =C-c C-d=  | helpful-at-point      |
-| =C-h C=    | helpful-command       |
-| =C-h F=    | describe-face         |
-| =C-x C-j=  | dired-jump            |
-| =C-M-'=    | eshell-toggle         |
-| =C-x g=    | magit-status          |
-| =C-c g=    | magit-file-dispatch   |
-| =M-y=      | yank-pop+             |
-| =C-x C-r=  | recentf-open-files+   |
-| =C-M-r=    | selectrum-repeat      |
-| =C-;=      | iedit-mode            |
-| =C-x C-z=  | selectrum-repeat      |
+| Key      | Binding               |
+|----------+-----------------------|
+| <escape> | keyboard-escape-quit  |
+| C-e      | end-of-line           |
+| C-y      | yank                  |
+| C-k      | kill-line             |
+| M-.      | xref-find-definition  |
+| M-,      | xref-pop-marker-stack |
+| s-.      | embark-dwim           |
+| s-,      | xref-pop-marker-stack |
+| C-x C-b  | ibuffer               |
+| C-M-j    | switch-to-buffer      |
+| M-:      | pp-eval-expression    |
+| M-/      | hippie-expand         |
+| M-o      | ace-window            |
+| M-n      | scroll up 1 line      |
+| M-p      | scroll down 1 line    |
+| C-.      | embark-act            |
+| C-h B    | embark-bindings       |
+| C-c C-d  | helpful-at-point      |
+| C-h C    | helpful-command       |
+| C-h F    | describe-face         |
+| C-x C-j  | dired-jump            |
+| C-M-'    | eshell-toggle         |
+| C-x g    | magit-status          |
+| C-c g    | magit-file-dispatch   |
+| M-y      | yank-pop+             |
+| C-x C-r  | recentf-open-files+   |
+| C-M-r    | selectrum-repeat      |
+| C-;      | iedit-mode            |
+| C-x C-z  | selectrum-repeat      |

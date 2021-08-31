@@ -84,6 +84,7 @@
               cursor-type '(bar . 2)
               x-stretch-cursor t
               tab-width 8
+              tab-always-indent 'complete
               line-spacing 3
               indent-tabs-mode nil
               mode-line-format '("%e"
@@ -173,11 +174,6 @@ used to create a new scratch buffer."
 (defun dawran/find-config ()
   (interactive)
   (find-file (expand-file-name user-init-file)))
-
-
-(setq-local imenu-generic-expression
-            (add-to-list 'imenu-generic-expression
-               '(nil "^(use-package\\s-+\\(.+\\)" 1)))
 
 
 (defun dawran/load-theme-action (theme)
@@ -901,7 +897,9 @@ reuse it's window, otherwise create new one."
         ("C-;" . nil))
   :hook
   (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode))
+  (text-mode . flyspell-mode)
+  :config
+  (diminish 'flyspell-mode))
 
 
 (use-package slime
