@@ -4,9 +4,6 @@
 [submodule "straight/repos/a.el"]
 	path = straight/repos/a.el
 	url = https://github.com/plexus/a.el.git
-[submodule "straight/repos/annalist.el"]
-	path = straight/repos/annalist.el
-	url = https://github.com/noctuid/annalist.el.git
 [submodule "straight/repos/cider"]
 	path = straight/repos/cider
 	url = https://github.com/clojure-emacs/cider.git
@@ -49,12 +46,6 @@
 [submodule "straight/repos/eshell-toggle"]
 	path = straight/repos/eshell-toggle
 	url = https://github.com/4DA/eshell-toggle.git
-[submodule "straight/repos/evil"]
-	path = straight/repos/evil
-	url = https://github.com/emacs-evil/evil.git
-[submodule "straight/repos/evil-collection"]
-	path = straight/repos/evil-collection
-	url = https://github.com/emacs-evil/evil-collection.git
 [submodule "straight/repos/expand-region.el"]
 	path = straight/repos/expand-region.el
 	url = https://github.com/magnars/expand-region.el.git
@@ -76,9 +67,6 @@
 [submodule "straight/repos/go-mode.el"]
 	path = straight/repos/go-mode.el
 	url = https://github.com/dominikh/go-mode.el.git
-[submodule "straight/repos/goto-chg"]
-	path = straight/repos/goto-chg
-	url = https://github.com/emacs-evil/goto-chg.git
 [submodule "straight/repos/helpful"]
 	path = straight/repos/helpful
 	url = https://github.com/Wilfred/helpful.git
@@ -112,6 +100,9 @@
 [submodule "straight/repos/melpa"]
 	path = straight/repos/melpa
 	url = https://github.com/melpa/melpa.git
+[submodule "straight/repos/modalka"]
+	path = straight/repos/modalka
+	url = https://github.com/mrkkrp/modalka.git
 [submodule "straight/repos/orderless"]
 	path = straight/repos/orderless
 	url = https://github.com/oantolin/orderless.git

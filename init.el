@@ -81,6 +81,7 @@
 (setq-default delete-by-moving-to-trash t
               scroll-preserve-screen-position 'always
               fill-column 80
+              cursor-type '(bar . 2)
               x-stretch-cursor t
               tab-width 8
               line-spacing 3
@@ -109,7 +110,6 @@
 (put 'upcase-region 'disabled nil)
 
 
-(global-set-key (kbd "<escape>") #'keyboard-escape-quit)
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x k") #'kill-this-buffer)
@@ -172,9 +172,12 @@ used to create a new scratch buffer."
 
 (defun dawran/find-config ()
   (interactive)
-  (find-file (expand-file-name "~/.emacs.d/init.el"))
-  (add-to-list 'imenu-generic-expression
-               '("Packages" "^(use-package\\s-+\\(.+\\)" 1)))
+  (find-file (expand-file-name user-init-file)))
+
+
+(setq-local imenu-generic-expression
+            (add-to-list 'imenu-generic-expression
+               '(nil "^(use-package\\s-+\\(.+\\)" 1)))
 
 
 (defun dawran/load-theme-action (theme)
@@ -339,11 +342,8 @@ used to create a new scratch buffer."
   ;; Use Ivy to provide completions in eshell
   (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
-  ;; Bind some useful keys for evil-mode
-  (evil-define-key '(normal insert visual)
-    eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
-  (evil-define-key '(normal insert visual)
-    eshell-mode-map (kbd "C-a") 'eshell-bol)
+  (define-key eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
+  (define-key eshell-mode-map (kbd "C-a") 'eshell-bol)
 
   (setq eshell-history-size          10000
         eshell-buffer-maximum-lines  10000
@@ -440,95 +440,80 @@ used to create a new scratch buffer."
 ;;; - 3rd Party Packages
 
 
-(use-package general
-  :straight t
-  :config
-  (general-define-key
-   :states 'normal
-   :keymaps 'override
-   :prefix "SPC"
-   "d" #'dired-jump
-   "e" #'eshell
-   "fd" #'dawran/find-config
-   "tc" #'display-time-world
-   "tt" #'dawran/load-theme
-   "tw" #'whitespace-mode
-   "tm" #'toggle-frame-maximized
-   "tM" #'toggle-frame-fullscreen
-   "t$" #'toggle-truncate-lines))
+(defvar my-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map "fd" #'dawran/find-config)
+    (define-key map "tt" #'dawran/load-theme)
+    (define-key map "tw" #'whitespace-mode)
+    (define-key map "tm" #'toggle-frame-maximized)
+    (define-key map "tM" #'toggle-frame-fullscreen)
+    (define-key map "t$" #'toggle-truncate-lines)
+    (define-key map "gg" #'magit-status)
+    (define-key map "gb" #'magit-blame-addition)
+    (define-key map "gd" #'magit-diff-unstaged)
+    (define-key map "gf" #'magit-file-dispatch)
+    (define-key map "gl" #'magit-log-buffer-file)
+    map)
+  "My key-map.")
 
 
-(use-package evil
+(use-package modalka
   :straight t
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-move-beyond-eol t)
-  (setq evil-move-cursor-back nil)
-  (setq evil-emacs-state-cursor 'bar)
   :custom
-  (evil-want-C-d-scroll nil)
-  (evil-want-C-u-scroll nil)
-  (evil-want-C-i-jump nil)
-  (evil-undo-system 'undo-fu)
-  (evil-symbol-word-search t)
-  (evil-want-fine-undo t)
+  (modalka-cursor-type 'box)
+  :bind
+  (("<escape>" . modalka-global-mode)
+   :map modalka-mode-map
+   ([remap self-insert-command] . 'ignore)
+   ("SPC" . #'my-map))
   :config
-  (evil-mode 1)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-normal-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-insert-state-map "\C-e" 'end-of-line)
-  (define-key evil-visual-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-motion-state-map "\C-e" 'evil-end-of-line)
-  (define-key evil-normal-state-map "\C-y" 'yank)
-  (define-key evil-insert-state-map "\C-y" 'yank)
-  (define-key evil-visual-state-map "\C-y" 'yank)
+  (modalka-define-kbd "0" "C-0")
+  (modalka-define-kbd "1" "C-1")
+  (modalka-define-kbd "2" "C-2")
+  (modalka-define-kbd "3" "C-3")
+  (modalka-define-kbd "4" "C-4")
+  (modalka-define-kbd "5" "C-5")
+  (modalka-define-kbd "6" "C-6")
+  (modalka-define-kbd "7" "C-7")
+  (modalka-define-kbd "8" "C-8")
+  (modalka-define-kbd "9" "C-9")
 
-  ;; Use visual line motions even outside of visual-line-mode buffers
-  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  (modalka-define-kbd "a" "C-a")
+  (modalka-define-kbd "b" "C-b")
+  ;; c
+  (modalka-define-kbd "d" "C-d")
+  (modalka-define-kbd "e" "C-e")
+  (modalka-define-kbd "f" "C-f")
+  (modalka-define-kbd "g" "C-g")
+  (modalka-define-kbd "h" "C-b")
+  (define-key modalka-mode-map "i" #'modalka-global-mode)
+  (modalka-define-kbd "j" "C-n")
+  (modalka-define-kbd "k" "C-p")
+  (modalka-define-kbd "l" "C-f")
+  ;; m
+  (modalka-define-kbd "n" "C-n")
+  (modalka-define-kbd "o" "S-<return>")
+  (modalka-define-kbd "p" "C-p")
+  ;; q
+  (modalka-define-kbd "r" "C-r")
+  (modalka-define-kbd "s" "C-s")
+  (modalka-define-kbd "t" "C-t")
+  ;; u
+  (modalka-define-kbd "v" "C-v")
+  (modalka-define-kbd "w" "C-w")
+  ;; x
+  (modalka-define-kbd "y" "C-y")
+  ;; z
 
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'git-commit-mode 'insert)
-
-  (define-key evil-insert-state-map (kbd "C-a") nil)
-  (define-key evil-insert-state-map (kbd "C-d") nil)
-  (define-key evil-insert-state-map (kbd "C-k") nil)
-  (define-key evil-insert-state-map (kbd "C-n") nil)
-  (define-key evil-insert-state-map (kbd "C-p") nil)
-  (define-key evil-insert-state-map (kbd "C-t") nil)
-  (define-key evil-motion-state-map (kbd ",") nil)
-  (define-key evil-motion-state-map (kbd "C-b") nil)
-  (define-key evil-motion-state-map (kbd "C-f") nil)
-  (define-key evil-motion-state-map (kbd "C-v") nil)
-  (define-key evil-motion-state-map (kbd "C-S-v") #'evil-visual-block)
-  (define-key evil-normal-state-map (kbd "<") nil)
-  (define-key evil-normal-state-map (kbd ">") nil)
-  (define-key evil-normal-state-map (kbd "C-.") nil)
-  (define-key evil-normal-state-map (kbd "C-n") nil)
-  (define-key evil-normal-state-map (kbd "C-p") nil)
-  (define-key evil-normal-state-map (kbd "C-t") nil)
-  (define-key evil-normal-state-map (kbd "M-,") nil)
-  (define-key evil-normal-state-map (kbd "M-.") nil)
-
-  (define-key evil-normal-state-map "*" #'isearch-forward-symbol-at-point)
-  (define-key evil-normal-state-map "#" #'isearch-forward-symbol-at-point)
-
-  ;; https://blog.meain.io/2020/emacs-highlight-yanked/
-  (defun dawran/evil-yank-advice (orig-fn beg end &rest args)
-    "Pulse momentary on yank text"
-    (pulse-momentary-highlight-region beg end)
-    (apply orig-fn beg end args))
-  (advice-add 'evil-yank :around #'dawran/evil-yank-advice))
-
-
-(use-package evil-collection
-  :straight t
-  :after evil
-  :config
-  (evil-collection-init)
-  (with-eval-after-load 'evil-collection-unimpaired
-    (diminish 'evil-collection-unimpaired-mode)))
+  (modalka-define-kbd "A" "C-M-a")
+  (modalka-define-kbd "B" "C-M-b")
+  (modalka-define-kbd "D" "C-M-d")
+  (modalka-define-kbd "E" "C-M-e")
+  (modalka-define-kbd "F" "C-M-f")
+  (modalka-define-kbd "T" "C-M-t")
+  (modalka-define-kbd "U" "C-M-u")
+  (modalka-define-kbd "K" "C-M-k")
+  )
 
 
 (use-package sketch-themes
@@ -647,14 +632,6 @@ reuse it's window, otherwise create new one."
         ("M-?" . nil)
         ("M-{" . paredit-wrap-curly)
         ("M-[" . paredit-wrap-square))
-  :general
-  (general-define-key
-   :states 'normal
-   :keymaps 'paredit-mode-map
-   ">" #'paredit-forward-slurp-sexp
-   "<" #'paredit-forward-barf-sexp
-   "C->" #'paredit-backward-barf-sexp
-   "C-<" #'paredit-backward-slurp-sexp)
   :config
   (diminish 'paredit-mode))
 
@@ -733,13 +710,8 @@ reuse it's window, otherwise create new one."
 
 (use-package org-journal
   :straight t
-  :general
-  (general-define-key
-   :states 'normal
-   :keymaps 'override
-   :prefix "SPC"
-   "nj" #'org-journal-open-current-journal-file
-   "nJ" #'org-journal-new-entry)
+  :commands org-journal-new-entry
+  :bind ("C-c n j" . 'org-journal-new-entry)
   :custom
   (org-journal-date-format "%A, %d/%m/%Y")
   (org-journal-date-prefix "* ")
@@ -753,16 +725,12 @@ reuse it's window, otherwise create new one."
   :straight t
   :custom
   (org-roam-directory "~/org/roam/")
-  :general
-  (general-define-key
-   :states 'normal
-   :keymaps 'override
-   :prefix "SPC"
-   "nf" #'org-roam-node-find
-   "nl" #'org-roam-buffer-toggle
-   "ng" #'org-roam-graph
-   "ni" #'org-roam-node-insert
-   "nc" #'org-roam-capture)
+  :bind
+  (("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n f" . org-roam-node-find)
+   ("C-c n g" . org-roam-graph)
+   ("C-c n i" . org-roam-node-insert)
+   ("C-c n c" . org-roam-capture))
   :init
   (setq org-roam-v2-ack t)
   :config
@@ -810,17 +778,7 @@ reuse it's window, otherwise create new one."
   :custom
   (magit-diff-refine-hunk 'all)
   (magit-display-buffer-function
-   #'magit-display-buffer-same-window-except-diff-v1)
-  :general
-  (general-define-key
-   :states 'normal
-   :keymaps 'override
-   :prefix "SPC"
-   "gg"  #'magit-status
-   "gb"  #'magit-blame-addition
-   "gd"  #'magit-diff-unstaged
-   "gf"  #'magit-file-dispatch
-   "gl"  #'magit-log-buffer-file))
+   #'magit-display-buffer-same-window-except-diff-v1))
 
 
 (use-package rg
@@ -876,13 +834,6 @@ reuse it's window, otherwise create new one."
                             try-expand-dabbrev-from-kill))))
   :custom
   (cljr-magic-requires nil)
-  :general
-  (general-define-key
-   :states 'normal
-   :prefix ","
-   :non-normal-prefix "C-c ,"
-   :keymaps '(clojure-mode-map clojurescript-mode-map)
-   "yn" #'+clojure-ns-kill-ring-save)
   :config
   ;; (require 'flycheck-clj-kondo)
   (setq clojure-indent-style 'align-arguments
@@ -899,32 +850,17 @@ reuse it's window, otherwise create new one."
 
 (use-package cider
   :straight t
+  :after clojure-mode
   :custom
   (cider-repl-display-help-banner nil)
   (cider-repl-display-in-current-window nil)
   (cider-repl-pop-to-buffer-on-connect nil)
   (cider-repl-use-pretty-printing t)
   (cider-repl-buffer-size-limit 100000)
-  :hook
-  (cider-repl-mode . evil-insert-state)
   :bind
   (:map cider-mode-map
-        ("M-," . nil)                   ; Prefer xref + clojure-lsp
-        ("M-." . nil))                  ; Prefer xref + clojure-lsp
-  :general
-  (general-define-key
-   :states 'normal
-   :prefix ","
-   :non-normal-prefix "C-c ,"
-   :keymaps '(clojure-mode-map clojurescript-mode-map)
-   "," #'cider
-   "eb" #'cider-eval-buffer
-   "ef" #'cider-eval-defun-at-point
-   "eF" #'cider-pprint-eval-defun-to-comment
-   "ee" #'cider-eval-last-sexp
-   "eE" #'cider-pprint-eval-last-sexp-to-comment
-   "tt" #'cider-test-run-test
-   "tn" #'cider-test-run-ns-tests))
+        ("M-," . nil)
+        ("M-." . nil)))
 
 
 (use-package go-mode
@@ -982,6 +918,7 @@ reuse it's window, otherwise create new one."
 
 (use-package elfeed
   :straight t
+  :commands elfeed
   :custom
   (elfeed-feeds '("http://irreal.org/blog/?feed=rss2"
                   "https://ambrevar.xyz/atom.xml"
@@ -999,13 +936,7 @@ reuse it's window, otherwise create new one."
                   "https://worace.works/atom.xml"
                   "https://www.manueluberti.eu/feed.xml"
                   "https://www.murilopereira.com/index.xml"
-                  "https://www.with-emacs.com/rss.xml"))
-  :general
-  (general-define-key
-   :states 'normal
-   :keymaps 'override
-   :prefix "SPC"
-   "R" #'elfeed))
+                  "https://www.with-emacs.com/rss.")))
 
 
 ;;; - EWW
