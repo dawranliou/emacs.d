@@ -230,8 +230,8 @@ used to create a new scratch buffer."
         mac-command-modifier 'super
         mac-option-modifier 'meta
         mac-right-option-modifier 'meta
-        insert-directory-program "gls"
-        dired-listing-switches "-AFhlv --group-directories-first")
+        insert-directory-program "/usr/local/bin/gls"
+        dired-listing-switches "-aFGhlv --group-directories-first")
 
   ;; Detect system theme
   (when (fboundp 'mac-application-state)
@@ -301,7 +301,6 @@ used to create a new scratch buffer."
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
   :config
-  (setq-default dired-omit-files-p t)
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
