@@ -617,6 +617,8 @@ reuse it's window, otherwise create new one."
         ("C-M-s" . paredit-splice-sexp)
         ("M-r" . nil)
         ("C-M-r" . paredit-raise-sexp)
+        ("]" . nil)
+        ("}" . nil)
         (")" . nil)
         ("C-d" . nil)
         ("M-d" . nil)
