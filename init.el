@@ -427,6 +427,7 @@ used to create a new scratch buffer."
   :commands (+uuid)
   :bind
   (([remap move-beginning-of-line] . +move-beginning-of-line)
+   ("C-<backspace>" . +kill-line-backwards)
    ("S-<return>" . +newline-at-end-of-line)
    ("M-y" . yank-pop+)
    ("C-x C-r" . recentf-open-files+)))

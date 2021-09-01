@@ -61,4 +61,9 @@ Otherwise choose text from the kill ring and insert it."
   (insert (downcase (string-trim (shell-command-to-string "uuidgen")))))
 
 
+(defun +kill-line-backwards ()
+  "Kill line backwards."
+  (interactive)
+  (kill-line 0))
+
 (provide 'extras)
