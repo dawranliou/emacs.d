@@ -435,23 +435,6 @@ used to create a new scratch buffer."
 ;;; - 3rd Party Packages
 
 
-(defvar my-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map "fd" #'dawran/find-config)
-    (define-key map "tt" #'dawran/load-theme)
-    (define-key map "tw" #'whitespace-mode)
-    (define-key map "tm" #'toggle-frame-maximized)
-    (define-key map "tM" #'toggle-frame-fullscreen)
-    (define-key map "t$" #'toggle-truncate-lines)
-    (define-key map "gg" #'magit-status)
-    (define-key map "gb" #'magit-blame-addition)
-    (define-key map "gd" #'magit-diff-unstaged)
-    (define-key map "gf" #'magit-file-dispatch)
-    (define-key map "gl" #'magit-log-buffer-file)
-    map)
-  "My key-map.")
-
-
 (use-package modalka
   :straight t
   :custom
@@ -459,9 +442,24 @@ used to create a new scratch buffer."
   :bind
   (("<escape>" . modalka-global-mode)
    :map modalka-mode-map
-   ([remap self-insert-command] . 'ignore)
-   ("SPC" . #'my-map))
+   ([remap self-insert-command] . 'ignore))
   :config
+  (setq my-map
+        (let ((map (make-sparse-keymap)))
+          (define-key map "fd" #'dawran/find-config)
+          (define-key map "tt" #'dawran/load-theme)
+          (define-key map "tw" #'whitespace-mode)
+          (define-key map "tm" #'toggle-frame-maximized)
+          (define-key map "tM" #'toggle-frame-fullscreen)
+          (define-key map "t$" #'toggle-truncate-lines)
+          (define-key map "gg" #'magit-status)
+          (define-key map "gb" #'magit-blame-addition)
+          (define-key map "gd" #'magit-diff-unstaged)
+          (define-key map "gf" #'magit-file-dispatch)
+          (define-key map "gl" #'magit-log-buffer-file)
+          map))
+  (define-key modalka-mode-map (kbd "SPC") my-map)
+
   (modalka-define-kbd "0" "C-0")
   (modalka-define-kbd "1" "C-1")
   (modalka-define-kbd "2" "C-2")
