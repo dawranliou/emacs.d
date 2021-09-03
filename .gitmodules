@@ -43,9 +43,6 @@
 [submodule "straight/repos/epl"]
 	path = straight/repos/epl
 	url = https://github.com/cask/epl.git
-[submodule "straight/repos/eshell-toggle"]
-	path = straight/repos/eshell-toggle
-	url = https://github.com/4DA/eshell-toggle.git
 [submodule "straight/repos/expand-region.el"]
 	path = straight/repos/expand-region.el
 	url = https://github.com/magnars/expand-region.el.git

@@ -430,7 +430,8 @@ used to create a new scratch buffer."
    ("C-<backspace>" . +kill-line-backwards)
    ("S-<return>" . +newline-at-end-of-line)
    ("M-y" . yank-pop+)
-   ("C-x C-r" . recentf-open-files+)))
+   ("C-x C-r" . recentf-open-files+)
+   ("C-M-'" . +eshell-here)))
 
 
 ;;; - 3rd Party Packages
@@ -754,15 +755,6 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-load "org"
   (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
-
-
-(use-package eshell-toggle
-  :straight t
-  :custom
-  (eshell-toggle-use-git-root t)
-  (eshell-toggle-run-command nil)
-  :bind
-  ("C-M-'" . eshell-toggle))
 
 
 (use-package magit

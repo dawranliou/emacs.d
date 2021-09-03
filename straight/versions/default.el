@@ -13,7 +13,6 @@
  ("embark" . "ca517fdabd182b0b905d0ef0cb380facb6697670")
  ("emmet-mode" . "6b2e554f7fd27f732810f4b14ea01e3c54b7b3da")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
- ("eshell-toggle" . "7160518ca56444fead841b8acff59aeffc7cebb3")
  ("expand-region.el" . "95a773bd8f557cbd43d3b2dab2fa4417ec5927ab")
  ("f.el" . "50af874cd19042f17c8686813d52569b1025c76a")
  ("fennel-mode" . "47152970a98734723b5086b5c774f50da34c0488")
