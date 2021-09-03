@@ -442,7 +442,8 @@ used to create a new scratch buffer."
   :custom
   (modalka-cursor-type 'box)
   :bind
-  (("<escape>" . modalka-global-mode)
+  (:map esc-map
+   ("<escape>" . modalka-global-mode)
    :map modalka-mode-map
    ([remap self-insert-command] . 'ignore))
   :config
