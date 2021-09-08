@@ -97,7 +97,6 @@
                                  mode-line-buffer-identification
                                  "   "
                                  mode-line-position
-                                 evil-mode-line-tag
                                  ;; (vc-mode vc-mode)
                                  "  "
                                  mode-line-modes
@@ -210,7 +209,8 @@ used to create a new scratch buffer."
   (interactive)
   (let ((qed-buffer (generate-new-buffer "*quick-edit*")))
     (switch-to-buffer qed-buffer)
-    (evil-paste-after 1)
+    (clipboard-yank)
+    (goto-char (point-min))
     (gfm-mode)))
 
 
@@ -666,7 +666,6 @@ reuse it's window, otherwise create new one."
 
 
 (defun dawran/org-mode-setup ()
-  (setq-local evil-auto-indent nil)
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
                  (if (char-equal c ?<)
