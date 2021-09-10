@@ -885,6 +885,7 @@ reuse it's window, otherwise create new one."
 (use-package flyspell
   :bind
   (:map flyspell-mode-map
+        ("C-." . nil)
         ("C-," . nil)
         ("C-;" . nil))
   :hook
