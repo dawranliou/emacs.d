@@ -828,11 +828,6 @@ reuse it's window, otherwise create new one."
   :custom
   (cljr-magic-requires nil)
   :config
-  ;; (require 'flycheck-clj-kondo)
-  (setq clojure-indent-style 'align-arguments
-        clojure-align-forms-automatically t)
-  (with-eval-after-load 'clj-refactor
-    (diminish 'clj-refactor-mode))
   (defun +clojure-ns-kill-ring-save ()
     "Save the current clojure ns to the kill ring."
     (interactive)
