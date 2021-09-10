@@ -111,8 +111,10 @@
 
 
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
+(global-set-key (kbd "C-M-<backspace>") #'backward-kill-sexp)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x k") #'kill-this-buffer)
+(global-set-key (kbd "M-o") #'other-window)
 (global-set-key (kbd "M-SPC") #'cycle-spacing)
 (global-set-key (kbd "M-/") #'hippie-expand)
 (global-set-key (kbd "M-:") #'pp-eval-expression)
@@ -432,7 +434,8 @@ used to create a new scratch buffer."
    ("S-<return>" . +newline-at-end-of-line)
    ("M-y" . yank-pop+)
    ("C-x C-r" . recentf-open-files+)
-   ("C-M-'" . +eshell-here)))
+   ("C-M-'" . +eshell-here)
+   ("C-w" . #'+backward-kill-word-or-region)))
 
 
 ;;; - 3rd Party Packages

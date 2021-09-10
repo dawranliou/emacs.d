@@ -84,4 +84,14 @@ directory to make multiple eshell windows easier."
     (insert (concat "ls"))
     (eshell-send-input)))
 
+
+(defun +backward-kill-word-or-region (&optional arg)
+  "Kill word backwards unless region is active,
+kill region instead"
+  (interactive)
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word (or arg 1))))
+
+
 (provide 'extras)

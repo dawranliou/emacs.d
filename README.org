@@ -15,6 +15,7 @@ by a bunch of resources I’ve found online:
 - https://github.com/hlissner/doom-emacs
 - https://github.com/ianpan870102/.wsl-emacs.d
 - https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
+- https://github.com/karthink/.emacs.d
 - https://github.com/magnars/.emacs.d
 - https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el
 - https://github.com/meqif/.emacs.d
@@ -57,7 +58,12 @@ These are kept out of git's version control:
 - =private.el= - The file is loaded after init.
 - =custom.el= - The file is for the custom settings.
 
-* Mac (OSX) ergonomics keybindings
+
+* On keybindings
+Keybinding ideas:
+- http://mbork.pl/2019-03-18_Free_Emacs_key_bindings
+
+** Mac (OSX) ergonomics keybindings
 
 Several OSX native keybindings that utilizes the command key (which is also the
 =super= key) are added to make context-switching to other native apps easier,
@@ -84,7 +90,7 @@ e.g. Chrome, Firefox.
 | s-v           | yank (paste)            |
 | s-w           | delete-window           |
 
-* Modal (Vim-style) keybindings
+** Modal (Vim-style) keybindings
 
 I used to use Spacemacs and then Doom Emacs and I like the idea of using =SPC=
 as the prefix.  What I dislike about it is that many keybindings are too many
@@ -104,7 +110,7 @@ A good read about evil keybindings (and emacs keymaps in general):
 | SPC t m | toggle-frame-maximized                |
 | SPC t M | toggle-frame-fullscreen               |
 
-* Emacs-style keybindings
+** Emacs-style keybindings
 
 There are some cases where I prefer emacs style keybindings.
 
