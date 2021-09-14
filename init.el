@@ -628,6 +628,7 @@ reuse it's window, otherwise create new one."
         ("}" . nil)
         (")" . nil)
         ("C-d" . nil)
+        ("C-k" . nil)
         ("C->" . paredit-forward-slurp-sexp)
         ("C-<" . paredit-forward-barf-sexp)
         ("C-M->" . paredit-backward-barf-sexp)
