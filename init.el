@@ -115,6 +115,7 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x k") #'kill-this-buffer)
 (global-set-key (kbd "M-o") #'other-window)
+(global-set-key (kbd "M-i") #'delete-other-windows)
 (global-set-key (kbd "M-j") #'join-line)
 (global-set-key (kbd "M-SPC") #'cycle-spacing)
 (global-set-key (kbd "M-/") #'hippie-expand)
