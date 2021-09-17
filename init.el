@@ -42,6 +42,14 @@
       initial-major-mode 'fundamental-mode
       initial-scratch-message nil
       tramp-default-method "ssh"
+
+      ;; backups
+      make-backup-files t
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
       backup-directory-alist
       (list (cons "." (expand-file-name "var/backup/" user-emacs-directory)))
       auto-save-list-file-prefix
