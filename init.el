@@ -787,7 +787,9 @@ reuse it's window, otherwise create new one."
 
 (use-package rg
   :straight t
-  :bind ("s-F" . rg-project)
+  :bind
+  (("s-F" . rg-project)
+   ("C-c r" . #'rg))
   :config
   (rg-enable-default-bindings))
 
