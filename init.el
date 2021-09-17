@@ -451,7 +451,11 @@ used to create a new scratch buffer."
    ("M-y" . yank-pop+)
    ("C-x C-r" . recentf-open-files+)
    ("C-M-'" . +eshell-here)
-   ("C-w" . #'+backward-kill-word-or-region)))
+   ("C-w" . #'+backward-kill-word-or-region)
+   ("M-Q" . #'+unfill-paragraph))
+  (:map ctl-x-4-map
+        ("s" . #'+toggle-window-split)
+        ("t" . #'+transpose-windows)))
 
 
 ;;; - 3rd Party Packages
