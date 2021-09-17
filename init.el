@@ -144,6 +144,12 @@
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 (global-set-key (kbd "s-w") #'delete-window)
 (global-set-key (kbd "s-v") #'yank)
+(global-set-key (kbd "C-c f d") #'+find-config)
+(global-set-key (kbd "C-c t t") #'+load-theme)
+(global-set-key (kbd "C-c t w") #'whitespace-mode)
+(global-set-key (kbd "C-c t m") #'toggle-frame-maximized)
+(global-set-key (kbd "C-c t M") #'toggle-frame-fullscreen)
+(global-set-key (kbd "C-c t $") #'toggle-truncate-lines)
 
 
 (custom-set-faces
@@ -183,25 +189,25 @@ used to create a new scratch buffer."
         (switch-to-buffer new-scratch-buffer)))))
 
 
-(defun dawran/find-config ()
+(defun +find-config ()
   (interactive)
   (find-file (expand-file-name user-init-file)))
 
 
-(defun dawran/load-theme-action (theme)
+(defun +load-theme-action (theme)
   "Disable current themes and load theme THEME."
   (progn
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme (intern theme) t)))
 
 
-(defun dawran/load-theme ()
+(defun +load-theme ()
   "Disable current themes and load theme from the completion list."
   (interactive)
   (let ((theme (completing-read "Load custom theme: "
                                 (mapcar 'symbol-name
                                         (custom-available-themes)))))
-    (dawran/load-theme-action theme)))
+    (+load-theme-action theme)))
 
 
 ;; Inspired by diminish.el
@@ -217,7 +223,7 @@ used to create a new scratch buffer."
   (diminish 'eldoc-mode))
 
 
-(defun dawran/quick-edit ()
+(defun +quick-edit ()
   "Util function for use with hammerspoon quick edit functionality."
   (interactive)
   (let ((qed-buffer (generate-new-buffer "*quick-edit*")))
@@ -227,7 +233,7 @@ used to create a new scratch buffer."
     (gfm-mode)))
 
 
-(defun dawran/quick-edit-end ()
+(defun +quick-edit-end ()
   "Util function to be executed on qed completion."
   (interactive)
   (mark-whole-buffer)
@@ -324,7 +330,7 @@ used to create a new scratch buffer."
   (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
 
 
-(defun dawran/eshell-history ()
+(defun +eshell-history ()
   "Browse eshell history."
   (interactive)
   (let ((candidates (cl-remove-duplicates
@@ -340,7 +346,7 @@ used to create a new scratch buffer."
       (insert (string-trim selected)))))
 
 
-(defun dawran/configure-eshell ()
+(defun +configure-eshell ()
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
 
@@ -350,7 +356,7 @@ used to create a new scratch buffer."
   ;; Use Ivy to provide completions in eshell
   (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
-  (define-key eshell-mode-map (kbd "C-r") 'dawran/eshell-history)
+  (define-key eshell-mode-map (kbd "C-r") '+eshell-history)
   (define-key eshell-mode-map (kbd "C-a") 'eshell-bol)
 
   (setq eshell-history-size          10000
@@ -361,7 +367,7 @@ used to create a new scratch buffer."
 
 
 (use-package eshell
-  :hook (eshell-first-time-mode . dawran/configure-eshell))
+  :hook (eshell-first-time-mode . +configure-eshell))
 
 
 (with-eval-after-load 'esh-opt
@@ -457,26 +463,10 @@ used to create a new scratch buffer."
   (modalka-cursor-type 'box)
   :bind
   (:map esc-map
-   ("<escape>" . modalka-global-mode)
-   :map modalka-mode-map
-   ([remap self-insert-command] . 'ignore))
+        ("<escape>" . modalka-global-mode))
+  (:map modalka-mode-map
+        ([remap self-insert-command] . 'ignore))
   :config
-  (setq my-map
-        (let ((map (make-sparse-keymap)))
-          (define-key map "fd" #'dawran/find-config)
-          (define-key map "tt" #'dawran/load-theme)
-          (define-key map "tw" #'whitespace-mode)
-          (define-key map "tm" #'toggle-frame-maximized)
-          (define-key map "tM" #'toggle-frame-fullscreen)
-          (define-key map "t$" #'toggle-truncate-lines)
-          (define-key map "gg" #'magit-status)
-          (define-key map "gb" #'magit-blame-addition)
-          (define-key map "gd" #'magit-diff-unstaged)
-          (define-key map "gf" #'magit-file-dispatch)
-          (define-key map "gl" #'magit-log-buffer-file)
-          map))
-  (define-key modalka-mode-map (kbd "SPC") my-map)
-
   (modalka-define-kbd "0" "C-0")
   (modalka-define-kbd "1" "C-1")
   (modalka-define-kbd "2" "C-2")
@@ -673,9 +663,9 @@ reuse it's window, otherwise create new one."
   ("s-'" .  er/expand-region)
   ("s-\"" .  er/contract-region)
   :hook
-  (prog-mode . dawran/greedy-expansion-list)
+  (prog-mode . +greedy-expansion-list)
   :config
-  (defun dawran/greedy-expansion-list ()
+  (defun +greedy-expansion-list ()
     "Skip marking words or inside quotes and pairs"
     (setq-local er/try-expand-list
                 (cl-set-difference er/try-expand-list
@@ -684,7 +674,7 @@ reuse it's window, otherwise create new one."
                                      er/mark-inside-pairs)))))
 
 
-(defun dawran/org-mode-setup ()
+(defun +org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
                  (if (char-equal c ?<)
@@ -694,7 +684,7 @@ reuse it's window, otherwise create new one."
 
 (use-package org
   :straight t
-  :hook ((org-mode . dawran/org-mode-setup)
+  :hook ((org-mode . +org-mode-setup)
          (org-mode . visual-line-mode)
          (org-mode . auto-fill-mode))
   :bind
@@ -756,7 +746,7 @@ reuse it's window, otherwise create new one."
 (defvar org-paste-clipboard-image-dir "img")
 
 
-(defun dawran/org-paste-clipboard-image ()
+(defun +org-paste-clipboard-image ()
   "Paste clipboard image to org file."
   (interactive)
   (if (not (executable-find "pngpaste"))
@@ -773,7 +763,7 @@ reuse it's window, otherwise create new one."
 
 
 (with-eval-after-load "org"
-  (define-key org-mode-map (kbd "s-y") #'dawran/org-paste-clipboard-image))
+  (define-key org-mode-map (kbd "s-y") #'+org-paste-clipboard-image))
 
 
 (use-package magit
