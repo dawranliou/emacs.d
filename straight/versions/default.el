@@ -7,7 +7,6 @@
  ("elfeed" . "162d7d545ed41c27967d108c04aa31f5a61c8e16")
  ("elisp-refs" . "fdde21e34b1272783d566d8230b5ed2dc4749048")
  ("elpher" . "0d65ffa3ab238529a11d5c1a5d2dea5a6c27e9b4")
- ("emacs-undo-fu" . "34b27c01da4c3eb8aa595f3613b7e2e1ed4e54be")
  ("emacsmirror-mirror" . "fc970dcdc47b809ed393c5e40baaf49a38f889a1")
  ("emacsql" . "9dca5996168c4963eb67e61c7f17fdcb8228e314")
  ("embark" . "d21277a638827623ab84e9e6341312a2da5062ab")
