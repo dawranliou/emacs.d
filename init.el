@@ -659,11 +659,6 @@ reuse it's window, otherwise create new one."
         ("C-p" . iedit-prev-occurrence)))
 
 
-(use-package undo-fu
-  :straight t
-  :defer t)
-
-
 (use-package expand-region
   :straight t
   :bind
@@ -869,7 +864,7 @@ reuse it's window, otherwise create new one."
 
 (use-package go-mode
   :straight t
-  :mode "\\.go\\'")
+  :defer t)
 
 
 (use-package markdown-mode
