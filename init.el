@@ -150,6 +150,10 @@
 (global-set-key (kbd "C-c t m") #'toggle-frame-maximized)
 (global-set-key (kbd "C-c t M") #'toggle-frame-fullscreen)
 (global-set-key (kbd "C-c t $") #'toggle-truncate-lines)
+(global-set-key (kbd "C-\\") #'undo-only)
+(global-set-key (kbd "C-h p") #'describe-package)  ; Swap the two
+(global-set-key (kbd "C-h P") #'finder-by-keyword)
+(global-set-key (kbd "C-h l") #'find-library)
 
 
 (custom-set-faces
@@ -569,9 +573,8 @@ used to create a new scratch buffer."
 (use-package embark
   :straight t
   :bind
-  (("C-." . embark-act)
-   ("s-," . xref-pop-marker-stack)
-   ("s-." . embark-dwim)
+  (("s-," . xref-pop-marker-stack)
+   ("s-." . embark-act)
    ("C-h B" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command))
@@ -692,10 +695,15 @@ reuse it's window, otherwise create new one."
          (org-mode . visual-line-mode)
          (org-mode . auto-fill-mode))
   :bind
+  ("C-c l" . #'org-store-link)
+  ("C-c a" . #'org-agenda)
+  ("C-c b" . #'org-switchb)
   (:map org-mode-map
         ("C-," . nil))
   :custom
   ;; (org-hide-emphasis-markers t)
+  (org-ellipsis "…")
+  (org-special-ctrl-a/e t)
   (org-src-fontify-natively t)
   (org-src-tab-acts-natively t)
   (org-src-window-setup 'current-window)
@@ -893,8 +901,8 @@ reuse it's window, otherwise create new one."
 (use-package flyspell
   :bind
   (:map flyspell-mode-map
-        ("C-." . nil)
-        ("C-," . nil)
+        ;; ("C-." . nil)
+        ;; ("C-," . nil)
         ("C-;" . nil))
   :hook
   (prog-mode . flyspell-prog-mode)
