@@ -16,7 +16,7 @@
                 (vertical-scroll-bars   . nil)
                 (width                  . 90)
                 (height                 . 40)
-                (font                   . "Inconsolata-16")))
+                (font                   . "Iosevka-15")))
 
 (provide 'early-init)
 
