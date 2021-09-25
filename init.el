@@ -92,7 +92,7 @@
               cursor-type '(bar . 2)
               x-stretch-cursor t
               tab-width 8
-              tab-always-indent 'complete
+              tab-always-indent t
               line-spacing 3
               indent-tabs-mode nil
               mode-line-format '("%e"
