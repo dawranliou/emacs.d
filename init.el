@@ -89,7 +89,6 @@
 (setq-default delete-by-moving-to-trash t
               scroll-preserve-screen-position 'always
               fill-column 80
-              cursor-type '(bar . 2)
               x-stretch-cursor t
               tab-width 8
               tab-always-indent t
@@ -462,13 +461,24 @@ used to create a new scratch buffer."
         ("t" . #'+transpose-windows)))
 
 
+;; https://emacs.stackexchange.com/a/36240
+;; (defun +highlight-selected-window ()
+;;   "Highlight selected window with a different background color."
+;;   (walk-windows (lambda (w)
+;;                   (unless (eq w (selected-window))
+;;                     (with-current-buffer (window-buffer w)
+;;                       (buffer-face-set '(:background "#ddd"))))))
+;;   (buffer-face-set 'default))
+;; (add-hook 'buffer-list-update-hook #'+highlight-selected-window)
+
+
 ;;; - 3rd Party Packages
 
 
 (use-package modalka
   :straight t
   :custom
-  (modalka-cursor-type 'box)
+  (modalka-cursor-type 'hollow)
   :bind
   (:map esc-map
         ("<escape>" . modalka-global-mode))
