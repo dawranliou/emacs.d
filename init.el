@@ -13,14 +13,15 @@
 ;;; - Performance
 
 
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6)
+(setq
+ gc-cons-threshold most-positive-fixnum
+ gc-cons-percentage 0.7)
 
 (add-hook
  'emacs-startup-hook
  (lambda ()
-   (setq gc-cons-threshold (* 100 1024 1024) ; 100mb
-         gc-cons-percentage 0.1)
+   (setq gc-cons-threshold (* 256 1024 1024) ; 256mb
+         gc-cons-percentage 0.3)
    (message "*** Emacs loaded in %.2f seconds with %d garbage collections."
             (float-time (time-subtract after-init-time before-init-time))
             gcs-done)
@@ -38,77 +39,79 @@
 (set-keyboard-coding-system 'utf-8)
 
 
-(setq inhibit-startup-message t
-      initial-major-mode 'fundamental-mode
-      initial-scratch-message nil
-      tramp-default-method "ssh"
+(setq
+ inhibit-startup-message t
+ initial-major-mode 'fundamental-mode
+ initial-scratch-message nil
+ tramp-default-method "ssh"
 
-      ;; backups
-      make-backup-files t
-      backup-by-copying t
-      version-control t
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      backup-directory-alist
-      (list (cons "." (expand-file-name "var/backup/" user-emacs-directory)))
-      auto-save-list-file-prefix
-      (expand-file-name "var/auto-save/" user-emacs-directory)
-      ring-bell-function #'ignore
-      visible-bell nil
-      ns-use-proxy-icon nil
-      frame-title-format nil
-      enable-recursive-minibuffers t
-      recentf-save-file
-      (expand-file-name "var/recentf-save.el" user-emacs-directory)
-      recentf-max-saved-items 200
-      savehist-file (expand-file-name "var/savehist.el" user-emacs-directory)
-      savehist-save-minibuffer-history t
-      savehist-additional-variables '(kill-ring
-                                      mark-ring
-                                      global-mark-ring
-                                      search-ring
-                                      regexp-search-ring)
-      history-length 20000
-      display-time-world-list '(("Asia/Taipei" "Taipei")
-                                ("America/Toronto" "Toronto")
-                                ("America/Los_Angeles" "San Francisco")
-                                ("Europe/Berlin" "Düsseldorf")
-                                ("Europe/London" "GMT"))
-      hippie-expand-try-functions-list '(try-complete-file-name-partially
-                                         try-complete-file-name
-                                         try-expand-dabbrev
-                                         try-expand-dabbrev-all-buffers
-                                         try-expand-dabbrev-from-kill)
-      custom-file (expand-file-name "custom.el" user-emacs-directory))
+ ;; backups
+ make-backup-files t
+ backup-by-copying t
+ version-control t
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-versions 2
+ backup-directory-alist
+ (list (cons "." (expand-file-name "var/backup/" user-emacs-directory)))
+ auto-save-list-file-prefix
+ (expand-file-name "var/auto-save/" user-emacs-directory)
+ ring-bell-function #'ignore
+ visible-bell nil
+ ns-use-proxy-icon nil
+ frame-title-format nil
+ enable-recursive-minibuffers t
+ recentf-save-file
+ (expand-file-name "var/recentf-save.el" user-emacs-directory)
+ recentf-max-saved-items 200
+ savehist-file (expand-file-name "var/savehist.el" user-emacs-directory)
+ savehist-save-minibuffer-history t
+ savehist-additional-variables '(kill-ring
+                                 mark-ring
+                                 global-mark-ring
+                                 search-ring
+                                 regexp-search-ring)
+ history-length 20000
+ display-time-world-list '(("Asia/Taipei" "Taipei")
+                           ("America/Toronto" "Toronto")
+                           ("America/Los_Angeles" "San Francisco")
+                           ("Europe/Berlin" "Düsseldorf")
+                           ("Europe/London" "GMT"))
+ hippie-expand-try-functions-list '(try-complete-file-name-partially
+                                    try-complete-file-name
+                                    try-expand-dabbrev
+                                    try-expand-dabbrev-all-buffers
+                                    try-expand-dabbrev-from-kill)
+ custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 
 (load custom-file 'noerror)
 
 
-(setq-default delete-by-moving-to-trash t
-              scroll-preserve-screen-position 'always
-              fill-column 80
-              x-stretch-cursor t
-              tab-width 8
-              tab-always-indent t
-              line-spacing 3
-              indent-tabs-mode nil
-              mode-line-format '("%e"
-                                 mode-line-front-space
-                                 mode-line-mule-info
-                                 mode-line-client
-                                 mode-line-modified
-                                 mode-line-remote
-                                 mode-line-frame-identification
-                                 mode-line-buffer-identification
-                                 "   "
-                                 mode-line-position
-                                 ;; (vc-mode vc-mode)
-                                 "  "
-                                 mode-line-modes
-                                 mode-line-misc-info
-                                 mode-line-end-spaces))
+(setq-default
+ delete-by-moving-to-trash t
+ scroll-preserve-screen-position 'always
+ fill-column 80
+ x-stretch-cursor t
+ tab-width 8
+ tab-always-indent t
+ line-spacing 3
+ indent-tabs-mode nil
+ mode-line-format '("%e"
+                    mode-line-front-space
+                    mode-line-mule-info
+                    mode-line-client
+                    mode-line-modified
+                    mode-line-remote
+                    mode-line-frame-identification
+                    mode-line-buffer-identification
+                    "   "
+                    mode-line-position
+                    ;; (vc-mode vc-mode)
+                    "  "
+                    mode-line-modes
+                    mode-line-misc-info
+                    mode-line-end-spaces))
 
 
 (put 'narrow-to-region 'disabled nil)
