@@ -11,6 +11,7 @@ by a bunch of resources I’ve found online:
 - https://github.com/angrybacon/dotemacs
 - https://github.com/bbatsov/prelude
 - https://github.com/bcmertz/dotfiles/tree/main/.emacs.d
+- https://github.com/Bogdanp/.emacs.d
 - https://github.com/daviwil/dotfiles/blob/master/Emacs.org
 - https://github.com/hlissner/doom-emacs
 - https://github.com/ianpan870102/.wsl-emacs.d
