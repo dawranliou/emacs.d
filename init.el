@@ -155,7 +155,7 @@
 (global-set-key (kbd "C-\\") #'undo-only)
 (global-set-key (kbd "C-h p") #'describe-package)  ; Swap the two
 (global-set-key (kbd "C-h P") #'finder-by-keyword)
-(global-set-key (kbd "C-h l") #'find-library)
+(global-set-key (kbd "C-h L") #'find-library)
 
 
 (custom-set-faces
