@@ -124,6 +124,7 @@
 (global-set-key (kbd "C-M-<backspace>") #'backward-kill-sexp)
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x k") #'kill-this-buffer)
+(global-set-key (kbd "C-M-r") #'raise-sexp)
 (global-set-key (kbd "M-o") #'other-window)
 (global-set-key (kbd "M-i") #'delete-other-windows)
 (global-set-key (kbd "M-j") #'join-line)
@@ -635,34 +636,6 @@ reuse it's window, otherwise create new one."
   (diminish 'ws-butler-mode))
 
 
-(use-package paredit
-  :straight t
-  :hook (emacs-lisp-mode . enable-paredit-mode)
-  :bind
-  (:map paredit-mode-map
-        ("M-s" . nil)
-        ("C-M-s" . paredit-splice-sexp)
-        ("M-r" . nil)
-        ("C-M-r" . paredit-raise-sexp)
-        ("]" . nil)
-        ("}" . nil)
-        (")" . nil)
-        ("C-d" . nil)
-        ("C-k" . nil)
-        ("C-M-." . paredit-forward-slurp-sexp)
-        ("C-M-," . paredit-forward-barf-sexp)
-        ("C-M->" . paredit-backward-barf-sexp)
-        ("C-M-<" . paredit-backward-slurp-sexp)
-        ("M-d" . nil)
-        ("DEL" . nil)
-        ("M-DEL" . nil)
-        ("M-?" . nil)
-        ("M-{" . paredit-wrap-curly)
-        ("M-[" . paredit-wrap-square))
-  :config
-  (diminish 'paredit-mode))
-
-
 (use-package iedit
   :straight t
   :bind
@@ -838,10 +811,7 @@ reuse it's window, otherwise create new one."
   :straight t
   :defer t
   :hook
-  ((clojure-mode . enable-paredit-mode)
-   (clojurescript-mode . enable-paredit-mode)
-   (cider-repl-mode . enable-paredit-mode)
-   (clojure-mode . lsp)
+  ((clojure-mode . lsp)
    (clojurec-mode . lsp)
    (clojurescript-mode . lsp))
   :init
@@ -904,8 +874,7 @@ reuse it's window, otherwise create new one."
 
 (use-package fennel-mode
   :straight (:host gitlab :repo "technomancy/fennel-mode")
-  :mode "\\.fnl\\'"
-  :hook (fennel-mode . paredit-mode))
+  :mode "\\.fnl\\'")
 
 
 (use-package flyspell

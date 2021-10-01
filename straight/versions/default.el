@@ -34,7 +34,6 @@
  ("org" . "d70f2806788dce06871287ef02c88ee08076dffc")
  ("org-journal" . "9757996ca058029800c4801fba315b1d1614dcb2")
  ("org-roam" . "1795039ab93ef19611dbb3fca21c4211c4e655a9")
- ("paredit" . "8330a41e8188fe18d3fa805bb9aa529f015318e8")
  ("paren-face" . "6790c7fdec490a69e7d460c0bea36ad343776f9b")
  ("parseclj" . "1bb3800f8f2417b0b881f57448ccb4acd1fe5b8d")
  ("parseedn" . "7b9ca20b398ca0ca0e3005e84c16f23aab49b667")

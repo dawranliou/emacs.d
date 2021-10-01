@@ -112,9 +112,6 @@
 [submodule "straight/repos/org-roam"]
 	path = straight/repos/org-roam
 	url = https://github.com/org-roam/org-roam.git
-[submodule "straight/repos/paredit"]
-	path = straight/repos/paredit
-	url = https://mumble.net/~campbell/git/paredit.git
 [submodule "straight/repos/paren-face"]
 	path = straight/repos/paren-face
 	url = https://github.com/tarsius/paren-face.git
