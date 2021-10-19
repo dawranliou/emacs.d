@@ -796,7 +796,7 @@ reuse it's window, otherwise create new one."
   :custom
   (lsp-enable-file-watchers nil)
   (lsp-headerline-breadcrumb-enable nil)
-  (lsp-keymap-prefix "s-l")
+  (lsp-keymap-prefix "C-c L")
   (lsp-enable-indentation nil)
   (lsp-completion-provider :none)
   (lsp-eldoc-enable-hover nil)
