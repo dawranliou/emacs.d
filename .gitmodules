@@ -85,6 +85,9 @@
 [submodule "straight/repos/macrostep"]
 	path = straight/repos/macrostep
 	url = https://github.com/joddie/macrostep.git
+[submodule "straight/repos/map"]
+	path = straight/repos/map
+	url = https://github.com/emacs-straight/map.git
 [submodule "straight/repos/magit"]
 	path = straight/repos/magit
 	url = https://github.com/magit/magit.git
