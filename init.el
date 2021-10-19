@@ -950,3 +950,7 @@ reuse it's window, otherwise create new one."
 (provide 'init)
 
 ;;; init.el ends here
+
+;; Local Variables:
+;; eval: (outline-minor-mode)
+;; End:
