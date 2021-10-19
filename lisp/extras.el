@@ -139,4 +139,24 @@ of text."
     (fill-paragraph nil region)))
 
 
+(defun +-kill-and-echo (X)
+  "Copy `X' into the `kill-ring' and echo to the minibuffer."
+  (kill-new X)
+  (message "[COPIED] %s" X))
+
+
+(defun +copy-path ()
+  "Echo file name to minibuffer and copy to kill ring."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name)))
+        (proj (project-current nil)))
+    (if proj
+        (let* ((proj-path (expand-file-name (cdr proj)))
+               (filename* (nth 1 (split-string filename proj-path))))
+          (+-kill-and-echo filename*))
+      (+-kill-and-echo filename))))
+
+
 (provide 'extras)
