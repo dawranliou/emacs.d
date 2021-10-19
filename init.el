@@ -459,12 +459,12 @@ used to create a new scratch buffer."
    ("M-y" . yank-pop+)
    ("C-x C-r" . recentf-open-files+)
    ("C-M-'" . +eshell-here)
-   ("C-w" . #'+backward-kill-word-or-region)
-   ("M-Q" . #'+unfill-paragraph)
-   ("M-q" . #'+fill-or-unfill-paragraph))
+   ("C-w" . +backward-kill-word-or-region)
+   ("M-Q" . +unfill-paragraph)
+   ("M-q" . +fill-or-unfill-paragraph))
   (:map ctl-x-4-map
-        ("s" . #'+toggle-window-split)
-        ("t" . #'+transpose-windows)))
+        ("s" . +toggle-window-split)
+        ("t" . +transpose-windows)))
 
 
 ;; https://emacs.stackexchange.com/a/36240
@@ -568,7 +568,7 @@ used to create a new scratch buffer."
 (use-package selectrum
   :straight t
   :bind
-  ("C-x C-z" . #'selectrum-repeat)
+  ("C-x C-z" . selectrum-repeat)
   :custom
   (orderless-skip-highlighting (lambda () selectrum-is-active))
   (selectrum-highlight-candidates-function #'orderless-highlight-matches)
@@ -601,13 +601,13 @@ used to create a new scratch buffer."
   :defer t
   :custom (helpful-switch-buffer-function #'+helpful-switch-to-buffer)
   :bind (;; Remap standard commands.
-         ([remap describe-function] . #'helpful-callable)
-         ([remap describe-variable] . #'helpful-variable)
-         ([remap describe-key]      . #'helpful-key)
-         ([remap describe-symbol]   . #'helpful-symbol)
-         ("C-c C-d" . #'helpful-at-point)
-         ("C-h C"   . #'helpful-command)
-         ("C-h F"   . #'describe-face))
+         ([remap describe-function] . helpful-callable)
+         ([remap describe-variable] . helpful-variable)
+         ([remap describe-key]      . helpful-key)
+         ([remap describe-symbol]   . helpful-symbol)
+         ("C-c C-d" . helpful-at-point)
+         ("C-h C"   . helpful-command)
+         ("C-h F"   . describe-face))
   :config
   ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
   (defun +helpful-switch-to-buffer (buffer-or-name)
@@ -678,9 +678,9 @@ reuse it's window, otherwise create new one."
          (org-mode . visual-line-mode)
          (org-mode . auto-fill-mode))
   :bind
-  ("C-c l" . #'org-store-link)
-  ("C-c a" . #'org-agenda)
-  ("C-c b" . #'org-switchb)
+  ("C-c l" . org-store-link)
+  ("C-c a" . org-agenda)
+  ("C-c b" . org-switchb)
   (:map org-mode-map
         ("C-," . nil))
   :custom
@@ -777,7 +777,7 @@ reuse it's window, otherwise create new one."
   :straight t
   :bind
   (("s-F" . rg-project)
-   ("C-c r" . #'rg))
+   ("C-c r" . rg))
   :config
   (rg-enable-default-bindings))
 
