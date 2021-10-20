@@ -25,7 +25,7 @@
  ("lsp-mode" . "8fe3f3a7636b8cc6e6543da0be8ae7a8083b524f")
  ("macrostep" . "424e3734a1ee526a1bd7b5c3cd1d3ef19d184267")
  ("magit" . "1b83f8ee1c5aa069f2f846e25d99df3d415d9657")
- ("map" . "dba584726393b0d9831e5cd44d0a974d7d993ca3")
+ ("map" . "7ef991a4e234195f125dc2b2ad4cad5a1d11a7d5")
  ("marginalia" . "86ac625169041cdc706c5e39cae0bf314c042473")
  ("markdown-mode" . "7360efc6bcfd4eb01aa5a8330f8073fa7e64805a")
  ("melpa" . "768bc3014e0ef793bec7cce46a2e1e0cfce555cb")
