@@ -253,24 +253,32 @@ used to create a new scratch buffer."
 
 
 (when (eq system-type 'darwin)
+  (add-to-list 'exec-path "/usr/local/MacGPG2/bin")
+  (add-to-list 'exec-path "/usr/local/bin")
+  (setenv "PATH" (concat "/usr/local/bin:/usr/local/MacGPG2/bin:"
+                         (getenv "PATH")))
   (setq mac-right-command-modifier 'super
         mac-command-modifier 'super
         mac-option-modifier 'meta
         mac-right-option-modifier 'meta
         insert-directory-program "/usr/local/bin/gls"
-        dired-listing-switches "-aFGhlv --group-directories-first")
+        dired-listing-switches "-aFGhlv --group-directories-first"))
 
-  ;; Detect system theme
-  (when (fboundp 'mac-application-state)
-    (add-hook
-     'after-init-hook
-     (lambda ()
-       (load-theme
-        (if (equal "NSAppearanceNameDarkAqua"
-                   (plist-get (mac-application-state) :appearance))
-            'sketch-black
-          'sketch-white)
-        t)))))
+
+;;; - Theme
+
+
+(add-hook
+ 'after-init-hook
+ (lambda ()
+   (load-theme
+    ;; Try to detect system theme
+    (if (and (fboundp 'mac-application-state)
+             (equal "NSAppearanceNameDarkAqua"
+                    (plist-get (mac-application-state) :appearance)))
+        'sketch-black
+      'sketch-white)
+    t)))
 
 
 ;;; - Package manager
