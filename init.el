@@ -59,7 +59,7 @@
  ring-bell-function #'ignore
  visible-bell nil
  ns-use-proxy-icon nil
- frame-title-format nil
+ ;; frame-title-format nil
  enable-recursive-minibuffers t
  recentf-save-file
  (expand-file-name "var/recentf-save.el" user-emacs-directory)
