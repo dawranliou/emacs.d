@@ -15,11 +15,13 @@ by a bunch of resources I’ve found online:
 - https://github.com/bkaestner/.emacs.d
 - https://github.com/Bogdanp/.emacs.d
 - https://github.com/daviwil/dotfiles/blob/master/Emacs.org
+- https://github.com/freesteph/dotfiles
 - https://github.com/hlissner/doom-emacs
 - https://github.com/ianpan870102/.wsl-emacs.d
 - https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
 - https://github.com/karthink/.emacs.d
 - https://github.com/magnars/.emacs.d
+- https://github.com/mclear-tools/dotemacs
 - https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el
 - https://github.com/meqif/.emacs.d
 - https://github.com/mpereira/.emacs.d
