@@ -698,7 +698,7 @@ reuse it's window, otherwise create new one."
   (:map org-mode-map
         ("C-," . nil))
   :custom
-  ;; (org-hide-emphasis-markers t)
+  (org-hide-emphasis-markers t)
   (org-ellipsis "…")
   (org-special-ctrl-a/e t)
   (org-src-fontify-natively t)
@@ -711,7 +711,7 @@ reuse it's window, otherwise create new one."
   (org-hide-block-startup nil)
   (org-src-preserve-indentation nil)
   (org-adapt-indentation nil)
-  ;; (org-startup-folded 'content)
+  (org-startup-folded 'content)
   (org-log-done 'time)
   (org-log-into-drawer t)
   (org-image-actual-width 640)
