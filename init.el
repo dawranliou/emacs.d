@@ -10,7 +10,16 @@
 ;;; Code:
 
 
-;;; - Performance
+;;; - Path fix for Mac
+
+(when (eq system-type 'darwin)
+  (add-to-list 'exec-path "/usr/local/MacGPG2/bin")
+  (add-to-list 'exec-path "/usr/local/bin")
+  (setenv "PATH" (concat "/usr/local/bin:/usr/local/MacGPG2/bin:"
+                         (getenv "PATH"))))
+
+
+;;; - GC
 
 
 (setq
@@ -44,6 +53,7 @@
  initial-major-mode 'fundamental-mode
  initial-scratch-message nil
  tramp-default-method "ssh"
+ delete-by-moving-to-trash t
 
  ;; backups
  make-backup-files t
@@ -89,7 +99,6 @@
 
 
 (setq-default
- delete-by-moving-to-trash t
  scroll-preserve-screen-position 'always
  fill-column 80
  x-stretch-cursor t
@@ -253,14 +262,11 @@ used to create a new scratch buffer."
 
 
 (when (eq system-type 'darwin)
-  (add-to-list 'exec-path "/usr/local/MacGPG2/bin")
-  (add-to-list 'exec-path "/usr/local/bin")
-  (setenv "PATH" (concat "/usr/local/bin:/usr/local/MacGPG2/bin:"
-                         (getenv "PATH")))
   (setq mac-right-command-modifier 'super
         mac-command-modifier 'super
         mac-option-modifier 'meta
         mac-right-option-modifier 'meta
+        trash-directory "~/.Trash"
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aFGhlv --group-directories-first"))
 
