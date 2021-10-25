@@ -182,7 +182,7 @@
 (electric-pair-mode 1)
 (save-place-mode t)
 (add-hook 'after-init-hook #'savehist-mode)
-(cua-selection-mode 1)
+;; (cua-selection-mode 1)
 
 
 ;;; Custom functions
