@@ -309,29 +309,6 @@ used to create a new scratch buffer."
 ;;; - Built-in Packages
 
 
-;; ibuffer
-(setq ibuffer-expert t
-      ibuffer-show-empty-filter-groups nil
-      ibuffer-saved-filter-groups
-      '(("default"
-         ("Scratch" (name . "*scratch*"))
-         ("Eww"   (mode . eww-mode))
-         ("Kira" (filename . "/kira/"))
-         ("Projects" (filename . "/projects/"))
-         ("Dired" (mode . dired-mode))
-         ("Meta"  (name . "\\*"))
-         ("Emacs Config" (filename . ".emacs.d"))
-         ("Help" (or (name . "\*Help\*")
-                     (name . "\*Apropos\*")
-                     (name . "\*Info\*"))))))
-
-
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-auto-mode 1)
-            (ibuffer-switch-to-saved-filter-groups "default")))
-
-
 (use-package dired
   :hook (;; (dired-mode . dired-hide-details-mode)
          (dired-mode . hl-line-mode))
