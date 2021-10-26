@@ -411,6 +411,9 @@ used to create a new scratch buffer."
   :custom
   (isearch-allow-scroll t)
   (search-whitespace-regexp ".*?")      ; Fuzzy search
+  ;; Emacs 28
+  (isearch-allow-motion t)
+  (isearch-wrap-pause 'no)
   :bind
   ("s-f" . isearch-forward)
   (:map isearch-mode-map
