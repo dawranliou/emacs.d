@@ -140,7 +140,6 @@
 (global-set-key (kbd "M-j") #'join-line)
 (global-set-key (kbd "M-SPC") #'cycle-spacing)
 (global-set-key (kbd "M-/") #'hippie-expand)
-(global-set-key (kbd "M-:") #'pp-eval-expression)
 (global-set-key (kbd "M-Z") #'zap-to-char)
 (global-set-key (kbd "M-z") #'zap-up-to-char)
 (global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 4)))
@@ -167,6 +166,8 @@
 (global-set-key (kbd "C-h p") #'describe-package)  ; Swap the two
 (global-set-key (kbd "C-h P") #'finder-by-keyword)
 (global-set-key (kbd "C-h L") #'find-library)
+(global-set-key [remap eval-expression] #'pp-eval-expression) ; M-:
+(global-set-key [remap eval-last-sexp] #'pp-eval-last-sexp)   ; C-x C-e
 
 
 (custom-set-faces
