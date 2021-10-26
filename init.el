@@ -92,7 +92,9 @@
                                     try-expand-dabbrev
                                     try-expand-dabbrev-all-buffers
                                     try-expand-dabbrev-from-kill)
- custom-file (expand-file-name "custom.el" user-emacs-directory))
+ custom-file (expand-file-name "custom.el" user-emacs-directory)
+ ;; Emacs 29
+ show-paren-context-when-offscreen t)
 
 
 (load custom-file 'noerror)
