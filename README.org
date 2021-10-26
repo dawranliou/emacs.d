@@ -63,7 +63,6 @@ These are kept out of git's version control:
 - =private.el= - The file is loaded after init.
 - =custom.el= - The file is for the custom settings.
 
-
 * On keybindings
 Keybinding ideas:
 - http://mbork.pl/2019-03-18_Free_Emacs_key_bindings
@@ -77,17 +76,15 @@ e.g. Chrome, Firefox.
 | Key           | Binding                 |
 |---------------+-------------------------|
 | s-'           | er/expand-region        |
-| s-\           | er/contract-region      |
+| s-"           | er/contract-region      |
 | s-=           | text-scale-adjust       |
 | s--           | text-scale-decrease     |
 | s-<backspace> | kill-whole-line         |
 | s-F           | rg-project              |
 | s-S           | write-file              |
 | s-a           | mark-whole-buffer       |
-| s-f           | isearch-forward         |
 | s-g           | magit-status            |
 | s-k           | kill-this-buffer        |
-| s-l           | lsp-keymap              |
 | s-p           | project-find-file       |
 | s-q           | save-buffers-kill-emacs |
 | s-s           | save-buffer             |
@@ -95,58 +92,39 @@ e.g. Chrome, Firefox.
 | s-v           | yank (paste)            |
 | s-w           | delete-window           |
 
-** Modal (Vim-style) keybindings
-
-I used to use Spacemacs and then Doom Emacs and I like the idea of using =SPC=
-as the prefix.  What I dislike about it is that many keybindings are too many
-keystrokes away.  So I try to be conservative about what I added to the
-=SPC=-prefixed keymap.
-
-A good read about evil keybindings (and emacs keymaps in general):
-
-- https://github.com/noctuid/evil-guide
-
-| Key     | Binding                               |
-|---------+---------------------------------------|
-| SPC f d | find config                           |
-| SPC t c | display-time-world                    |
-| SPC t t | load theme                            |
-| SPC t w | whitespace-mode                       |
-| SPC t m | toggle-frame-maximized                |
-| SPC t M | toggle-frame-fullscreen               |
-
 ** Emacs-style keybindings
 
 There are some cases where I prefer emacs style keybindings.
 
-| Key      | Binding               |
-|----------+-----------------------|
-| <escape> | keyboard-escape-quit  |
-| C-e      | end-of-line           |
-| C-y      | yank                  |
-| C-k      | kill-line             |
-| M-.      | xref-find-definition  |
-| M-,      | xref-pop-marker-stack |
-| s-.      | embark-dwim           |
-| s-,      | xref-pop-marker-stack |
-| C-x C-b  | ibuffer               |
-| C-M-j    | switch-to-buffer      |
-| M-:      | pp-eval-expression    |
-| M-/      | hippie-expand         |
-| M-o      | ace-window            |
-| M-n      | scroll up 1 line      |
-| M-p      | scroll down 1 line    |
-| C-.      | embark-act            |
-| C-h B    | embark-bindings       |
-| C-c C-d  | helpful-at-point      |
-| C-h C    | helpful-command       |
-| C-h F    | describe-face         |
-| C-x C-j  | dired-jump            |
-| C-M-'    | eshell-toggle         |
-| C-x g    | magit-status          |
-| C-c g    | magit-file-dispatch   |
-| M-y      | yank-pop+             |
-| C-x C-r  | recentf-open-files+   |
-| C-M-r    | selectrum-repeat      |
-| C-;      | iedit-mode            |
-| C-x C-z  | selectrum-repeat      |
+| Key     | Binding               |
+|---------+-----------------------|
+| C-;     | iedit-mode            |
+| C-M-'   | +eshell-here          |
+| C-M-j   | switch-to-buffer      |
+| C-c C-d | helpful-at-point      |
+| C-c g   | magit-file-dispatch   |
+| C-h B   | embark-bindings       |
+| C-h C   | helpful-command       |
+| C-h F   | describe-face         |
+| C-x C-b | ibuffer               |
+| C-x C-j | dired-jump            |
+| C-x C-r | recentf-open-files+   |
+| C-x C-z | selectrum-repeat      |
+| C-x g   | magit-status          |
+| M-/     | hippie-expand         |
+| M-:     | pp-eval-expression    |
+| M-i     | delete-other-windows  |
+| M-n     | scroll up 4 line      |
+| M-o     | other-window          |
+| M-p     | scroll down 4 line    |
+| s-,     | xref-pop-marker-stack |
+| s-.     | embark-act            |
+** Evil/modal/vim-style keybindings
+
+Not anymore!  As a refugee from Vim, I started off from Spacemacs, Doom,
+=evil-mode=, and then =modalka=.  As I got closer to vanilla Emacs, the less I want
+to deal with all the hassles of coming in and out of the modes.  When I switched
+to =modalka= from =evil-mode= for its simplicity, I found myself not really using
+the =modalka-mode= at all.  I am as efficient as (if not more efficient than) I
+was using modal editing.  So i think it's time for me to graduate from the modal
+editing in general and embrace the Emacs key sequences.
