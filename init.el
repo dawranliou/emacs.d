@@ -182,7 +182,6 @@
 (electric-pair-mode 1)
 (save-place-mode t)
 (add-hook 'after-init-hook #'savehist-mode)
-;; (cua-selection-mode 1)
 
 
 ;;; Custom functions
@@ -455,17 +454,6 @@ used to create a new scratch buffer."
   (:map ctl-x-4-map
         ("s" . +toggle-window-split)
         ("t" . +transpose-windows)))
-
-
-;; https://emacs.stackexchange.com/a/36240
-;; (defun +highlight-selected-window ()
-;;   "Highlight selected window with a different background color."
-;;   (walk-windows (lambda (w)
-;;                   (unless (eq w (selected-window))
-;;                     (with-current-buffer (window-buffer w)
-;;                       (buffer-face-set '(:background "#ddd"))))))
-;;   (buffer-face-set 'default))
-;; (add-hook 'buffer-list-update-hook #'+highlight-selected-window)
 
 
 ;;; - 3rd Party Packages
