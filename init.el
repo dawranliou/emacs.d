@@ -465,65 +465,6 @@ used to create a new scratch buffer."
 ;;; - 3rd Party Packages
 
 
-(use-package modalka
-  :straight t
-  :custom
-  (modalka-cursor-type 'hollow)
-  :bind
-  (:map esc-map
-        ("<escape>" . modalka-global-mode))
-  (:map modalka-mode-map
-        ([remap self-insert-command] . 'ignore))
-  :config
-  (modalka-define-kbd "0" "C-0")
-  (modalka-define-kbd "1" "C-1")
-  (modalka-define-kbd "2" "C-2")
-  (modalka-define-kbd "3" "C-3")
-  (modalka-define-kbd "4" "C-4")
-  (modalka-define-kbd "5" "C-5")
-  (modalka-define-kbd "6" "C-6")
-  (modalka-define-kbd "7" "C-7")
-  (modalka-define-kbd "8" "C-8")
-  (modalka-define-kbd "9" "C-9")
-
-  (modalka-define-kbd "a" "C-a")
-  (modalka-define-kbd "b" "C-b")
-  ;; c
-  (modalka-define-kbd "d" "C-d")
-  (modalka-define-kbd "e" "C-e")
-  (modalka-define-kbd "f" "C-f")
-  (modalka-define-kbd "g" "C-g")
-  (modalka-define-kbd "h" "C-b")
-  (define-key modalka-mode-map "i" #'modalka-global-mode)
-  (modalka-define-kbd "j" "C-n")
-  (modalka-define-kbd "k" "C-p")
-  (modalka-define-kbd "l" "C-f")
-  ;; m
-  (modalka-define-kbd "n" "C-n")
-  (modalka-define-kbd "o" "S-<return>")
-  (modalka-define-kbd "p" "C-p")
-  ;; q
-  (modalka-define-kbd "r" "C-r")
-  (modalka-define-kbd "s" "C-s")
-  (modalka-define-kbd "t" "C-t")
-  ;; u
-  (modalka-define-kbd "v" "C-v")
-  (modalka-define-kbd "w" "C-w")
-  ;; x
-  (modalka-define-kbd "y" "C-y")
-  ;; z
-
-  (modalka-define-kbd "A" "C-M-a")
-  (modalka-define-kbd "B" "C-M-b")
-  (modalka-define-kbd "D" "C-M-d")
-  (modalka-define-kbd "E" "C-M-e")
-  (modalka-define-kbd "F" "C-M-f")
-  (modalka-define-kbd "T" "C-M-t")
-  (modalka-define-kbd "U" "C-M-u")
-  (modalka-define-kbd "K" "C-M-k")
-  )
-
-
 (use-package sketch-themes
   :defer t
   :straight (:host github :repo "dawranliou/sketch-themes"))

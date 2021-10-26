@@ -29,7 +29,6 @@
  ("marginalia" . "86ac625169041cdc706c5e39cae0bf314c042473")
  ("markdown-mode" . "c3c2f0d473a3f8ca8c4ffb2ecc094d5c3541769f")
  ("melpa" . "cc3a0ce6c8a4a67b8a8d4b8b2c090694535e6848")
- ("modalka" . "3d7f652d06c8e39cfe252ece804868a20730df07")
  ("orderless" . "62f71c34baca0b7d0adeab4a1c07d85ffcee80d9")
  ("org" . "5315773e8a0838268592617174b221ec7bf1c87a")
  ("org-journal" . "71e8b10088ae52c4ac17f7af87020ea85fbc6ff7")
