@@ -442,12 +442,11 @@ used to create a new scratch buffer."
 
 (use-package extras
   :load-path "lisp/"
-  :commands (+uuid)
+  :commands (+uuid +set-font)
   :bind
   (([remap move-beginning-of-line] . +move-beginning-of-line)
    ("C-<backspace>" . +kill-line-backwards)
    ("S-<return>" . +newline-at-end-of-line)
-   ("M-y" . yank-pop+)
    ("C-x C-r" . recentf-open-files+)
    ("C-M-'" . +eshell-here)
    ("C-w" . +backward-kill-word-or-region)
