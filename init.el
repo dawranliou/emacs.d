@@ -417,7 +417,6 @@ used to create a new scratch buffer."
   (isearch-allow-motion t)
   (isearch-wrap-pause 'no)
   :bind
-  ("s-f" . isearch-forward)
   (:map isearch-mode-map
         ("C-o" . isearch-occur)
         ("<C-backspace>" . isearch-delete-wrong)

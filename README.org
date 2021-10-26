@@ -63,10 +63,9 @@ These are kept out of git's version control:
 - =private.el= - The file is loaded after init.
 - =custom.el= - The file is for the custom settings.
 
-* On keybindings
+* Keybindings
 Keybinding ideas:
 - http://mbork.pl/2019-03-18_Free_Emacs_key_bindings
-
 ** Mac (OSX) ergonomics keybindings
 
 Several OSX native keybindings that utilizes the command key (which is also the
@@ -103,6 +102,7 @@ There are some cases where I prefer emacs style keybindings.
 | C-M-j   | switch-to-buffer      |
 | C-c C-d | helpful-at-point      |
 | C-c g   | magit-file-dispatch   |
+| C-c r   | rg                    |
 | C-h B   | embark-bindings       |
 | C-h C   | helpful-command       |
 | C-h F   | describe-face         |
@@ -119,6 +119,7 @@ There are some cases where I prefer emacs style keybindings.
 | M-p     | scroll down 4 line    |
 | s-,     | xref-pop-marker-stack |
 | s-.     | embark-act            |
+
 ** Evil/modal/vim-style keybindings
 
 Not anymore!  As a refugee from Vim, I started off from Spacemacs, Doom,
