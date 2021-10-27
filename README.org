@@ -74,8 +74,6 @@ e.g. Chrome, Firefox.
 
 | Key           | Binding                 |
 |---------------+-------------------------|
-| s-'           | er/expand-region        |
-| s-"           | er/contract-region      |
 | s-=           | text-scale-adjust       |
 | s--           | text-scale-decrease     |
 | s-<backspace> | kill-whole-line         |
@@ -114,6 +112,7 @@ There are some cases where I prefer emacs style keybindings.
 | M-/     | hippie-expand         |
 | M-:     | pp-eval-expression    |
 | M-i     | delete-other-windows  |
+| M-j     | avy-goto-char-timer   |
 | M-n     | scroll up 4 line      |
 | M-o     | other-window          |
 | M-p     | scroll down 4 line    |
