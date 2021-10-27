@@ -181,3 +181,6 @@
 [submodule "straight/repos/yaml-mode"]
 	path = straight/repos/yaml-mode
 	url = https://github.com/yoshiki/yaml-mode.git
+[submodule "straight/repos/avy"]
+	path = straight/repos/avy
+	url = https://github.com/abo-abo/avy.git

@@ -151,7 +151,6 @@
 (global-set-key (kbd "C-M-r") #'raise-sexp)
 (global-set-key (kbd "M-o") #'other-window)
 (global-set-key (kbd "M-i") #'delete-other-windows)
-(global-set-key (kbd "M-j") #'join-line)
 (global-set-key (kbd "M-SPC") #'cycle-spacing)
 (global-set-key (kbd "M-/") #'hippie-expand)
 (global-set-key (kbd "M-Z") #'zap-to-char)
@@ -530,6 +529,15 @@ used to create a new scratch buffer."
    ("C-h B" . embark-bindings))
   :init
   (setq prefix-help-command #'embark-prefix-help-command))
+
+
+(use-package avy
+  :straight t
+  :bind
+  ("M-j" . avy-goto-char-timer)
+  ;; (:map isearch-mode-map
+  ;;       ("M-j" . 'avy-isearch))
+  )
 
 
 (use-package helpful

@@ -1,4 +1,5 @@
 (("Emacs-wgrep" . "f9687c28bbc2e84f87a479b6ce04407bb97cfb23")
+ ("avy" . "e92cb37457b43336b765630dbfbea8ba4be601fa")
  ("cider" . "6a17686799b7ef97bc15fa041016421e5c875bfb")
  ("clojure-mode" . "e1dc7caee76d117a366f8b8b1c2da7e6400636a8")
  ("dash.el" . "da167c51e9fd167a48d06c7c0ee8e3ac7abd9718")
