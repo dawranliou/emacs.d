@@ -12,7 +12,6 @@
  ("embark" . "560af655922582f3f20a46fb1969915ee34028a4")
  ("emmet-mode" . "6b2e554f7fd27f732810f4b14ea01e3c54b7b3da")
  ("epl" . "78ab7a85c08222cd15582a298a364774e3282ce6")
- ("expand-region.el" . "95a773bd8f557cbd43d3b2dab2fa4417ec5927ab")
  ("f.el" . "50af874cd19042f17c8686813d52569b1025c76a")
  ("fennel-mode" . "8c0b2904a9d1bb93552eb4dbc83539bd1f0300ae")
  ("flycheck" . "784f184cdd9f9cb4e3dbb997c09d93e954142842")

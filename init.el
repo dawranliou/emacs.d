@@ -591,23 +591,6 @@ reuse it's window, otherwise create new one."
         ("C-p" . iedit-prev-occurrence)))
 
 
-(use-package expand-region
-  :straight t
-  :bind
-  ("s-'" .  er/expand-region)
-  ("s-\"" .  er/contract-region)
-  :hook
-  (prog-mode . +greedy-expansion-list)
-  :config
-  (defun +greedy-expansion-list ()
-    "Skip marking words or inside quotes and pairs"
-    (setq-local er/try-expand-list
-                (cl-set-difference er/try-expand-list
-                                   '(er/mark-word
-                                     er/mark-inside-quotes
-                                     er/mark-inside-pairs)))))
-
-
 (defun +org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
