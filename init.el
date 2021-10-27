@@ -93,6 +93,17 @@
                                     try-expand-dabbrev-all-buffers
                                     try-expand-dabbrev-from-kill)
  custom-file (expand-file-name "custom.el" user-emacs-directory)
+ ediff-window-setup-function #'ediff-setup-windows-plain
+ ediff-split-window-function #'split-window-horizontally
+ shr-use-colors nil
+ shr-use-fonts nil
+ shr-indentation 0
+ shr-max-image-proportion 0.5
+ shr-image-animate nil
+ shr-width 72
+ shr-discard-aria-hidden t
+ shr-cookie-policy nil
+
  ;; Emacs 29
  show-paren-context-when-offscreen t)
 
@@ -831,21 +842,9 @@ reuse it's window, otherwise create new one."
 ;;; - EWW
 
 
-(setq shr-use-colors nil
-      shr-use-fonts nil
-      shr-indentation 0
-      shr-max-image-proportion 0.5
-      shr-image-animate nil
-      shr-width 72
-      shr-discard-aria-hidden t
-      shr-cookie-policy nil)
-
 (use-package elpher
   :straight t
   :commands elpher)
-
-(setq ediff-window-setup-function #'ediff-setup-windows-plain)
-(setq ediff-split-window-function #'split-window-horizontally)
 
 
 (provide 'init)
