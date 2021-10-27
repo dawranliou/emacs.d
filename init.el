@@ -93,6 +93,8 @@
                                     try-expand-dabbrev-all-buffers
                                     try-expand-dabbrev-from-kill)
  custom-file (expand-file-name "custom.el" user-emacs-directory)
+ scroll-preserve-screen-position 'always
+ scroll-conservatively 101              ; Don't recenter
  ediff-window-setup-function #'ediff-setup-windows-plain
  ediff-split-window-function #'split-window-horizontally
  shr-use-colors nil
@@ -112,7 +114,6 @@
 
 
 (setq-default
- scroll-preserve-screen-position 'always
  fill-column 80
  x-stretch-cursor t
  tab-width 8
