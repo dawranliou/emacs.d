@@ -388,9 +388,7 @@ used to create a new scratch buffer."
   :bind
   ("s-p" . project-find-file)
   (:map project-prefix-map
-        ("m" . magit-project-status))
-  :config
-  (add-to-list 'project-switch-commands '(magit-project-status "Magit")))
+        ("m" . magit-project-status)))
 
 
 (use-package compile
