@@ -10,33 +10,7 @@
 ;;; Code:
 
 
-;;; - GC
-
-
-(setq
- gc-cons-threshold most-positive-fixnum
- gc-cons-percentage 0.7)
-
-(add-hook
- 'emacs-startup-hook
- (lambda ()
-   (setq gc-cons-threshold (* 256 1024 1024) ; 256mb
-         gc-cons-percentage 0.3)
-   (message "*** Emacs loaded in %.2f seconds with %d garbage collections."
-            (float-time (time-subtract after-init-time before-init-time))
-            gcs-done)
-   (let ((private-file (concat user-emacs-directory "private.el")))
-     (when (file-exists-p private-file)
-       (load-file private-file)))))
-
-
 ;;; - Emacs
-
-
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
 
 
 (setq

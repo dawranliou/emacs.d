@@ -13,10 +13,26 @@
   (setenv "PATH" (concat "/usr/local/bin:/usr/local/MacGPG2/bin:/usr/local/go/bin:"
                          (getenv "PATH"))))
 
+;;; - GC
+
 (setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
+      gc-cons-percentage 0.7
       package-enable-at-startup nil
       frame-inhibit-implied-resize t)
+
+(add-hook
+ 'emacs-startup-hook
+ (lambda ()
+   (setq gc-cons-threshold (* 256 1024 1024) ; 256mb
+         gc-cons-percentage 0.3)
+   (message "*** Emacs loaded in %.2f seconds with %d garbage collections."
+            (float-time (time-subtract after-init-time before-init-time))
+            gcs-done)
+   (let ((private-file (concat user-emacs-directory "private.el")))
+     (when (file-exists-p private-file)
+       (load-file private-file)))))
+
+;;; - UI
 
 (setq-default default-frame-alist
               '((menu-bar-lines         . 0)
@@ -26,6 +42,13 @@
                 (width                  . 90)
                 (height                 . 40)
                 (font                   . "Iosevka-15")))
+
+;;; - UTF-8 everything
+
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
 
 (provide 'early-init)
 
