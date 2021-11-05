@@ -362,7 +362,10 @@ used to create a new scratch buffer."
   :bind
   ("s-p" . project-find-file)
   (:map project-prefix-map
-        ("m" . magit-project-status)))
+        ("m" . magit-project-status))
+  :config
+  ;; Setup the `project-switch-commands'
+  (require 'magit-extras))
 
 
 (use-package compile
