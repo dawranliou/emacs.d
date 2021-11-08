@@ -18,7 +18,8 @@
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.7
       package-enable-at-startup nil
-      frame-inhibit-implied-resize t)
+      frame-inhibit-implied-resize t
+      native-comp-async-report-warnings-errors nil)
 
 (add-hook
  'emacs-startup-hook
