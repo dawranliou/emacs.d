@@ -204,19 +204,6 @@ used to create a new scratch buffer."
     (+load-theme-action theme)))
 
 
-;; Inspired by diminish.el
-;; https://github.com/myrjola/diminish.el/blob/master/diminish.el
-(defun diminish (mode)
-  "Diminish minor mode MODE."
-  (let ((minor (assq mode minor-mode-alist)))
-    (when minor
-      (setcdr minor (list "")))))
-
-
-(with-eval-after-load 'eldoc
-  (diminish 'eldoc-mode))
-
-
 (defun +quick-edit ()
   "Util function for use with hammerspoon quick edit functionality."
   (interactive)
@@ -380,9 +367,7 @@ used to create a new scratch buffer."
 
 
 (use-package autorevert
-  :mode ("\\.log\\'" . auto-revert-tail-mode)
-  :config
-  (diminish 'auto-revert-mode))
+  :mode ("\\.log\\'" . auto-revert-tail-mode))
 
 
 (use-package isearch
@@ -542,9 +527,7 @@ reuse it's window, otherwise create new one."
   :hook ((text-mode . ws-butler-mode)
          (prog-mode . ws-butler-mode))
   :custom
-  (ws-butler-keep-whitespace-before-point nil)
-  :config
-  (diminish 'ws-butler-mode))
+  (ws-butler-keep-whitespace-before-point nil))
 
 
 (use-package iedit
@@ -756,9 +739,7 @@ reuse it's window, otherwise create new one."
         ("C-;" . nil))
   :hook
   (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode)
-  :config
-  (diminish 'flyspell-mode))
+  (text-mode . flyspell-mode))
 
 
 (use-package slime
