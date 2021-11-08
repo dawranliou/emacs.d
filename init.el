@@ -58,7 +58,6 @@
                                     try-expand-dabbrev-all-buffers
                                     try-expand-dabbrev-from-kill)
  custom-file (expand-file-name "custom.el" user-emacs-directory)
- scroll-preserve-screen-position 'always
  scroll-conservatively 101              ; Don't recenter
  ediff-window-setup-function #'ediff-setup-windows-plain
  ediff-split-window-function #'split-window-horizontally
