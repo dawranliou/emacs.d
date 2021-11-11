@@ -560,7 +560,7 @@ reuse it's window, otherwise create new one."
         ("C-," . nil))
   :custom
   (org-hide-emphasis-markers t)
-  (org-ellipsis "…")
+  (org-ellipsis " …")
   (org-special-ctrl-a/e t)
   (org-src-fontify-natively t)
   (org-src-tab-acts-natively t)
