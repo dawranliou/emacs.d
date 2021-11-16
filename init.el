@@ -160,6 +160,7 @@
 (electric-pair-mode 1)
 (save-place-mode t)
 (add-hook 'after-init-hook #'savehist-mode)
+(winner-mode)
 
 
 ;;; Custom functions
