@@ -33,7 +33,6 @@
  ("org" . "5315773e8a0838268592617174b221ec7bf1c87a")
  ("org-journal" . "71e8b10088ae52c4ac17f7af87020ea85fbc6ff7")
  ("org-roam" . "2c75b194d8f75a8edaec77d503a47d1bf0c58f24")
- ("paren-face" . "6790c7fdec490a69e7d460c0bea36ad343776f9b")
  ("parseclj" . "a8c4cf30fb68b66ae51541462a8b21753229a6e5")
  ("parseedn" . "e5ba280d1fb7b408d54062d4eac545326e850172")
  ("persistent-scratch" . "57221e5fdff22985c0ea2f3e7c282ce823ea5932")

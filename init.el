@@ -431,12 +431,6 @@ used to create a new scratch buffer."
   :straight (:host github :repo "dawranliou/sketch-themes"))
 
 
-(use-package paren-face
-  :straight t
-  :hook
-  (emacs-lisp-mode . paren-face-mode))
-
-
 (use-package rainbow-mode
   :straight t
   :commands rainbow-mode)
