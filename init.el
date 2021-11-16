@@ -339,17 +339,10 @@ used to create a new scratch buffer."
 
 
 (use-package project
-  :preface
-  ;; although emacs ships with project.el, the latest version project.el is
-  ;; nicer.
-  (when (version< emacs-version "28")
-    (straight-use-package 'project))
   :custom
   (project-list-file (expand-file-name "var/projects.el" user-emacs-directory))
   :bind
   ("s-p" . project-find-file)
-  (:map project-prefix-map
-        ("m" . magit-project-status))
   :config
   ;; Setup the `project-switch-commands'
   (require 'magit-extras))
