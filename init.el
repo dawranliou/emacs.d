@@ -159,6 +159,8 @@
 (save-place-mode t)
 (add-hook 'after-init-hook #'savehist-mode)
 (winner-mode)
+(global-so-long-mode)
+(delete-selection-mode)
 
 
 ;;; Custom functions
