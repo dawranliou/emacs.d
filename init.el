@@ -119,8 +119,6 @@
 (global-set-key (kbd "M-/") #'hippie-expand)
 (global-set-key (kbd "M-Z") #'zap-to-char)
 (global-set-key (kbd "M-z") #'zap-up-to-char)
-(global-set-key (kbd "M-n") (lambda () (interactive) (scroll-up 4)))
-(global-set-key (kbd "M-p") (lambda () (interactive) (scroll-down 4)))
 (global-set-key (kbd "s--") #'text-scale-decrease)
 (global-set-key (kbd "s-<backspace>") #'kill-whole-line)
 (global-set-key (kbd "s-=") #'text-scale-adjust)
@@ -414,6 +412,12 @@ used to create a new scratch buffer."
   (:map ctl-x-4-map
         ("s" . +toggle-window-split)
         ("t" . +transpose-windows)))
+
+
+(use-package smartscan
+  :load-path "site-lisp"
+  :config
+  (global-smartscan-mode))
 
 
 ;;; - 3rd Party Packages
