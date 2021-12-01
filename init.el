@@ -774,9 +774,8 @@ reuse it's window, otherwise create new one."
 ;;; - EWW
 
 
-(use-package elpher
-  :straight t
-  :commands elpher)
+(elpa-package 'elpher
+  (autoload #'elpher "elpher" nil t))
 
 
 (provide 'init)
