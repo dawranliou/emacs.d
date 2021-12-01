@@ -460,9 +460,10 @@ used to create a new scratch buffer."
 (elpa-package 'sketch-themes)
 
 
-(use-package rainbow-mode
-  :straight t
-  :commands rainbow-mode)
+(elpa-package 'rainbow-mode
+  (unless
+      (fboundp 'rainbow-mode)
+    (autoload #'rainbow-mode "rainbow-mode" nil t)))
 
 
 (use-package orderless
