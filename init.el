@@ -696,9 +696,7 @@ reuse it's window, otherwise create new one."
     (define-key cider-mode-map (kbd "M-.") nil)))
 
 
-(use-package go-mode
-  :straight t
-  :defer t)
+(elpa-package 'go-mode)
 
 
 (use-package markdown-mode
