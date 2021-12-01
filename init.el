@@ -699,11 +699,10 @@ reuse it's window, otherwise create new one."
 (elpa-package 'go-mode)
 
 
-(use-package markdown-mode
-  :straight t
-  :mode "\\.md\\'"
-  :hook ((markdown-mode . auto-fill-mode))
-  :config
+(elpa-package 'markdown-mode
+  (add-to-list 'auto-mode-alist
+               '("\\.md\\'" . markdown-mode))
+  (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (setq markdown-command "marked"))
 
 
