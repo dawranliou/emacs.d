@@ -716,9 +716,9 @@ reuse it's window, otherwise create new one."
                '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-mode)))
 
 
-(use-package fennel-mode
-  :straight (:host gitlab :repo "technomancy/fennel-mode")
-  :mode "\\.fnl\\'")
+(elpa-package 'fennel-mode
+  (add-to-list 'auto-mode-alist
+               '("\\.fnl\\'" . fennel-mode)))
 
 
 (use-package flyspell
