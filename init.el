@@ -711,9 +711,9 @@ reuse it's window, otherwise create new one."
   (add-hook 'css-mode 'emmet-mode))
 
 
-(use-package yaml-mode
-  :straight t
-  :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
+(elpa-package 'yaml-mode
+  (add-to-list 'auto-mode-alist
+               '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-mode)))
 
 
 (use-package fennel-mode
