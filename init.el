@@ -397,8 +397,8 @@ used to create a new scratch buffer."
       (ansi-color-apply-on-region (point-min) (point-max)))))
 
 
-(use-package autorevert
-  :mode ("\\.log\\'" . auto-revert-tail-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.log\\'" . auto-revert-tail-mode))
 
 
 (use-package isearch
