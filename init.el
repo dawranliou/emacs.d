@@ -738,6 +738,14 @@ reuse it's window, otherwise create new one."
     (load (expand-file-name "~/.quicklisp/slime-helper.el"))))
 
 
+(elpa-package 'sqlformat
+  (custom-set-variables
+   '(sqlformat-command 'pgformatter)
+   '(sqlformat-args '("-s2" "-g")))
+  (with-eval-after-load 'sql
+    (define-key sql-mode-map (kbd "C-c C-f") 'sqlformat)))
+
+
 ;;; - Elfeed
 
 
