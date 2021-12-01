@@ -661,29 +661,26 @@ reuse it's window, otherwise create new one."
 ;;; - Language major modes
 
 
-(use-package clojure-mode
-  :straight t
-  :defer t
-  :hook
-  ((clojure-mode . lsp)
-   (clojurec-mode . lsp)
-   (clojurescript-mode . lsp))
-  :init
+(elpa-package 'clojure-mode
+  (add-hook 'clojure-mode-hook 'lsp)
+  (add-hook 'clojurec-mode-hook 'lsp)
+  (add-hook 'clojurescript-mode-hook 'lsp)
   (add-hook 'clojure-mode-hook
             (lambda ()
               (setq-local hippie-expand-try-functions-list
                           '(try-expand-dabbrev
                             try-expand-dabbrev-all-buffers
                             try-expand-dabbrev-from-kill))))
-  :custom
-  (cljr-magic-requires nil)
-  :config
-  (defun +clojure-ns-kill-ring-save ()
-    "Save the current clojure ns to the kill ring."
-    (interactive)
-    (let ((ns (funcall clojure-expected-ns-function)))
-      (kill-new ns)
-      (message (format "Saved to kill-ring: %s" ns)))))
+  (custom-set-variables
+   '(cljr-magic-requires nil))
+
+  (with-eval-after-load 'clojure-mode
+    (defun +clojure-ns-kill-ring-save ()
+      "Save the current clojure ns to the kill ring."
+      (interactive)
+      (let ((ns (funcall clojure-expected-ns-function)))
+        (kill-new ns)
+        (message (format "Saved to kill-ring: %s" ns))))))
 
 
 (use-package cider
