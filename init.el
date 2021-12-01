@@ -449,10 +449,9 @@ used to create a new scratch buffer."
 (define-key ctl-x-4-map (kbd "t") '+transpose-windows)
 
 
-(use-package smartscan
-  :load-path "site-lisp"
-  :hook
-  (prog-mode . smartscan-mode))
+(add-to-list 'load-path (expand-file-name "site-lisp/"))
+(with-eval-after-load 'smartscan
+  (add-hook 'prog-mode-hook 'smartscan-mode))
 
 
 ;;; - 3rd Party Packages
