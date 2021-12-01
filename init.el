@@ -749,27 +749,26 @@ reuse it's window, otherwise create new one."
 ;;; - Elfeed
 
 
-(use-package elfeed
-  :straight t
-  :commands elfeed
-  :custom
-  (elfeed-feeds '("http://irreal.org/blog/?feed=rss2"
-                  "https://ambrevar.xyz/atom.xml"
-                  "https://blog.meain.io/feed.xml"
-                  "https://clojure.org/feed.xml"
-                  "https://d12frosted.io/atom.xml"
-                  "https://dawranliou.com/atom.xml"
-                  "https://drewdevault.com/blog/index.xml"
-                  "https://emacsredux.com/atom.xml"
-                  "https://endlessparentheses.com/atom.xml"
-                  "https://erick.navarro.io/index.xml"
-                  "https://protesilaos.com/codelog.xml"
-                  "https://ruzkuku.com/all.atom"
-                  "https://technomancy.us/atom.xml"
-                  "https://worace.works/atom.xml"
-                  "https://www.manueluberti.eu/feed.xml"
-                  "https://www.murilopereira.com/index.xml"
-                  "https://www.with-emacs.com/rss.")))
+(elpa-package 'elfeed
+  (autoload #'elfeed "elfeed" nil t)
+  (custom-set-variables
+   '(elfeed-feeds '("http://irreal.org/blog/?feed=rss2"
+                    "https://ambrevar.xyz/atom.xml"
+                    "https://blog.meain.io/feed.xml"
+                    "https://clojure.org/feed.xml"
+                    "https://d12frosted.io/atom.xml"
+                    "https://dawranliou.com/atom.xml"
+                    "https://drewdevault.com/blog/index.xml"
+                    "https://emacsredux.com/atom.xml"
+                    "https://endlessparentheses.com/atom.xml"
+                    "https://erick.navarro.io/index.xml"
+                    "https://protesilaos.com/codelog.xml"
+                    "https://ruzkuku.com/all.atom"
+                    "https://technomancy.us/atom.xml"
+                    "https://worace.works/atom.xml"
+                    "https://www.manueluberti.eu/feed.xml"
+                    "https://www.murilopereira.com/index.xml"
+                    "https://www.with-emacs.com/rss."))))
 
 
 ;;; - EWW
