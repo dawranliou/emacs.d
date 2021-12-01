@@ -457,9 +457,7 @@ used to create a new scratch buffer."
 ;;; - 3rd Party Packages
 
 
-(use-package sketch-themes
-  :defer t
-  :straight (:host github :repo "dawranliou/sketch-themes"))
+(elpa-package 'sketch-themes)
 
 
 (use-package rainbow-mode
