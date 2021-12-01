@@ -435,27 +435,24 @@ used to create a new scratch buffer."
 ;;; - My extras lisp
 
 
-(use-package extras
-  :load-path "lisp/"
-  :commands (+uuid +set-font)
-  :bind
-  (([remap move-beginning-of-line] . +move-beginning-of-line)
-   ("C-<backspace>" . +kill-line-backwards)
-   ("S-<return>" . +newline-at-end-of-line)
-   ("C-x C-r" . recentf-open-files+)
-   ("C-M-'" . +eshell-here)
-   ("C-w" . +backward-kill-word-or-region)
-   ("M-Q" . +unfill-paragraph)
-   ("M-q" . +fill-or-unfill-paragraph))
-  (:map ctl-x-4-map
-        ("s" . +toggle-window-split)
-        ("t" . +transpose-windows)))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
+(require 'extras)
+(global-set-key (kbd "C-<backspace>") '+kill-line-backwards)
+(global-set-key (kbd "C-<backspace>") '+kill-line-backwards)
+(global-set-key (kbd "S-<return>") '+newline-at-end-of-line)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files+)
+(global-set-key (kbd "C-M-'") '+eshell-here)
+(global-set-key (kbd "C-w") '+backward-kill-word-or-region)
+(global-set-key (kbd "M-Q") '+unfill-paragraph)
+(global-set-key (kbd "M-q") '+fill-or-unfill-paragraph)
+(define-key ctl-x-4-map (kbd "s") '+toggle-window-split)
+(define-key ctl-x-4-map (kbd "t") '+transpose-windows)
 
 
 (use-package smartscan
   :load-path "site-lisp"
-  :config
-  (global-smartscan-mode))
+  :hook
+  (prog-mode . smartscan-mode))
 
 
 ;;; - 3rd Party Packages
