@@ -481,11 +481,8 @@ used to create a new scratch buffer."
   (selectrum-mode +1))
 
 
-(use-package marginalia
-  :straight t
-  :bind (:map minibuffer-local-map
-              ("C-M-a" . marginalia-cycle))
-  :init
+(elpa-package 'marginalia
+  (define-key minibuffer-local-map (kbd "C-M-a") 'marginalia-cycle)
   (marginalia-mode)
   (setq marginalia-annotators '(marginalia-annotators-light
                                 marginalia-annotators-heavy)))
