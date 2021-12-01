@@ -319,16 +319,15 @@ used to create a new scratch buffer."
 ;;; - Built-in Packages
 
 
-(use-package dired
-  :hook (;; (dired-mode . dired-hide-details-mode)
-         (dired-mode . hl-line-mode))
-  :bind ("C-x C-j" . dired-jump)
-  :custom
-  (dired-auto-revert-buffer t)
-  (dired-dwim-target t)
-  (dired-recursive-copies 'always)
-  (dired-recursive-deletes 'always)
-  :config
+(with-eval-after-load 'dired
+  ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  (add-hook 'dired-mode-hook 'hl-line-mode)
+  (define-key global-map (kbd "C-x C-j") 'dired-jump)
+  (custom-set-variables
+   '(dired-auto-revert-buffer t)
+   '(dired-dwim-target t)
+   '(dired-recursive-copies 'always)
+   '(dired-recursive-deletes 'always))
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
