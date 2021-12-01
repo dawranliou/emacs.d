@@ -536,13 +536,11 @@ reuse it's window, otherwise create new one."
    '(ws-butler-keep-whitespace-before-point nil)))
 
 
-(use-package iedit
-  :straight t
-  :bind
-  ("C-;" . iedit-mode)
-  (:map iedit-mode-keymap
-        ("C-n" . iedit-next-occurrence)
-        ("C-p" . iedit-prev-occurrence)))
+(elpa-package 'iedit
+  (global-set-key (kbd "C-;") 'iedit-mode)
+  (with-eval-after-load 'iedit-mode
+    (define-key iedit-mode-keymap (kbd "C-n") 'iedit-next-occurrence)
+    (define-key iedit-mode-keymap (kbd "C-p") 'iedit-prev-occurrence)))
 
 
 (defun +org-mode-setup ()
