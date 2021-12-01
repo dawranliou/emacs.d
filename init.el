@@ -550,22 +550,19 @@ reuse it's window, otherwise create new one."
                      t
                    (,electric-pair-inhibit-predicate c)))))
 
+(add-hook 'org-mode-hook '+org-mode-setup)
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
-(elpa-package 'org
-  (add-hook 'org-mode-hook '+org-mode-setup)
-  (add-hook 'org-mode-hook 'visual-line-mode)
-  (add-hook 'org-mode-hook 'auto-fill-mode)
+(autoload #'org-store-link "org" nil t)
+(autoload #'org-agenda "org" nil t)
+(autoload #'org-switchb "org" nil t)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c b") 'org-switchb)
 
-  (autoload #'org-store-link "org" nil t)
-  (autoload #'org-agenda "org" nil t)
-  (autoload #'org-switchb "org" nil t)
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c b") 'org-switchb)
-
-  (with-eval-after-load 'org
-    (define-key org-mode-map (kbd "C-,") nil))
-
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-,") nil)
   (custom-set-variables
    '(org-hide-emphasis-markers t)
    '(org-ellipsis " …")
