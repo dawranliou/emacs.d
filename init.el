@@ -9,8 +9,67 @@
 
 ;;; Code:
 
+;;; Package Management
 
-;;; - Emacs
+;; The very first thing I do is setup the packages I need. I do this so that
+;; when I open this config on a new machine, all the packages needed to make it
+;; work are specified in `package-selected-packages', with that one you can
+;; install them with `package-install-selected-packages'. At which point the
+;; whole config should be ready to rock.
+
+(require 'package)
+
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+(setq package-archive-priorities '(("gnu" . 30)
+                                   ("nongnu" . 25)
+                                   ("melpa-stable" . 20)
+                                   ("melpa" . 10)))
+
+(setq package-selected-packages
+      '(avy
+        cider
+        clojure-mode
+        elfeed
+        elpher
+        embark
+        emmet-mode
+        fennel-mode
+        flycheck
+        flyspell
+        go-mode
+        helpful
+        iedit
+        lsp-mode
+        magit
+        marginalia
+        markdown-mode
+        orderless
+        org
+        org-journal
+        org-roam
+        persistent-scratch
+        rainbow-mode
+        rg
+        selectrum
+        sketch-themes
+        slime
+        smartscan
+        sqlformat
+        ws-butler
+        yaml-mode))
+
+
+(defmacro elpa-package (package &rest body)
+  "Eval BODY only if PACKAGE is installed."
+  (declare (indent defun))
+  `(if (package-installed-p ,package)
+       (progn ,@body)
+     (message (concat "Package \'"
+                      (symbol-name ,package)
+                      "\' is not installed... skipping config."))))
+
 
 
 (setq
@@ -250,25 +309,6 @@ used to create a new scratch buffer."
         'sketch-black
       'sketch-white)
     t)))
-
-
-;;; - Package manager
-
-
-(setq straight-build-dir (format "build-%s" emacs-version)
-      ;; Lazy modification detection speeds up the startup time. I don't often
-      ;; modify packages anyway. When I do, I can build the package manually, I
-      ;; think.
-      straight-check-for-modifications '(check-on-save find-when-checking))
-
-(load (expand-file-name
-       "straight/repos/straight.el/bootstrap.el" user-emacs-directory)
-      nil 'nomessage)
-
-(straight-use-package 'use-package)
-;; (setq use-package-verbose t)
-;; (setq use-package-compute-statistics t)
-(setq use-package-expand-minimally t)
 
 
 ;;; - Built-in Packages
