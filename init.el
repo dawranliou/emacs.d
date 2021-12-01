@@ -389,13 +389,9 @@ used to create a new scratch buffer."
   (require 'magit-extras))
 
 
-(use-package compile
-  :defer t
-  :hook
-  (compilation-filter . colorize-compilation-buffer)
-  :config
+(with-eval-after-load 'compile
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
   (require 'ansi-color)
-
   (defun colorize-compilation-buffer ()
     (let ((inhibit-read-only t))
       (ansi-color-apply-on-region (point-min) (point-max)))))
