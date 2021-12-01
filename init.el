@@ -523,11 +523,9 @@ reuse it's window, otherwise create new one."
    '(helpful-switch-buffer-function #'+helpful-switch-to-buffer)))
 
 
-(use-package persistent-scratch
-  :straight t
-  :custom
-  (persistent-scratch-autosave-interval 60)
-  :config
+(elpa-package 'persistent-scratch
+  (custom-set-variables
+   '(persistent-scratch-autosave-interval 60))
   (persistent-scratch-setup-default))
 
 
