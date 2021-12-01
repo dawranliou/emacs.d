@@ -488,13 +488,10 @@ used to create a new scratch buffer."
                                 marginalia-annotators-heavy)))
 
 
-(use-package embark
-  :straight t
-  :bind
-  (("s-," . xref-pop-marker-stack)
-   ("s-." . embark-act)
-   ("C-h B" . embark-bindings))
-  :init
+(elpa-package 'embark
+  (global-set-key (kbd "s-,") 'xref-pop-marker-stack)
+  (global-set-key (kbd "s-.") 'embark-act)
+  (global-set-key (kbd "C-h B") 'embark-bindings)
   (setq prefix-help-command #'embark-prefix-help-command))
 
 
