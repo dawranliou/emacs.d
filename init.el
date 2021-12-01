@@ -495,13 +495,8 @@ used to create a new scratch buffer."
   (setq prefix-help-command #'embark-prefix-help-command))
 
 
-(use-package avy
-  :straight t
-  :bind
-  ("M-j" . avy-goto-char-timer)
-  ;; (:map isearch-mode-map
-  ;;       ("M-j" . 'avy-isearch))
-  )
+(elpa-package 'avy
+  (global-set-key (kbd "M-j") 'avy-goto-char-timer))
 
 
 (use-package helpful
