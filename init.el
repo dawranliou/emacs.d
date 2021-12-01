@@ -401,23 +401,14 @@ used to create a new scratch buffer."
              '("\\.log\\'" . auto-revert-tail-mode))
 
 
-(use-package isearch
-  :custom
-  (isearch-allow-scroll t)
-  (search-whitespace-regexp ".*?")      ; Fuzzy search
-  ;; Emacs 28
-  (isearch-allow-motion t)
-  (isearch-wrap-pause 'no)
-  :bind
-  (:map isearch-mode-map
-        ("C-o" . isearch-occur)
-        ("<C-backspace>" . isearch-delete-wrong)
-        ;; DEL during isearch should edit the search string, not jump back to
-        ;; the previous result
-        ([remap isearch-delete-char] . isearch-del-char))
-  :hook
-  (isearch-mode-end . isearch-exit-at-start)
-  :config
+(with-eval-after-load 'isearch
+  (custom-set-variables
+   '(isearch-allow-scroll t)
+   '(search-whitespace-regexp ".*?")      ; Fuzzy search
+   ;; Emacs 28
+   '(isearch-allow-motion t)
+   '(isearch-wrap-pause 'no))
+
   ;; https://www.emacswiki.org/emacs/IncrementalSearch#h5o-4
   (defun isearch-exit-at-start ()
     "Exit search at the beginning of the current match."
@@ -430,7 +421,15 @@ used to create a new scratch buffer."
     (interactive)
     (while (or (not isearch-success) isearch-error)
       (isearch-pop-state))
-    (isearch-update)))
+    (isearch-update))
+
+  (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
+  (define-key isearch-mode-map (kbd "<C-backspace>") 'isearch-delete-wrong)
+  ;; DEL during isearch should edit the search string, not jump back to the
+  ;; previous result
+  (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
+
+  (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
 
 ;;; - My extras lisp
