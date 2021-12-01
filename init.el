@@ -731,13 +731,11 @@ reuse it's window, otherwise create new one."
   (add-to-list 'text-mode-hook 'flyspell-mode))
 
 
-(use-package slime
-  :straight t
-  :commands slime
-  :init
+(elpa-package 'slime
+  (autoload #'slime "slime" nil t)
   (setq inferior-lisp-program "sbcl")
-  :config
-  (load (expand-file-name "~/.quicklisp/slime-helper.el")))
+  (with-eval-after-load 'slime
+    (load (expand-file-name "~/.quicklisp/slime-helper.el"))))
 
 
 ;;; - Elfeed
