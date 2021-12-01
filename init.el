@@ -71,6 +71,13 @@
                       "\' is not installed... skipping config."))))
 
 
+;;; Settings
+
+;; Save all interactive customization to a temp file, which is never loaded.
+;; This means interactive customization is session-local. Only this init file
+;; persists sessions.
+
+(setq custom-file (make-temp-file "emacs-custom-"))
 
 (setq
  inhibit-startup-message t
@@ -116,7 +123,6 @@
                                     try-expand-dabbrev
                                     try-expand-dabbrev-all-buffers
                                     try-expand-dabbrev-from-kill)
- custom-file (expand-file-name "custom.el" user-emacs-directory)
  scroll-conservatively 101              ; Don't recenter
  ediff-window-setup-function #'ediff-setup-windows-plain
  ediff-split-window-function #'split-window-horizontally
@@ -133,7 +139,6 @@
  show-paren-context-when-offscreen t)
 
 
-(load custom-file 'noerror)
 
 
 (setq-default
