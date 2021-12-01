@@ -683,19 +683,17 @@ reuse it's window, otherwise create new one."
         (message (format "Saved to kill-ring: %s" ns))))))
 
 
-(use-package cider
-  :straight t
-  :after clojure-mode
-  :custom
-  (cider-repl-display-help-banner nil)
-  (cider-repl-display-in-current-window nil)
-  (cider-repl-pop-to-buffer-on-connect nil)
-  (cider-repl-use-pretty-printing t)
-  (cider-repl-buffer-size-limit 100000)
-  :bind
-  (:map cider-mode-map
-        ("M-," . nil)
-        ("M-." . nil)))
+(elpa-package 'cider
+  (custom-set-variables
+   '(cider-repl-display-help-banner nil)
+   '(cider-repl-display-in-current-window nil)
+   '(cider-repl-pop-to-buffer-on-connect nil)
+   '(cider-repl-use-pretty-printing t)
+   '(cider-repl-buffer-size-limit 100000))
+
+  (with-eval-after-load 'cider
+    (define-key cider-mode-map (kbd "M-,") nil)
+    (define-key cider-mode-map (kbd "M-.") nil)))
 
 
 (use-package go-mode
