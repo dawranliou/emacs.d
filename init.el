@@ -373,8 +373,8 @@ used to create a new scratch buffer."
         eshell-scroll-to-bottom-on-input t))
 
 
-(use-package eshell
-  :hook (eshell-first-time-mode . +configure-eshell))
+(with-eval-after-load 'eshell
+  (add-hook 'eshell-first-time-mode-hook '+configure-eshell))
 
 
 (with-eval-after-load 'esh-opt
