@@ -706,11 +706,9 @@ reuse it's window, otherwise create new one."
   (setq markdown-command "marked"))
 
 
-(use-package emmet-mode
-  :straight t
-  :hook
-  (html-mode . emmet-mode)
-  (css-mode . emmet-mode))
+(elpa-package 'emmet-mode
+  (add-hook 'html-mode 'emmet-mode)
+  (add-hook 'css-mode 'emmet-mode))
 
 
 (use-package yaml-mode
