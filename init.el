@@ -381,10 +381,11 @@ used to create a new scratch buffer."
   (setq eshell-destroy-buffer-when-process-dies t))
 
 
+(global-set-key (kbd "s-p") 'project-find-file)
+
 (with-eval-after-load 'project
   (custom-set-variables
    '(project-list-file (expand-file-name "var/projects.el" user-emacs-directory)))
-  (define-key global-map 'project-find-file)
   ;; Setup the `project-switch-commands'
   (require 'magit-extras))
 
