@@ -643,21 +643,18 @@ reuse it's window, otherwise create new one."
   (add-hook 'prog-init-hook 'flycheck-mode))
 
 
-(use-package lsp-mode
-  :straight t
-  :defer t
-  :custom-face
-  (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
-  :custom
-  (lsp-enable-file-watchers nil)
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-keymap-prefix "C-c L")
-  (lsp-enable-indentation nil)
-  (lsp-completion-provider :none)
-  (lsp-eldoc-enable-hover nil)
-  (lsp-modeline-diagnostics-scope :file)
-  (lsp-modeline-code-actions-enable nil)
-  :config
+(elpa-package 'lsp-mode
+  (custom-set-faces
+   `(lsp-face-highlight-textual ((t (:inherit lazy-highlight)))))
+  (custom-set-variables
+   '(lsp-enable-file-watchers nil)
+   '(lsp-headerline-breadcrumb-enable nil)
+   '(lsp-keymap-prefix "C-c L")
+   '(lsp-enable-indentation nil)
+   '(lsp-completion-provider :none)
+   '(lsp-eldoc-enable-hover nil)
+   '(lsp-modeline-diagnostics-scope :file)
+   '(lsp-modeline-code-actions-enable nil))
   (setq-default read-process-output-max (* 1024 1024)))
 
 
