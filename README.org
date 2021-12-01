@@ -27,6 +27,7 @@ by a bunch of resources I’ve found online:
 - https://github.com/meqif/.emacs.d
 - https://github.com/mpereira/.emacs.d
 - https://github.com/oantolin/emacs-config
+- https://github.com/olivertaylor/dotfilesq
 - https://github.com/purcell/emacs.d
 - https://github.com/raxod502/radian/blob/develop/emacs/radian.el
 - https://github.com/sam217pa/emacs-config
