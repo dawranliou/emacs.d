@@ -621,16 +621,15 @@ reuse it's window, otherwise create new one."
     (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)))
 
 
-(use-package magit
-  :straight t
-  :bind (("s-g" . magit-status)
-         ("C-x g" . magit-status)
-         ("C-c g" . magit-file-dispatch))
-  :commands (magit-project-status)
-  :custom
-  (magit-diff-refine-hunk 'all)
-  (magit-display-buffer-function
-   #'magit-display-buffer-same-window-except-diff-v1))
+(elpa-package 'magit
+  (global-set-key (kbd "s-g") 'magit-status)
+  (global-set-key (kbd "C-x g") 'magit-status)
+  (global-set-key (kbd "C-c g") 'magit-file-dispatch)
+  (autoload #'magit-project-status "magit" nil t)
+  (custom-set-variables
+   '(magit-diff-refine-hunk 'all)
+   '(magit-display-buffer-function
+     #'magit-display-buffer-same-window-except-diff-v1)))
 
 
 (use-package rg
