@@ -332,10 +332,9 @@ used to create a new scratch buffer."
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 
-(use-package find-dired
-  :commands find-name-dired
-  :custom
-  (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
+(with-eval-after-load 'find-dired
+  (custom-set-variables
+   '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))))
 
 
 (defun +eshell-history ()
