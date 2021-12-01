@@ -592,17 +592,16 @@ reuse it's window, otherwise create new one."
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 
-(use-package org-journal
-  :straight t
-  :commands org-journal-new-entry
-  :bind ("C-c n j" . 'org-journal-new-entry)
-  :custom
-  (org-journal-date-format "%A, %d/%m/%Y")
-  (org-journal-date-prefix "* ")
-  (org-journal-file-format "%F.org")
-  (org-journal-dir "~/org/journal/")
-  (org-journal-file-type 'weekly)
-  (org-journal-find-file #'find-file))
+(elpa-package 'org-journal
+  (autoload #'org-journal-new-entry "org-journal" nil t)
+  (global-set-key (kbd "C-c n j") 'org-journal-new-entry)
+  (custom-set-variables
+   '(org-journal-date-format "%A, %d/%m/%Y")
+   '(org-journal-date-prefix "* ")
+   '(org-journal-file-format "%F.org")
+   '(org-journal-dir "~/org/journal/")
+   '(org-journal-file-type 'weekly)
+   '(org-journal-find-file #'find-file)))
 
 
 (use-package org-roam
