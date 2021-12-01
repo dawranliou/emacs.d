@@ -632,13 +632,11 @@ reuse it's window, otherwise create new one."
      #'magit-display-buffer-same-window-except-diff-v1)))
 
 
-(use-package rg
-  :straight t
-  :bind
-  (("s-F" . rg-project)
-   ("C-c r" . rg))
-  :config
-  (rg-enable-default-bindings))
+(elpa-package 'rg
+  (global-set-key (kbd "s-F") 'rg-project)
+  (global-set-key (kbd "C-c r") 'rg)
+  (with-eval-after-load 'rg
+    (rg-enable-default-bindings)))
 
 
 (use-package flycheck
