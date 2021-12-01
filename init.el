@@ -499,19 +499,16 @@ used to create a new scratch buffer."
   (global-set-key (kbd "M-j") 'avy-goto-char-timer))
 
 
-(use-package helpful
-  :straight t
-  :defer t
-  :custom (helpful-switch-buffer-function #'+helpful-switch-to-buffer)
-  :bind (;; Remap standard commands.
-         ([remap describe-function] . helpful-callable)
-         ([remap describe-variable] . helpful-variable)
-         ([remap describe-key]      . helpful-key)
-         ([remap describe-symbol]   . helpful-symbol)
-         ("C-c C-d" . helpful-at-point)
-         ("C-h C"   . helpful-command)
-         ("C-h F"   . describe-face))
-  :config
+(elpa-package 'helpful
+  ;; Remap standard commands.
+  (global-set-key [remap describe-function] 'helpful-callable)
+  (global-set-key [remap describe-variable] 'helpful-variable)
+  (global-set-key [remap describe-key]      'helpful-key)
+  (global-set-key [remap describe-symbol]   'helpful-symbol)
+  (global-set-key (kbd "C-c C-d") 'helpful-at-point)
+  (global-set-key (kbd "C-h C")   'helpful-command)
+  (global-set-key (kbd "C-h F")   'describe-face)
+
   ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
   (defun +helpful-switch-to-buffer (buffer-or-name)
     "Switch to helpful BUFFER-OR-NAME.
@@ -520,7 +517,10 @@ The logic is simple, if we are currently in the helpful buffer,
 reuse it's window, otherwise create new one."
     (if (eq major-mode 'helpful-mode)
         (switch-to-buffer buffer-or-name)
-      (pop-to-buffer buffer-or-name))))
+      (pop-to-buffer buffer-or-name)))
+
+  (custom-set-variables
+   '(helpful-switch-buffer-function #'+helpful-switch-to-buffer)))
 
 
 (use-package persistent-scratch
