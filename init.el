@@ -466,12 +466,10 @@ used to create a new scratch buffer."
     (autoload #'rainbow-mode "rainbow-mode" nil t)))
 
 
-(use-package orderless
-  :straight t
-  :custom
-  (completion-styles '(orderless))
-  (completion-category-overrides '((file (styles partial-completion))))
-  :init
+(elpa-package 'orderless
+  (custom-set-variables
+   '(completion-styles '(orderless))
+   '(completion-category-overrides '((file (styles partial-completion)))))
   (setq completion-category-defaults nil))
 
 
