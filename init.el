@@ -473,14 +473,11 @@ used to create a new scratch buffer."
   (setq completion-category-defaults nil))
 
 
-(use-package selectrum
-  :straight t
-  :bind
-  ("C-x C-z" . selectrum-repeat)
-  :custom
-  (orderless-skip-highlighting (lambda () selectrum-is-active))
-  (selectrum-highlight-candidates-function #'orderless-highlight-matches)
-  :init
+(elpa-package 'selectrum
+  (global-set-key (kbd "C-x C-z") 'selectrum-repeat)
+  (custom-set-variables
+   '(orderless-skip-highlighting (lambda () selectrum-is-active))
+   '(selectrum-highlight-candidates-function #'orderless-highlight-matches))
   (selectrum-mode +1))
 
 
