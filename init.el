@@ -529,12 +529,11 @@ reuse it's window, otherwise create new one."
   (persistent-scratch-setup-default))
 
 
-(use-package ws-butler
-  :straight t
-  :hook ((text-mode . ws-butler-mode)
-         (prog-mode . ws-butler-mode))
-  :custom
-  (ws-butler-keep-whitespace-before-point nil))
+(elpa-package 'ws-butler
+  (add-hook 'text-mode-hook 'ws-butler-mode)
+  (add-hook 'prog-mode-hook 'ws-butler-mode)
+  (custom-set-variables
+   '(ws-butler-keep-whitespace-before-point nil)))
 
 
 (use-package iedit
