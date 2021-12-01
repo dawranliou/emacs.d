@@ -721,15 +721,14 @@ reuse it's window, otherwise create new one."
                '("\\.fnl\\'" . fennel-mode)))
 
 
-(use-package flyspell
-  :bind
-  (:map flyspell-mode-map
-        ;; ("C-." . nil)
-        ;; ("C-," . nil)
-        ("C-;" . nil))
-  :hook
-  (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode))
+(elpa-package 'flyspell
+  (with-eval-after-load 'flyspell
+    ;; (define-key flyspell-mode-map (kbd "C-.") nil)
+    ;; (define-key flyspell-mode-map (kbd "C-,") nil)
+    (define-key flyspell-mode-map (kbd "C-;") nil))
+
+  (add-to-list 'prog-mode-hook 'flyspell-prog-mode)
+  (add-to-list 'text-mode-hook 'flyspell-mode))
 
 
 (use-package slime
