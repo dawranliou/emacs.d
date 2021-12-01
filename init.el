@@ -639,10 +639,8 @@ reuse it's window, otherwise create new one."
     (rg-enable-default-bindings)))
 
 
-(use-package flycheck
-  :straight t
-  :ensure t
-  :hook (prog-init . flycheck-mode))
+(elpa-package 'flycheck
+  (add-hook 'prog-init-hook 'flycheck-mode))
 
 
 (use-package lsp-mode
