@@ -604,20 +604,21 @@ reuse it's window, otherwise create new one."
    '(org-journal-find-file #'find-file)))
 
 
-(use-package org-roam
-  :straight t
-  :custom
-  (org-roam-directory "~/org/roam/")
-  :bind
-  (("C-c n l" . org-roam-buffer-toggle)
-   ("C-c n f" . org-roam-node-find)
-   ("C-c n g" . org-roam-graph)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n c" . org-roam-capture))
-  :init
+(elpa-package 'org-roam
   (setq org-roam-v2-ack t)
-  :config
-  (org-roam-setup))
+  (custom-set-variables
+   '(org-roam-directory "~/org/roam/"))
+  (autoload #'org-roam-node-find "org-roam" nil t)
+  (autoload #'org-roam-capture "org-roam" nil t)
+  (autoload #'org-roam-node-insert "org-roam" nil t)
+  (global-set-key (kbd "C-c n f") 'org-roam-node-find)
+  (global-set-key (kbd "C-c n i") 'org-roam-node-insert)
+  (global-set-key (kbd "C-c n c")  'org-roam-capture)
+
+  (with-eval-after-load 'org-roam
+    (org-roam-setup)
+    (global-set-key (kbd "C-c n g") 'org-roam-graph)
+    (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)))
 
 
 (use-package magit
