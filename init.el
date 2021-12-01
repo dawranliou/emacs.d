@@ -551,37 +551,41 @@ reuse it's window, otherwise create new one."
                    (,electric-pair-inhibit-predicate c)))))
 
 
-(use-package org
-  :straight t
-  :hook ((org-mode . +org-mode-setup)
-         (org-mode . visual-line-mode)
-         (org-mode . auto-fill-mode))
-  :bind
-  ("C-c l" . org-store-link)
-  ("C-c a" . org-agenda)
-  ("C-c b" . org-switchb)
-  (:map org-mode-map
-        ("C-," . nil))
-  :custom
-  (org-hide-emphasis-markers t)
-  (org-ellipsis " …")
-  (org-special-ctrl-a/e t)
-  (org-src-fontify-natively t)
-  (org-src-tab-acts-natively t)
-  (org-src-window-setup 'current-window)
-  (org-cycle-separator-lines 2)
-  (org-edit-src-content-indentation 0)
-  (org-src-window-setup 'current-window)
-  (org-indirect-buffer-display 'current-window)
-  (org-hide-block-startup nil)
-  (org-src-preserve-indentation nil)
-  (org-adapt-indentation nil)
-  (org-startup-folded 'content)
-  (org-log-done 'time)
-  (org-log-into-drawer t)
-  (org-image-actual-width 640)
-  (org-attach-auto-tag "attachment")
-  :config
+(elpa-package 'org
+  (add-hook 'org-mode-hook '+org-mode-setup)
+  (add-hook 'org-mode-hook 'visual-line-mode)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+
+  (autoload #'org-store-link "org" nil t)
+  (autoload #'org-agenda "org" nil t)
+  (autoload #'org-switchb "org" nil t)
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c b") 'org-switchb)
+
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "C-,") nil))
+
+  (custom-set-variables
+   '(org-hide-emphasis-markers t)
+   '(org-ellipsis " …")
+   '(org-special-ctrl-a/e t)
+   '(org-src-fontify-natively t)
+   '(org-src-tab-acts-natively t)
+   '(org-src-window-setup 'current-window)
+   '(org-cycle-separator-lines 2)
+   '(org-edit-src-content-indentation 0)
+   '(org-src-window-setup 'current-window)
+   '(org-indirect-buffer-display 'current-window)
+   '(org-hide-block-startup nil)
+   '(org-src-preserve-indentation nil)
+   '(org-adapt-indentation nil)
+   '(org-startup-folded 'content)
+   '(org-log-done 'time)
+   '(org-log-into-drawer t)
+   '(org-image-actual-width 640)
+   '(org-attach-auto-tag "attachment"))
+
   (require 'ox-md)
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
