@@ -468,11 +468,13 @@ used to create a new scratch buffer."
   (custom-set-variables
    '(orderless-skip-highlighting (lambda () selectrum-is-active))
    '(selectrum-highlight-candidates-function #'orderless-highlight-matches))
+  (require 'selectrum)
   (selectrum-mode +1))
 
 
 (elpa-package 'marginalia
   (define-key minibuffer-local-map (kbd "C-M-a") 'marginalia-cycle)
+  (require 'marginalia)
   (marginalia-mode)
   (setq marginalia-annotators '(marginalia-annotators-light
                                 marginalia-annotators-heavy)))
@@ -516,6 +518,7 @@ reuse it's window, otherwise create new one."
 (elpa-package 'persistent-scratch
   (custom-set-variables
    '(persistent-scratch-autosave-interval 60))
+  (require 'persistent-scratch)
   (persistent-scratch-setup-default))
 
 
