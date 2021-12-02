@@ -25,3 +25,4 @@
 /.org-id-locations
 /projects
 *.elc
+/package-quickstart.el
