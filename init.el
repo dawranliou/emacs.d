@@ -79,66 +79,61 @@
 
 (setq custom-file (make-temp-file "emacs-custom-"))
 
-(setq
- inhibit-startup-message t
- initial-major-mode 'fundamental-mode
- initial-scratch-message nil
- tramp-default-method "ssh"
- delete-by-moving-to-trash t
+(custom-set-variables
+ '(inhibit-startup-message t)
+ '(initial-major-mode 'fundamental-mode)
+ '(initial-scratch-message nil)
+ '(tramp-default-method "ssh")
+ '(delete-by-moving-to-trash t)
 
  ;; backups
- make-backup-files t
- backup-by-copying t
- version-control t
- delete-old-versions t
- kept-new-versions 6
- kept-old-versions 2
- backup-directory-alist
- (list (cons "." (expand-file-name "var/backup/" user-emacs-directory)))
- auto-save-list-file-prefix
- (expand-file-name "var/auto-save/" user-emacs-directory)
- ring-bell-function #'ignore
- visible-bell nil
- ns-use-proxy-icon nil
- ;; frame-title-format nil
- enable-recursive-minibuffers t
- recentf-save-file
- (expand-file-name "var/recentf-save.el" user-emacs-directory)
- recentf-max-saved-items 200
- savehist-file (expand-file-name "var/savehist.el" user-emacs-directory)
- savehist-save-minibuffer-history t
- savehist-additional-variables '(kill-ring
-                                 mark-ring
-                                 global-mark-ring
-                                 search-ring
-                                 regexp-search-ring)
- history-length 20000
- display-time-world-list '(("Asia/Taipei" "Taipei")
-                           ("America/Toronto" "Toronto")
-                           ("America/Los_Angeles" "San Francisco")
-                           ("Europe/Berlin" "Düsseldorf")
-                           ("Europe/London" "GMT"))
- hippie-expand-try-functions-list '(try-complete-file-name-partially
-                                    try-complete-file-name
-                                    try-expand-dabbrev
-                                    try-expand-dabbrev-all-buffers
-                                    try-expand-dabbrev-from-kill)
- scroll-conservatively 101              ; Don't recenter
- ediff-window-setup-function #'ediff-setup-windows-plain
- ediff-split-window-function #'split-window-horizontally
- shr-use-colors nil
- shr-use-fonts nil
- shr-indentation 0
- shr-max-image-proportion 0.5
- shr-image-animate nil
- shr-width 72
- shr-discard-aria-hidden t
- shr-cookie-policy nil
+ '(make-backup-files t)
+ '(backup-by-copying t)
+ '(version-control t)
+ '(delete-old-versions t)
+ '(kept-new-versions 6)
+ '(kept-old-versions 2)
+ '(backup-directory-alist
+   (list (cons "." (expand-file-name "var/backup/" user-emacs-directory))))
+
+ '(auto-save-list-file-prefix
+   (expand-file-name "var/auto-save/" user-emacs-directory))
+ '(ring-bell-function #'ignore)
+ '(visible-bell nil)
+ '(ns-use-proxy-icon nil)
+ '(enable-recursive-minibuffers t)
+ '(recentf-max-saved-items 200)
+ '(savehist-save-minibuffer-history t)
+ '(savehist-additional-variables '(kill-ring
+                                   mark-ring
+                                   global-mark-ring
+                                   search-ring
+                                   regexp-search-ring))
+ '(history-length 20000)
+ '(display-time-world-list '(("Asia/Taipei" "Taipei")
+                             ("America/Toronto" "Toronto")
+                             ("America/Los_Angeles" "San Francisco")
+                             ("Europe/Berlin" "Düsseldorf")
+                             ("Europe/London" "GMT")))
+ '(hippie-expand-try-functions-list '(try-complete-file-name-partially
+                                      try-complete-file-name
+                                      try-expand-dabbrev
+                                      try-expand-dabbrev-all-buffers
+                                      try-expand-dabbrev-from-kill))
+ '(scroll-conservatively 101)           ; Don't recenter
+ '(ediff-window-setup-function #'ediff-setup-windows-plain)
+ '(ediff-split-window-function #'split-window-horizontally)
+ '(shr-use-colors nil)
+ '(shr-use-fonts nil)
+ '(shr-indentation 0)
+ '(shr-max-image-proportion 0.5)
+ '(shr-image-animate nil)
+ '(shr-width 72)
+ '(shr-discard-aria-hidden t)
+ '(shr-cookie-policy nil)
 
  ;; Emacs 29
- show-paren-context-when-offscreen t)
-
-
+ '(show-paren-context-when-offscreen t))
 
 
 (setq-default
@@ -384,8 +379,6 @@ used to create a new scratch buffer."
 (global-set-key (kbd "s-p") 'project-find-file)
 
 (with-eval-after-load 'project
-  (custom-set-variables
-   '(project-list-file (expand-file-name "var/projects.el" user-emacs-directory)))
   ;; Setup the `project-switch-commands'
   (require 'magit-extras))
 
