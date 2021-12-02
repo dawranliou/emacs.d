@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-(defun +set-font ()
+(defun set-font ()
   "Select xfont."
   (interactive)
   (set-frame-font (completing-read
@@ -17,7 +17,7 @@
     (find-file (completing-read "Find recent file: " files nil t))))
 
 
-(defun +move-beginning-of-line (arg)
+(defun move-beginning-of-line+ (arg)
   "Move point to beginning of current line or the first non whitespace char."
   (interactive "^p")
   (or arg (setq arg 1))
@@ -31,26 +31,26 @@
     (move-beginning-of-line 1)))
 
 
-(defun +newline-at-end-of-line ()
+(defun newline-at-end-of-line ()
   "Move to end of line, enter a newline, and reindent."
   (interactive)
   (move-end-of-line 1)
   (newline-and-indent))
 
 
-(defun +uuid ()
+(defun uuid ()
   "Generate a new UUID and insert."
   (interactive)
   (insert (downcase (string-trim (shell-command-to-string "uuidgen")))))
 
 
-(defun +kill-line-backwards ()
+(defun kill-line-backwards ()
   "Kill line backwards."
   (interactive)
   (kill-line 0))
 
 
-(defun +eshell-here ()
+(defun eshell-here ()
   "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
@@ -68,7 +68,7 @@ directory to make multiple eshell windows easier."
     (eshell-send-input)))
 
 
-(defun +backward-kill-word-or-region (&optional arg)
+(defun backward-kill-word-or-region (&optional arg)
   "Kill word backwards unless region is active,
 kill region instead"
   (interactive)
@@ -77,7 +77,7 @@ kill region instead"
     (backward-kill-word (or arg 1))))
 
 
-(defun +toggle-window-split ()
+(defun toggle-window-split ()
   "Toggle window split from vertical to horizontal."
   (interactive)
   (if (> (length (window-list)) 2)
@@ -92,7 +92,7 @@ kill region instead"
         (switch-to-buffer (other-buffer))))))
 
 
-(defun +transpose-windows ()
+(defun transpose-windows ()
   "Swap the buffers shown in current and next window."
   (interactive)
   (let ((this-buffer (window-buffer))
@@ -102,7 +102,7 @@ kill region instead"
     (select-window next-window)))
 
 
-(defun +unfill-paragraph (&optional region)
+(defun unfill-paragraph (&optional region)
   "Takes a multi-line paragraph and makes it into a single line
 of text."
   (interactive (progn
@@ -112,7 +112,7 @@ of text."
     (fill-paragraph nil region)))
 
 
-(defun +fill-or-unfill-paragraph (&optional unfill region)
+(defun fill-or-unfill-paragraph (&optional unfill region)
   "Fill paragraph (or REGION).
         With the prefix argument UNFILL, unfill it instead."
   (interactive (progn
@@ -122,13 +122,13 @@ of text."
     (fill-paragraph nil region)))
 
 
-(defun +-kill-and-echo (X)
+(defun -kill-and-echo (X)
   "Copy `X' into the `kill-ring' and echo to the minibuffer."
   (kill-new X)
   (message "[COPIED] %s" X))
 
 
-(defun +copy-path ()
+(defun copy-path ()
   "Echo file name to minibuffer and copy to kill ring."
   (interactive)
   (let ((filename (if (equal major-mode 'dired-mode)
@@ -138,8 +138,8 @@ of text."
     (if proj
         (let* ((proj-path (expand-file-name (cdr proj)))
                (filename* (nth 1 (split-string filename proj-path))))
-          (+-kill-and-echo filename*))
-      (+-kill-and-echo filename))))
+          (-kill-and-echo filename*))
+      (-kill-and-echo filename))))
 
 
 (provide 'extras)

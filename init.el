@@ -190,8 +190,8 @@
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 (global-set-key (kbd "s-w") #'delete-window)
 (global-set-key (kbd "s-v") #'yank)
-(global-set-key (kbd "C-c f d") #'+find-config)
-(global-set-key (kbd "C-c t t") #'+load-theme)
+(global-set-key (kbd "C-c f d") #'find-config)
+(global-set-key (kbd "C-c t t") #'load-one-theme)
 (global-set-key (kbd "C-c t w") #'whitespace-mode)
 (global-set-key (kbd "C-c t m") #'toggle-frame-maximized)
 (global-set-key (kbd "C-c t M") #'toggle-frame-fullscreen)
@@ -243,28 +243,28 @@ used to create a new scratch buffer."
         (switch-to-buffer new-scratch-buffer)))))
 
 
-(defun +find-config ()
+(defun find-config ()
   (interactive)
   (find-file (expand-file-name user-init-file)))
 
 
-(defun +load-theme-action (theme)
+(defun load-one-theme-action (theme)
   "Disable current themes and load theme THEME."
   (progn
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme (intern theme) t)))
 
 
-(defun +load-theme ()
+(defun load-one-theme ()
   "Disable current themes and load theme from the completion list."
   (interactive)
   (let ((theme (completing-read "Load custom theme: "
                                 (mapcar 'symbol-name
                                         (custom-available-themes)))))
-    (+load-theme-action theme)))
+    (load-one-theme-action theme)))
 
 
-(defun +quick-edit ()
+(defun quick-edit ()
   "Util function for use with hammerspoon quick edit functionality."
   (interactive)
   (let ((qed-buffer (generate-new-buffer "*quick-edit*")))
@@ -274,7 +274,7 @@ used to create a new scratch buffer."
     (gfm-mode)))
 
 
-(defun +quick-edit-end ()
+(defun quick-edit-end ()
   "Util function to be executed on qed completion."
   (interactive)
   (mark-whole-buffer)
@@ -332,7 +332,7 @@ used to create a new scratch buffer."
    '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))))
 
 
-(defun +eshell-history ()
+(defun eshell-history ()
   "Browse eshell history."
   (interactive)
   (let ((candidates (cl-remove-duplicates
@@ -348,7 +348,7 @@ used to create a new scratch buffer."
       (insert (string-trim selected)))))
 
 
-(defun +configure-eshell ()
+(with-eval-after-load 'eshell
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
 
@@ -358,7 +358,7 @@ used to create a new scratch buffer."
   ;; Use Ivy to provide completions in eshell
   (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
-  (define-key eshell-mode-map (kbd "C-r") '+eshell-history)
+  (define-key eshell-mode-map (kbd "C-r") 'eshell-history)
   (define-key eshell-mode-map (kbd "C-a") 'eshell-bol)
 
   (setq eshell-history-size          10000
@@ -366,10 +366,6 @@ used to create a new scratch buffer."
         eshell-hist-ignoredups           t
         eshell-highlight-prompt          t
         eshell-scroll-to-bottom-on-input t))
-
-
-(with-eval-after-load 'eshell
-  (add-hook 'eshell-first-time-mode-hook '+configure-eshell))
 
 
 (with-eval-after-load 'esh-opt
@@ -384,11 +380,11 @@ used to create a new scratch buffer."
 
 
 (with-eval-after-load 'compile
-  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
   (require 'ansi-color)
   (defun colorize-compilation-buffer ()
     (let ((inhibit-read-only t))
-      (ansi-color-apply-on-region (point-min) (point-max)))))
+      (ansi-color-apply-on-region (point-min) (point-max))))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
 
 (add-to-list 'auto-mode-alist
@@ -431,16 +427,16 @@ used to create a new scratch buffer."
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
 (require 'extras)
-(global-set-key (kbd "C-<backspace>") '+kill-line-backwards)
-(global-set-key (kbd "C-<backspace>") '+kill-line-backwards)
-(global-set-key (kbd "S-<return>") '+newline-at-end-of-line)
+(global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+)
+(global-set-key (kbd "C-<backspace>") 'kill-line-backwards)
+(global-set-key (kbd "S-<return>") 'newline-at-end-of-line)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files+)
-(global-set-key (kbd "C-M-'") '+eshell-here)
-(global-set-key (kbd "C-w") '+backward-kill-word-or-region)
-(global-set-key (kbd "M-Q") '+unfill-paragraph)
-(global-set-key (kbd "M-q") '+fill-or-unfill-paragraph)
-(define-key ctl-x-4-map (kbd "s") '+toggle-window-split)
-(define-key ctl-x-4-map (kbd "t") '+transpose-windows)
+(global-set-key (kbd "C-M-'") 'eshell-here)
+(global-set-key (kbd "C-w") 'backward-kill-word-or-region)
+(global-set-key (kbd "M-Q") 'unfill-paragraph)
+(global-set-key (kbd "M-q") 'fill-or-unfill-paragraph)
+(define-key ctl-x-4-map (kbd "s") 'toggle-window-split)
+(define-key ctl-x-4-map (kbd "t") 'transpose-windows)
 
 
 (add-to-list 'load-path (expand-file-name "site-lisp/"))
@@ -504,7 +500,7 @@ used to create a new scratch buffer."
   (global-set-key (kbd "C-h F")   'describe-face)
 
   ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
-  (defun +helpful-switch-to-buffer (buffer-or-name)
+  (defun helpful-switch-to-buffer (buffer-or-name)
     "Switch to helpful BUFFER-OR-NAME.
 
 The logic is simple, if we are currently in the helpful buffer,
@@ -514,7 +510,7 @@ reuse it's window, otherwise create new one."
       (pop-to-buffer buffer-or-name)))
 
   (custom-set-variables
-   '(helpful-switch-buffer-function #'+helpful-switch-to-buffer)))
+   '(helpful-switch-buffer-function #'helpful-switch-to-buffer)))
 
 
 (elpa-package 'persistent-scratch
@@ -537,14 +533,14 @@ reuse it's window, otherwise create new one."
     (define-key iedit-mode-keymap (kbd "C-p") 'iedit-prev-occurrence)))
 
 
-(defun +org-mode-setup ()
+(defun org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
                  (if (char-equal c ?<)
                      t
                    (,electric-pair-inhibit-predicate c)))))
 
-(add-hook 'org-mode-hook '+org-mode-setup)
+(add-hook 'org-mode-hook 'org-mode-setup)
 (add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
@@ -666,7 +662,7 @@ reuse it's window, otherwise create new one."
    '(cljr-magic-requires nil))
 
   (with-eval-after-load 'clojure-mode
-    (defun +clojure-ns-kill-ring-save ()
+    (defun clojure-ns-kill-ring-save ()
       "Save the current clojure ns to the kill ring."
       (interactive)
       (let ((ns (funcall clojure-expected-ns-function)))
