@@ -9,72 +9,131 @@
 
 ;;; Code:
 
+;;; Package Management
 
-;;; - Emacs
+;; The very first thing I do is setup the packages I need. I do this so that
+;; when I open this config on a new machine, all the packages needed to make it
+;; work are specified in `package-selected-packages', with that one you can
+;; install them with `package-install-selected-packages'. At which point the
+;; whole config should be ready to rock.
+
+(require 'package)
+
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+(setq package-archive-priorities '(("gnu" . 30)
+                                   ("nongnu" . 25)
+                                   ("melpa-stable" . 20)
+                                   ("melpa" . 10)))
+
+(setq package-selected-packages
+      '(avy
+        cider
+        clojure-mode
+        elfeed
+        elpher
+        embark
+        emmet-mode
+        fennel-mode
+        flycheck
+        flyspell
+        go-mode
+        helpful
+        iedit
+        lsp-mode
+        magit
+        marginalia
+        markdown-mode
+        orderless
+        org
+        org-journal
+        org-roam
+        persistent-scratch
+        rainbow-mode
+        rg
+        selectrum
+        sketch-themes
+        slime
+        smartscan
+        sqlformat
+        ws-butler
+        yaml-mode))
 
 
-(setq
- inhibit-startup-message t
- initial-major-mode 'fundamental-mode
- initial-scratch-message nil
- tramp-default-method "ssh"
- delete-by-moving-to-trash t
+(defmacro elpa-package (package &rest body)
+  "Eval BODY only if PACKAGE is installed."
+  (declare (indent defun))
+  `(if (package-installed-p ,package)
+       (progn ,@body)
+     (message (concat "Package \'"
+                      (symbol-name ,package)
+                      "\' is not installed... skipping config."))))
+
+
+;;; Settings
+
+;; Save all interactive customization to a temp file, which is never loaded.
+;; This means interactive customization is session-local. Only this init file
+;; persists sessions.
+
+(setq custom-file (make-temp-file "emacs-custom-"))
+
+(custom-set-variables
+ '(inhibit-startup-message t)
+ '(initial-major-mode 'fundamental-mode)
+ '(initial-scratch-message nil)
+ '(tramp-default-method "ssh")
+ '(delete-by-moving-to-trash t)
 
  ;; backups
- make-backup-files t
- backup-by-copying t
- version-control t
- delete-old-versions t
- kept-new-versions 6
- kept-old-versions 2
- backup-directory-alist
- (list (cons "." (expand-file-name "var/backup/" user-emacs-directory)))
- auto-save-list-file-prefix
- (expand-file-name "var/auto-save/" user-emacs-directory)
- ring-bell-function #'ignore
- visible-bell nil
- ns-use-proxy-icon nil
- ;; frame-title-format nil
- enable-recursive-minibuffers t
- recentf-save-file
- (expand-file-name "var/recentf-save.el" user-emacs-directory)
- recentf-max-saved-items 200
- savehist-file (expand-file-name "var/savehist.el" user-emacs-directory)
- savehist-save-minibuffer-history t
- savehist-additional-variables '(kill-ring
-                                 mark-ring
-                                 global-mark-ring
-                                 search-ring
-                                 regexp-search-ring)
- history-length 20000
- display-time-world-list '(("Asia/Taipei" "Taipei")
-                           ("America/Toronto" "Toronto")
-                           ("America/Los_Angeles" "San Francisco")
-                           ("Europe/Berlin" "Düsseldorf")
-                           ("Europe/London" "GMT"))
- hippie-expand-try-functions-list '(try-complete-file-name-partially
-                                    try-complete-file-name
-                                    try-expand-dabbrev
-                                    try-expand-dabbrev-all-buffers
-                                    try-expand-dabbrev-from-kill)
- custom-file (expand-file-name "custom.el" user-emacs-directory)
- scroll-conservatively 101              ; Don't recenter
- ediff-window-setup-function #'ediff-setup-windows-plain
- ediff-split-window-function #'split-window-horizontally
- shr-use-colors nil
- shr-use-fonts nil
- shr-indentation 0
- shr-max-image-proportion 0.5
- shr-image-animate nil
- shr-width 72
- shr-discard-aria-hidden t
- shr-cookie-policy nil
+ '(make-backup-files t)
+ '(backup-by-copying t)
+ '(version-control t)
+ '(delete-old-versions t)
+ '(kept-new-versions 6)
+ '(kept-old-versions 2)
+ '(backup-directory-alist
+   (list (cons "." (expand-file-name "var/backup/" user-emacs-directory))))
+
+ '(auto-save-list-file-prefix
+   (expand-file-name "var/auto-save/" user-emacs-directory))
+ '(ring-bell-function #'ignore)
+ '(visible-bell nil)
+ '(ns-use-proxy-icon nil)
+ '(enable-recursive-minibuffers t)
+ '(recentf-max-saved-items 200)
+ '(savehist-save-minibuffer-history t)
+ '(savehist-additional-variables '(kill-ring
+                                   mark-ring
+                                   global-mark-ring
+                                   search-ring
+                                   regexp-search-ring))
+ '(history-length 20000)
+ '(display-time-world-list '(("Asia/Taipei" "Taipei")
+                             ("America/Toronto" "Toronto")
+                             ("America/Los_Angeles" "San Francisco")
+                             ("Europe/Berlin" "Düsseldorf")
+                             ("Europe/London" "GMT")))
+ '(hippie-expand-try-functions-list '(try-complete-file-name-partially
+                                      try-complete-file-name
+                                      try-expand-dabbrev
+                                      try-expand-dabbrev-all-buffers
+                                      try-expand-dabbrev-from-kill))
+ '(scroll-conservatively 101)           ; Don't recenter
+ '(ediff-window-setup-function #'ediff-setup-windows-plain)
+ '(ediff-split-window-function #'split-window-horizontally)
+ '(shr-use-colors nil)
+ '(shr-use-fonts nil)
+ '(shr-indentation 0)
+ '(shr-max-image-proportion 0.5)
+ '(shr-image-animate nil)
+ '(shr-width 72)
+ '(shr-discard-aria-hidden t)
+ '(shr-cookie-policy nil)
 
  ;; Emacs 29
- show-paren-context-when-offscreen t)
-
-
-(load custom-file 'noerror)
+ '(show-paren-context-when-offscreen t))
 
 
 (setq-default
@@ -131,8 +190,8 @@
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
 (global-set-key (kbd "s-w") #'delete-window)
 (global-set-key (kbd "s-v") #'yank)
-(global-set-key (kbd "C-c f d") #'+find-config)
-(global-set-key (kbd "C-c t t") #'+load-theme)
+(global-set-key (kbd "C-c f d") #'find-config)
+(global-set-key (kbd "C-c t t") #'load-one-theme)
 (global-set-key (kbd "C-c t w") #'whitespace-mode)
 (global-set-key (kbd "C-c t m") #'toggle-frame-maximized)
 (global-set-key (kbd "C-c t M") #'toggle-frame-fullscreen)
@@ -184,28 +243,28 @@ used to create a new scratch buffer."
         (switch-to-buffer new-scratch-buffer)))))
 
 
-(defun +find-config ()
+(defun find-config ()
   (interactive)
   (find-file (expand-file-name user-init-file)))
 
 
-(defun +load-theme-action (theme)
+(defun load-one-theme-action (theme)
   "Disable current themes and load theme THEME."
   (progn
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme (intern theme) t)))
 
 
-(defun +load-theme ()
+(defun load-one-theme ()
   "Disable current themes and load theme from the completion list."
   (interactive)
   (let ((theme (completing-read "Load custom theme: "
                                 (mapcar 'symbol-name
                                         (custom-available-themes)))))
-    (+load-theme-action theme)))
+    (load-one-theme-action theme)))
 
 
-(defun +quick-edit ()
+(defun quick-edit ()
   "Util function for use with hammerspoon quick edit functionality."
   (interactive)
   (let ((qed-buffer (generate-new-buffer "*quick-edit*")))
@@ -215,12 +274,12 @@ used to create a new scratch buffer."
     (gfm-mode)))
 
 
-(defun +quick-edit-end ()
+(defun quick-edit-end ()
   "Util function to be executed on qed completion."
   (interactive)
   (mark-whole-buffer)
   (call-interactively 'kill-ring-save)
-  (kill-current-buffer))
+  (bury-buffer))
 
 
 ;;; - Mac
@@ -252,49 +311,28 @@ used to create a new scratch buffer."
     t)))
 
 
-;;; - Package manager
-
-
-(setq straight-build-dir (format "build-%s" emacs-version)
-      ;; Lazy modification detection speeds up the startup time. I don't often
-      ;; modify packages anyway. When I do, I can build the package manually, I
-      ;; think.
-      straight-check-for-modifications '(check-on-save find-when-checking))
-
-(load (expand-file-name
-       "straight/repos/straight.el/bootstrap.el" user-emacs-directory)
-      nil 'nomessage)
-
-(straight-use-package 'use-package)
-;; (setq use-package-verbose t)
-;; (setq use-package-compute-statistics t)
-(setq use-package-expand-minimally t)
-
-
 ;;; - Built-in Packages
 
 
-(use-package dired
-  :hook (;; (dired-mode . dired-hide-details-mode)
-         (dired-mode . hl-line-mode))
-  :bind ("C-x C-j" . dired-jump)
-  :custom
-  (dired-auto-revert-buffer t)
-  (dired-dwim-target t)
-  (dired-recursive-copies 'always)
-  (dired-recursive-deletes 'always)
-  :config
+(with-eval-after-load 'dired
+  ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  (add-hook 'dired-mode-hook 'hl-line-mode)
+  (define-key global-map (kbd "C-x C-j") 'dired-jump)
+  (custom-set-variables
+   '(dired-auto-revert-buffer t)
+   '(dired-dwim-target t)
+   '(dired-recursive-copies 'always)
+   '(dired-recursive-deletes 'always))
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 
-(use-package find-dired
-  :commands find-name-dired
-  :custom
-  (find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld")))
+(with-eval-after-load 'find-dired
+  (custom-set-variables
+   '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))))
 
 
-(defun +eshell-history ()
+(defun eshell-history ()
   "Browse eshell history."
   (interactive)
   (let ((candidates (cl-remove-duplicates
@@ -310,7 +348,7 @@ used to create a new scratch buffer."
       (insert (string-trim selected)))))
 
 
-(defun +configure-eshell ()
+(with-eval-after-load 'eshell
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
 
@@ -320,7 +358,7 @@ used to create a new scratch buffer."
   ;; Use Ivy to provide completions in eshell
   (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
 
-  (define-key eshell-mode-map (kbd "C-r") '+eshell-history)
+  (define-key eshell-mode-map (kbd "C-r") 'eshell-history)
   (define-key eshell-mode-map (kbd "C-a") 'eshell-bol)
 
   (setq eshell-history-size          10000
@@ -330,57 +368,37 @@ used to create a new scratch buffer."
         eshell-scroll-to-bottom-on-input t))
 
 
-(use-package eshell
-  :hook (eshell-first-time-mode . +configure-eshell))
-
-
 (with-eval-after-load 'esh-opt
   (setq eshell-destroy-buffer-when-process-dies t))
 
 
-(use-package project
-  :custom
-  (project-list-file (expand-file-name "var/projects.el" user-emacs-directory))
-  :bind
-  ("s-p" . project-find-file)
-  :config
+(global-set-key (kbd "s-p") 'project-find-file)
+
+(with-eval-after-load 'project
   ;; Setup the `project-switch-commands'
   (require 'magit-extras))
 
 
-(use-package compile
-  :defer t
-  :hook
-  (compilation-filter . colorize-compilation-buffer)
-  :config
+(with-eval-after-load 'compile
   (require 'ansi-color)
-
   (defun colorize-compilation-buffer ()
     (let ((inhibit-read-only t))
-      (ansi-color-apply-on-region (point-min) (point-max)))))
+      (ansi-color-apply-on-region (point-min) (point-max))))
+  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
 
-(use-package autorevert
-  :mode ("\\.log\\'" . auto-revert-tail-mode))
+(add-to-list 'auto-mode-alist
+             '("\\.log\\'" . auto-revert-tail-mode))
 
 
-(use-package isearch
-  :custom
-  (isearch-allow-scroll t)
-  (search-whitespace-regexp ".*?")      ; Fuzzy search
-  ;; Emacs 28
-  (isearch-allow-motion t)
-  (isearch-wrap-pause 'no)
-  :bind
-  (:map isearch-mode-map
-        ("C-o" . isearch-occur)
-        ("<C-backspace>" . isearch-delete-wrong)
-        ;; DEL during isearch should edit the search string, not jump back to
-        ;; the previous result
-        ([remap isearch-delete-char] . isearch-del-char))
-  :hook
-  (isearch-mode-end . isearch-exit-at-start)
-  :config
+(with-eval-after-load 'isearch
+  (custom-set-variables
+   '(isearch-allow-scroll t)
+   '(search-whitespace-regexp ".*?")      ; Fuzzy search
+   ;; Emacs 28
+   '(isearch-allow-motion t)
+   '(isearch-wrap-pause 'no))
+
   ;; https://www.emacswiki.org/emacs/IncrementalSearch#h5o-4
   (defun isearch-exit-at-start ()
     "Exit search at the beginning of the current match."
@@ -393,390 +411,360 @@ used to create a new scratch buffer."
     (interactive)
     (while (or (not isearch-success) isearch-error)
       (isearch-pop-state))
-    (isearch-update)))
+    (isearch-update))
+
+  (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
+  (define-key isearch-mode-map (kbd "<C-backspace>") 'isearch-delete-wrong)
+  ;; DEL during isearch should edit the search string, not jump back to the
+  ;; previous result
+  (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
+
+  (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
 
 ;;; - My extras lisp
 
 
-(use-package extras
-  :load-path "lisp/"
-  :commands (+uuid +set-font)
-  :bind
-  (([remap move-beginning-of-line] . +move-beginning-of-line)
-   ("C-<backspace>" . +kill-line-backwards)
-   ("S-<return>" . +newline-at-end-of-line)
-   ("C-x C-r" . recentf-open-files+)
-   ("C-M-'" . +eshell-here)
-   ("C-w" . +backward-kill-word-or-region)
-   ("M-Q" . +unfill-paragraph)
-   ("M-q" . +fill-or-unfill-paragraph))
-  (:map ctl-x-4-map
-        ("s" . +toggle-window-split)
-        ("t" . +transpose-windows)))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
+(require 'extras)
+(global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+)
+(global-set-key (kbd "C-<backspace>") 'kill-line-backwards)
+(global-set-key (kbd "S-<return>") 'newline-at-end-of-line)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files+)
+(global-set-key (kbd "C-M-'") 'eshell-here)
+(global-set-key (kbd "C-w") 'backward-kill-word-or-region)
+(global-set-key (kbd "M-Q") 'unfill-paragraph)
+(global-set-key (kbd "M-q") 'fill-or-unfill-paragraph)
+(define-key ctl-x-4-map (kbd "s") 'toggle-window-split)
+(define-key ctl-x-4-map (kbd "t") 'transpose-windows)
 
 
-(use-package smartscan
-  :load-path "site-lisp"
-  :config
-  (global-smartscan-mode))
+(add-to-list 'load-path (expand-file-name "site-lisp/"))
+(with-eval-after-load 'smartscan
+  (add-hook 'prog-mode-hook 'smartscan-mode))
 
 
 ;;; - 3rd Party Packages
 
 
-(use-package sketch-themes
-  :defer t
-  :straight (:host github :repo "dawranliou/sketch-themes"))
+(elpa-package 'sketch-themes)
 
 
-(use-package rainbow-mode
-  :straight t
-  :commands rainbow-mode)
+(elpa-package 'rainbow-mode
+  (unless
+      (fboundp 'rainbow-mode)
+    (autoload #'rainbow-mode "rainbow-mode" nil t)))
 
 
-(use-package orderless
-  :straight t
-  :custom
-  (completion-styles '(orderless))
-  (completion-category-overrides '((file (styles partial-completion))))
-  :init
+(elpa-package 'orderless
+  (custom-set-variables
+   '(completion-styles '(orderless))
+   '(completion-category-overrides '((file (styles partial-completion)))))
   (setq completion-category-defaults nil))
 
 
-(use-package selectrum
-  :straight t
-  :bind
-  ("C-x C-z" . selectrum-repeat)
-  :custom
-  (orderless-skip-highlighting (lambda () selectrum-is-active))
-  (selectrum-highlight-candidates-function #'orderless-highlight-matches)
-  :init
+(elpa-package 'selectrum
+  (global-set-key (kbd "C-x C-z") 'selectrum-repeat)
+  (custom-set-variables
+   '(orderless-skip-highlighting (lambda () selectrum-is-active))
+   '(selectrum-highlight-candidates-function #'orderless-highlight-matches))
+  (require 'selectrum)
   (selectrum-mode +1))
 
 
-(use-package marginalia
-  :straight t
-  :bind (:map minibuffer-local-map
-              ("C-M-a" . marginalia-cycle))
-  :init
+(elpa-package 'marginalia
+  (define-key minibuffer-local-map (kbd "C-M-a") 'marginalia-cycle)
+  (require 'marginalia)
   (marginalia-mode)
   (setq marginalia-annotators '(marginalia-annotators-light
                                 marginalia-annotators-heavy)))
 
 
-(use-package embark
-  :straight t
-  :bind
-  (("s-," . xref-pop-marker-stack)
-   ("s-." . embark-act)
-   ("C-h B" . embark-bindings))
-  :init
+(elpa-package 'embark
+  (global-set-key (kbd "s-,") 'xref-pop-marker-stack)
+  (global-set-key (kbd "s-.") 'embark-act)
+  (global-set-key (kbd "C-h B") 'embark-bindings)
   (setq prefix-help-command #'embark-prefix-help-command))
 
 
-(use-package avy
-  :straight t
-  :bind
-  ("M-j" . avy-goto-char-timer)
-  ;; (:map isearch-mode-map
-  ;;       ("M-j" . 'avy-isearch))
-  )
+(elpa-package 'avy
+  (global-set-key (kbd "M-j") 'avy-goto-char-timer))
 
 
-(use-package helpful
-  :straight t
-  :defer t
-  :custom (helpful-switch-buffer-function #'+helpful-switch-to-buffer)
-  :bind (;; Remap standard commands.
-         ([remap describe-function] . helpful-callable)
-         ([remap describe-variable] . helpful-variable)
-         ([remap describe-key]      . helpful-key)
-         ([remap describe-symbol]   . helpful-symbol)
-         ("C-c C-d" . helpful-at-point)
-         ("C-h C"   . helpful-command)
-         ("C-h F"   . describe-face))
-  :config
+(elpa-package 'helpful
+  ;; Remap standard commands.
+  (global-set-key [remap describe-function] 'helpful-callable)
+  (global-set-key [remap describe-variable] 'helpful-variable)
+  (global-set-key [remap describe-key]      'helpful-key)
+  (global-set-key [remap describe-symbol]   'helpful-symbol)
+  (global-set-key (kbd "C-c C-d") 'helpful-at-point)
+  (global-set-key (kbd "C-h C")   'helpful-command)
+  (global-set-key (kbd "C-h F")   'describe-face)
+
   ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
-  (defun +helpful-switch-to-buffer (buffer-or-name)
+  (defun helpful-switch-to-buffer (buffer-or-name)
     "Switch to helpful BUFFER-OR-NAME.
 
 The logic is simple, if we are currently in the helpful buffer,
 reuse it's window, otherwise create new one."
     (if (eq major-mode 'helpful-mode)
         (switch-to-buffer buffer-or-name)
-      (pop-to-buffer buffer-or-name))))
+      (pop-to-buffer buffer-or-name)))
+
+  (custom-set-variables
+   '(helpful-switch-buffer-function #'helpful-switch-to-buffer)))
 
 
-(use-package persistent-scratch
-  :straight t
-  :custom
-  (persistent-scratch-autosave-interval 60)
-  :config
+(elpa-package 'persistent-scratch
+  (custom-set-variables
+   '(persistent-scratch-autosave-interval 60))
+  (require 'persistent-scratch)
   (persistent-scratch-setup-default))
 
 
-(use-package ws-butler
-  :straight t
-  :hook ((text-mode . ws-butler-mode)
-         (prog-mode . ws-butler-mode))
-  :custom
-  (ws-butler-keep-whitespace-before-point nil))
+(elpa-package 'ws-butler
+  (add-hook 'text-mode-hook 'ws-butler-mode)
+  (add-hook 'prog-mode-hook 'ws-butler-mode)
+  (custom-set-variables
+   '(ws-butler-keep-whitespace-before-point nil)))
 
 
-(use-package iedit
-  :straight t
-  :bind
-  ("C-;" . iedit-mode)
-  (:map iedit-mode-keymap
-        ("C-n" . iedit-next-occurrence)
-        ("C-p" . iedit-prev-occurrence)))
+(elpa-package 'iedit
+  (global-set-key (kbd "C-;") 'iedit-mode)
+  (with-eval-after-load 'iedit-mode
+    (define-key iedit-mode-keymap (kbd "C-n") 'iedit-next-occurrence)
+    (define-key iedit-mode-keymap (kbd "C-p") 'iedit-prev-occurrence)))
 
 
-(defun +org-mode-setup ()
+(defun org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
                  (if (char-equal c ?<)
                      t
                    (,electric-pair-inhibit-predicate c)))))
 
+(add-hook 'org-mode-hook 'org-mode-setup)
+(add-hook 'org-mode-hook 'visual-line-mode)
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
-(use-package org
-  :straight t
-  :hook ((org-mode . +org-mode-setup)
-         (org-mode . visual-line-mode)
-         (org-mode . auto-fill-mode))
-  :bind
-  ("C-c l" . org-store-link)
-  ("C-c a" . org-agenda)
-  ("C-c b" . org-switchb)
-  (:map org-mode-map
-        ("C-," . nil))
-  :custom
-  (org-hide-emphasis-markers t)
-  (org-ellipsis " …")
-  (org-special-ctrl-a/e t)
-  (org-src-fontify-natively t)
-  (org-src-tab-acts-natively t)
-  (org-src-window-setup 'current-window)
-  (org-cycle-separator-lines 2)
-  (org-edit-src-content-indentation 0)
-  (org-src-window-setup 'current-window)
-  (org-indirect-buffer-display 'current-window)
-  (org-hide-block-startup nil)
-  (org-src-preserve-indentation nil)
-  (org-adapt-indentation nil)
-  (org-startup-folded 'content)
-  (org-log-done 'time)
-  (org-log-into-drawer t)
-  (org-image-actual-width 640)
-  (org-attach-auto-tag "attachment")
-  :config
+(autoload #'org-store-link "org" nil t)
+(autoload #'org-agenda "org" nil t)
+(autoload #'org-switchb "org" nil t)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c b") 'org-switchb)
+
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-,") nil)
+  (custom-set-variables
+   '(org-hide-emphasis-markers t)
+   '(org-ellipsis " …")
+   '(org-special-ctrl-a/e t)
+   '(org-src-fontify-natively t)
+   '(org-src-tab-acts-natively t)
+   '(org-src-window-setup 'current-window)
+   '(org-cycle-separator-lines 2)
+   '(org-edit-src-content-indentation 0)
+   '(org-src-window-setup 'current-window)
+   '(org-indirect-buffer-display 'current-window)
+   '(org-hide-block-startup nil)
+   '(org-src-preserve-indentation nil)
+   '(org-adapt-indentation nil)
+   '(org-startup-folded 'content)
+   '(org-log-done 'time)
+   '(org-log-into-drawer t)
+   '(org-image-actual-width 640)
+   '(org-attach-auto-tag "attachment"))
+
   (require 'ox-md)
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 
-(use-package org-journal
-  :straight t
-  :commands org-journal-new-entry
-  :bind ("C-c n j" . 'org-journal-new-entry)
-  :custom
-  (org-journal-date-format "%A, %d/%m/%Y")
-  (org-journal-date-prefix "* ")
-  (org-journal-file-format "%F.org")
-  (org-journal-dir "~/org/journal/")
-  (org-journal-file-type 'weekly)
-  (org-journal-find-file #'find-file))
+(elpa-package 'org-journal
+  (autoload #'org-journal-new-entry "org-journal" nil t)
+  (global-set-key (kbd "C-c n j") 'org-journal-new-entry)
+  (custom-set-variables
+   '(org-journal-date-format "%A, %d/%m/%Y")
+   '(org-journal-date-prefix "* ")
+   '(org-journal-file-format "%F.org")
+   '(org-journal-dir "~/org/journal/")
+   '(org-journal-file-type 'weekly)
+   '(org-journal-find-file #'find-file)))
 
 
-(use-package org-roam
-  :straight t
-  :custom
-  (org-roam-directory "~/org/roam/")
-  :bind
-  (("C-c n l" . org-roam-buffer-toggle)
-   ("C-c n f" . org-roam-node-find)
-   ("C-c n g" . org-roam-graph)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n c" . org-roam-capture))
-  :init
+(elpa-package 'org-roam
   (setq org-roam-v2-ack t)
-  :config
-  (org-roam-setup))
+  (custom-set-variables
+   '(org-roam-directory "~/org/roam/"))
+  (autoload #'org-roam-node-find "org-roam" nil t)
+  (autoload #'org-roam-capture "org-roam" nil t)
+  (autoload #'org-roam-node-insert "org-roam" nil t)
+  (global-set-key (kbd "C-c n f") 'org-roam-node-find)
+  (global-set-key (kbd "C-c n i") 'org-roam-node-insert)
+  (global-set-key (kbd "C-c n c")  'org-roam-capture)
+
+  (with-eval-after-load 'org-roam
+    (org-roam-setup)
+    (global-set-key (kbd "C-c n g") 'org-roam-graph)
+    (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)))
 
 
-(use-package magit
-  :straight t
-  :bind (("s-g" . magit-status)
-         ("C-x g" . magit-status)
-         ("C-c g" . magit-file-dispatch))
-  :commands (magit-project-status)
-  :custom
-  (magit-diff-refine-hunk 'all)
-  (magit-display-buffer-function
-   #'magit-display-buffer-same-window-except-diff-v1))
+(elpa-package 'magit
+  (global-set-key (kbd "s-g") 'magit-status)
+  (global-set-key (kbd "C-x g") 'magit-status)
+  (global-set-key (kbd "C-c g") 'magit-file-dispatch)
+  (autoload #'magit-project-status "magit" nil t)
+  (custom-set-variables
+   '(magit-diff-refine-hunk 'all)
+   '(magit-display-buffer-function
+     #'magit-display-buffer-same-window-except-diff-v1)))
 
 
-(use-package rg
-  :straight t
-  :bind
-  (("s-F" . rg-project)
-   ("C-c r" . rg))
-  :config
-  (rg-enable-default-bindings))
+(elpa-package 'rg
+  (global-set-key (kbd "s-F") 'rg-project)
+  (global-set-key (kbd "C-c r") 'rg)
+  (with-eval-after-load 'rg
+    (rg-enable-default-bindings)))
 
 
-(use-package flycheck
-  :straight t
-  :ensure t
-  :hook (prog-init . flycheck-mode))
+(elpa-package 'flycheck
+  (add-hook 'prog-init-hook 'flycheck-mode))
 
 
-(use-package lsp-mode
-  :straight t
-  :defer t
-  :custom-face
-  (lsp-face-highlight-textual ((t (:inherit lazy-highlight))))
-  :custom
-  (lsp-enable-file-watchers nil)
-  (lsp-headerline-breadcrumb-enable nil)
-  (lsp-keymap-prefix "C-c L")
-  (lsp-enable-indentation nil)
-  (lsp-completion-provider :none)
-  (lsp-eldoc-enable-hover nil)
-  (lsp-modeline-diagnostics-scope :file)
-  (lsp-modeline-code-actions-enable nil)
-  :config
+(elpa-package 'lsp-mode
+  (custom-set-faces
+   `(lsp-face-highlight-textual ((t (:inherit lazy-highlight)))))
+  (custom-set-variables
+   '(lsp-enable-file-watchers nil)
+   '(lsp-headerline-breadcrumb-enable nil)
+   '(lsp-keymap-prefix "C-c L")
+   '(lsp-enable-indentation nil)
+   '(lsp-completion-provider :none)
+   '(lsp-eldoc-enable-hover nil)
+   '(lsp-modeline-diagnostics-scope :file)
+   '(lsp-modeline-code-actions-enable nil))
   (setq-default read-process-output-max (* 1024 1024)))
 
 
 ;;; - Language major modes
 
 
-(use-package clojure-mode
-  :straight t
-  :defer t
-  :hook
-  ((clojure-mode . lsp)
-   (clojurec-mode . lsp)
-   (clojurescript-mode . lsp))
-  :init
+(elpa-package 'clojure-mode
+  (add-hook 'clojure-mode-hook 'lsp)
+  (add-hook 'clojurec-mode-hook 'lsp)
+  (add-hook 'clojurescript-mode-hook 'lsp)
   (add-hook 'clojure-mode-hook
             (lambda ()
               (setq-local hippie-expand-try-functions-list
                           '(try-expand-dabbrev
                             try-expand-dabbrev-all-buffers
                             try-expand-dabbrev-from-kill))))
-  :custom
-  (cljr-magic-requires nil)
-  :config
-  (defun +clojure-ns-kill-ring-save ()
-    "Save the current clojure ns to the kill ring."
-    (interactive)
-    (let ((ns (funcall clojure-expected-ns-function)))
-      (kill-new ns)
-      (message (format "Saved to kill-ring: %s" ns)))))
+  (custom-set-variables
+   '(cljr-magic-requires nil))
+
+  (with-eval-after-load 'clojure-mode
+    (defun clojure-ns-kill-ring-save ()
+      "Save the current clojure ns to the kill ring."
+      (interactive)
+      (let ((ns (funcall clojure-expected-ns-function)))
+        (kill-new ns)
+        (message (format "Saved to kill-ring: %s" ns))))))
 
 
-(use-package cider
-  :straight t
-  :after clojure-mode
-  :custom
-  (cider-repl-display-help-banner nil)
-  (cider-repl-display-in-current-window nil)
-  (cider-repl-pop-to-buffer-on-connect nil)
-  (cider-repl-use-pretty-printing t)
-  (cider-repl-buffer-size-limit 100000)
-  :bind
-  (:map cider-mode-map
-        ("M-," . nil)
-        ("M-." . nil)))
+(elpa-package 'cider
+  (custom-set-variables
+   '(cider-repl-display-help-banner nil)
+   '(cider-repl-display-in-current-window nil)
+   '(cider-repl-pop-to-buffer-on-connect nil)
+   '(cider-repl-use-pretty-printing t)
+   '(cider-repl-buffer-size-limit 100000))
+
+  (with-eval-after-load 'cider
+    (define-key cider-mode-map (kbd "M-,") nil)
+    (define-key cider-mode-map (kbd "M-.") nil)))
 
 
-(use-package go-mode
-  :straight t
-  :defer t)
+(elpa-package 'go-mode)
 
 
-(use-package markdown-mode
-  :straight t
-  :mode "\\.md\\'"
-  :hook ((markdown-mode . auto-fill-mode))
-  :config
+(elpa-package 'markdown-mode
+  (add-to-list 'auto-mode-alist
+               '("\\.md\\'" . markdown-mode))
+  (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (setq markdown-command "marked"))
 
 
-(use-package emmet-mode
-  :straight t
-  :hook
-  (html-mode . emmet-mode)
-  (css-mode . emmet-mode))
+(elpa-package 'emmet-mode
+  (add-hook 'html-mode 'emmet-mode)
+  (add-hook 'css-mode 'emmet-mode))
 
 
-(use-package yaml-mode
-  :straight t
-  :mode "\\.\\(e?ya?\\|ra\\)ml\\'")
+(elpa-package 'yaml-mode
+  (add-to-list 'auto-mode-alist
+               '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-mode)))
 
 
-(use-package fennel-mode
-  :straight (:host gitlab :repo "technomancy/fennel-mode")
-  :mode "\\.fnl\\'")
+(elpa-package 'fennel-mode
+  (add-to-list 'auto-mode-alist
+               '("\\.fnl\\'" . fennel-mode)))
 
 
-(use-package flyspell
-  :bind
-  (:map flyspell-mode-map
-        ;; ("C-." . nil)
-        ;; ("C-," . nil)
-        ("C-;" . nil))
-  :hook
-  (prog-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode))
+(with-eval-after-load 'flyspell
+  ;; (define-key flyspell-mode-map (kbd "C-.") nil)
+  ;; (define-key flyspell-mode-map (kbd "C-,") nil)
+  (define-key flyspell-mode-map (kbd "C-;") nil))
+
+(add-to-list 'prog-mode-hook 'flyspell-prog-mode)
+(add-to-list 'text-mode-hook 'flyspell-mode)
 
 
-(use-package slime
-  :straight t
-  :commands slime
-  :init
+(elpa-package 'slime
+  (autoload #'slime "slime" nil t)
   (setq inferior-lisp-program "sbcl")
-  :config
-  (load (expand-file-name "~/.quicklisp/slime-helper.el")))
+  (with-eval-after-load 'slime
+    (load (expand-file-name "~/.quicklisp/slime-helper.el"))))
+
+
+(elpa-package 'sqlformat
+  (custom-set-variables
+   '(sqlformat-command 'pgformatter)
+   '(sqlformat-args '("-s2" "-g")))
+  (with-eval-after-load 'sql
+    (define-key sql-mode-map (kbd "C-c C-f") 'sqlformat)))
 
 
 ;;; - Elfeed
 
 
-(use-package elfeed
-  :straight t
-  :commands elfeed
-  :custom
-  (elfeed-feeds '("http://irreal.org/blog/?feed=rss2"
-                  "https://ambrevar.xyz/atom.xml"
-                  "https://blog.meain.io/feed.xml"
-                  "https://clojure.org/feed.xml"
-                  "https://d12frosted.io/atom.xml"
-                  "https://dawranliou.com/atom.xml"
-                  "https://drewdevault.com/blog/index.xml"
-                  "https://emacsredux.com/atom.xml"
-                  "https://endlessparentheses.com/atom.xml"
-                  "https://erick.navarro.io/index.xml"
-                  "https://protesilaos.com/codelog.xml"
-                  "https://ruzkuku.com/all.atom"
-                  "https://technomancy.us/atom.xml"
-                  "https://worace.works/atom.xml"
-                  "https://www.manueluberti.eu/feed.xml"
-                  "https://www.murilopereira.com/index.xml"
-                  "https://www.with-emacs.com/rss.")))
+(elpa-package 'elfeed
+  (autoload #'elfeed "elfeed" nil t)
+  (custom-set-variables
+   '(elfeed-feeds '("http://irreal.org/blog/?feed=rss2"
+                    "https://ambrevar.xyz/atom.xml"
+                    "https://blog.meain.io/feed.xml"
+                    "https://clojure.org/feed.xml"
+                    "https://d12frosted.io/atom.xml"
+                    "https://dawranliou.com/atom.xml"
+                    "https://drewdevault.com/blog/index.xml"
+                    "https://emacsredux.com/atom.xml"
+                    "https://endlessparentheses.com/atom.xml"
+                    "https://erick.navarro.io/index.xml"
+                    "https://protesilaos.com/codelog.xml"
+                    "https://ruzkuku.com/all.atom"
+                    "https://technomancy.us/atom.xml"
+                    "https://worace.works/atom.xml"
+                    "https://www.manueluberti.eu/feed.xml"
+                    "https://www.murilopereira.com/index.xml"
+                    "https://www.with-emacs.com/rss."))))
 
 
 ;;; - EWW
 
 
-(use-package elpher
-  :straight t
-  :commands elpher)
+(elpa-package 'elpher
+  (autoload #'elpher "elpher" nil t))
 
 
 (provide 'init)

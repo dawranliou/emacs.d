@@ -17,7 +17,7 @@
 
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.7
-      package-enable-at-startup nil
+      package-quickstart t
       frame-inhibit-implied-resize t
       native-comp-async-report-warnings-errors nil)
 

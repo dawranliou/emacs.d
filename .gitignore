@@ -23,3 +23,5 @@
 /newsticker/
 /workspace/
 /.org-id-locations
+/projects
+*.elc
