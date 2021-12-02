@@ -42,17 +42,14 @@ Style guide:
 * Installation
 
 #+begin_src shell
-git clone --recursive git@github.com:dawranliou/emacs.d.git
+git clone git@github.com:dawranliou/emacs.d.git
 #+end_src
 
 * Startup performance
 
-The startup time is ~0.9 seconds on my machine.  (It's ~0.4 seconds when things
-are warm. Whatever that means.)  The only tricks I use is to increase the
-startup GC threshold and defer loading package loading.  Nothing too fancy here.
-I also set =straight-check-for-modifications= to =(check-on-save
-find-when-checking)= because I don't usually tweak my dependencies.  If I do, I
-know how to rebuild them when needed.
+The startup time is ~0.6 seconds on my machine.  The only tricks I use is to
+increase the startup GC threshold and defer loading package loading.  Nothing
+too fancy here.
 
 * Configuration structure
 
@@ -63,7 +60,6 @@ know how to rebuild them when needed.
 These are kept out of git's version control:
 
 - =private.el= - The file is loaded after init.
-- =custom.el= - The file is for the custom settings.
 
 * Keybindings
 Keybinding ideas:
