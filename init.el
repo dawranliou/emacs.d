@@ -279,7 +279,7 @@ used to create a new scratch buffer."
   (interactive)
   (mark-whole-buffer)
   (call-interactively 'kill-ring-save)
-  (kill-current-buffer))
+  (bury-buffer))
 
 
 ;;; - Mac
