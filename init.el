@@ -440,8 +440,7 @@ used to create a new scratch buffer."
 
 
 (add-to-list 'load-path (expand-file-name "site-lisp/"))
-(with-eval-after-load 'smartscan
-  (add-hook 'prog-mode-hook 'smartscan-mode))
+(add-hook 'prog-mode-hook 'smartscan-mode)
 
 
 ;;; - 3rd Party Packages
