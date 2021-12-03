@@ -44,7 +44,7 @@
         iedit
         lsp-mode
         magit
-        marginalia
+        ;; marginalia
         markdown-mode
         orderless
         org
@@ -459,12 +459,6 @@ used to create a new scratch buffer."
   (vertico-mode))
 
 
-(elpa-package 'marginalia
-  (define-key minibuffer-local-map (kbd "C-M-a") 'marginalia-cycle)
-  (require 'marginalia)
-  (marginalia-mode)
-  (setq marginalia-annotators '(marginalia-annotators-light
-                                marginalia-annotators-heavy)))
 (elpa-package 'corfu
   (corfu-global-mode))
 
