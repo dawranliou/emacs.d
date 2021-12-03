@@ -224,9 +224,6 @@
 (delete-selection-mode)
 
 
-;;; Custom functions
-
-
 (defun jump-to-scratch-buffer ()
   "Jump to the existing *scratch* buffer or create a new
 one. Repeating this command will prompt the user for the name
@@ -448,15 +445,6 @@ used to create a new scratch buffer."
 ;;; - 3rd Party Packages
 
 
-(elpa-package 'sketch-themes)
-
-
-(elpa-package 'rainbow-mode
-  (unless
-      (fboundp 'rainbow-mode)
-    (autoload #'rainbow-mode "rainbow-mode" nil t)))
-
-
 (elpa-package 'orderless
   (custom-set-variables
    '(completion-styles '(orderless))
@@ -516,7 +504,6 @@ reuse it's window, otherwise create new one."
 (elpa-package 'persistent-scratch
   (custom-set-variables
    '(persistent-scratch-autosave-interval 60))
-  (require 'persistent-scratch)
   (persistent-scratch-setup-default))
 
 
@@ -528,10 +515,7 @@ reuse it's window, otherwise create new one."
 
 
 (elpa-package 'iedit
-  (global-set-key (kbd "C-;") 'iedit-mode)
-  (with-eval-after-load 'iedit-mode
-    (define-key iedit-mode-keymap (kbd "C-n") 'iedit-next-occurrence)
-    (define-key iedit-mode-keymap (kbd "C-p") 'iedit-prev-occurrence)))
+  (global-set-key (kbd "C-;") 'iedit-mode))
 
 
 (defun org-mode-setup ()
@@ -610,10 +594,10 @@ reuse it's window, otherwise create new one."
 
 
 (elpa-package 'magit
+  (autoload #'magit-project-status "magit" nil t)
   (global-set-key (kbd "s-g") 'magit-status)
   (global-set-key (kbd "C-x g") 'magit-status)
   (global-set-key (kbd "C-c g") 'magit-file-dispatch)
-  (autoload #'magit-project-status "magit" nil t)
   (custom-set-variables
    '(magit-diff-refine-hunk 'all)
    '(magit-display-buffer-function
@@ -684,12 +668,7 @@ reuse it's window, otherwise create new one."
     (define-key cider-mode-map (kbd "M-.") nil)))
 
 
-(elpa-package 'go-mode)
-
-
 (elpa-package 'markdown-mode
-  (add-to-list 'auto-mode-alist
-               '("\\.md\\'" . markdown-mode))
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (setq markdown-command "marked"))
 
@@ -697,25 +676,6 @@ reuse it's window, otherwise create new one."
 (elpa-package 'emmet-mode
   (add-hook 'html-mode 'emmet-mode)
   (add-hook 'css-mode 'emmet-mode))
-
-
-(elpa-package 'yaml-mode
-  (add-to-list 'auto-mode-alist
-               '("\\.\\(e?ya?\\|ra\\)ml\\'" . yaml-mode)))
-
-
-(elpa-package 'fennel-mode
-  (add-to-list 'auto-mode-alist
-               '("\\.fnl\\'" . fennel-mode)))
-
-
-(with-eval-after-load 'flyspell
-  ;; (define-key flyspell-mode-map (kbd "C-.") nil)
-  ;; (define-key flyspell-mode-map (kbd "C-,") nil)
-  (define-key flyspell-mode-map (kbd "C-;") nil))
-
-(add-to-list 'prog-mode-hook 'flyspell-prog-mode)
-(add-to-list 'text-mode-hook 'flyspell-mode)
 
 
 (elpa-package 'slime
@@ -731,9 +691,6 @@ reuse it's window, otherwise create new one."
    '(sqlformat-args '("-s2" "-g")))
   (with-eval-after-load 'sql
     (define-key sql-mode-map (kbd "C-c C-f") 'sqlformat)))
-
-
-;;; - Elfeed
 
 
 (elpa-package 'elfeed
@@ -756,13 +713,6 @@ reuse it's window, otherwise create new one."
                     "https://www.manueluberti.eu/feed.xml"
                     "https://www.murilopereira.com/index.xml"
                     "https://www.with-emacs.com/rss."))))
-
-
-;;; - EWW
-
-
-(elpa-package 'elpher
-  (autoload #'elpher "elpher" nil t))
 
 
 (provide 'init)
