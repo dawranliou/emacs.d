@@ -190,6 +190,7 @@
 (global-set-key (kbd "s-a") #'mark-whole-buffer)
 (global-set-key (kbd "s-i") #'imenu)
 (global-set-key (kbd "s-k") #'kill-this-buffer)
+(global-set-key (kbd "s-p") #'project-find-file)
 (global-set-key (kbd "s-q") #'save-buffers-kill-emacs)
 (global-set-key (kbd "s-s") #'save-buffer)
 (global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
@@ -319,7 +320,7 @@ used to create a new scratch buffer."
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (add-hook 'dired-mode-hook 'hl-line-mode)
-  (define-key global-map (kbd "C-x C-j") 'dired-jump)
+  (define-key global-map (kbd "C-x C-j") #'dired-jump)
   (custom-set-variables
    '(dired-auto-revert-buffer t)
    '(dired-dwim-target t)
@@ -350,31 +351,21 @@ used to create a new scratch buffer."
       (insert (string-trim selected)))))
 
 
-(with-eval-after-load 'eshell
+(with-eval-after-load 'esh-mode
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
-
   ;; Truncate buffer for performance
   (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
-
   ;; Use Ivy to provide completions in eshell
-  (define-key eshell-mode-map (kbd "<tab>") 'completion-at-point)
-
-  (define-key eshell-mode-map (kbd "C-r") 'eshell-history)
-  (define-key eshell-mode-map (kbd "C-a") 'eshell-bol)
-
+  (define-key eshell-mode-map (kbd "C-r") #'eshell-history)
+  (define-key eshell-mode-map (kbd "C-a") #'eshell-bol)
   (setq eshell-history-size          10000
         eshell-buffer-maximum-lines  10000
         eshell-hist-ignoredups           t
         eshell-highlight-prompt          t
-        eshell-scroll-to-bottom-on-input t))
+        eshell-scroll-to-bottom-on-input t
+        eshell-destroy-buffer-when-process-dies t))
 
-
-(with-eval-after-load 'esh-opt
-  (setq eshell-destroy-buffer-when-process-dies t))
-
-
-(global-set-key (kbd "s-p") 'project-find-file)
 
 (with-eval-after-load 'project
   ;; Setup the `project-switch-commands'
@@ -415,11 +406,11 @@ used to create a new scratch buffer."
       (isearch-pop-state))
     (isearch-update))
 
-  (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
-  (define-key isearch-mode-map (kbd "<C-backspace>") 'isearch-delete-wrong)
+  (define-key isearch-mode-map (kbd "C-o") #'isearch-occur)
+  (define-key isearch-mode-map (kbd "<C-backspace>") #'isearch-delete-wrong)
   ;; DEL during isearch should edit the search string, not jump back to the
   ;; previous result
-  (define-key isearch-mode-map [remap isearch-delete-char] 'isearch-del-char)
+  (define-key isearch-mode-map [remap isearch-delete-char] #'isearch-del-char)
 
   (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
@@ -430,15 +421,15 @@ used to create a new scratch buffer."
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/"))
 (require 'extras)
 (global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+)
-(global-set-key (kbd "C-<backspace>") 'kill-line-backwards)
-(global-set-key (kbd "S-<return>") 'newline-at-end-of-line)
-(global-set-key (kbd "C-x C-r") 'recentf-open-files+)
-(global-set-key (kbd "C-M-'") 'eshell-here)
-(global-set-key (kbd "C-w") 'backward-kill-word-or-region)
-(global-set-key (kbd "M-Q") 'unfill-paragraph)
-(global-set-key (kbd "M-q") 'fill-or-unfill-paragraph)
-(define-key ctl-x-4-map (kbd "s") 'toggle-window-split)
-(define-key ctl-x-4-map (kbd "t") 'transpose-windows)
+(global-set-key (kbd "C-<backspace>") #'kill-line-backwards)
+(global-set-key (kbd "S-<return>") #'newline-at-end-of-line)
+(global-set-key (kbd "C-x C-r") #'recentf-open-files+)
+(global-set-key (kbd "C-M-'") #'eshell-here)
+(global-set-key (kbd "C-w") #'backward-kill-word-or-region)
+(global-set-key (kbd "M-Q") #'unfill-paragraph)
+(global-set-key (kbd "M-q") #'fill-or-unfill-paragraph)
+(define-key ctl-x-4-map (kbd "s") #'toggle-window-split)
+(define-key ctl-x-4-map (kbd "t") #'transpose-windows)
 
 
 (add-to-list 'load-path (expand-file-name "site-lisp/"))
@@ -464,9 +455,8 @@ used to create a new scratch buffer."
 
 
 (elpa-package 'embark
-  (global-set-key (kbd "s-,") 'xref-pop-marker-stack)
-  (global-set-key (kbd "s-.") 'embark-act)
-  (global-set-key (kbd "C-h B") 'embark-bindings)
+  (global-set-key (kbd "C-.") #'embark-act)
+  (global-set-key (kbd "C-h B") #'embark-bindings)
   (setq prefix-help-command #'embark-prefix-help-command))
 
 
@@ -476,13 +466,13 @@ used to create a new scratch buffer."
 
 (elpa-package 'helpful
   ;; Remap standard commands.
-  (global-set-key [remap describe-function] 'helpful-callable)
-  (global-set-key [remap describe-variable] 'helpful-variable)
-  (global-set-key [remap describe-key]      'helpful-key)
-  (global-set-key [remap describe-symbol]   'helpful-symbol)
-  (global-set-key (kbd "C-c C-d") 'helpful-at-point)
-  (global-set-key (kbd "C-h C")   'helpful-command)
-  (global-set-key (kbd "C-h F")   'describe-face)
+  (global-set-key [remap describe-function] #'helpful-callable)
+  (global-set-key [remap describe-variable] #'helpful-variable)
+  (global-set-key [remap describe-key]      #'helpful-key)
+  (global-set-key [remap describe-symbol]   #'helpful-symbol)
+  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
+  (global-set-key (kbd "C-h C")   #'helpful-command)
+  (global-set-key (kbd "C-h F")   #'describe-face)
 
   ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
   (defun helpful-switch-to-buffer (buffer-or-name)
@@ -529,9 +519,9 @@ reuse it's window, otherwise create new one."
 (autoload #'org-store-link "org" nil t)
 (autoload #'org-agenda "org" nil t)
 (autoload #'org-switchb "org" nil t)
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c b") 'org-switchb)
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c b") #'org-switchb)
 
 (with-eval-after-load 'org
   (define-key org-mode-map (kbd "C-,") nil)
@@ -563,7 +553,7 @@ reuse it's window, otherwise create new one."
 
 (elpa-package 'org-journal
   (autoload #'org-journal-new-entry "org-journal" nil t)
-  (global-set-key (kbd "C-c n j") 'org-journal-new-entry)
+  (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
   (custom-set-variables
    '(org-journal-date-format "%A, %d/%m/%Y")
    '(org-journal-date-prefix "* ")
@@ -580,21 +570,21 @@ reuse it's window, otherwise create new one."
   (autoload #'org-roam-node-find "org-roam" nil t)
   (autoload #'org-roam-capture "org-roam" nil t)
   (autoload #'org-roam-node-insert "org-roam" nil t)
-  (global-set-key (kbd "C-c n f") 'org-roam-node-find)
-  (global-set-key (kbd "C-c n i") 'org-roam-node-insert)
-  (global-set-key (kbd "C-c n c")  'org-roam-capture)
+  (global-set-key (kbd "C-c n f") #'org-roam-node-find)
+  (global-set-key (kbd "C-c n i") #'org-roam-node-insert)
+  (global-set-key (kbd "C-c n c") #'org-roam-capture)
 
   (with-eval-after-load 'org-roam
     (org-roam-setup)
-    (global-set-key (kbd "C-c n g") 'org-roam-graph)
-    (global-set-key (kbd "C-c n l") 'org-roam-buffer-toggle)))
+    (global-set-key (kbd "C-c n g") #'org-roam-graph)
+    (global-set-key (kbd "C-c n l") #'org-roam-buffer-toggle)))
 
 
 (elpa-package 'magit
   (autoload #'magit-project-status "magit" nil t)
-  (global-set-key (kbd "s-g") 'magit-status)
-  (global-set-key (kbd "C-x g") 'magit-status)
-  (global-set-key (kbd "C-c g") 'magit-file-dispatch)
+  (global-set-key (kbd "s-g") #'magit-status)
+  (global-set-key (kbd "C-x g") #'magit-status)
+  (global-set-key (kbd "C-c g") #'magit-file-dispatch)
   (custom-set-variables
    '(magit-diff-refine-hunk 'all)
    '(magit-display-buffer-function
@@ -602,8 +592,8 @@ reuse it's window, otherwise create new one."
 
 
 (elpa-package 'rg
-  (global-set-key (kbd "s-F") 'rg-project)
-  (global-set-key (kbd "C-c r") 'rg)
+  (global-set-key (kbd "s-F") #'rg-project)
+  (global-set-key (kbd "C-c r") #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
@@ -687,7 +677,7 @@ reuse it's window, otherwise create new one."
    '(sqlformat-command 'pgformatter)
    '(sqlformat-args '("-s2" "-g")))
   (with-eval-after-load 'sql
-    (define-key sql-mode-map (kbd "C-c C-f") 'sqlformat)))
+    (define-key sql-mode-map (kbd "C-c C-f") #'sqlformat)))
 
 
 (elpa-package 'elfeed
