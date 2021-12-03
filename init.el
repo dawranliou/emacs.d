@@ -31,6 +31,7 @@
       '(avy
         cider
         clojure-mode
+        corfu
         elfeed
         elpher
         embark
@@ -52,11 +53,11 @@
         persistent-scratch
         rainbow-mode
         rg
-        selectrum
         sketch-themes
         slime
         smartscan
         sqlformat
+        vertico
         ws-butler
         yaml-mode))
 
@@ -175,7 +176,8 @@
 (global-set-key (kbd "M-o") #'other-window)
 (global-set-key (kbd "M-i") #'delete-other-windows)
 (global-set-key (kbd "M-SPC") #'cycle-spacing)
-(global-set-key (kbd "M-/") #'hippie-expand)
+(global-set-key (kbd "M-/") #'dabbrev-completion)
+(global-set-key (kbd "C-M-/") #'hippie-expand)
 (global-set-key (kbd "M-Z") #'zap-to-char)
 (global-set-key (kbd "M-z") #'zap-up-to-char)
 (global-set-key (kbd "s--") #'text-scale-decrease)
@@ -462,13 +464,8 @@ used to create a new scratch buffer."
   (setq completion-category-defaults nil))
 
 
-(elpa-package 'selectrum
-  (global-set-key (kbd "C-x C-z") 'selectrum-repeat)
-  (custom-set-variables
-   '(orderless-skip-highlighting (lambda () selectrum-is-active))
-   '(selectrum-highlight-candidates-function #'orderless-highlight-matches))
-  (require 'selectrum)
-  (selectrum-mode +1))
+(elpa-package 'vertico
+  (vertico-mode))
 
 
 (elpa-package 'marginalia
@@ -477,6 +474,8 @@ used to create a new scratch buffer."
   (marginalia-mode)
   (setq marginalia-annotators '(marginalia-annotators-light
                                 marginalia-annotators-heavy)))
+(elpa-package 'corfu
+  (corfu-global-mode))
 
 
 (elpa-package 'embark
