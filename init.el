@@ -685,6 +685,13 @@ reuse it's window, otherwise create new one."
   (setq markdown-command "marked"))
 
 
+(with-eval-after-package-install 'flyspell-mode
+  (with-eval-after-load 'flyspell
+    (define-key flyspell-mode-map (kbd "C-.") nil)  ; Reserved for embark-act
+    (define-key flyspell-mode-map (kbd "C-;") nil)) ; Reserved for iedit
+  (add-hook 'text-mode-hook 'flyspell-mode))
+
+
 (with-eval-after-package-install 'emmet-mode
   (add-hook 'html-mode 'emmet-mode)
   (add-hook 'css-mode 'emmet-mode))
