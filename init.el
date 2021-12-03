@@ -65,7 +65,7 @@
 (package-initialize)
 
 
-(defmacro elpa-package (package &rest body)
+(defmacro with-eval-after-package-install (package &rest body)
   "Eval BODY only if PACKAGE is installed."
   (declare (indent defun))
   `(if (package-installed-p ,package)
@@ -438,14 +438,14 @@ used to create a new scratch buffer."
 ;;; - 3rd Party Packages
 
 
-(elpa-package 'orderless
+(with-eval-after-package-install 'orderless
   (custom-set-variables
    '(completion-styles '(orderless))
    '(completion-category-overrides '((file (styles partial-completion)))))
   (setq completion-category-defaults nil))
 
 
-(elpa-package 'vertico
+(with-eval-after-package-install 'vertico
   (vertico-mode)
 
   ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
@@ -458,11 +458,12 @@ used to create a new scratch buffer."
                    "  ")
                  cand))))
 
-(elpa-package 'corfu
+
+(with-eval-after-package-install 'corfu
   (corfu-global-mode))
 
 
-(elpa-package 'embark
+(with-eval-after-package-install 'embark
   (global-set-key (kbd "C-.") #'embark-act)
   (global-set-key (kbd "C-h B") #'embark-bindings)
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -472,11 +473,11 @@ used to create a new scratch buffer."
                          embark-isearch-highlight-indicator))))
 
 
-(elpa-package 'avy
+(with-eval-after-package-install 'avy
   (global-set-key (kbd "M-j") 'avy-goto-char-timer))
 
 
-(elpa-package 'helpful
+(with-eval-after-package-install 'helpful
   ;; Remap standard commands.
   (global-set-key [remap describe-function] #'helpful-callable)
   (global-set-key [remap describe-variable] #'helpful-variable)
@@ -500,20 +501,20 @@ reuse it's window, otherwise create new one."
    '(helpful-switch-buffer-function #'helpful-switch-to-buffer)))
 
 
-(elpa-package 'persistent-scratch
+(with-eval-after-package-install 'persistent-scratch
   (custom-set-variables
    '(persistent-scratch-autosave-interval 60))
   (persistent-scratch-setup-default))
 
 
-(elpa-package 'ws-butler
+(with-eval-after-package-install 'ws-butler
   (add-hook 'text-mode-hook 'ws-butler-mode)
   (add-hook 'prog-mode-hook 'ws-butler-mode)
   (custom-set-variables
    '(ws-butler-keep-whitespace-before-point nil)))
 
 
-(elpa-package 'iedit
+(with-eval-after-package-install 'iedit
   (global-set-key (kbd "C-;") 'iedit-mode))
 
 
@@ -563,7 +564,7 @@ reuse it's window, otherwise create new one."
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
 
-(elpa-package 'org-journal
+(with-eval-after-package-install 'org-journal
   (autoload #'org-journal-new-entry "org-journal" nil t)
   (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
   (custom-set-variables
@@ -575,7 +576,7 @@ reuse it's window, otherwise create new one."
    '(org-journal-find-file #'find-file)))
 
 
-(elpa-package 'org-roam
+(with-eval-after-package-install 'org-roam
   (setq org-roam-v2-ack t)
   (custom-set-variables
    '(org-roam-directory "~/org/roam/"))
@@ -592,7 +593,7 @@ reuse it's window, otherwise create new one."
     (global-set-key (kbd "C-c n l") #'org-roam-buffer-toggle)))
 
 
-(elpa-package 'magit
+(with-eval-after-package-install 'magit
   (autoload #'magit-project-status "magit" nil t)
   (global-set-key (kbd "s-g") #'magit-status)
   (global-set-key (kbd "C-x g") #'magit-status)
@@ -603,18 +604,18 @@ reuse it's window, otherwise create new one."
      #'magit-display-buffer-same-window-except-diff-v1)))
 
 
-(elpa-package 'rg
+(with-eval-after-package-install 'rg
   (global-set-key (kbd "s-F") #'rg-project)
   (global-set-key (kbd "C-c r") #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
 
-(elpa-package 'flycheck
+(with-eval-after-package-install 'flycheck
   (add-hook 'prog-init-hook 'flycheck-mode))
 
 
-(elpa-package 'lsp-mode
+(with-eval-after-package-install 'lsp-mode
   (custom-set-faces
    `(lsp-face-highlight-textual ((t (:inherit lazy-highlight)))))
   (custom-set-variables
@@ -638,7 +639,7 @@ reuse it's window, otherwise create new one."
 ;;; - Language major modes
 
 
-(elpa-package 'clojure-mode
+(with-eval-after-package-install 'clojure-mode
   (add-hook 'clojure-mode-hook 'lsp)
   (add-hook 'clojurec-mode-hook 'lsp)
   (add-hook 'clojurescript-mode-hook 'lsp)
@@ -660,7 +661,7 @@ reuse it's window, otherwise create new one."
         (message (format "Saved to kill-ring: %s" ns))))))
 
 
-(elpa-package 'cider
+(with-eval-after-package-install 'cider
   (custom-set-variables
    '(cider-repl-display-help-banner nil)
    '(cider-repl-display-in-current-window nil)
@@ -673,24 +674,24 @@ reuse it's window, otherwise create new one."
     (define-key cider-mode-map (kbd "M-.") nil)))
 
 
-(elpa-package 'markdown-mode
+(with-eval-after-package-install 'markdown-mode
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (setq markdown-command "marked"))
 
 
-(elpa-package 'emmet-mode
+(with-eval-after-package-install 'emmet-mode
   (add-hook 'html-mode 'emmet-mode)
   (add-hook 'css-mode 'emmet-mode))
 
 
-(elpa-package 'slime
+(with-eval-after-package-install 'slime
   (autoload #'slime "slime" nil t)
   (setq inferior-lisp-program "sbcl")
   (with-eval-after-load 'slime
     (load (expand-file-name "~/.quicklisp/slime-helper.el"))))
 
 
-(elpa-package 'sqlformat
+(with-eval-after-package-install 'sqlformat
   (custom-set-variables
    '(sqlformat-command 'pgformatter)
    '(sqlformat-args '("-s2" "-g")))
@@ -698,7 +699,7 @@ reuse it's window, otherwise create new one."
     (define-key sql-mode-map (kbd "C-c C-f") #'sqlformat)))
 
 
-(elpa-package 'elfeed
+(with-eval-after-package-install 'elfeed
   (autoload #'elfeed "elfeed" nil t)
   (custom-set-variables
    '(elfeed-feeds '("http://irreal.org/blog/?feed=rss2"
