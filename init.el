@@ -55,7 +55,6 @@
         rg
         sketch-themes
         slime
-        smartscan
         sqlformat
         vertico
         ws-butler
