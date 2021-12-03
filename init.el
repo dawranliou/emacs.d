@@ -613,7 +613,8 @@ reuse it's window, otherwise create new one."
    '(lsp-completion-provider :none)
    '(lsp-eldoc-enable-hover nil)
    '(lsp-modeline-diagnostics-scope :file)
-   '(lsp-modeline-code-actions-enable nil))
+   '(lsp-modeline-code-actions-enable nil)
+   '(lsp-lens-enable nil))
   (setq-default read-process-output-max (* 1024 1024)))
 
 
