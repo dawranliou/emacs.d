@@ -465,7 +465,11 @@ used to create a new scratch buffer."
 (elpa-package 'embark
   (global-set-key (kbd "C-.") #'embark-act)
   (global-set-key (kbd "C-h B") #'embark-bindings)
-  (setq prefix-help-command #'embark-prefix-help-command))
+  (setq prefix-help-command #'embark-prefix-help-command)
+  (custom-set-variables
+   '(embark-indicators '(embark-minimal-indicator
+                         embark-highlight-indicator
+                         embark-isearch-highlight-indicator))))
 
 
 (elpa-package 'avy
