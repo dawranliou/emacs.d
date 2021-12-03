@@ -627,7 +627,12 @@ reuse it's window, otherwise create new one."
    '(lsp-modeline-diagnostics-scope :file)
    '(lsp-modeline-code-actions-enable nil)
    '(lsp-lens-enable nil))
-  (setq-default read-process-output-max (* 1024 1024)))
+  (setq-default read-process-output-max (* 1024 1024))
+
+  (defun lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless)))
+  (add-hook 'lsp-completion-mode #'lsp-mode-setup-completion))
 
 
 ;;; - Language major modes
