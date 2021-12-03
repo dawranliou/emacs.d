@@ -24,7 +24,7 @@
 
 (setq package-archive-priorities '(("gnu" . 30)
                                    ("nongnu" . 25)
-                                   ("melpa-stable" . 20)
+                                   ;; ("melpa-stable" . 20)
                                    ("melpa" . 10)))
 
 (setq package-selected-packages
