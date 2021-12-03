@@ -30,6 +30,7 @@ by a bunch of resources I’ve found online:
 - https://github.com/olivertaylor/dotfilesq
 - https://github.com/purcell/emacs.d
 - https://github.com/raxod502/radian/blob/develop/emacs/radian.el
+- https://github.com/rnkn/dotfiles/
 - https://github.com/sam217pa/emacs-config
 - https://gitlab.com/ambrevar/dotfiles/-/tree/master/.emacs.d
 - https://karthinks.com/software/batteries-included-with-emacs/
