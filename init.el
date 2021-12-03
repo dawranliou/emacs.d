@@ -702,7 +702,7 @@ reuse it's window, otherwise create new one."
   (setq markdown-command "marked"))
 
 
-(with-eval-after-package-install 'flyspell-mode
+(with-eval-after-package-install 'flyspell
   (with-eval-after-load 'flyspell
     (define-key flyspell-mode-map (kbd "C-.") nil)  ; Reserved for embark-act
     (define-key flyspell-mode-map (kbd "C-;") nil)) ; Reserved for iedit
