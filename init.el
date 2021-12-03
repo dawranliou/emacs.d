@@ -62,6 +62,9 @@
         yaml-mode))
 
 
+(package-initialize)
+
+
 (defmacro elpa-package (package &rest body)
   "Eval BODY only if PACKAGE is installed."
   (declare (indent defun))
