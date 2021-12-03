@@ -454,7 +454,7 @@ used to create a new scratch buffer."
 (define-key ctl-x-4-map (kbd "t") #'transpose-windows)
 
 
-(add-to-list 'load-path (expand-file-name "site-lisp/"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 (add-hook 'prog-mode-hook 'smartscan-mode)
 
 
