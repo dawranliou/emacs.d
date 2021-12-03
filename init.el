@@ -232,6 +232,24 @@
 (delete-selection-mode)
 
 
+;;; Confirm killing modified buffers
+;; https://www.olivertaylor.net/emacs/buffer-confirm-kill.html
+(defvar-local buffer-confirm-kill nil
+  "Non-nil means to confirm killing buffer when modified.
+Variable is checked by `buffer-confirm-kill-p'.")
+
+(defun buffer-confirm-kill-p ()
+  "Return nil if buffer is modified and `buffer-confirm-kill' is t.
+This function is designed to be called from `kill-buffer-query-functions'."
+  (if (and (buffer-modified-p)
+           buffer-confirm-kill)
+      (yes-or-no-p
+       (format "Buffer %s modified; kill anyway?" (buffer-name)))
+    t))
+
+(add-hook 'kill-buffer-query-functions #'buffer-confirm-kill-p)
+
+
 (defun jump-to-scratch-buffer ()
   "Jump to the existing *scratch* buffer or create a new
 one. Repeating this command will prompt the user for the name
