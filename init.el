@@ -50,7 +50,6 @@
         org
         org-journal
         org-roam
-        persistent-scratch
         rainbow-mode
         rg
         sketch-themes
@@ -251,21 +250,23 @@ This function is designed to be called from `kill-buffer-query-functions'."
 
 
 (defun jump-to-scratch-buffer ()
-  "Jump to the existing *scratch* buffer or create a new
-one. Repeating this command will prompt the user for the name
-used to create a new scratch buffer."
+  "Jump to the existing *scratch* buffer or create a new one.
+
+If the current buffer is the *scratch* buffer, create a new
+scratch buffer.  The newly created buffer would have the
+`buffer-confirm-kill' and `buffer-offer-save' protection."
   (interactive)
-  (if (eq last-command this-command)
-      (let ((new-buffer (generate-new-buffer
-                         (format
-                          "*scratch*<%s>"
-                          (read-string
-                           "New scratch buffer name for *scratch*<NAME>: ")))))
-        (switch-to-buffer new-buffer))
-    (if-let (existing-scratch-buffer (get-buffer "*scratch*"))
-        (switch-to-buffer existing-scratch-buffer)
-      (let ((new-scratch-buffer (get-buffer-create "*scratch*")))
-        (switch-to-buffer new-scratch-buffer)))))
+  (let ((existing-scratch-buf (get-buffer "*scratch*")))
+    (if (and existing-scratch-buf
+             (not (eq (current-buffer) existing-scratch-buf)))
+        (switch-to-buffer existing-scratch-buf)
+      (let ((new-scratch-buf (get-buffer-create
+                              (generate-new-buffer-name"*scratch*"))))
+        (switch-to-buffer new-scratch-buf)
+        (with-current-buffer new-scratch-buf
+          (setq-local buffer-confirm-kill t)
+          (setq-local buffer-offer-save t)
+          (not-modified))))))
 
 
 (defun find-config ()
@@ -522,12 +523,6 @@ reuse it's window, otherwise create new one."
 
   (custom-set-variables
    '(helpful-switch-buffer-function #'helpful-switch-to-buffer)))
-
-
-(with-eval-after-package-install 'persistent-scratch
-  (custom-set-variables
-   '(persistent-scratch-autosave-interval 60))
-  (persistent-scratch-setup-default))
 
 
 (with-eval-after-package-install 'ws-butler
