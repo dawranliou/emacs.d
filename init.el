@@ -213,11 +213,6 @@
 (global-set-key [remap eval-last-sexp] #'pp-eval-last-sexp)   ; C-x C-e
 
 
-(custom-set-faces
- '(fixed-pitch ((t (:inherit default :height 140))))
- '(variable-pitch ((t (:height 160)))))
-
-
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 
