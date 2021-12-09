@@ -1,0 +1,3 @@
+[submodule "themes/sketch-themes"]
+	path = themes/sketch-themes
+	url = https://github.com/dawranliou/sketch-themes.git

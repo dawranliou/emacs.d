@@ -52,7 +52,6 @@
         org-roam
         rainbow-mode
         rg
-        sketch-themes
         slime
         sqlformat
         vertico
@@ -75,11 +74,7 @@
 
 ;;; Settings
 
-;; Save all interactive customization to a temp file, which is never loaded.
-;; This means interactive customization is session-local. Only this init file
-;; persists sessions.
-
-(setq custom-file (make-temp-file "emacs-custom-"))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 (custom-set-variables
  '(inhibit-startup-message t)
@@ -214,6 +209,8 @@
 
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
 
 
 (column-number-mode)
