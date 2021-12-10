@@ -10,7 +10,8 @@
   (add-to-list 'exec-path "/usr/local/MacGPG2/bin")
   (add-to-list 'exec-path "/usr/local/bin")
   (add-to-list 'exec-path "/usr/local/go/bin")
-  (setenv "PATH" (concat "/usr/local/bin:/usr/local/MacGPG2/bin:/usr/local/go/bin:"
+  (add-to-list 'exec-path "/Library/TeX/texbin")
+  (setenv "PATH" (concat "/usr/local/bin:/usr/local/MacGPG2/bin:/usr/local/go/bin:/Library/TeX/texbin:"
                          (getenv "PATH"))))
 
 ;;; - GC
