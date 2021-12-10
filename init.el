@@ -75,6 +75,8 @@
 ;;; Settings
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file :noerror)
+
 
 (custom-set-variables
  '(inhibit-startup-message t)
