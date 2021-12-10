@@ -661,8 +661,6 @@ reuse it's window, otherwise create new one."
                           '(try-expand-dabbrev
                             try-expand-dabbrev-all-buffers
                             try-expand-dabbrev-from-kill))))
-  (custom-set-variables
-   '(cljr-magic-requires nil))
 
   (with-eval-after-load 'clojure-mode
     (defun clojure-ns-kill-ring-save ()
