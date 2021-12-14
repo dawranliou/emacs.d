@@ -749,12 +749,12 @@ reuse it's window, otherwise create new one."
                             try-expand-dabbrev-from-kill))))
 
   (with-eval-after-load 'clojure-mode
-    (defun clojure-ns ()
+    (defun clojure-copy-ns ()
       "Save the current clojure ns to the kill ring."
       (interactive)
       (let ((ns (funcall clojure-expected-ns-function)))
         (-kill-and-echo ns)))
-    (defun clojure-ns-var ()
+    (defun clojure-copy-ns-var ()
       "Save the current clojure var to the kill ring."
       (interactive)
       (let ((ns (funcall clojure-expected-ns-function))
