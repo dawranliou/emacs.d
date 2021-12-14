@@ -753,7 +753,13 @@ reuse it's window, otherwise create new one."
       "Save the current clojure ns to the kill ring."
       (interactive)
       (let ((ns (funcall clojure-expected-ns-function)))
-        (-kill-and-echo ns)))))
+        (-kill-and-echo ns)))
+    (defun clojure-ns-var ()
+      "Save the current clojure var to the kill ring."
+      (interactive)
+      (let ((ns (funcall clojure-expected-ns-function))
+            (def (clojure-find-def)))
+        (-kill-and-echo (format "%s/%s" ns (cadr def)))))))
 
 (with-eval-after-package-install 'cider
   (custom-set-variables
