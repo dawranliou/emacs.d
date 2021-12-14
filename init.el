@@ -5,7 +5,7 @@
 
 ;;; Commentary:
 
-;;
+;; This config targets Emacs 29
 
 ;;; Code:
 
@@ -20,11 +20,9 @@
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (setq package-archive-priorities '(("gnu" . 30)
                                    ("nongnu" . 25)
-                                   ;; ("melpa-stable" . 20)
                                    ("melpa" . 10)))
 
 (setq package-selected-packages
@@ -44,7 +42,6 @@
         iedit
         lsp-mode
         magit
-        ;; marginalia
         markdown-mode
         orderless
         org
@@ -58,9 +55,7 @@
         ws-butler
         yaml-mode))
 
-
 (package-initialize)
-
 
 (defmacro with-eval-after-package-install (package &rest body)
   "Eval BODY only if PACKAGE is installed."
@@ -71,12 +66,11 @@
                       (symbol-name ,package)
                       "\' is not installed... skipping config."))))
 
-
 ;;; Settings
 
+;; Persist the settings in the custom.el, which is ignored by git.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file :noerror)
-
 
 (custom-set-variables
  '(inhibit-startup-message t)
@@ -134,7 +128,6 @@
  ;; Emacs 29
  '(show-paren-context-when-offscreen t))
 
-
 (setq-default
  fill-column 80
  x-stretch-cursor t
@@ -158,12 +151,12 @@
                     mode-line-misc-info
                     mode-line-end-spaces))
 
-
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
+;;; Keybindings
 
 (global-set-key (kbd "C-M-j") #'switch-to-buffer)
 (global-set-key (kbd "C-M-<backspace>") #'backward-kill-sexp)
@@ -210,23 +203,9 @@
 (global-set-key [remap eval-expression] #'pp-eval-expression) ; M-:
 (global-set-key [remap eval-last-sexp] #'pp-eval-last-sexp)   ; C-x C-e
 
+;;; Functions
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
-
-
-(column-number-mode)
-(show-paren-mode)
-(electric-pair-mode 1)
-(save-place-mode t)
-(add-hook 'after-init-hook #'savehist-mode)
-(winner-mode)
-(global-so-long-mode)
-(delete-selection-mode)
-
-
-;;; Confirm killing modified buffers
+;; Confirm killing modified buffers
 ;; https://www.olivertaylor.net/emacs/buffer-confirm-kill.html
 (defvar-local buffer-confirm-kill nil
   "Non-nil means to confirm killing buffer when modified.
@@ -242,7 +221,6 @@ This function is designed to be called from `kill-buffer-query-functions'."
     t))
 
 (add-hook 'kill-buffer-query-functions #'buffer-confirm-kill-p)
-
 
 (defun jump-to-scratch-buffer ()
   "Jump to the existing *scratch* buffer or create a new one.
@@ -263,18 +241,15 @@ scratch buffer.  The newly created buffer would have the
           (setq-local buffer-offer-save t)
           (not-modified))))))
 
-
 (defun find-config ()
   (interactive)
   (find-file (expand-file-name user-init-file)))
-
 
 (defun load-one-theme-action (theme)
   "Disable current themes and load theme THEME."
   (progn
     (mapc #'disable-theme custom-enabled-themes)
     (load-theme (intern theme) t)))
-
 
 (defun load-one-theme ()
   "Disable current themes and load theme from the completion list."
@@ -284,7 +259,6 @@ scratch buffer.  The newly created buffer would have the
                                         (custom-available-themes)))))
     (load-one-theme-action theme)))
 
-
 (defun quick-edit ()
   "Util function for use with hammerspoon quick edit functionality."
   (interactive)
@@ -293,7 +267,6 @@ scratch buffer.  The newly created buffer would have the
     (clipboard-yank)
     (goto-char (point-min))
     (gfm-mode)))
-
 
 (defun quick-edit-end ()
   "Util function to be executed on qed completion."
@@ -315,9 +288,11 @@ scratch buffer.  The newly created buffer would have the
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aFGhlv --group-directories-first"))
 
+;;; Theme
 
-;;; - Theme
-
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
 
 (add-hook
  'after-init-hook
@@ -331,9 +306,16 @@ scratch buffer.  The newly created buffer would have the
       'sketch-white)
     t)))
 
+;;; Built-in Packages
 
-;;; - Built-in Packages
-
+(column-number-mode)
+(show-paren-mode)
+(electric-pair-mode 1)
+(save-place-mode t)
+(add-hook 'after-init-hook #'savehist-mode)
+(winner-mode)
+(global-so-long-mode)
+(delete-selection-mode)
 
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
@@ -347,11 +329,9 @@ scratch buffer.  The newly created buffer would have the
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
-
 (with-eval-after-load 'find-dired
   (custom-set-variables
    '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))))
-
 
 (defun eshell-history ()
   "Browse eshell history."
@@ -368,7 +348,6 @@ scratch buffer.  The newly created buffer would have the
       (eshell-kill-input)
       (insert (string-trim selected)))))
 
-
 (with-eval-after-load 'esh-mode
   ;; Save command history when commands are entered
   (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
@@ -384,11 +363,9 @@ scratch buffer.  The newly created buffer would have the
         eshell-scroll-to-bottom-on-input t
         eshell-destroy-buffer-when-process-dies t))
 
-
 (with-eval-after-load 'project
   ;; Setup the `project-switch-commands'
   (require 'magit-extras))
-
 
 (with-eval-after-load 'compile
   (require 'ansi-color)
@@ -397,10 +374,8 @@ scratch buffer.  The newly created buffer would have the
       (ansi-color-apply-on-region (point-min) (point-max))))
   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
 
-
 (add-to-list 'auto-mode-alist
              '("\\.log\\'" . auto-revert-tail-mode))
-
 
 (with-eval-after-load 'isearch
   (custom-set-variables
@@ -453,16 +428,13 @@ scratch buffer.  The newly created buffer would have the
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 (add-hook 'prog-mode-hook 'smartscan-mode)
 
-
-;;; - 3rd Party Packages
-
+;;; 3rd Party Packages
 
 (with-eval-after-package-install 'orderless
   (custom-set-variables
    '(completion-styles '(orderless))
    '(completion-category-overrides '((file (styles partial-completion)))))
   (setq completion-category-defaults nil))
-
 
 (with-eval-after-package-install 'vertico
   (vertico-mode)
@@ -477,10 +449,8 @@ scratch buffer.  The newly created buffer would have the
                    "  ")
                  cand))))
 
-
 (with-eval-after-package-install 'corfu
   (corfu-global-mode))
-
 
 (with-eval-after-package-install 'embark
   (global-set-key (kbd "C-.") #'embark-act)
@@ -491,10 +461,8 @@ scratch buffer.  The newly created buffer would have the
                          embark-highlight-indicator
                          embark-isearch-highlight-indicator))))
 
-
 (with-eval-after-package-install 'avy
   (global-set-key (kbd "M-j") 'avy-goto-char-timer))
-
 
 (with-eval-after-package-install 'helpful
   ;; Remap standard commands.
@@ -519,17 +487,14 @@ reuse it's window, otherwise create new one."
   (custom-set-variables
    '(helpful-switch-buffer-function #'helpful-switch-to-buffer)))
 
-
 (with-eval-after-package-install 'ws-butler
   (add-hook 'text-mode-hook 'ws-butler-mode)
   (add-hook 'prog-mode-hook 'ws-butler-mode)
   (custom-set-variables
    '(ws-butler-keep-whitespace-before-point nil)))
 
-
 (with-eval-after-package-install 'iedit
   (global-set-key (kbd "C-;") 'iedit-mode))
-
 
 (defun org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
@@ -576,7 +541,6 @@ reuse it's window, otherwise create new one."
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
-
 (with-eval-after-package-install 'org-journal
   (autoload #'org-journal-new-entry "org-journal" nil t)
   (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
@@ -587,7 +551,6 @@ reuse it's window, otherwise create new one."
    '(org-journal-dir "~/org/journal/")
    '(org-journal-file-type 'weekly)
    '(org-journal-find-file #'find-file)))
-
 
 (with-eval-after-package-install 'org-roam
   (setq org-roam-v2-ack t)
@@ -605,7 +568,6 @@ reuse it's window, otherwise create new one."
     (global-set-key (kbd "C-c n g") #'org-roam-graph)
     (global-set-key (kbd "C-c n l") #'org-roam-buffer-toggle)))
 
-
 (with-eval-after-package-install 'magit
   (autoload #'magit-project-status "magit" nil t)
   (global-set-key (kbd "s-g") #'magit-status)
@@ -616,17 +578,14 @@ reuse it's window, otherwise create new one."
    '(magit-display-buffer-function
      #'magit-display-buffer-same-window-except-diff-v1)))
 
-
 (with-eval-after-package-install 'rg
   (global-set-key (kbd "s-F") #'rg-project)
   (global-set-key (kbd "C-c r") #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
-
 (with-eval-after-package-install 'flycheck
   (add-hook 'prog-init-hook 'flycheck-mode))
-
 
 (with-eval-after-package-install 'lsp-mode
   (custom-set-faces
@@ -648,9 +607,7 @@ reuse it's window, otherwise create new one."
           '(orderless)))
   (add-hook 'lsp-completion-mode #'lsp-mode-setup-completion))
 
-
-;;; - Language major modes
-
+;;; Language major modes
 
 (with-eval-after-package-install 'clojure-mode
   (add-hook 'clojure-mode-hook 'lsp)
@@ -671,7 +628,6 @@ reuse it's window, otherwise create new one."
         (kill-new ns)
         (message (format "Saved to kill-ring: %s" ns))))))
 
-
 (with-eval-after-package-install 'cider
   (custom-set-variables
    '(cider-repl-display-help-banner nil)
@@ -684,11 +640,9 @@ reuse it's window, otherwise create new one."
     (define-key cider-mode-map (kbd "M-,") nil)
     (define-key cider-mode-map (kbd "M-.") nil)))
 
-
 (with-eval-after-package-install 'markdown-mode
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (setq markdown-command "marked"))
-
 
 (with-eval-after-package-install 'flyspell
   (with-eval-after-load 'flyspell
@@ -696,11 +650,9 @@ reuse it's window, otherwise create new one."
     (define-key flyspell-mode-map (kbd "C-;") nil)) ; Reserved for iedit
   (add-hook 'text-mode-hook 'flyspell-mode))
 
-
 (with-eval-after-package-install 'emmet-mode
   (add-hook 'html-mode 'emmet-mode)
   (add-hook 'css-mode 'emmet-mode))
-
 
 (with-eval-after-package-install 'slime
   (autoload #'slime "slime" nil t)
@@ -708,14 +660,12 @@ reuse it's window, otherwise create new one."
   (with-eval-after-load 'slime
     (load (expand-file-name "~/.quicklisp/slime-helper.el"))))
 
-
 (with-eval-after-package-install 'sqlformat
   (custom-set-variables
    '(sqlformat-command 'pgformatter)
    '(sqlformat-args '("-s2" "-g")))
   (with-eval-after-load 'sql
     (define-key sql-mode-map (kbd "C-c C-f") #'sqlformat)))
-
 
 (with-eval-after-package-install 'elfeed
   (autoload #'elfeed "elfeed" nil t)
@@ -737,7 +687,6 @@ reuse it's window, otherwise create new one."
                     "https://www.manueluberti.eu/feed.xml"
                     "https://www.murilopereira.com/index.xml"
                     "https://www.with-emacs.com/rss."))))
-
 
 (provide 'init)
 
