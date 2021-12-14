@@ -206,6 +206,7 @@
 (global-set-key (kbd "C-h p") #'describe-package)  ; Swap the two
 (global-set-key (kbd "C-h P") #'finder-by-keyword)
 (global-set-key (kbd "C-h L") #'find-library)
+(global-set-key (kbd "C-z") nil)
 (global-set-key [remap eval-expression] #'pp-eval-expression) ; M-:
 (global-set-key [remap eval-last-sexp] #'pp-eval-last-sexp)   ; C-x C-e
 
