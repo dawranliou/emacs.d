@@ -160,60 +160,59 @@
 
 ;;; Keybindings
 
-(global-set-key (kbd "C-M-j") #'switch-to-buffer)
-(global-set-key (kbd "C-M-<backspace>") #'backward-kill-sexp)
-(global-set-key (kbd "C-x C-b") #'ibuffer)
-(global-set-key (kbd "C-x k") #'kill-this-buffer)
-(global-set-key (kbd "C-M-r") #'raise-sexp)
-(global-set-key (kbd "M-h") nil)
-(global-set-key (kbd "M-h w") #'mark-word)
-(global-set-key (kbd "M-h SPC") #'mark-word)
-(global-set-key (kbd "M-h s") #'mark-end-of-sentence)
-(global-set-key (kbd "M-h p") #'mark-paragraph)
-(global-set-key (kbd "M-h b") #'mark-end-of-buffer)
-(global-set-key (kbd "M-o") #'other-window)
-(global-set-key (kbd "M-i") #'delete-other-windows)
-(global-set-key (kbd "M-SPC") #'cycle-spacing)
-(global-set-key (kbd "M-/") #'dabbrev-completion)
-(global-set-key (kbd "C-M-/") #'hippie-expand)
-(global-set-key (kbd "M-Z") #'zap-to-char)
-(global-set-key (kbd "M-z") #'zap-up-to-char)
-(global-set-key (kbd "s--") #'text-scale-decrease)
-(global-set-key (kbd "s-<backspace>") #'kill-whole-line)
-(global-set-key (kbd "s-=") #'text-scale-adjust)
-(global-set-key (kbd "s-S") #'write-file)
-(global-set-key (kbd "s-a") #'mark-whole-buffer)
-(global-set-key (kbd "s-i") #'imenu)
-(global-set-key (kbd "s-k") #'kill-this-buffer)
-(global-set-key (kbd "s-p") #'project-find-file)
-(global-set-key (kbd "s-q") #'save-buffers-kill-emacs)
-(global-set-key (kbd "s-s") #'save-buffer)
-(global-set-key (kbd "s-t") #'jump-to-scratch-buffer)
-(global-set-key (kbd "s-w") #'delete-window)
-(global-set-key (kbd "s-v") #'yank)
-(global-set-key (kbd "C-c f d") #'find-config)
-(global-set-key (kbd "C-c t t") #'load-one-theme)
-(global-set-key (kbd "C-c t w") #'whitespace-mode)
-(global-set-key (kbd "C-c t m") #'toggle-frame-maximized)
-(global-set-key (kbd "C-c t M") #'toggle-frame-fullscreen)
-(global-set-key (kbd "C-c t $") #'toggle-truncate-lines)
-(global-set-key (kbd "C-\\") #'undo-only)
-(global-set-key (kbd "C-h p") #'describe-package)  ; Swap the two
-(global-set-key (kbd "C-h P") #'finder-by-keyword)
-(global-set-key (kbd "C-h L") #'find-library)
-(global-set-key (kbd "C-z") nil)
-(global-set-key [remap eval-expression] #'pp-eval-expression) ; M-:
-(global-set-key [remap eval-last-sexp] #'pp-eval-last-sexp)   ; C-x C-e
-(global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+) ; C-a
-;; (global-set-key (kbd "C-<backspace>") #'kill-line-backwards)
-(global-set-key (kbd "S-<return>") #'newline-at-end-of-line)
-(global-set-key (kbd "C-x C-r") #'recentf-open-files+)
-(global-set-key (kbd "C-M-'") #'eshell-here)
-(global-set-key (kbd "C-w") #'backward-kill-word-or-region)
-(global-set-key (kbd "M-Q") #'unfill-paragraph)
-(global-set-key (kbd "M-q") #'fill-or-unfill-paragraph)
-(define-key ctl-x-4-map (kbd "s") #'toggle-window-split)
-(define-key ctl-x-4-map (kbd "t") #'transpose-windows)
+(keymap-global-set "C-M-j" #'switch-to-buffer)
+(keymap-global-set "C-M-<backspace>" #'backward-kill-sexp)
+(keymap-global-set "C-x C-b" #'ibuffer)
+(keymap-global-set "C-x k" #'kill-this-buffer)
+(keymap-global-set "C-M-r" #'raise-sexp)
+(keymap-global-set "M-h" nil)
+(keymap-global-set "M-h w" #'mark-word)
+(keymap-global-set "M-h SPC" #'mark-word)
+(keymap-global-set "M-h s" #'mark-end-of-sentence)
+(keymap-global-set "M-h p" #'mark-paragraph)
+(keymap-global-set "M-h b" #'mark-end-of-buffer)
+(keymap-global-set "M-o" #'other-window)
+(keymap-global-set "M-i" #'delete-other-windows)
+(keymap-global-set "M-SPC" #'cycle-spacing)
+(keymap-global-set "C-M-/" #'dabbrev-completion)
+(keymap-global-set "M-/" #'hippie-expand)
+(keymap-global-set "M-Z" #'zap-to-char)
+(keymap-global-set "M-z" #'zap-up-to-char)
+(keymap-global-set "s--" #'text-scale-decrease)
+(keymap-global-set "s-<backspace>" #'kill-whole-line)
+(keymap-global-set "s-=" #'text-scale-adjust)
+(keymap-global-set "s-S" #'write-file)
+(keymap-global-set "s-a" #'mark-whole-buffer)
+(keymap-global-set "s-i" #'imenu)
+(keymap-global-set "s-k" #'kill-this-buffer)
+(keymap-global-set "s-p" #'project-find-file)
+(keymap-global-set "s-q" #'save-buffers-kill-emacs)
+(keymap-global-set "s-s" #'save-buffer)
+(keymap-global-set "s-t" #'jump-to-scratch-buffer)
+(keymap-global-set "s-w" #'delete-window)
+(keymap-global-set "s-v" #'yank)
+(keymap-global-set "C-c f d" #'find-config)
+(keymap-global-set "C-c t t" #'load-one-theme)
+(keymap-global-set "C-c t w" #'whitespace-mode)
+(keymap-global-set "C-c t m" #'toggle-frame-maximized)
+(keymap-global-set "C-c t M" #'toggle-frame-fullscreen)
+(keymap-global-set "C-c t $" #'toggle-truncate-lines)
+(keymap-global-set "C-\\" #'undo-only)
+(keymap-global-set "C-h p" #'describe-package)  ; Swap the two
+(keymap-global-set "C-h P" #'finder-by-keyword)
+(keymap-global-set "C-h L" #'find-library)
+(keymap-global-set "C-z" nil)
+(keymap-substitute global-map #'eval-expression #'pp-eval-expression) ; M-:
+(keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
+(keymap-substitute global-map #'move-beginning-of-line 'move-beginning-of-line+) ; C-a
+;; (keymap-global-set "C-<backspace>" #'kill-line-backwards)
+(keymap-global-set "S-<return>" #'newline-at-end-of-line)
+(keymap-global-set "C-x C-r" #'recentf-open-files+)
+(keymap-global-set "C-w" #'backward-kill-word-or-region)
+(keymap-global-set "M-Q" #'unfill-paragraph)
+(keymap-global-set "M-q" #'fill-or-unfill-paragraph)
+(keymap-set ctl-x-4-map "s" #'toggle-window-split)
+(keymap-set ctl-x-4-map "t" #'transpose-windows)
 
 ;;; Functions
 
@@ -405,8 +404,8 @@ of text."
       (zap-up-to-char (- arg) ?/)
     (delete-minibuffer-contents)))
 
-(define-key minibuffer-local-filename-completion-map
-            (kbd "<C-backspace>") #'minibuffer-up-directory)
+(keymap-set minibuffer-local-filename-completion-map
+            "C-<backspace>" #'minibuffer-up-directory)
 
 ;;; Mac
 
@@ -451,7 +450,7 @@ of text."
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (add-hook 'dired-mode-hook 'hl-line-mode)
-  (define-key global-map (kbd "C-x C-j") #'dired-jump)
+  (keymap-set global-map "C-x C-j" #'dired-jump)
   (custom-set-variables
    '(dired-auto-revert-buffer t)
    '(dired-dwim-target t)
@@ -485,8 +484,8 @@ of text."
   ;; Truncate buffer for performance
   (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
   ;; Use Ivy to provide completions in eshell
-  (define-key eshell-mode-map (kbd "C-r") #'eshell-history)
-  (define-key eshell-mode-map (kbd "C-a") #'eshell-bol)
+  (keymap-set eshell-mode-map "C-r" #'eshell-history)
+  (keymap-set eshell-mode-map "C-a" #'eshell-bol)
   (setq eshell-history-size          10000
         eshell-buffer-maximum-lines  10000
         eshell-hist-ignoredups           t
@@ -530,11 +529,11 @@ of text."
       (isearch-pop-state))
     (isearch-update))
 
-  (define-key isearch-mode-map (kbd "C-o") #'isearch-occur)
-  (define-key isearch-mode-map (kbd "<C-backspace>") #'isearch-delete-wrong)
+  (keymap-set isearch-mode-map "C-o" #'isearch-occur)
+  (keymap-set isearch-mode-map "C-<backspace>" #'isearch-delete-wrong)
   ;; DEL during isearch should edit the search string, not jump back to the
   ;; previous result
-  (define-key isearch-mode-map [remap isearch-delete-char] #'isearch-del-char)
+  (keymap-substitute isearch-mode-map #'isearch-delete-char #'isearch-del-char)
 
   (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
@@ -566,8 +565,8 @@ of text."
   (corfu-global-mode))
 
 (with-eval-after-package-install 'embark
-  (global-set-key (kbd "C-.") #'embark-act)
-  (global-set-key (kbd "C-h B") #'embark-bindings)
+  (keymap-global-set "C-." #'embark-act)
+  (keymap-global-set "C-h B" #'embark-bindings)
   (setq prefix-help-command #'embark-prefix-help-command)
   (custom-set-variables
    '(embark-indicators '(embark-minimal-indicator
@@ -575,17 +574,17 @@ of text."
                          embark-isearch-highlight-indicator))))
 
 (with-eval-after-package-install 'avy
-  (global-set-key (kbd "M-j") 'avy-goto-char-timer))
+  (keymap-global-set "M-j" 'avy-goto-char-timer))
 
 (with-eval-after-package-install 'helpful
   ;; Remap standard commands.
-  (global-set-key [remap describe-function] #'helpful-callable)
-  (global-set-key [remap describe-variable] #'helpful-variable)
-  (global-set-key [remap describe-key]      #'helpful-key)
-  (global-set-key [remap describe-symbol]   #'helpful-symbol)
-  (global-set-key (kbd "C-c C-d") #'helpful-at-point)
-  (global-set-key (kbd "C-h C")   #'helpful-command)
-  (global-set-key (kbd "C-h F")   #'describe-face)
+  (keymap-substitute global-map #'describe-function #'helpful-callable)
+  (keymap-substitute global-map #'describe-variable #'helpful-variable)
+  (keymap-substitute global-map #'describe-key      #'helpful-key)
+  (keymap-substitute global-map #'describe-symbol   #'helpful-symbol)
+  (keymap-global-set "C-c C-d" #'helpful-at-point)
+  (keymap-global-set "C-h C"   #'helpful-command)
+  (keymap-global-set "C-h F"   #'describe-face)
 
   ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
   (defun helpful-switch-to-buffer (buffer-or-name)
@@ -606,7 +605,7 @@ reuse it's window, otherwise create new one."
    '(ws-butler-keep-whitespace-before-point nil)))
 
 (with-eval-after-package-install 'iedit
-  (global-set-key (kbd "C-;") 'iedit-mode))
+  (keymap-global-set "C-;" 'iedit-mode))
 
 (defun org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
@@ -622,12 +621,12 @@ reuse it's window, otherwise create new one."
 (autoload #'org-store-link "org" nil t)
 (autoload #'org-agenda "org" nil t)
 (autoload #'org-switchb "org" nil t)
-(global-set-key (kbd "C-c l") #'org-store-link)
-(global-set-key (kbd "C-c a") #'org-agenda)
-(global-set-key (kbd "C-c b") #'org-switchb)
+(keymap-global-set "C-c l" #'org-store-link)
+(keymap-global-set "C-c a" #'org-agenda)
+(keymap-global-set "C-c b" #'org-switchb)
 
 (with-eval-after-load 'org
-  (define-key org-mode-map (kbd "C-,") nil)
+  (keymap-set org-mode-map "C-," nil)
   (custom-set-variables
    '(org-hide-emphasis-markers t)
    '(org-ellipsis " …")
@@ -655,7 +654,7 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'org-journal
   (autoload #'org-journal-new-entry "org-journal" nil t)
-  (global-set-key (kbd "C-c n j") #'org-journal-new-entry)
+  (keymap-global-set "C-c n j" #'org-journal-new-entry)
   (custom-set-variables
    '(org-journal-date-format "%A, %d/%m/%Y")
    '(org-journal-date-prefix "* ")
@@ -671,28 +670,28 @@ reuse it's window, otherwise create new one."
   (autoload #'org-roam-node-find "org-roam" nil t)
   (autoload #'org-roam-capture "org-roam" nil t)
   (autoload #'org-roam-node-insert "org-roam" nil t)
-  (global-set-key (kbd "C-c n f") #'org-roam-node-find)
-  (global-set-key (kbd "C-c n i") #'org-roam-node-insert)
-  (global-set-key (kbd "C-c n c") #'org-roam-capture)
+  (keymap-global-set "C-c n f" #'org-roam-node-find)
+  (keymap-global-set "C-c n i" #'org-roam-node-insert)
+  (keymap-global-set "C-c n c" #'org-roam-capture)
 
   (with-eval-after-load 'org-roam
     (org-roam-setup)
-    (global-set-key (kbd "C-c n g") #'org-roam-graph)
-    (global-set-key (kbd "C-c n l") #'org-roam-buffer-toggle)))
+    (keymap-global-set "C-c n g" #'org-roam-graph)
+    (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
 
 (with-eval-after-package-install 'magit
   (autoload #'magit-project-status "magit" nil t)
-  (global-set-key (kbd "s-g") #'magit-status)
-  (global-set-key (kbd "C-x g") #'magit-status)
-  (global-set-key (kbd "C-c g") #'magit-file-dispatch)
+  (keymap-global-set "s-g" #'magit-status)
+  (keymap-global-set "C-x g" #'magit-status)
+  (keymap-global-set "C-c g" #'magit-file-dispatch)
   (custom-set-variables
    '(magit-diff-refine-hunk 'all)
    '(magit-display-buffer-function
      #'magit-display-buffer-same-window-except-diff-v1)))
 
 (with-eval-after-package-install 'rg
-  (global-set-key (kbd "s-F") #'rg-project)
-  (global-set-key (kbd "C-c r") #'rg)
+  (keymap-global-set "s-F" #'rg-project)
+  (keymap-global-set "C-c r" #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
@@ -755,8 +754,8 @@ reuse it's window, otherwise create new one."
    '(cider-repl-buffer-size-limit 100000))
 
   (with-eval-after-load 'cider
-    (define-key cider-mode-map (kbd "M-,") nil)
-    (define-key cider-mode-map (kbd "M-.") nil)))
+    (keymap-set cider-mode-map "M-," nil)
+    (keymap-set cider-mode-map "M-." nil)))
 
 (with-eval-after-package-install 'markdown-mode
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
@@ -764,8 +763,8 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'flyspell
   (with-eval-after-load 'flyspell
-    (define-key flyspell-mode-map (kbd "C-.") nil)  ; Reserved for embark-act
-    (define-key flyspell-mode-map (kbd "C-;") nil)) ; Reserved for iedit
+    (keymap-set flyspell-mode-map "C-." nil)  ; Reserved for embark-act
+    (keymap-set flyspell-mode-map "C-;" nil)) ; Reserved for iedit
   (add-hook 'text-mode-hook 'flyspell-mode))
 
 (with-eval-after-package-install 'emmet-mode
@@ -783,7 +782,7 @@ reuse it's window, otherwise create new one."
    '(sqlformat-command 'pgformatter)
    '(sqlformat-args '("-s2" "-g")))
   (with-eval-after-load 'sql
-    (define-key sql-mode-map (kbd "C-c C-f") #'sqlformat)))
+    (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
 
 (with-eval-after-package-install 'elfeed
   (autoload #'elfeed "elfeed" nil t)
