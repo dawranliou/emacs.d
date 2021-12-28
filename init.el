@@ -136,6 +136,7 @@
  tab-always-indent t
  line-spacing 3
  indent-tabs-mode nil
+ truncate-lines t
  mode-line-format '("%e"
                     mode-line-front-space
                     mode-line-mule-info
