@@ -751,11 +751,7 @@ reuse it's window, otherwise create new one."
    '(cider-repl-display-in-current-window nil)
    '(cider-repl-pop-to-buffer-on-connect nil)
    '(cider-repl-use-pretty-printing t)
-   '(cider-repl-buffer-size-limit 100000))
-
-  (with-eval-after-load 'cider
-    (keymap-set cider-mode-map "M-," nil)
-    (keymap-set cider-mode-map "M-." nil)))
+   '(cider-repl-buffer-size-limit 100000)))
 
 (with-eval-after-package-install 'markdown-mode
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
