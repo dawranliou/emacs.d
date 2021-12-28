@@ -601,7 +601,6 @@ reuse it's window, otherwise create new one."
    '(helpful-switch-buffer-function #'helpful-switch-to-buffer)))
 
 (with-eval-after-package-install 'ws-butler
-  (add-hook 'text-mode-hook 'ws-butler-mode)
   (add-hook 'prog-mode-hook 'ws-butler-mode)
   (custom-set-variables
    '(ws-butler-keep-whitespace-before-point nil)))
