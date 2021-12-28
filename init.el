@@ -21,9 +21,9 @@
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
-(setq package-archive-priorities '(("gnu" . 30)
-                                   ("nongnu" . 25)
-                                   ("melpa" . 10)))
+(setq package-archive-priorities '(("melpa" . 30)
+                                   ("gnu" . 20)
+                                   ("nongnu" . 10)))
 
 (setq package-selected-packages
       '(avy
