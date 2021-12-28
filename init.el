@@ -50,6 +50,7 @@
         rainbow-mode
         rg
         slime
+        smartscan
         sqlformat
         vertico
         ws-butler
