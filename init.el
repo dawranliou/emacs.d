@@ -45,7 +45,6 @@
         markdown-mode
         orderless
         org
-        org-journal
         org-roam
         rainbow-mode
         rg
@@ -688,21 +687,11 @@ reuse it's window, otherwise create new one."
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
-(with-eval-after-package-install 'org-journal
-  (autoload #'org-journal-new-entry "org-journal" nil t)
-  (keymap-global-set "C-c n j" #'org-journal-new-entry)
-  (custom-set-variables
-   '(org-journal-date-format "%A, %d/%m/%Y")
-   '(org-journal-date-prefix "* ")
-   '(org-journal-file-format "%F.org")
-   '(org-journal-dir "~/org/journal/")
-   '(org-journal-file-type 'weekly)
-   '(org-journal-find-file #'find-file)))
-
 (with-eval-after-package-install 'org-roam
   (setq org-roam-v2-ack t)
   (custom-set-variables
-   '(org-roam-directory "~/org/roam/"))
+   '(org-roam-directory "~/org/roam/")
+   '(org-roam-dailies-directory "journal/"))
   (autoload #'org-roam-node-find "org-roam" nil t)
   (autoload #'org-roam-capture "org-roam" nil t)
   (autoload #'org-roam-node-insert "org-roam" nil t)
@@ -713,7 +702,11 @@ reuse it's window, otherwise create new one."
   (with-eval-after-load 'org-roam
     (org-roam-setup)
     (keymap-global-set "C-c n g" #'org-roam-graph)
-    (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
+    (keymap-global-set "C-c n l" #'org-roam-buffer-toggle))
+
+  (keymap-global-set "C-c n d" #'org-roam-dailies-goto-today)
+  (with-eval-after-load 'org-roam-dailies
+    (keymap-global-set "C-c d" org-roam-dailies-map)))
 
 (with-eval-after-package-install 'magit
   (autoload #'magit-project-status "magit" nil t)
