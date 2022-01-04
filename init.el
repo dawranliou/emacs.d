@@ -203,7 +203,7 @@
 (keymap-global-set "C-z" nil)
 (keymap-substitute global-map #'eval-expression #'pp-eval-expression) ; M-:
 (keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
-(keymap-substitute global-map #'move-beginning-of-line 'move-beginning-of-line+) ; C-a
+(global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+) ; C-a
 ;; (keymap-global-set "C-<backspace>" #'kill-line-backwards)
 (keymap-global-set "S-<return>" #'newline-at-end-of-line)
 (keymap-global-set "C-x C-r" #'recentf-open-files+)
