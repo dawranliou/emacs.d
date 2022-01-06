@@ -642,6 +642,8 @@ reuse it's window, otherwise create new one."
 (with-eval-after-package-install 'iedit
   (keymap-global-set "C-;" 'iedit-mode))
 
+;; Org mode
+
 (defun org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
               `(lambda (c)
@@ -659,6 +661,7 @@ reuse it's window, otherwise create new one."
 (keymap-global-set "C-c l" #'org-store-link)
 (keymap-global-set "C-c a" #'org-agenda)
 (keymap-global-set "C-c b" #'org-switchb)
+(global-set-key (kbd "C-c c") #'org-capture)
 
 (custom-set-variables
  '(org-directory "~/org")
@@ -679,7 +682,59 @@ reuse it's window, otherwise create new one."
  '(org-log-done 'time)
  '(org-log-into-drawer t)
  '(org-image-actual-width 640)
- '(org-attach-auto-tag "attachment"))
+ '(org-attach-auto-tag "attachment")
+ '(org-agenda-files '("~/org/journal/inbox.org"
+                      "~/org/journal/journal.org"))
+ '(org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
+                       (sequence "|" "WAIT(w)" "BACK(b)")))
+ '(org-todo-keyword-faces '(("TODO" :foreground "red" :weight bold)
+                            ("NEXT" :foreground "orange" :weight bold)
+                            ("WAIT" :foreground "HotPink2" :weight bold)
+                            ("BACK" :foreground "MediumPurple3" :weight bold)
+                            ("DONE" :foreground "forest green" :weight bold)))
+ '(org-agenda-window-setup 'current-window)
+ '(org-agenda-span 'day)
+ '(org-agenda-start-with-log-mode t)
+ '(org-default-notes-file "~/org/journal/inbox.org")
+ '(org-capture-templates '(("t" "todo" entry
+                            (file "~/org/journal/inbox.org")
+                            "* TODO %?\n%U\n%a\n"
+                            :clock-in t
+                            :clock-resume t
+                            :empty-lines 1)
+                           ("j" "journal" entry
+                            (file+olp+datetree "~/org/journal/journal.org")
+                            "* %?\n%U\n"
+                            :tree-type week
+                            :clock-in t
+                            :clock-resume t
+                            :empty-lines 1)
+                           ("m" "meeting" entry
+                            (file+olp+datetree "~/org/journal/journal.org")
+                            "* %^{Meeting} :meeting:\n\n%U\n\n%?\n"
+                            :tree-type week
+                            :clock-in t
+                            :clock-resume t
+                            :empty-lines 1)
+                           ("l" "learning" entry
+                            (file+olp+datetree "~/org/journal/journal.org")
+                            "* %? :learning:\n%U\n"
+                            :tree-type week
+                            :clock-in t
+                            :clock-resume t
+                            :empty-lines 1)
+                           ("i" "interrupt" entry
+                            (file+olp+datetree "~/org/journal/journal.org")
+                            "* Interruption %^g:interrupt:\n%U\n"
+                            :tree-type week
+                            :clock-in t
+                            :clock-resume t
+                            :empty-lines 1)))
+ '(org-refile-targets '((nil :maxlevel . 9)
+                        (org-agenda-files :maxlevel . 9)))
+ '(org-refile-use-outline-path t)
+ '(org-outline-path-complete-in-steps nil)
+ '(org-refile-allow-creating-parent-nodes 'confirm))
 
 (with-eval-after-load 'org
   (keymap-set org-mode-map "C-," nil)
