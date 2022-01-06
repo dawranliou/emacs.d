@@ -692,8 +692,7 @@ reuse it's window, otherwise create new one."
 (with-eval-after-package-install 'org-roam
   (setq org-roam-v2-ack t)
   (custom-set-variables
-   '(org-roam-directory "~/org/roam/")
-   '(org-roam-dailies-directory "journal/"))
+   '(org-roam-directory "~/org/roam/"))
   (autoload #'org-roam-node-find "org-roam" nil t)
   (autoload #'org-roam-capture "org-roam" nil t)
   (autoload #'org-roam-node-insert "org-roam" nil t)
@@ -704,11 +703,7 @@ reuse it's window, otherwise create new one."
   (with-eval-after-load 'org-roam
     (org-roam-setup)
     (keymap-global-set "C-c n g" #'org-roam-graph)
-    (keymap-global-set "C-c n l" #'org-roam-buffer-toggle))
-
-  (keymap-global-set "C-c n d" #'org-roam-dailies-goto-today)
-  (with-eval-after-load 'org-roam-dailies
-    (keymap-global-set "C-c d" org-roam-dailies-map)))
+    (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
 
 (with-eval-after-package-install 'magit
   (autoload #'magit-project-status "magit" nil t)
