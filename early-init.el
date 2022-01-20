@@ -37,8 +37,7 @@
 ;;; - UI
 
 (setq-default default-frame-alist
-              '((menu-bar-lines         . 0)
-                (tool-bar-lines         . 0)
+              '((tool-bar-lines         . 0)
                 (horizontal-scroll-barr . nil)
                 (vertical-scroll-bars   . nil)
                 (width                  . 90)
