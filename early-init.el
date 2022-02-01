@@ -14,11 +14,14 @@
   (setenv "PATH" (concat "/usr/local/bin:/usr/local/MacGPG2/bin:/usr/local/go/bin:/Library/TeX/texbin:"
                          (getenv "PATH"))))
 
-;;; - GC
+;;; - Startup performance
+
+(defvar doom--file-name-handler-alist file-name-handler-alist)
 
 (setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.7
+      gc-cons-percentage 0.6
       ;; package-quickstart t
+      file-name-handler-alist nil
       frame-inhibit-implied-resize t
       native-comp-async-report-warnings-errors nil)
 
@@ -26,7 +29,8 @@
  'emacs-startup-hook
  (lambda ()
    (setq gc-cons-threshold (* 256 1024 1024) ; 256mb
-         gc-cons-percentage 0.3)
+         gc-cons-percentage 0.3
+         file-name-handler-alist doom--file-name-handler-alist)
    (message "*** Emacs loaded in %.2f seconds with %d garbage collections."
             (float-time (time-subtract after-init-time before-init-time))
             gcs-done)
