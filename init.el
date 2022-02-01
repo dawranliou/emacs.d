@@ -494,6 +494,10 @@ The optional argument can be generated with `make-hippie-expand-function'."
 
 ;;; Built-in Packages
 
+(with-eval-after-load 'tab-bar
+  (add-hook 'tab-bar-tab-post-open-functions
+            (lambda (&rest _)
+              (call-interactively #'tab-bar-rename-tab))))
 
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
