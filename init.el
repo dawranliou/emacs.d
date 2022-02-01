@@ -125,7 +125,18 @@
  '(shr-discard-aria-hidden t)
  '(shr-cookie-policy nil)
 
+ '(column-number-mode t)
+ '(show-paren-mode t)
+ '(electric-pair-mode t)
+ '(savehist-mode t)
+ '(save-place-mode t)
+ '(winner-mode t)
+ '(global-so-long-mode t)
+ '(delete-selection-mode t)
+
  ;; Emacs 29
+ '(repeat-mode t)
+ '(pixel-scroll-precision-mode t)
  '(show-paren-context-when-offscreen t))
 
 (setq-default
@@ -483,14 +494,6 @@ The optional argument can be generated with `make-hippie-expand-function'."
 
 ;;; Built-in Packages
 
-(column-number-mode)
-(show-paren-mode)
-(electric-pair-mode 1)
-(save-place-mode t)
-(add-hook 'after-init-hook #'savehist-mode)
-(winner-mode)
-(global-so-long-mode)
-(delete-selection-mode)
 
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
