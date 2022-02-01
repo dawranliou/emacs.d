@@ -191,6 +191,8 @@
 (keymap-global-set "s-w" #'delete-window)
 (keymap-global-set "s-v" #'yank)
 (keymap-global-set "C-c f d" #'find-config)
+(keymap-global-set "C-c f j" #'find-journal)
+(keymap-global-set "C-c f i" #'find-inbox)
 (keymap-global-set "C-c t t" #'load-one-theme)
 (keymap-global-set "C-c t w" #'whitespace-mode)
 (keymap-global-set "C-c t m" #'toggle-frame-maximized)
@@ -254,6 +256,14 @@ scratch buffer.  The newly created buffer would have the
 (defun find-config ()
   (interactive)
   (find-file (expand-file-name user-init-file)))
+
+(defun find-journal ()
+  (interactive)
+  (find-file (expand-file-name "~/org/journal/journal.org")))
+
+(defun find-inbox ()
+  (interactive)
+  (find-file (expand-file-name "~/org/journal/inbox.org")))
 
 (defun load-one-theme-action (theme)
   "Disable current themes and load theme THEME."
@@ -636,6 +646,7 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'ws-butler
   (add-hook 'prog-mode-hook 'ws-butler-mode)
+  (add-hook 'text-mode-hook 'ws-butler-mode)
   (custom-set-variables
    '(ws-butler-keep-whitespace-before-point nil)))
 
@@ -685,12 +696,14 @@ reuse it's window, otherwise create new one."
  '(org-attach-auto-tag "attachment")
  '(org-agenda-files '("~/org/journal/inbox.org"
                       "~/org/journal/journal.org"))
- '(org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-                       (sequence "|" "WAIT(w)" "BACK(b)")))
+ '(org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d!)")
+                       (sequence "WAIT(w)" "|" "BACK(b)" "DECLINED(D)")))
  '(org-todo-keyword-faces '(("TODO" :foreground "red" :weight bold)
-                            ("NEXT" :foreground "orange" :weight bold)
+                            ("NEXT" :foreground "blue" :weight bold)
+                            ("REVIEW" :foreground "orange" :weight bold)
                             ("WAIT" :foreground "HotPink2" :weight bold)
                             ("BACK" :foreground "MediumPurple3" :weight bold)
+                            ("DECLINED" :foreground "forest green" :weight bold)
                             ("DONE" :foreground "forest green" :weight bold)))
  '(org-agenda-window-setup 'current-window)
  '(org-agenda-span 'day)
@@ -698,20 +711,28 @@ reuse it's window, otherwise create new one."
  '(org-default-notes-file "~/org/journal/inbox.org")
  '(org-capture-templates '(("t" "todo" entry
                             (file "~/org/journal/inbox.org")
-                            "* TODO %?\n%U\n%a\n"
+                            "* TODO %?\n"
                             :clock-in t
                             :clock-resume t
                             :empty-lines 1)
                            ("j" "journal" entry
                             (file+olp+datetree "~/org/journal/journal.org")
-                            "* %?\n%U\n"
+                            "* %?\n%i\n%a"
                             :tree-type week
-                            :clock-in t
-                            :clock-resume t
                             :empty-lines 1)
+                           ("i" "check in" entry
+                            (file+olp+datetree "~/org/journal/journal.org")
+                            "* Check in %U\n#+BEGIN: clocktable :scope agenda :maxlevel 4 :block %<%Y-%m-%d>\n#+END:"
+                            :tree-type week
+                            :immediate-finish t)
+                           ("o" "check out" entry
+                            (file+olp+datetree "~/org/journal/journal.org")
+                            "* Check out - %U"
+                            :tree-type week
+                            :immediate-finish t)
                            ("m" "meeting" entry
                             (file+olp+datetree "~/org/journal/journal.org")
-                            "* %^{Meeting} :meeting:\n\n%U\n\n%?\n"
+                            "* %^{Meeting} :meeting:\n%?\n"
                             :tree-type week
                             :clock-in t
                             :clock-resume t
@@ -723,9 +744,9 @@ reuse it's window, otherwise create new one."
                             :clock-in t
                             :clock-resume t
                             :empty-lines 1)
-                           ("i" "interrupt" entry
+                           ("s" "slack" entry
                             (file+olp+datetree "~/org/journal/journal.org")
-                            "* Interruption %^g:interrupt:\n%U\n"
+                            "* Slack :meeting:\n%?\n"
                             :tree-type week
                             :clock-in t
                             :clock-resume t
