@@ -41,12 +41,10 @@
 ;;; - UI
 
 (setq-default default-frame-alist
-              '((tool-bar-lines         . 0)
-                (horizontal-scroll-barr . nil)
-                (vertical-scroll-bars   . nil)
-                (width                  . 90)
-                (height                 . 40)
-                (font                   . "Iosevka-15")))
+              '((tool-bar-lines . 0)
+                (width          . 90)
+                (height         . 40)
+                (font           . "Iosevka-15")))
 
 ;;; - UTF-8 everything
 
