@@ -48,7 +48,7 @@
         org-roam
         rainbow-mode
         rg
-        slime
+        sly
         smartscan
         sqlformat
         vertico
@@ -848,11 +848,8 @@ reuse it's window, otherwise create new one."
   (add-hook 'html-mode 'emmet-mode)
   (add-hook 'css-mode 'emmet-mode))
 
-(with-eval-after-package-install 'slime
-  (autoload #'slime "slime" nil t)
-  (setq inferior-lisp-program "sbcl")
-  (with-eval-after-load 'slime
-    (load (expand-file-name "~/.quicklisp/slime-helper.el"))))
+(with-eval-after-package-install 'sly
+  (setq inferior-lisp-program "sbcl"))
 
 (with-eval-after-package-install 'sqlformat
   (custom-set-variables
