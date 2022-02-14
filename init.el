@@ -754,7 +754,7 @@ reuse it's window, otherwise create new one."
                             :empty-lines 1)
                            ("i" "check in" entry
                             (file+olp+datetree "~/org/journal/journal.org")
-                            "* Check in %U\n#+BEGIN: clocktable :scope agenda :maxlevel 4 :block %<%Y-%m-%d>\n#+END:"
+                            "* Check in %U\n#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :block %<%Y-%m-%d>\n#+END:"
                             :tree-type week
                             :immediate-finish t)
                            ("o" "check out" entry
