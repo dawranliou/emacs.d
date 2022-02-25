@@ -30,6 +30,7 @@
         cider
         clojure-mode
         corfu
+        eglot
         elfeed
         elpher
         embark
@@ -40,7 +41,7 @@
         go-mode
         helpful
         iedit
-        lsp-mode
+        ;;lsp-mode
         magit
         markdown-mode
         orderless
@@ -832,33 +833,38 @@ reuse it's window, otherwise create new one."
 (with-eval-after-package-install 'flycheck
   (add-hook 'prog-init-hook 'flycheck-mode))
 
-(with-eval-after-package-install 'lsp-mode
-  (custom-set-faces
-   `(lsp-face-highlight-textual ((t (:inherit lazy-highlight)))))
-  (custom-set-variables
-   '(lsp-enable-file-watchers nil)
-   '(lsp-headerline-breadcrumb-enable nil)
-   '(lsp-keymap-prefix "C-c L")
-   '(lsp-enable-indentation nil)
-   '(lsp-enable-snippet nil)
-   '(lsp-completion-provider :none)
-   '(lsp-eldoc-enable-hover nil)
-   '(lsp-modeline-diagnostics-scope :file)
-   '(lsp-modeline-code-actions-enable nil)
-   '(lsp-lens-enable nil))
-  (setq read-process-output-max (* 1024 1024))
+;; (with-eval-after-package-install 'lsp-mode
+;;   (add-hook 'clojure-mode-hook 'lsp)
+;;   (add-hook 'clojurec-mode-hook 'lsp)
+;;   (add-hook 'clojurescript-mode-hook 'lsp)
+;;   (custom-set-faces
+;;    `(lsp-face-highlight-textual ((t (:inherit lazy-highlight)))))
+;;   (custom-set-variables
+;;    '(lsp-enable-file-watchers nil)
+;;    '(lsp-headerline-breadcrumb-enable nil)
+;;    '(lsp-keymap-prefix "C-c L")
+;;    '(lsp-enable-indentation nil)
+;;    '(lsp-enable-snippet nil)
+;;    '(lsp-completion-provider :none)
+;;    '(lsp-eldoc-enable-hover nil)
+;;    '(lsp-modeline-diagnostics-scope :file)
+;;    '(lsp-modeline-code-actions-enable nil)
+;;    '(lsp-lens-enable nil))
+;;   (setq read-process-output-max (* 1024 1024))
 
-  (defun lsp-mode-setup-completion ()
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless)))
-  (add-hook 'lsp-completion-mode #'lsp-mode-setup-completion))
+;;   (defun lsp-mode-setup-completion ()
+;;     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+;;           '(orderless)))
+;;   (add-hook 'lsp-completion-mode #'lsp-mode-setup-completion))
+
+(with-eval-after-package-install 'eglot
+  (add-hook 'clojure-mode-hook 'eglot-ensure)
+  (add-hook 'clojurec-mode-hook 'eglot-ensure)
+  (add-hook 'clojurescript-mode-hook 'eglot-ensure))
 
 ;;; Language major modes
 
 (with-eval-after-package-install 'clojure-mode
-  (add-hook 'clojure-mode-hook 'lsp)
-  (add-hook 'clojurec-mode-hook 'lsp)
-  (add-hook 'clojurescript-mode-hook 'lsp)
   (add-hook 'clojure-mode-hook
             (lambda ()
               (setq-local hippie-expand-try-functions-list
