@@ -36,7 +36,7 @@
         embark
         emmet-mode
         fennel-mode
-        flycheck
+        ;; flycheck
         flyspell
         go-mode
         helpful
@@ -830,8 +830,8 @@ reuse it's window, otherwise create new one."
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
-(with-eval-after-package-install 'flycheck
-  (add-hook 'prog-init-hook 'flycheck-mode))
+;; (with-eval-after-package-install 'flycheck
+;;   (add-hook 'prog-init-hook 'flycheck-mode))
 
 ;; (with-eval-after-package-install 'lsp-mode
 ;;   (add-hook 'clojure-mode-hook 'lsp)
