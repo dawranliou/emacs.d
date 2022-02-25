@@ -835,8 +835,6 @@ reuse it's window, otherwise create new one."
 
 ;; (with-eval-after-package-install 'lsp-mode
 ;;   (add-hook 'clojure-mode-hook 'lsp)
-;;   (add-hook 'clojurec-mode-hook 'lsp)
-;;   (add-hook 'clojurescript-mode-hook 'lsp)
 ;;   (custom-set-faces
 ;;    `(lsp-face-highlight-textual ((t (:inherit lazy-highlight)))))
 ;;   (custom-set-variables
@@ -859,8 +857,6 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
-  (add-hook 'clojurec-mode-hook 'eglot-ensure)
-  (add-hook 'clojurescript-mode-hook 'eglot-ensure)
 
   (custom-set-variables
    '(eglot-connect-timeout 300))
