@@ -598,7 +598,7 @@ The optional argument can be generated with `make-hippie-expand-function'."
 (with-eval-after-package-install 'orderless
   (custom-set-variables
    '(completion-styles '(orderless))
-   '(completion-category-overrides '((file (styles partial-completion)))))
+   '(completion-category-overrides '((file (styles basic orderless)))))
   (setq completion-category-defaults nil))
 
 (with-eval-after-package-install 'vertico
