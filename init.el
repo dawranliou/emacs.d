@@ -481,17 +481,7 @@ The optional argument can be generated with `make-hippie-expand-function'."
 (add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
 
-(add-hook
- 'after-init-hook
- (lambda ()
-   (load-theme
-    ;; Try to detect system theme
-    (if (and (fboundp 'mac-application-state)
-             (equal "NSAppearanceNameDarkAqua"
-                    (plist-get (mac-application-state) :appearance)))
-        'sketch-black
-      'sketch-white)
-    t)))
+(add-hook 'after-init-hook (lambda () (load-theme 'sketch-white t)))
 
 ;;; Built-in Packages
 
