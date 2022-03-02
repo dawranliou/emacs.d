@@ -872,7 +872,7 @@ reuse it's window, otherwise create new one."
   (defun find-clojure-project-advice (orig-fun &rest args)
     "Fix project-root for the clojure monorepo setup."
     (let ((project-find-functions
-           (add-to-list 'project-find-functions #'project-try-clojure-project)))
+           (cons #'project-try-clojure-project project-find-functions)))
       (apply orig-fun args)))
 
   (advice-add 'eglot-ensure :around #'find-clojure-project-advice))
