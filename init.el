@@ -850,6 +850,8 @@ reuse it's window, otherwise create new one."
 
   (custom-set-variables
    '(eglot-connect-timeout 300))
+  (custom-set-faces
+   '(eglot-highlight-symbol-face ((t (:inherit highlight)))))
 
   ;; Fix for the clojure monorepo setup.  We want to start the clojure-lsp under
   ;; the sub-directory instead of the project root (vc root).
