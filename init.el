@@ -847,27 +847,14 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
+  ;; (with-eval-after-load 'eglot
+  ;;   (add-to-list 'eglot-server-programs
+  ;;                '(clojure-mode "~/projects/clojure-lsp/clojure-lsp")))
 
   (custom-set-variables
-   '(eglot-connect-timeout 300))
+   '(eglot-connect-timeout 600))
   (custom-set-faces
-   '(eglot-highlight-symbol-face ((t (:inherit highlight)))))
-
-  ;; Fix for the clojure monorepo setup.  We want to start the clojure-lsp under
-  ;; the sub-directory instead of the project root (vc root).
-
-  (defun project-try-clojure-project (dir)
-    "Try to locate a Clojure project."
-    (when-let ((found (clojure-project-dir)))
-      (cons 'transient found)))
-
-  (defun find-clojure-project-advice (orig-fun &rest args)
-    "Fix project-root for the clojure monorepo setup."
-    (let ((project-find-functions
-           (cons #'project-try-clojure-project project-find-functions)))
-      (apply orig-fun args)))
-
-  (advice-add 'eglot-ensure :around #'find-clojure-project-advice))
+   '(eglot-highlight-symbol-face ((t (:inherit highlight))))))
 
 ;;; Language major modes
 
