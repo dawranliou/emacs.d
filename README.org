@@ -1,44 +1,8 @@
 #+TITLE:Daw-Ran Liou's Emacs Configuration
 #+STARTUP: overview
-#+PROPERTY: header-args:emacs-lisp :tangle init.el :results silent
 
 This is an ongoing evolution of my original Emacs configuration files, inspired
-by a bunch of resources I’ve found online:
-
-- http://sriramkswamy.github.io/dotemacs/
-- https://ambrevar.xyz/emacs/
-- https://git.sr.ht/~technomancy/dotfiles/tree/master/item/.emacs.d
-- https://github.com/alexander-yakushev/.emacs.d
-- https://github.com/angrybacon/dotemacs
-- https://github.com/bbatsov/prelude
-- https://github.com/bcmertz/dotfiles/tree/main/.emacs.d
-- https://github.com/bkaestner/.emacs.d
-- https://github.com/Bogdanp/.emacs.d
-- https://github.com/daviwil/dotfiles/blob/master/Emacs.org
-- https://github.com/freesteph/dotfiles
-- https://github.com/hlissner/doom-emacs
-- https://github.com/ianpan870102/.wsl-emacs.d
-- https://github.com/ianpan870102/yay-evil-emacs/blob/master/config.org
-- https://github.com/jart/justinemacs
-- https://github.com/karthink/.emacs.d
-- https://github.com/magnars/.emacs.d
-- https://github.com/mclear-tools/dotemacs
-- https://github.com/meain/dotfiles/blob/master/emacs/.config/emacs/init.el
-- https://github.com/meqif/.emacs.d
-- https://github.com/mpereira/.emacs.d
-- https://github.com/oantolin/emacs-config
-- https://github.com/olivertaylor/dotfiles
-- https://github.com/purcell/emacs.d
-- https://github.com/raxod502/radian/blob/develop/emacs/radian.el
-- https://github.com/rnkn/dotfiles/
-- https://github.com/sam217pa/emacs-config
-- https://gitlab.com/ambrevar/dotfiles/-/tree/master/.emacs.d
-- https://karthinks.com/software/batteries-included-with-emacs/
-- https://luca.cambiaghi.me/vanilla-emacs/readme.html
-
-Style guide:
-
-- [[https://github.com/bbatsov/emacs-lisp-style-guide][bbatsov's emacs-lisp-style-guide]]
+by a bunch of resources I’ve found online.
 
 * Installation
 
@@ -56,7 +20,6 @@ too fancy here.
 
 - =early-init.el= - See [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Early-Init-File.html][The Early Init File]]
 - =init.el= - The majority of the configuration
-- =lisp/extras.el= - Couple of things I found online.
 
 These are kept out of git's version control:
 
@@ -65,6 +28,10 @@ These are kept out of git's version control:
 * Keybindings
 Keybinding ideas:
 - http://mbork.pl/2019-03-18_Free_Emacs_key_bindings
+
+This section might be out-dated because I am constantly tweaking my
+configurations.
+
 ** Mac (OSX) ergonomics keybindings
 
 Several OSX native keybindings that utilizes the command key (which is also the
