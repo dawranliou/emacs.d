@@ -36,12 +36,10 @@
         embark
         emmet-mode
         fennel-mode
-        ;; flycheck
         flyspell
         go-mode
         helpful
         iedit
-        ;;lsp-mode
         magit
         markdown-mode
         orderless
@@ -142,22 +140,7 @@
  tab-always-indent t
  line-spacing 3
  indent-tabs-mode nil
- truncate-lines t
- mode-line-format '("%e"
-                    mode-line-front-space
-                    mode-line-mule-info
-                    mode-line-client
-                    mode-line-modified
-                    mode-line-remote
-                    mode-line-frame-identification
-                    mode-line-buffer-identification
-                    "   "
-                    mode-line-position
-                    ;; (vc-mode vc-mode)
-                    "  "
-                    mode-line-modes
-                    mode-line-misc-info
-                    mode-line-end-spaces))
+ truncate-lines t)
 
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
@@ -758,33 +741,9 @@ reuse it's window, otherwise create new one."
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
-;; (with-eval-after-package-install 'flycheck
-;;   (add-hook 'prog-init-hook 'flycheck-mode))
-
-;; (with-eval-after-package-install 'lsp-mode
-;;   (add-hook 'clojure-mode-hook 'lsp)
-;;   (custom-set-faces
-;;    `(lsp-face-highlight-textual ((t (:inherit lazy-highlight)))))
-;;   (custom-set-variables
-;;    '(lsp-enable-file-watchers nil)
-;;    '(lsp-headerline-breadcrumb-enable nil)
-;;    '(lsp-keymap-prefix "C-c L")
-;;    '(lsp-enable-indentation nil)
-;;    '(lsp-enable-snippet nil)
-;;    '(lsp-completion-provider :none)
-;;    '(lsp-eldoc-enable-hover nil)
-;;    '(lsp-modeline-diagnostics-scope :file)
-;;    '(lsp-modeline-code-actions-enable nil)
-;;    '(lsp-lens-enable nil))
-;;   (setq read-process-output-max (* 1024 1024))
-
-;;   (defun lsp-mode-setup-completion ()
-;;     (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-;;           '(orderless)))
-;;   (add-hook 'lsp-completion-mode #'lsp-mode-setup-completion))
-
 (with-eval-after-package-install 'eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
+  ;; Debug clojure-lsp
   ;; (with-eval-after-load 'eglot
   ;;   (add-to-list 'eglot-server-programs
   ;;                '(clojure-mode "~/projects/clojure-lsp/clojure-lsp")))
@@ -841,27 +800,6 @@ reuse it's window, otherwise create new one."
    '(sqlformat-args '("-s2" "-g")))
   (with-eval-after-load 'sql
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
-
-(with-eval-after-package-install 'elfeed
-  (autoload #'elfeed "elfeed" nil t)
-  (custom-set-variables
-   '(elfeed-feeds '("http://irreal.org/blog/?feed=rss2"
-                    "https://ambrevar.xyz/atom.xml"
-                    "https://blog.meain.io/feed.xml"
-                    "https://clojure.org/feed.xml"
-                    "https://d12frosted.io/atom.xml"
-                    "https://dawranliou.com/atom.xml"
-                    "https://drewdevault.com/blog/index.xml"
-                    "https://emacsredux.com/atom.xml"
-                    "https://endlessparentheses.com/atom.xml"
-                    "https://erick.navarro.io/index.xml"
-                    "https://protesilaos.com/codelog.xml"
-                    "https://ruzkuku.com/all.atom"
-                    "https://technomancy.us/atom.xml"
-                    "https://worace.works/atom.xml"
-                    "https://www.manueluberti.eu/feed.xml"
-                    "https://www.murilopereira.com/index.xml"
-                    "https://www.with-emacs.com/rss."))))
 
 (provide 'init)
 
