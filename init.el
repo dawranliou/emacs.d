@@ -189,19 +189,6 @@
 (keymap-global-set "M-/" #'hippie-expand)
 (keymap-global-set "M-Z" #'zap-to-char)
 (keymap-global-set "M-z" #'zap-up-to-char)
-(keymap-global-set "s--" #'text-scale-decrease)
-(keymap-global-set "s-<backspace>" #'kill-whole-line)
-(keymap-global-set "s-=" #'text-scale-adjust)
-(keymap-global-set "s-S" #'write-file)
-(keymap-global-set "s-a" #'mark-whole-buffer)
-(keymap-global-set "s-i" #'imenu)
-(keymap-global-set "s-k" #'kill-this-buffer)
-(keymap-global-set "s-p" #'project-find-file)
-(keymap-global-set "s-q" #'save-buffers-kill-emacs)
-(keymap-global-set "s-s" #'save-buffer)
-(keymap-global-set "s-t" #'jump-to-scratch-buffer)
-(keymap-global-set "s-w" #'delete-window)
-(keymap-global-set "s-v" #'yank)
 (keymap-global-set "C-c f d" #'find-config)
 (keymap-global-set "C-c f j" #'find-journal)
 (keymap-global-set "C-c f i" #'find-inbox)
@@ -219,7 +206,6 @@
 (keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
 (global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+) ; C-a
 ;; (keymap-global-set "C-<backspace>" #'kill-line-backwards)
-(keymap-global-set "S-<return>" #'newline-at-end-of-line)
 (keymap-global-set "C-x C-r" #'recentf-open-files+)
 (keymap-global-set "C-w" #'backward-kill-word-or-region)
 (keymap-global-set "M-Q" #'unfill-paragraph)
@@ -467,10 +453,8 @@ The optional argument can be generated with `make-hippie-expand-function'."
 ;;; Mac
 
 (when (eq system-type 'darwin)
-  (setq mac-right-command-modifier 'super
-        mac-command-modifier 'super
-        mac-option-modifier 'meta
-        mac-right-option-modifier 'meta
+  (setq mac-command-modifier 'meta
+        mac-option-modifier 'meta       ; Backup meta key
         trash-directory "~/.Trash"
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aFGhlv --group-directories-first"))
@@ -805,10 +789,6 @@ reuse it's window, otherwise create new one."
     (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
 
 (with-eval-after-package-install 'magit
-  (autoload #'magit-project-status "magit" nil t)
-  (keymap-global-set "s-g" #'magit-status)
-  (keymap-global-set "C-x g" #'magit-status)
-  (keymap-global-set "C-c g" #'magit-file-dispatch)
   (custom-set-variables
    '(magit-diff-refine-hunk 'all)
    '(magit-display-buffer-function
