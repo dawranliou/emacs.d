@@ -47,17 +47,6 @@ There are some cases where I prefer emacs style keybindings.
 | C-a     | move-beginning-of-line+      | move-beginning-of-line  |
 | C-w     | backward-kill-word-or-region | backward-kill-word      |
 | C-z     | nil                          | suspend-emacs           |
-| C-c d   | find-config                  |                         |
-| C-c r   | rg                           |                         |
-| C-c n f | org-roam-node-find           |                         |
-| C-c n i | org-roam-node-insert         |                         |
-| C-c n c | org-roam-capture             |                         |
-| C-c C-d | helpful-at-point             |                         |
-| C-x k   | kill this buffer             |                         |
-| C-x C-b | ibuffer                      |                         |
-| C-x C-e | pp-eval-last-sexp            |                         |
-| C-x C-j | dired-jump                   |                         |
-| C-x C-r | recentf-open-files+          |                         |
 | M-:     | pp-eval-expression           |                         |
 | M-j     | avy-goto-char-timer          |                         |
 | M-i     | delete-other-windows         |                         |
@@ -71,13 +60,51 @@ There are some cases where I prefer emacs style keybindings.
 | M-Z     | zap-to-char                  |                         |
 | M-SPC   | cycle-spacing                |                         |
 
-*** Help map
+*** =C-c= map
 
-| Key   | Binding         | Original |
-|-------+-----------------+----------|
-| C-h B | embark-bindings |          |
-| C-h C | helpful-command |          |
-| C-h F | describe-face   |          |
+| Key     | Binding                      | Original |
+|---------+------------------------------+----------|
+| C-c d   | find-config                  |          |
+| C-c r   | rg                           |          |
+| C-c l   | org-store-link               |          |
+| C-c a   | org-agenda                   |          |
+| C-c b   | org-switchb                  |          |
+| C-c c   | org-capture                  |          |
+| C-c C-d | helpful-at-point             |          |
+| C-c C-f | completion-at-point-filename |          |
+| C-c n f | org-roam-node-find           |          |
+| C-c n i | org-roam-node-insert         |          |
+| C-c n c | org-roam-capture             |          |
+| C-c t t | load-one-theme               |          |
+| C-c t w | whitespace-mode              |          |
+| C-c t m | toggle-frame-maximized       |          |
+| C-c t M | toggle-frame-fullscreen      |          |
+| C-c t $ | toggle-truncate-lines        |          |
+
+*** =C-x= map
+
+| Key     | Binding             | Original            |
+|---------+---------------------+---------------------|
+| C-x k   | kill this buffer    | kill-buffer         |
+| C-x C-b | ibuffer             | list-buffers        |
+| C-x C-e | pp-eval-last-sexp   | eval-last-sexp      |
+| C-x C-j | dired-jump          |                     |
+| C-x C-r | recentf-open-files+ | find-file-read-only |
+
+*** Help map =C-h=
+
+| Key   | Binding           | Original          |
+|-------+-------------------+-------------------|
+| C-h B | embark-bindings   |                   |
+| C-h C | helpful-command   |                   |
+| C-h F | describe-face     |                   |
+| C-h f | helpful-callable  | describe-function |
+| C-h v | helpful-variable  | describe-variable |
+| C-h k | helpful-key       | describe-key      |
+| C-h o | helpful-symbol    | describe-symbol   |
+| C-h L | find-library      |                   |
+| C-h p | describe-package  | finder-by-keyword |
+| C-h P | finder-by-keyword | describe-package  |
 
 ** Mac (OSX) ergonomics keybindings
 
@@ -90,6 +117,11 @@ Lately I decided to use the command keys as the meta keys on my mac as well.
 This forced me to swap/remove some of the OS default keybindings.  However, the
 benefit of having the meta key in a more ergonomics position outweighs the
 trouble.  I spent most of my time in Emacs anyways.
+
+To rebind/disable some Mac OS default keybindings:
+- [[https://apple.stackexchange.com/questions/210517/disable-shift-cmd-q-for-logout][Disable Shift Cmd Q for logout]]
+- [[https://apple.stackexchange.com/questions/22785/how-do-i-disable-the-command-control-d-word-definition-keyboard-shortcut-in-os-x][How do I disable the Command-Control-D word definition keyboard shortcut in OS
+  X Lion?]]
 
 ** Evil/modal/vim-style keybindings
 

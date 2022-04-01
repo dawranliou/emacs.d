@@ -173,10 +173,8 @@
 (keymap-substitute global-map #'eval-expression #'pp-eval-expression) ; M-:
 (keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
 (global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+) ; C-a
-;; (keymap-global-set "C-<backspace>" #'kill-line-backwards)
 (keymap-global-set "C-x C-r" #'recentf-open-files+)
 (keymap-global-set "C-w" #'backward-kill-word-or-region)
-(keymap-global-set "M-Q" #'unfill-paragraph)
 (keymap-global-set "M-q" #'fill-or-unfill-paragraph)
 (keymap-set ctl-x-4-map "s" #'toggle-window-split)
 (keymap-set ctl-x-4-map "t" #'transpose-windows)
@@ -256,11 +254,6 @@ This function is designed to be called from `kill-buffer-query-functions'."
   "Generate a new UUID and insert."
   (interactive)
   (insert (downcase (string-trim (shell-command-to-string "uuidgen")))))
-
-(defun kill-line-backwards ()
-  "Kill line backwards."
-  (interactive)
-  (kill-line 0))
 
 (defun backward-kill-word-or-region (&optional arg)
   "Kill word backwards unless region is active,
