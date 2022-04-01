@@ -32,65 +32,73 @@ Keybinding ideas:
 This section might be out-dated because I am constantly tweaking my
 configurations.
 
-** Mac (OSX) ergonomics keybindings
-
-Several OSX native keybindings that utilizes the command key (which is also the
-=super= key) are added to make context-switching to other native apps easier,
-e.g. Chrome, Firefox.
-
-| Key           | Binding                 |
-|---------------+-------------------------|
-| s-=           | text-scale-adjust       |
-| s--           | text-scale-decrease     |
-| s-<backspace> | kill-whole-line         |
-| s-F           | rg-project              |
-| s-S           | write-file              |
-| s-a           | mark-whole-buffer       |
-| s-g           | magit-status            |
-| s-k           | kill-this-buffer        |
-| s-p           | project-find-file       |
-| s-q           | save-buffers-kill-emacs |
-| s-s           | save-buffer             |
-| s-t           | open scratch buffer     |
-| s-v           | yank (paste)            |
-| s-w           | delete-window           |
-
 ** Emacs-style keybindings
 
 There are some cases where I prefer emacs style keybindings.
 
-| Key     | Binding               |
-|---------+-----------------------|
-| C-;     | iedit-mode            |
-| C-M-'   | +eshell-here          |
-| C-M-j   | switch-to-buffer      |
-| C-c C-d | helpful-at-point      |
-| C-c g   | magit-file-dispatch   |
-| C-c r   | rg                    |
-| C-h B   | embark-bindings       |
-| C-h C   | helpful-command       |
-| C-h F   | describe-face         |
-| C-x C-b | ibuffer               |
-| C-x C-j | dired-jump            |
-| C-x C-r | recentf-open-files+   |
-| C-x C-z | selectrum-repeat      |
-| C-x g   | magit-status          |
-| M-/     | hippie-expand         |
-| M-:     | pp-eval-expression    |
-| M-i     | delete-other-windows  |
-| M-j     | avy-goto-char-timer   |
-| M-n     | scroll up 4 line      |
-| M-o     | other-window          |
-| M-p     | scroll down 4 line    |
-| s-,     | xref-pop-marker-stack |
-| s-.     | embark-act            |
+| Key     | Binding                      | Original                |
+|---------+------------------------------+-------------------------|
+| C-.     | embark-act                   |                         |
+| C-;     | iedit-mode                   |                         |
+| C-\     | undo-only                    |                         |
+| C-M-d   | down-list                    |                         |
+| C-M-r   | raise-sexp                   | isearch-backward-regexp |
+| C-M-w   | backward-kill-sexp           | append-next-kill        |
+| C-a     | move-beginning-of-line+      | move-beginning-of-line  |
+| C-w     | backward-kill-word-or-region | backward-kill-word      |
+| C-z     | nil                          | suspend-emacs           |
+| C-c d   | find-config                  |                         |
+| C-c r   | rg                           |                         |
+| C-c n f | org-roam-node-find           |                         |
+| C-c n i | org-roam-node-insert         |                         |
+| C-c n c | org-roam-capture             |                         |
+| C-c C-d | helpful-at-point             |                         |
+| C-x k   | kill this buffer             |                         |
+| C-x C-b | ibuffer                      |                         |
+| C-x C-e | pp-eval-last-sexp            |                         |
+| C-x C-j | dired-jump                   |                         |
+| C-x C-r | recentf-open-files+          |                         |
+| M-:     | pp-eval-expression           |                         |
+| M-j     | avy-goto-char-timer          |                         |
+| M-i     | delete-other-windows         |                         |
+| M-o     | other-window                 |                         |
+| M-n     | embark-next-symbol           |                         |
+| M-p     | embark-previous-symbol       |                         |
+| M-s n   | embark-next-symbol           |                         |
+| M-s p   | embark-previous-symbol       |                         |
+| M-q     | fill-or-unfill-paragraph     |                         |
+| M-z     | zap-up-to-char               |                         |
+| M-Z     | zap-to-char                  |                         |
+| M-SPC   | cycle-spacing                |                         |
+
+*** Help map
+
+| Key   | Binding         | Original |
+|-------+-----------------+----------|
+| C-h B | embark-bindings |          |
+| C-h C | helpful-command |          |
+| C-h F | describe-face   |          |
+
+** Mac (OSX) ergonomics keybindings
+
+Not anymore!
+
+This section used to be my keybindings bound with the super modifier key
+(usually the command key ⌘).  Since I started using ArchLinu on my personal
+laptop (a ThinkPad T460S), I've grown to be less dependent on those keybindings.
+Lately I decided to use the command keys as the meta keys on my mac as well.
+This forced me to swap/remove some of the OS default keybindings.  However, the
+benefit of having the meta key in a more ergonomics position outweighs the
+trouble.  I spent most of my time in Emacs anyways.
 
 ** Evil/modal/vim-style keybindings
 
-Not anymore!  As a refugee from Vim, I started off from Spacemacs, Doom,
-=evil-mode=, and then =modalka=.  As I got closer to vanilla Emacs, the less I want
-to deal with all the hassles of coming in and out of the modes.  When I switched
-to =modalka= from =evil-mode= for its simplicity, I found myself not really using
-the =modalka-mode= at all.  I am as efficient as (if not more efficient than) I
-was using modal editing.  So i think it's time for me to graduate from the modal
+Not anymore!
+
+As a refugee from Vim, I started off from Spacemacs, Doom, =evil-mode=, and then
+=modalka=.  As I got closer to vanilla Emacs, the less I want to deal with all
+the hassles of coming in and out of the modes.  When I switched to =modalka=
+from =evil-mode= for its simplicity, I found myself not really using the
+=modalka-mode= at all.  I am as efficient as (if not more efficient than) I was
+using modal editing.  So i think it's time for me to graduate from the modal
 editing in general and embrace the Emacs key sequences.
