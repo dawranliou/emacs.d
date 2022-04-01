@@ -35,7 +35,6 @@
         elpher
         embark
         emmet-mode
-        fennel-mode
         flyspell
         go-mode
         helpful
@@ -144,8 +143,6 @@
 
 ;;; Keybindings
 
-(keymap-global-set "C-M-j" #'switch-to-buffer)
-(keymap-global-set "C-M-<backspace>" #'backward-kill-sexp)
 (keymap-global-set "C-x C-b" #'ibuffer)
 (keymap-global-set "C-x k" #'kill-this-buffer)
 (keymap-global-set "C-M-r" #'raise-sexp)
@@ -158,12 +155,9 @@
 (keymap-global-set "M-o" #'other-window)
 (keymap-global-set "M-i" #'delete-other-windows)
 (keymap-global-set "M-SPC" #'cycle-spacing)
-(keymap-global-set "C-M-/" #'dabbrev-completion)
 (keymap-global-set "M-Z" #'zap-to-char)
 (keymap-global-set "M-z" #'zap-up-to-char)
-(keymap-global-set "C-c f d" #'find-config)
-(keymap-global-set "C-c f j" #'find-journal)
-(keymap-global-set "C-c f i" #'find-inbox)
+(keymap-global-set "C-c d" #'find-config)
 (keymap-global-set "C-c t t" #'load-one-theme)
 (keymap-global-set "C-c t w" #'whitespace-mode)
 (keymap-global-set "C-c t m" #'toggle-frame-maximized)
@@ -306,15 +300,6 @@ of text."
   (let ((fill-column (point-max)))
     (fill-paragraph nil region)))
 
-(defun fill-or-unfill-paragraph (&optional unfill region)
-  "Fill paragraph (or REGION).
-        With the prefix argument UNFILL, unfill it instead."
-  (interactive (progn
-                 (barf-if-buffer-read-only)
-                 (list (if current-prefix-arg 'unfill) t)))
-  (let ((fill-column (if unfill (point-max) fill-column)))
-    (fill-paragraph nil region)))
-
 (defun -kill-and-echo (X)
   "Copy `X' into the `kill-ring' and echo to the minibuffer."
   (kill-new X)
@@ -448,7 +433,6 @@ of text."
   (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
-(add-hook 'prog-mode-hook 'smartscan-mode)
 
 ;;; 3rd Party Packages
 
@@ -621,7 +605,7 @@ reuse it's window, otherwise create new one."
      #'magit-display-buffer-same-window-except-diff-v1)))
 
 (with-eval-after-package-install 'rg
-  (keymap-global-set "s-F" #'rg-project)
+  (define-key project-prefix-map [remap project-find-regexp] #'rg-project)
   (keymap-global-set "C-c r" #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
