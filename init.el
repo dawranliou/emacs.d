@@ -146,6 +146,8 @@
 (keymap-global-set "C-x C-b" #'ibuffer)
 (keymap-global-set "C-x k" #'kill-this-buffer)
 (keymap-global-set "C-M-r" #'raise-sexp)
+(keymap-global-set "C-M-d" #'down-list)
+(keymap-global-set "C-M-w" #'backward-kill-sexp)
 (keymap-global-set "M-h" nil)
 (keymap-global-set "M-h w" #'mark-word)
 (keymap-global-set "M-h SPC" #'mark-word)
@@ -342,6 +344,8 @@ of text."
             (lambda (&rest _)
               (call-interactively #'tab-bar-rename-tab))))
 
+(ffap-bindings)
+
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (add-hook 'dired-mode-hook 'hl-line-mode)
@@ -486,11 +490,13 @@ of text."
 (with-eval-after-package-install 'embark
   (keymap-global-set "C-." #'embark-act)
   (keymap-global-set "C-h B" #'embark-bindings)
-  (setq prefix-help-command #'embark-prefix-help-command)
-  (custom-set-variables
-   '(embark-indicators '(embark-minimal-indicator
-                         embark-highlight-indicator
-                         embark-isearch-highlight-indicator))))
+  (keymap-global-set "M-n" #'embark-next-symbol)
+  (keymap-global-set "M-s n" #'embark-next-symbol)
+  (keymap-global-set "M-p" #'embark-previous-symbol)
+  (keymap-global-set "M-s p" #'embark-previous-symbol)
+  (autoload #'embark-next-symbol "embark" nil t)
+  (autoload #'embark-previous-symbol "embark" nil t)
+  (setq prefix-help-command #'embark-prefix-help-command))
 
 (with-eval-after-package-install 'avy
   (keymap-global-set "M-j" 'avy-goto-char-timer))
