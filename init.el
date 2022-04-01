@@ -102,11 +102,6 @@
                                    search-ring
                                    regexp-search-ring))
  '(history-length 20000)
- '(display-time-world-list '(("Asia/Taipei" "Taipei")
-                             ("America/Toronto" "Toronto")
-                             ("America/Los_Angeles" "San Francisco")
-                             ("Europe/Berlin" "Düsseldorf")
-                             ("Europe/London" "GMT")))
  '(scroll-conservatively 101)           ; Don't recenter
  '(ediff-window-setup-function #'ediff-setup-windows-plain)
  '(ediff-split-window-function #'split-window-horizontally)
@@ -209,36 +204,9 @@ This function is designed to be called from `kill-buffer-query-functions'."
 
 (add-hook 'kill-buffer-query-functions #'buffer-confirm-kill-p)
 
-(defun jump-to-scratch-buffer ()
-  "Jump to the existing *scratch* buffer or create a new one.
-
-If the current buffer is the *scratch* buffer, create a new
-scratch buffer.  The newly created buffer would have the
-`buffer-confirm-kill' and `buffer-offer-save' protection."
-  (interactive)
-  (let ((existing-scratch-buf (get-buffer "*scratch*")))
-    (if (and existing-scratch-buf
-             (not (eq (current-buffer) existing-scratch-buf)))
-        (switch-to-buffer existing-scratch-buf)
-      (let ((new-scratch-buf (get-buffer-create
-                              (generate-new-buffer-name"*scratch*"))))
-        (switch-to-buffer new-scratch-buf)
-        (with-current-buffer new-scratch-buf
-          (setq-local buffer-confirm-kill t)
-          (setq-local buffer-offer-save t)
-          (not-modified))))))
-
 (defun find-config ()
   (interactive)
   (find-file (expand-file-name user-init-file)))
-
-(defun find-journal ()
-  (interactive)
-  (find-file (expand-file-name "~/org/journal/journal.org")))
-
-(defun find-inbox ()
-  (interactive)
-  (find-file (expand-file-name "~/org/journal/inbox.org")))
 
 (defun load-one-theme-action (theme)
   "Disable current themes and load theme THEME."
@@ -253,22 +221,6 @@ scratch buffer.  The newly created buffer would have the
                                 (mapcar 'symbol-name
                                         (custom-available-themes)))))
     (load-one-theme-action theme)))
-
-(defun quick-edit ()
-  "Util function for use with hammerspoon quick edit functionality."
-  (interactive)
-  (let ((qed-buffer (generate-new-buffer "*quick-edit*")))
-    (switch-to-buffer qed-buffer)
-    (clipboard-yank)
-    (goto-char (point-min))
-    (gfm-mode)))
-
-(defun quick-edit-end ()
-  "Util function to be executed on qed completion."
-  (interactive)
-  (mark-whole-buffer)
-  (call-interactively 'kill-ring-save)
-  (bury-buffer))
 
 (defun set-font ()
   "Select xfont."
@@ -380,16 +332,6 @@ of text."
                (filename* (nth 1 (split-string filename proj-path))))
           (-kill-and-echo filename*))
       (-kill-and-echo filename))))
-
-(defun minibuffer-up-directory (arg)
-  "Move up a directory (delete backwards to /)."
-  (interactive "p")
-  (if (string-match-p "/." (minibuffer-contents))
-      (zap-up-to-char (- arg) ?/)
-    (delete-minibuffer-contents)))
-
-(keymap-set minibuffer-local-filename-completion-map
-            "C-<backspace>" #'minibuffer-up-directory)
 
 ;;; Mac
 
@@ -624,7 +566,6 @@ reuse it's window, otherwise create new one."
 
 (custom-set-variables
  '(org-directory "~/org")
- '(org-hide-emphasis-markers t)
  '(org-ellipsis " …")
  '(org-special-ctrl-a/e t)
  '(org-src-fontify-natively t)
@@ -642,65 +583,9 @@ reuse it's window, otherwise create new one."
  '(org-log-into-drawer t)
  '(org-image-actual-width 640)
  '(org-attach-auto-tag "attachment")
- '(org-agenda-files '("~/org/journal/inbox.org"
-                      "~/org/journal/journal.org"))
- '(org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d!)")
-                       (sequence "WAIT(w)" "|" "BACK(b)" "DECLINED(D)")))
- '(org-todo-keyword-faces '(("TODO" :foreground "red" :weight bold)
-                            ("NEXT" :foreground "blue" :weight bold)
-                            ("REVIEW" :foreground "orange" :weight bold)
-                            ("WAIT" :foreground "HotPink2" :weight bold)
-                            ("BACK" :foreground "MediumPurple3" :weight bold)
-                            ("DECLINED" :foreground "forest green" :weight bold)
-                            ("DONE" :foreground "forest green" :weight bold)))
  '(org-agenda-window-setup 'current-window)
  '(org-agenda-span 'day)
  '(org-agenda-start-with-log-mode t)
- '(org-default-notes-file "~/org/journal/inbox.org")
- '(org-capture-templates '(("t" "todo" entry
-                            (file "~/org/journal/inbox.org")
-                            "* TODO %?\n"
-                            :clock-in t
-                            :clock-resume t
-                            :empty-lines 1)
-                           ("j" "journal" entry
-                            (file+olp+datetree "~/org/journal/journal.org")
-                            "* %?\n%i\n%a"
-                            :tree-type week
-                            :empty-lines 1)
-                           ("i" "check in" entry
-                            (file+olp+datetree "~/org/journal/journal.org")
-                            "* Check in %U\n#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :block %<%Y-%m-%d>\n#+END:"
-                            :tree-type week
-                            :immediate-finish t)
-                           ("o" "check out" entry
-                            (file+olp+datetree "~/org/journal/journal.org")
-                            "* Check out - %U"
-                            :tree-type week
-                            :immediate-finish t)
-                           ("m" "meeting" entry
-                            (file+olp+datetree "~/org/journal/journal.org")
-                            "* %^{Meeting} :meeting:\n%?\n"
-                            :tree-type week
-                            :clock-in t
-                            :clock-resume t
-                            :empty-lines 1)
-                           ("l" "learning" entry
-                            (file+olp+datetree "~/org/journal/journal.org")
-                            "* %? :learning:\n%U\n"
-                            :tree-type week
-                            :clock-in t
-                            :clock-resume t
-                            :empty-lines 1)
-                           ("s" "slack" entry
-                            (file+olp+datetree "~/org/journal/journal.org")
-                            "* Slack :meeting:\n%?\n"
-                            :tree-type week
-                            :clock-in t
-                            :clock-resume t
-                            :empty-lines 1)))
- '(org-refile-targets '((nil :maxlevel . 9)
-                        (org-agenda-files :maxlevel . 9)))
  '(org-refile-use-outline-path t)
  '(org-outline-path-complete-in-steps nil)
  '(org-refile-allow-creating-parent-nodes 'confirm))
