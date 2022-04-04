@@ -76,6 +76,7 @@
  '(initial-scratch-message nil)
  '(tramp-default-method "ssh")
  '(delete-by-moving-to-trash t)
+ '(sentence-end-double-space nil)
 
  ;; backups
  '(make-backup-files t)
