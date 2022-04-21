@@ -114,6 +114,7 @@
  '(shr-cookie-policy nil)
 
  '(column-number-mode t)
+ '(context-menu-mode t)
  '(show-paren-mode t)
  '(electric-pair-mode t)
  '(savehist-mode t)
@@ -121,6 +122,8 @@
  '(winner-mode t)
  '(global-so-long-mode t)
  '(delete-selection-mode t)
+
+ '(next-error-message-highlight t)
 
  ;; Emacs 29
  '(repeat-mode t)
