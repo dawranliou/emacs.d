@@ -173,6 +173,7 @@
 (keymap-global-set "C-x C-r" #'recentf-open-files+)
 (keymap-global-set "C-w" #'backward-kill-word-or-region)
 (keymap-global-set "M-Q" #'unfill-paragraph)
+(global-set-key (kbd "M-q") #'fill-or-unfill) ; M-q
 (keymap-set ctl-x-4-map "s" #'toggle-window-split)
 (keymap-set ctl-x-4-map "t" #'transpose-windows)
 
@@ -282,6 +283,16 @@ kill region instead"
     (set-window-buffer nil (window-buffer next-window))
     (set-window-buffer next-window this-buffer)
     (select-window next-window)))
+
+(defun fill-or-unfill ()
+  "Like `fill-paragraph', but unfill if used twice."
+  (interactive)
+  (let ((fill-column
+         (if (eq last-command 'fill-or-unfill)
+             (progn (setq this-command nil)
+                    (point-max))
+           fill-column)))
+    (call-interactively #'fill-paragraph)))
 
 (defun unfill-paragraph (&optional region)
   "Takes a multi-line paragraph and makes it into a single line of text."
