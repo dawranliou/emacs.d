@@ -648,7 +648,7 @@ reuse it's window, otherwise create new one."
   (custom-set-variables
    '(cider-repl-display-help-banner nil)
    '(cider-repl-display-in-current-window nil)
-   '(cider-repl-pop-to-buffer-on-connect nil)
+   '(cider-repl-pop-to-buffer-on-connect 'display-only)
    '(cider-repl-use-pretty-printing t)
    '(cider-repl-buffer-size-limit 100000)))
 
