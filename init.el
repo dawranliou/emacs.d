@@ -438,6 +438,14 @@ kill region instead"
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
+(with-eval-after-load 'erc
+  (custom-set-variables
+   '(erc-server "irc.libera.chat")
+   '(erc-prompt (lambda () (concat "[" (buffer-name) "]")))
+   '(erc-auto-query 'bury)
+   '(erc-fill-function 'erc-fill-static)
+   '(erc-fill-static-center 20)))
+
 ;;; 3rd Party Packages
 
 (with-eval-after-package-install 'orderless
