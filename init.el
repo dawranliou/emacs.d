@@ -121,7 +121,6 @@
  '(save-place-mode t)
  '(winner-mode t)
  '(global-so-long-mode t)
- '(delete-selection-mode t)
 
  '(next-error-message-highlight t)
 
