@@ -678,6 +678,7 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'flyspell
   (with-eval-after-load 'flyspell
+    (keymap-set flyspell-mode-map "C-M-i" nil) ; Reserved for completion-at-point
     (keymap-set flyspell-mode-map "C-." nil)  ; Reserved for embark-act
     (keymap-set flyspell-mode-map "C-;" nil)) ; Reserved for iedit
   (add-hook 'text-mode-hook 'flyspell-mode))
