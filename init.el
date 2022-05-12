@@ -662,9 +662,13 @@ reuse it's window, otherwise create new one."
       (interactive)
       (let ((ns (funcall clojure-expected-ns-function))
             (def (clojure-find-def)))
-        (-kill-and-echo (format "%s/%s" ns (cadr def)))))))
+        (-kill-and-echo (format "%s/%s" ns (cadr def)))))
+    (keymap-set clojure-mode-map "C-c w" #'clojure-copy-ns-var)
+    (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)))
 
 (with-eval-after-package-install 'cider
+  (with-eval-after-load 'cider
+    (keymap-set cider-mode-map "C-c M-." 'cider-find-var))
   (custom-set-variables
    '(cider-repl-display-help-banner nil)
    '(cider-repl-display-in-current-window nil)
