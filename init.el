@@ -631,7 +631,7 @@ reuse it's window, otherwise create new one."
      #'magit-display-buffer-same-window-except-diff-v1)))
 
 (with-eval-after-package-install 'rg
-  (define-key project-prefix-map [remap project-find-regexp] #'rg-project)
+  (keymap-substitute project-prefix-map #'project-find-regexp #'rg-dwim-project-dir)
   (keymap-global-set "C-c r" #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
