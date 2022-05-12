@@ -335,7 +335,19 @@ kill region instead"
 (add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
 
-(add-hook 'after-init-hook (lambda () (load-theme 'sketch-white t)))
+(add-hook 'after-init-hook
+          (lambda ()
+            (load-theme 'sketch-white t)
+            (custom-theme-set-faces
+             'user
+             '(variable-pitch ((t (:family "Sans Serif" :height 170))))
+             '(fixed-pitch ((t ( :family "Iosevka" :height 140)))))
+            (set-face-attribute 'mode-line nil
+                                :height 0.85
+                                :box '(:line-width 5 :color "#efefef"))
+            (set-face-attribute 'mode-line-inactive nil
+                                :height 0.85
+                                :box '(:line-width 5 :color "#efefef"))))
 
 ;;; Built-in Packages
 
