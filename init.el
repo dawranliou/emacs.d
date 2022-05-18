@@ -350,6 +350,28 @@ kill region instead"
 (add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
 
+(setq-default
+ mode-line-format
+ `(""
+   mode-line-front-space
+   mode-line-mule-info
+   mode-line-client
+   mode-line-modified
+   mode-line-remote
+   ;; " " mode-line-buffer-identification
+   (:propertize " %b" face mode-line-buffer-id)
+   " %l:%c (%p)"
+   " ["
+   (:propertize ("" mode-name)
+                help-echo "Major mode\n\
+mouse-1: Display major mode menu\n\
+mouse-2: Show help for major mode\n\
+mouse-3: Toggle minor modes"
+                mouse-face mode-line-highlight
+                local-map ,mode-line-major-mode-keymap)
+   "]"
+   mode-line-misc-info))
+
 (add-hook 'after-init-hook
           (lambda ()
             (load-theme 'sketch-white t)
@@ -680,6 +702,8 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'cider
   (with-eval-after-load 'cider
+    (add-to-list 'mode-line-misc-info
+                 `(cider-mode (" [" (:eval (cider--modeline-info)) "]")))
     (keymap-set cider-mode-map "C-c M-." 'cider-find-var))
   (custom-set-variables
    '(cider-repl-display-help-banner nil)
