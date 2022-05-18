@@ -30,7 +30,6 @@
         cider
         clojure-mode
         eglot
-        elfeed
         elpher
         embark
         emmet-mode
@@ -46,7 +45,6 @@
         rainbow-mode
         rg
         sly
-        smartscan
         sqlformat
         vertico
         ws-butler
