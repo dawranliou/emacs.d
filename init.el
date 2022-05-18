@@ -29,7 +29,6 @@
       '(avy
         cider
         clojure-mode
-        corfu
         eglot
         elfeed
         elpher
@@ -228,6 +227,24 @@ This function is designed to be called from `kill-buffer-query-functions'."
     (recentf-mode +1))
   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
     (find-file (completing-read "Find recent file: " files nil t))))
+
+(defun completing-read-at-point (start end col &optional pred)
+  "Inspired by https://github.com/katspaugh/ido-at-point"
+  (if (minibufferp) (completion--in-region start end col pred)
+    (let* ((init (buffer-substring-no-properties start end))
+           (all (completion-all-completions init col pred (length init)))
+           (completion (cond
+                        ((atom all) nil)
+                        ((and (consp all) (atom (cdr all))) (car all))
+                        (t (completing-read "Completions: " col pred t init)))))
+      (if completion
+          (progn
+            (delete-region start end)
+            (insert completion)
+            t)
+        (message "No completions") nil))))
+
+(setq completion-in-region-function #'completing-read-at-point)
 
 (defun move-beginning-of-line+ (arg)
   "Move point to beginning of current line or the first non whitespace char."
@@ -478,9 +495,6 @@ kill region instead"
                      (propertize "» " 'face 'vertico-current)
                    "  ")
                  cand))))
-
-(with-eval-after-package-install 'corfu
-  (corfu-global-mode))
 
 ;; https://github.com/minad/cape
 (defun capf-complete-filename ()
