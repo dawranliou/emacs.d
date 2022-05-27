@@ -118,6 +118,7 @@
  '(save-place-mode t)
  '(winner-mode t)
  '(global-so-long-mode t)
+ '(xref-search-program 'ripgrep)
 
  '(next-error-message-highlight t)
 
@@ -668,7 +669,6 @@ reuse it's window, otherwise create new one."
      #'magit-display-buffer-same-window-except-diff-v1)))
 
 (with-eval-after-package-install 'rg
-  (keymap-substitute project-prefix-map #'project-find-regexp #'rg-dwim-project-dir)
   (keymap-global-set "C-c r" #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
