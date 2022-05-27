@@ -641,6 +641,7 @@ reuse it's window, otherwise create new one."
 
   (require 'ox-md)
   (require 'org-tempo)
+  (require 'org-habit)
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
