@@ -42,7 +42,7 @@
 
 (setq-default default-frame-alist
               '((tool-bar-lines . 0)
-                ;(width          . 90)
+                (width          . 90)
                 ;(height         . 40)
                 (font           . "Iosevka-15")))
 
