@@ -671,6 +671,10 @@ reuse it's window, otherwise create new one."
    '(magit-display-buffer-function
      #'magit-display-buffer-same-window-except-diff-v1)))
 
+(with-eval-after-package-install 'with-editor
+  (keymap-substitute global-map #'async-shell-command #'with-editor-async-shell-command)
+  (keymap-substitute global-map #'shell-command #'with-editor-shell-command))
+
 (with-eval-after-package-install 'rg
   (keymap-global-set "C-c r" #'rg)
   (with-eval-after-load 'rg
