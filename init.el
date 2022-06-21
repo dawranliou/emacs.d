@@ -291,14 +291,17 @@ kill region instead"
         (other-window 1)
         (switch-to-buffer (other-buffer))))))
 
-(defun transpose-windows ()
-  "Swap the buffers shown in current and next window."
-  (interactive)
+(defun transpose-windows (arg)
+  "Transpose the buffers shown in two windows.
+Prefix ARG determines if the current windows buffer is swapped
+with the next or previous window, and the number of
+transpositions to execute in sequence."
+  (interactive "p")
   (let ((this-buffer (window-buffer))
-        (next-window (next-window nil :no-minibuf nil)))
-    (set-window-buffer nil (window-buffer next-window))
-    (set-window-buffer next-window this-buffer)
-    (select-window next-window)))
+        (this-window (selected-window)))
+    (other-window arg)
+    (set-window-buffer this-window (current-buffer))
+    (set-window-buffer (selected-window) this-buffer)))
 
 (defun fill-or-unfill ()
   "Like `fill-paragraph', but unfill if used twice."
