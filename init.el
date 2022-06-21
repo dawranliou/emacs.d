@@ -676,7 +676,7 @@ reuse it's window, otherwise create new one."
   (keymap-substitute global-map #'shell-command #'with-editor-shell-command))
 
 (with-eval-after-package-install 'rg
-  (keymap-global-set "C-c r" #'rg)
+  (keymap-global-set "C-c s" #'rg-menu)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
