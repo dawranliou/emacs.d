@@ -11,47 +11,6 @@
 
 ;;; Package Management
 
-;; The very first thing I do is setup the packages I need. I do this so that
-;; when I open this config on a new machine, all the packages needed to make it
-;; work are specified in `package-selected-packages', with that one you can
-;; install them with `package-install-selected-packages'. At which point the
-;; whole config should be ready to rock.
-
-(require 'package)
-
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-
-(setq package-archive-priorities '(("melpa" . 30)
-                                   ("gnu" . 20)
-                                   ("nongnu" . 10)))
-
-(setq package-selected-packages
-      '(avy
-        cider
-        clojure-mode
-        eglot
-        elpher
-        embark
-        emmet-mode
-        flyspell
-        go-mode
-        helpful
-        iedit
-        magit
-        markdown-mode
-        orderless
-        org
-        org-roam
-        rainbow-mode
-        rg
-        sly
-        sqlformat
-        vertico
-        ws-butler
-        yaml-mode))
-
-(package-initialize)
-
 (defmacro with-eval-after-package-install (package &rest body)
   "Eval BODY only if PACKAGE is installed."
   (declare (indent defun))
@@ -63,69 +22,166 @@
 
 ;;; Settings
 
-;; Persist the settings in the custom.el, which is ignored by git.
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file :noerror)
-
 (custom-set-variables
- '(inhibit-startup-message t)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auto-save-list-file-prefix (expand-file-name "var/auto-save/" user-emacs-directory))
+ '(backup-by-copying t)
+ '(backup-directory-alist
+   (list
+    (cons "."
+          (expand-file-name "var/backup/" user-emacs-directory))))
+ '(cider-repl-buffer-size-limit 100000)
+ '(cider-repl-display-help-banner nil)
+ '(cider-repl-display-in-current-window nil)
+ '(cider-repl-pop-to-buffer-on-connect 'display-only)
+ '(cider-repl-use-pretty-printing t)
+ '(cider-xref-fn-depth 90)
+ '(column-number-mode t)
+ '(completion-category-overrides '((file (styles basic orderless))))
+ '(completion-styles '(orderless))
+ '(context-menu-mode t)
+ '(delete-by-moving-to-trash t)
+ '(delete-old-versions t)
+ '(dired-auto-revert-buffer t)
+ '(dired-dwim-target t)
+ '(dired-recursive-copies 'always)
+ '(dired-recursive-deletes 'always)
+ '(ediff-split-window-function #'split-window-horizontally)
+ '(ediff-window-setup-function #'ediff-setup-windows-plain)
+ '(eglot-connect-timeout 600)
+ '(electric-pair-mode t)
+ '(enable-recursive-minibuffers t)
+ '(erc-auto-query 'bury)
+ '(erc-fill-function 'erc-fill-static)
+ '(erc-fill-static-center 20)
+ '(erc-prompt (lambda nil (concat "[" (buffer-name) "]")))
+ '(erc-server "irc.libera.chat" t)
+ '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+ '(global-so-long-mode t)
+ '(helpful-switch-buffer-function #'helpful-switch-to-buffer)
+ '(history-length 20000)
+ '(inhibit-startup-screen t)
  '(initial-major-mode 'fundamental-mode)
  '(initial-scratch-message nil)
- '(tramp-default-method "ssh")
- '(delete-by-moving-to-trash t)
-
- ;; backups
- '(make-backup-files t)
- '(backup-by-copying t)
- '(version-control t)
- '(delete-old-versions t)
+ '(isearch-allow-motion t)
+ '(isearch-allow-scroll t)
+ '(isearch-wrap-pause 'no)
  '(kept-new-versions 6)
  '(kept-old-versions 2)
- '(backup-directory-alist
-   (list (cons "." (expand-file-name "var/backup/" user-emacs-directory))))
-
- '(auto-save-list-file-prefix
-   (expand-file-name "var/auto-save/" user-emacs-directory))
- '(ring-bell-function #'ignore)
- '(visible-bell nil)
- '(ns-use-proxy-icon nil)
- '(enable-recursive-minibuffers t)
+ '(magit-diff-refine-hunk 'all)
+ '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+ '(make-backup-files t)
+ '(next-error-message-highlight t)
+ '(ns-use-proxy-icon nil t)
+ '(org-adapt-indentation nil)
+ '(org-agenda-files '("~/org/journal/inbox.org" "~/org/journal/journal.org"))
+ '(org-agenda-span 'day)
+ '(org-agenda-start-with-log-mode t)
+ '(org-agenda-window-setup 'current-window)
+ '(org-attach-auto-tag "attachment")
+ '(org-capture-templates
+   '(("t" "todo" entry
+      (file "~/org/journal/inbox.org")
+      "* TODO %?\12" :clock-in t :clock-resume t :empty-lines 1)
+     ("j" "journal" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* %?\12%i\12%a" :tree-type week :empty-lines 1)
+     ("i" "check in" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* Check in %U\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :block %<%Y-%m-%d>\12#+END:" :tree-type week :immediate-finish t)
+     ("o" "check out" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* Check out - %U" :tree-type week :immediate-finish t)
+     ("m" "meeting" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* %^{Meeting} :meeting:\12" :tree-type week :clock-in t :clock-resume t :empty-lines 1)
+     ("l" "learning" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* %? :learning:\12%U" :tree-type week :clock-in t :clock-resume t :empty-lines 1)
+     ("s" "slack" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* Slack :meeting:\12%?" :tree-type week :clock-in t :clock-resume t :empty-lines 1)))
+ '(org-cycle-separator-lines 2)
+ '(org-default-notes-file "~/org/journal/inbox.org")
+ '(org-directory "~/org")
+ '(org-edit-src-content-indentation 0)
+ '(org-ellipsis " …")
+ '(org-hide-block-startup nil)
+ '(org-image-actual-width 640)
+ '(org-indirect-buffer-display 'current-window)
+ '(org-log-done 'time)
+ '(org-log-into-drawer t)
+ '(org-outline-path-complete-in-steps nil)
+ '(org-refile-allow-creating-parent-nodes 'confirm)
+ '(org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
+ '(org-refile-use-outline-path 'file)
+ '(org-roam-directory "~/org/roam/")
+ '(org-special-ctrl-a/e t)
+ '(org-src-fontify-natively t)
+ '(org-src-preserve-indentation nil)
+ '(org-src-tab-acts-natively t)
+ '(org-src-window-setup 'current-window)
+ '(org-startup-folded 'content)
+ '(org-todo-keyword-faces
+   '(("TODO" :foreground "red" :weight bold)
+     ("NEXT" :foreground "blue" :weight bold)
+     ("REVIEW" :foreground "orange" :weight bold)
+     ("WAIT" :foreground "HotPink2" :weight bold)
+     ("BACK" :foreground "MediumPurple3" :weight bold)
+     ("DECLINED" :foreground "forest green" :weight bold)
+     ("DONE" :foreground "forest green" :weight bold)))
+ '(org-todo-keywords
+   '((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d!)")
+     (sequence "WAIT(w)" "|" "BACK(b)" "DECLINED(D)")))
+ '(package-archive-priorities '(("melpa" . 30) ("gnu" . 20) ("nongnu" . 10)))
+ '(package-archives
+   '(("gnu" . "https://elpa.gnu.org/packages/")
+     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+     ("melpa" . "https://melpa.org/packages/")))
+ '(package-selected-packages
+   '(avy cider clojure-mode eglot elpher embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org org-roam rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+ '(pixel-scroll-precision-mode t)
  '(recentf-max-saved-items 200)
+ '(repeat-mode t)
+ '(ring-bell-function #'ignore)
+ '(save-place-mode t)
+ '(savehist-additional-variables
+   '(kill-ring mark-ring global-mark-ring search-ring regexp-search-ring))
+ '(savehist-mode t)
  '(savehist-save-minibuffer-history t)
- '(savehist-additional-variables '(kill-ring
-                                   mark-ring
-                                   global-mark-ring
-                                   search-ring
-                                   regexp-search-ring))
- '(history-length 20000)
- '(scroll-conservatively 101)           ; Don't recenter
- '(ediff-window-setup-function #'ediff-setup-windows-plain)
- '(ediff-split-window-function #'split-window-horizontally)
+ '(scroll-conservatively 101)
+ '(search-whitespace-regexp ".*?")
+ '(show-paren-context-when-offscreen t)
+ '(show-paren-mode t)
+ '(shr-cookie-policy nil)
+ '(shr-discard-aria-hidden t)
+ '(shr-image-animate nil)
+ '(shr-indentation 0 t)
+ '(shr-max-image-proportion 0.5)
  '(shr-use-colors nil)
  '(shr-use-fonts nil)
- '(shr-indentation 0)
- '(shr-max-image-proportion 0.5)
- '(shr-image-animate nil)
  '(shr-width 72)
- '(shr-discard-aria-hidden t)
- '(shr-cookie-policy nil)
-
- '(column-number-mode t)
- '(context-menu-mode t)
- '(show-paren-mode t)
- '(electric-pair-mode t)
- '(savehist-mode t)
- '(save-place-mode t)
+ '(sqlformat-args '("-s2" "-g"))
+ '(sqlformat-command 'pgformatter)
+ '(tramp-default-method "ssh")
+ '(version-control t)
+ '(visible-bell nil)
  '(winner-mode t)
- '(global-so-long-mode t)
- '(xref-search-program 'ripgrep)
-
- '(next-error-message-highlight t)
-
- ;; Emacs 29
- '(repeat-mode t)
- '(pixel-scroll-precision-mode t)
- '(show-paren-context-when-offscreen t))
+ '(ws-butler-keep-whitespace-before-point nil)
+ '(xref-search-program 'ripgrep))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(eglot-highlight-symbol-face ((t (:inherit highlight))))
+ '(fixed-pitch ((t (:family "Iosevka" :height 140))))
+ '(mode-line ((t (:height 0.85 :box (:line-width (5 . 5) :color "#efefef") :foreground "#212121" :background "#efefef"))))
+ '(mode-line-inactive ((t (:height 0.85 :box (:line-width (5 . 5) :color "#efefef") :foreground "#dddddd" :background "#efefef"))))
+ '(variable-pitch ((t (:family "Sans Serif" :height 170)))))
 
 (setq-default
  fill-column 80
@@ -405,17 +461,8 @@ mouse-3: Toggle minor modes"
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (add-hook 'dired-mode-hook 'hl-line-mode)
   (keymap-set global-map "C-x C-j" #'dired-jump)
-  (custom-set-variables
-   '(dired-auto-revert-buffer t)
-   '(dired-dwim-target t)
-   '(dired-recursive-copies 'always)
-   '(dired-recursive-deletes 'always))
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
-
-(with-eval-after-load 'find-dired
-  (custom-set-variables
-   '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))))
 
 (defun eshell-history ()
   "Browse eshell history."
@@ -462,13 +509,6 @@ mouse-3: Toggle minor modes"
              '("\\.log\\'" . auto-revert-tail-mode))
 
 (with-eval-after-load 'isearch
-  (custom-set-variables
-   '(isearch-allow-scroll t)
-   '(search-whitespace-regexp ".*?")      ; Fuzzy search
-   ;; Emacs 28
-   '(isearch-allow-motion t)
-   '(isearch-wrap-pause 'no))
-
   ;; https://www.emacswiki.org/emacs/IncrementalSearch#h5o-4
   (defun isearch-exit-at-start ()
     "Exit search at the beginning of the current match."
@@ -493,20 +533,9 @@ mouse-3: Toggle minor modes"
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
-(with-eval-after-load 'erc
-  (custom-set-variables
-   '(erc-server "irc.libera.chat")
-   '(erc-prompt (lambda () (concat "[" (buffer-name) "]")))
-   '(erc-auto-query 'bury)
-   '(erc-fill-function 'erc-fill-static)
-   '(erc-fill-static-center 20)))
-
 ;;; 3rd Party Packages
 
 (with-eval-after-package-install 'orderless
-  (custom-set-variables
-   '(completion-styles '(orderless))
-   '(completion-category-overrides '((file (styles basic orderless)))))
   (setq completion-category-defaults nil))
 
 (with-eval-after-package-install 'vertico
@@ -579,10 +608,7 @@ The logic is simple, if we are currently in the helpful buffer,
 reuse it's window, otherwise create new one."
     (if (eq major-mode 'helpful-mode)
         (switch-to-buffer buffer-or-name)
-      (pop-to-buffer buffer-or-name)))
-
-  (custom-set-variables
-   '(helpful-switch-buffer-function #'helpful-switch-to-buffer)))
+      (pop-to-buffer buffer-or-name))))
 
 (with-eval-after-package-install 'ws-butler
   (add-hook 'prog-mode-hook 'ws-butler-mode)
@@ -614,31 +640,7 @@ reuse it's window, otherwise create new one."
 (keymap-global-set "C-c b" #'org-switchb)
 (global-set-key (kbd "C-c c") #'org-capture)
 
-(custom-set-variables
- '(org-directory "~/org")
- '(org-ellipsis " …")
- '(org-special-ctrl-a/e t)
- '(org-src-fontify-natively t)
- '(org-src-tab-acts-natively t)
- '(org-src-window-setup 'current-window)
- '(org-cycle-separator-lines 2)
- '(org-edit-src-content-indentation 0)
- '(org-src-window-setup 'current-window)
- '(org-indirect-buffer-display 'current-window)
- '(org-hide-block-startup nil)
- '(org-src-preserve-indentation nil)
- '(org-adapt-indentation nil)
- '(org-startup-folded 'content)
- '(org-log-done 'time)
- '(org-log-into-drawer t)
- '(org-image-actual-width 640)
- '(org-attach-auto-tag "attachment")
- '(org-agenda-window-setup 'current-window)
- '(org-agenda-span 'day)
- '(org-agenda-start-with-log-mode t)
- '(org-refile-use-outline-path t)
- '(org-outline-path-complete-in-steps nil)
- '(org-refile-allow-creating-parent-nodes 'confirm))
+
 
 (with-eval-after-load 'org
   (keymap-set org-mode-map "C-," nil)
@@ -651,8 +653,6 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'org-roam
   (setq org-roam-v2-ack t)
-  (custom-set-variables
-   '(org-roam-directory "~/org/roam/"))
   (autoload #'org-roam-node-find "org-roam" nil t)
   (autoload #'org-roam-capture "org-roam" nil t)
   (autoload #'org-roam-node-insert "org-roam" nil t)
@@ -664,12 +664,6 @@ reuse it's window, otherwise create new one."
     (org-roam-setup)
     (keymap-global-set "C-c n g" #'org-roam-graph)
     (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
-
-(with-eval-after-package-install 'magit
-  (custom-set-variables
-   '(magit-diff-refine-hunk 'all)
-   '(magit-display-buffer-function
-     #'magit-display-buffer-same-window-except-diff-v1)))
 
 (with-eval-after-package-install 'with-editor
   (keymap-substitute global-map #'async-shell-command #'with-editor-async-shell-command)
@@ -686,11 +680,7 @@ reuse it's window, otherwise create new one."
   ;; (with-eval-after-load 'eglot
   ;;   (add-to-list 'eglot-server-programs
   ;;                '(clojure-mode "~/projects/clojure-lsp/clojure-lsp")))
-
-  (custom-set-variables
-   '(eglot-connect-timeout 600))
-  (custom-set-faces
-   '(eglot-highlight-symbol-face ((t (:inherit highlight))))))
+  )
 
 ;;; Language major modes
 
@@ -714,13 +704,7 @@ reuse it's window, otherwise create new one."
   (with-eval-after-load 'cider
     (add-to-list 'mode-line-misc-info
                  `(cider-mode (" [" (:eval (cider--modeline-info)) "]")))
-    (keymap-set cider-mode-map "C-c M-." 'cider-find-var))
-  (custom-set-variables
-   '(cider-repl-display-help-banner nil)
-   '(cider-repl-display-in-current-window nil)
-   '(cider-repl-pop-to-buffer-on-connect 'display-only)
-   '(cider-repl-use-pretty-printing t)
-   '(cider-repl-buffer-size-limit 100000)))
+    (keymap-set cider-mode-map "C-c M-." 'cider-find-var)))
 
 (with-eval-after-package-install 'markdown-mode
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
@@ -741,16 +725,9 @@ reuse it's window, otherwise create new one."
   (setq inferior-lisp-program "sbcl"))
 
 (with-eval-after-package-install 'sqlformat
-  (custom-set-variables
-   '(sqlformat-command 'pgformatter)
-   '(sqlformat-args '("-s2" "-g")))
   (with-eval-after-load 'sql
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
 
 (provide 'init)
 
 ;;; init.el ends here
-
-;; Local Variables:
-;; eval: (outline-minor-mode)
-;; End:
