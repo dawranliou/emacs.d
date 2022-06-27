@@ -395,6 +395,15 @@ transpositions to execute in sequence."
           (-kill-and-echo filename*))
       (-kill-and-echo filename))))
 
+(defun copy-current-location ()
+  "Show the current location and put it into the kill ring.
+Use the filename relative to the current VC root directory."
+  (interactive)
+  (let* ((file-name (file-relative-name buffer-file-name (vc-root-dir)))
+	 (line-number (line-number-at-pos nil t))
+	 (location (format "%s:%s" file-name line-number)))
+    (-kill-and-echo location)))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
