@@ -74,6 +74,7 @@
  '(kept-old-versions 2)
  '(magit-diff-refine-hunk 'all)
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+ '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
  '(make-backup-files t)
  '(next-error-message-highlight t)
  '(ns-use-proxy-icon nil t)
