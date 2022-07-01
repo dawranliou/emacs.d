@@ -39,6 +39,7 @@
  '(cider-repl-pop-to-buffer-on-connect 'display-only)
  '(cider-repl-use-pretty-printing t)
  '(cider-xref-fn-depth 90)
+ '(clojure-toplevel-inside-comment-form t)
  '(column-number-mode t)
  '(completion-category-overrides '((file (styles basic orderless))))
  '(completion-styles '(orderless))
