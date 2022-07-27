@@ -93,7 +93,8 @@
       "* %?\12%i\12%a" :tree-type week :empty-lines 1)
      ("i" "check in" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check in %U\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :block %<%Y-%m-%d>\12#+END:" :tree-type week :immediate-finish t)
+      "* Check in %U\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:"
+      :tree-type week :immediate-finish t)
      ("o" "check out" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* Check out - %U" :tree-type week :immediate-finish t)
@@ -681,7 +682,7 @@ reuse it's window, otherwise create new one."
   (keymap-substitute global-map #'shell-command #'with-editor-shell-command))
 
 (with-eval-after-package-install 'rg
-  (keymap-global-set "C-c s" #'rg-menu)
+  (keymap-global-set "C-c s" #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
@@ -733,7 +734,22 @@ reuse it's window, otherwise create new one."
   (add-hook 'css-mode 'emmet-mode))
 
 (with-eval-after-package-install 'sly
-  (setq inferior-lisp-program "sbcl"))
+  (setq inferior-lisp-program "sbcl")
+  (with-eval-after-load 'sly
+    (defun sly-eval-last-expression-in-repl ()
+      "Evaluates last expression in the Sly mREPL."
+      (interactive)
+      (let ((expr (sly-last-expression))
+            (buffer-name (buffer-name (current-buffer)))
+            (new-package (sly-current-package)))
+        (with-current-buffer (sly-mrepl--find-buffer)
+          (goto-char (point-max))
+          (insert-before-markers (format "\n;;; from %s\n" buffer-name))
+          (when new-package
+            (sly-mrepl-set-package new-package))
+          (insert expr)
+          (sly-mrepl-return))))
+    (keymap-set sly-mode-map "C-c C-j" 'sly-eval-last-expression-in-repl)))
 
 (with-eval-after-package-install 'sqlformat
   (with-eval-after-load 'sql
