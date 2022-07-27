@@ -741,14 +741,25 @@ reuse it's window, otherwise create new one."
       (interactive)
       (let ((expr (sly-last-expression))
             (buffer-name (buffer-name (current-buffer)))
-            (new-package (sly-current-package)))
+            (new-package (sly-current-package))
+            (yank-back nil))
         (with-current-buffer (sly-mrepl--find-buffer)
+          (unless (eq (current-buffer) (window-buffer))
+            (pop-to-buffer (current-buffer) t))
+          ;; Kill pending input in the REPL
+          (when (< (marker-position (sly-mrepl--mark)) (point))
+            (let ((inhibit-read-only t))
+              (kill-region (marker-position (sly-mrepl--mark)) (point)))
+            (setq yank-back t))
           (goto-char (point-max))
           (insert-before-markers (format "\n;;; from %s\n" buffer-name))
           (when new-package
             (sly-mrepl-set-package new-package))
           (insert expr)
-          (sly-mrepl-return))))
+          (sly-mrepl-return)
+          ;; Put pending input back
+          (when yank-back
+            (yank)))))
     (keymap-set sly-mode-map "C-c C-j" 'sly-eval-last-expression-in-repl)))
 
 (with-eval-after-package-install 'sqlformat
