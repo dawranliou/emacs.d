@@ -128,17 +128,9 @@
  '(org-src-tab-acts-natively t)
  '(org-src-window-setup 'current-window)
  '(org-startup-folded 'content)
- '(org-todo-keyword-faces
-   '(("TODO" :foreground "red" :weight bold)
-     ("NEXT" :foreground "blue" :weight bold)
-     ("REVIEW" :foreground "orange" :weight bold)
-     ("WAIT" :foreground "HotPink2" :weight bold)
-     ("BACK" :foreground "MediumPurple3" :weight bold)
-     ("DECLINED" :foreground "forest green" :weight bold)
-     ("DONE" :foreground "forest green" :weight bold)))
+ '(org-todo-keyword-faces '(("NEXT" . "Blue") ("HOLD" . "Purple")))
  '(org-todo-keywords
-   '((sequence "TODO(t)" "NEXT(n)" "REVIEW(r)" "|" "DONE(d!)")
-     (sequence "WAIT(w)" "|" "BACK(b)" "DECLINED(D)")))
+   '((sequence "TODO(t)" "NEXT(n!)" "HOLD(h!)" "|" "DONE(d!)" "DECLINED(D!)")))
  '(package-archive-priorities '(("melpa" . 30) ("gnu" . 20) ("nongnu" . 10)))
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
