@@ -1,0 +1,74 @@
+(deftheme bit
+  "A bit of color theme.
+
+https://lospec.com/palette-list/bit-interior
+
+- #f3e2b1
+- #f7c439
+- #ff880b
+- #ff5036
+- #ae3737
+- #e05ad1
+- #4dd464
+- #5fb7f3
+- #c98c4b
+- #a26134
+- #bec4bb
+- #929992
+- #2e2823
+- #331b0b
+- #201208
+
+https://lospec.com/palette-list/bitbits-neon
+
+- #222323
+- #ff4adc
+- #3dff98
+- #f0f6f0
+")
+
+(let ((class '((class color) (min-colors 89)))
+      (fg "#f0f6f0")
+      (bg "#222323")
+      ;; (bg "#f0f6f0")
+      ;; (fg "#222323")
+      (pop "#3dff98")
+      (dim "#FCE2DB")
+      (hl "#ff4adc"))
+  (custom-theme-set-faces
+   'bit
+   `(default ((,class (:background ,bg :foreground ,fg
+                                   :weight normal
+                                   ))))
+   `(cursor ((,class (:background ,pop))))
+   ;; Highlighting faces
+   `(fringe ((,class (:background ,bg))))
+   `(highlight ((,class (:background ,hl))))
+   `(region ((,class (:background ,hl))))
+   `(secondary-selection ((,class (:background ,hl :foreground ,fg))))
+   `(isearch ((,class (:weight bold))))
+   `(lazy-highlight ((,class (:background ,hl))))
+   `(show-paren-match ((,class (:background ,hl :bold t))))
+   ;; Mode line faces
+   `(mode-line ((,class (:background ,pop :foreground ,bg))))
+   `(mode-line-inactive ((,class (:background ,fg :foreground ,bg))))
+   ;; Escape and prompt faces
+   `(minibuffer-prompt ((,class (:foreground ,fg))))
+   `(escape-glyph ((,class (:foreground ,fg :weight bold))))
+   `(homoglyph ((,class (:foreground ,fg :weight bold))))
+   ;; Font lock faces
+   `(font-lock-builtin-face ((,class (:foreground ,fg))))
+   `(font-lock-comment-face ((,class (:italic t :weight light :foreground ,dim))))
+   `(font-lock-constant-face ((,class (:foreground ,fg))))
+   `(font-lock-function-name-face ((,class (:foreground ,fg :weight bold))))
+   `(font-lock-keyword-face ((,class (:foreground ,fg))))
+   `(font-lock-string-face ((,class (:foreground ,dim :weight light))))
+   `(font-lock-type-face ((,class (:foreground ,fg))))
+   `(font-lock-variable-name-face ((,class (:foreground ,fg :weight bold))))
+   ;; `(font-lock-warning-face ((,class (:weight bold))))
+   ;; Button and link faces
+   `(link ((,class (:foreground ,fg :underline t))))
+   `(link-visited ((,class (:foreground ,fg :underline t))))
+   ;; `(button ((,class (:background ,hl :foreground ,fg))))
+   `(header-line ((,class (:background ,bg :foreground ,fg))))
+   ))
