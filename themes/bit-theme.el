@@ -49,9 +49,11 @@ https://lospec.com/palette-list/bitbits-neon
    `(isearch ((,class (:background ,hl :foreground ,fg))))
    `(lazy-highlight ((,class (:background ,dim :foreground ,bg))))
    `(show-paren-match ((,class (:background ,hl :bold t))))
+   `(success ((,class (:foreground ,pop))))
+   `(error ((,class (:foreground ,hl))))
    ;; Mode line faces
-   `(mode-line ((,class (:inverse-video t :foreground ,pop))))
-   `(mode-line-inactive ((,class (:inverse-video t))))
+   `(mode-line ((,class (:background ,pop :foreground ,bg :box ,pop))))
+   `(mode-line-inactive ((,class (:box ,pop))))
    ;; Escape and prompt faces
    `(minibuffer-prompt ((,class (:foreground ,fg))))
    `(escape-glyph ((,class (:foreground ,fg :weight bold))))
@@ -59,12 +61,12 @@ https://lospec.com/palette-list/bitbits-neon
    ;; Font lock faces
    `(font-lock-builtin-face ((,class (:foreground ,fg))))
    `(font-lock-comment-face ((,class (:italic t :weight light :foreground ,hl))))
-   `(font-lock-constant-face ((,class (:foreground ,fg :bold t))))
-   `(font-lock-function-name-face ((,class (:foreground ,fg :bold t))))
+   `(font-lock-constant-face ((,class (:foreground ,fg :weight light))))
+   `(font-lock-function-name-face ((,class (:foreground ,fg))))
    `(font-lock-keyword-face ((,class (:foreground ,fg))))
    `(font-lock-string-face ((,class (:foreground ,hl :weight light))))
    `(font-lock-type-face ((,class (:foreground ,fg))))
-   `(font-lock-variable-name-face ((,class (:foreground ,fg :bold t))))
+   `(font-lock-variable-name-face ((,class (:foreground ,fg))))
    ;; `(font-lock-warning-face ((,class (:weight bold))))
    ;; Button and link faces
    `(link ((,class (:foreground ,fg :underline t))))
