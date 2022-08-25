@@ -44,9 +44,9 @@ https://lospec.com/palette-list/bitbits-neon
    ;; Highlighting faces
    `(fringe ((,class (:background ,bg))))
    `(highlight ((,class (:background ,hl :foreground ,fg))))
-   `(region ((,class (:background ,hl :foreground ,fg))))
+   `(region ((,class (:background ,pop :foreground ,bg))))
    `(secondary-selection ((,class (:background ,hl :foreground ,fg))))
-   `(isearch ((,class (:background ,hl :foreground ,fg))))
+   `(isearch ((,class (:background ,pop :foreground ,bg))))
    `(lazy-highlight ((,class (:background ,dim :foreground ,bg))))
    `(show-paren-match ((,class (:background ,hl :bold t))))
    `(success ((,class (:foreground ,pop))))
