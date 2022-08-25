@@ -111,7 +111,7 @@
  '(org-default-notes-file "~/org/journal/inbox.org")
  '(org-directory "~/org")
  '(org-edit-src-content-indentation 0)
- '(org-ellipsis " …")
+ '(org-ellipsis " ¶")
  '(org-hide-block-startup nil)
  '(org-image-actual-width 640)
  '(org-indirect-buffer-display 'current-window)
