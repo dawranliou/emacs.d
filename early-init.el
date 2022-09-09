@@ -43,6 +43,7 @@
 (setq-default default-frame-alist
               '((tool-bar-lines . 0)
                 (width          . 90)
+                ;; (width . 130)
                 (vertical-scroll-bars . nil)
                 (font           . "Iosevka-15")))
 
