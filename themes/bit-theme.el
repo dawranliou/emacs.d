@@ -74,3 +74,5 @@ https://lospec.com/palette-list/bitbits-neon
    ;; `(button ((,class (:background ,hl :foreground ,fg))))
    `(header-line ((,class (:background ,bg :foreground ,fg))))
    ))
+
+(provide-theme 'bit)
