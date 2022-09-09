@@ -434,20 +434,7 @@ mouse-3: Toggle minor modes"
    mode-line-misc-info))
 
 (add-hook 'after-init-hook
-          (lambda ()
-            (load-theme 'sketch-white t)
-            (custom-theme-set-faces
-             'user
-             '(variable-pitch ((t (:family "Sans Serif" :height 170))))
-             '(fixed-pitch ((t ( :family "Iosevka" :height 140))))
-             '(mode-line ((t (:height 0.85
-                              :box (:line-width (5 . 5) :color "#efefef")
-                              :foreground "#212121"
-                              :background "#efefef"))))
-             '(mode-line-inactive ((t (:height 0.85
-                                       :box (:line-width (5 . 5) :color "#efefef")
-                                       :foreground "#dddddd"
-                                       :background "#efefef")))))))
+          (lambda () (load-theme 'sketch-white t)))
 
 ;;; Built-in Packages
 
