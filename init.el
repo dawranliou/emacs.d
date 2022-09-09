@@ -93,11 +93,10 @@
       "* %?\12%i\12%a" :tree-type week :empty-lines 1)
      ("i" "check in" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check in %U\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:"
-      :tree-type week :immediate-finish t)
+      "* Check in %T\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :tree-type week :immediate-finish t)
      ("o" "check out" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check out - %U" :tree-type week :immediate-finish t)
+      "* Check out - %T" :tree-type week :immediate-finish t)
      ("m" "meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* %^{Meeting} :meeting:\12" :tree-type week :clock-in t :clock-resume t :empty-lines 1)
