@@ -171,10 +171,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(eglot-highlight-symbol-face ((t (:inherit highlight))))
+ '(eglot-highlight-symbol-face ((t (:inherit lazy-highlight))))
  '(fixed-pitch ((t (:family "Iosevka" :height 140))))
- '(mode-line ((t (:height 0.85 :box (:line-width (5 . 5) :color "#efefef") :foreground "#212121" :background "#efefef"))))
- '(mode-line-inactive ((t (:height 0.85 :box (:line-width (5 . 5) :color "#efefef") :foreground "#dddddd" :background "#efefef"))))
  '(variable-pitch ((t (:family "Sans Serif" :height 170)))))
 
 (setq-default
