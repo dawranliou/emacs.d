@@ -1,0 +1,6 @@
+* Daily Review   :process:
+%U
+
+- [ ] Check calendar for tomorrow
+- [ ] Reschedule unfinished TODO
+- [ ] Clock out and update clock report

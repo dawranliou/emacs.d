@@ -82,27 +82,29 @@
  '(next-error-message-highlight t)
  '(ns-use-proxy-icon nil t)
  '(org-adapt-indentation nil)
- '(org-agenda-files '("~/org/journal/inbox.org" "~/org/journal/journal.org"))
+ '(org-agenda-files '("~/org/journal/journal.org"))
  '(org-agenda-span 'day)
  '(org-agenda-start-with-log-mode t)
  '(org-agenda-window-setup 'current-window)
  '(org-attach-auto-tag "attachment")
  '(org-capture-templates
-   '(("t" "todo" entry
-      (file "~/org/journal/inbox.org")
-      "* TODO %?\12" :empty-lines 1 :clock-in t :clock-resume t)
-     ("j" "journal" entry
+   '(("t" "Todo" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* %?\12%i\12%a" :empty-lines 1 :tree-type week)
-     ("i" "check in" entry
+      "* TODO %?\12" :empty-lines 1 :clock-in t :clock-resume t :tree-type week)
+     ("j" "Journal" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check in %T\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :immediate-finish t :tree-type week)
-     ("o" "check out" entry
+      "* %? %^G\12" :empty-lines 1 :clock-in t :clock-keep t :tree-type week)
+     ("d" "Daily Review" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check out - %T" :immediate-finish t :tree-type week)
-     ("m" "meeting" entry
+      (file "~/.emacs.d/org-templates/daily-review.org")
+      :immediate-finish t :empty-lines 1 :clock-in t :clock-keep t :tree-type week)
+     ("i" "Check In" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* %^{Meeting} :meeting:\12" :empty-lines 1 :clock-in t :clock-resume t :tree-type week)))
+      "* Check in %T\12#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :immediate-finish t :empty-lines 1 :tree-type week)
+     ("m" "Meeting" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* %^{Meeting} :meeting:%^G\12" :empty-lines 1 :clock-in t :clock-keep t :tree-type week)))
+ '(org-clock-clocktable-default-properties '(:maxlevel 4))
  '(org-cycle-separator-lines 2)
  '(org-default-notes-file "~/org/journal/inbox.org")
  '(org-directory "~/org")
@@ -137,7 +139,7 @@
  '(pixel-scroll-precision-mode t)
  '(recentf-max-saved-items 200)
  '(repeat-mode t)
- '(ring-bell-function #'ignore)
+ '(ring-bell-function 'ignore)
  '(save-place-mode t)
  '(savehist-additional-variables
    '(kill-ring mark-ring global-mark-ring search-ring regexp-search-ring))
