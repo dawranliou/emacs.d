@@ -90,25 +90,19 @@
  '(org-capture-templates
    '(("t" "todo" entry
       (file "~/org/journal/inbox.org")
-      "* TODO %?\12" :clock-in t :clock-resume t :empty-lines 1)
+      "* TODO %?\12" :empty-lines 1 :clock-in t :clock-resume t)
      ("j" "journal" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* %?\12%i\12%a" :tree-type week :empty-lines 1)
+      "* %?\12%i\12%a" :empty-lines 1 :tree-type week)
      ("i" "check in" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check in %T\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :tree-type week :immediate-finish t)
+      "* Check in %T\12#+BEGIN: clocktable :scope agenda :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :immediate-finish t :tree-type week)
      ("o" "check out" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check out - %T" :tree-type week :immediate-finish t)
+      "* Check out - %T" :immediate-finish t :tree-type week)
      ("m" "meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* %^{Meeting} :meeting:\12" :tree-type week :clock-in t :clock-resume t :empty-lines 1)
-     ("l" "learning" entry
-      (file+olp+datetree "~/org/journal/journal.org")
-      "* %? :learning:\12%U" :tree-type week :clock-in t :clock-resume t :empty-lines 1)
-     ("s" "slack" entry
-      (file+olp+datetree "~/org/journal/journal.org")
-      "* Slack :meeting:\12%?" :tree-type week :clock-in t :clock-resume t :empty-lines 1)))
+      "* %^{Meeting} :meeting:\12" :empty-lines 1 :clock-in t :clock-resume t :tree-type week)))
  '(org-cycle-separator-lines 2)
  '(org-default-notes-file "~/org/journal/inbox.org")
  '(org-directory "~/org")
