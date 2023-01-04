@@ -103,7 +103,7 @@
       "* Check in %T\12#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :immediate-finish t :empty-lines 1 :tree-type week)
      ("m" "Meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* %^{Meeting} :meeting:%^G\12" :empty-lines 1 :clock-in t :clock-keep t :tree-type week)))
+      "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :empty-lines 1 :clock-in t :clock-keep t :tree-type week)))
  '(org-clock-clocktable-default-properties '(:maxlevel 4))
  '(org-cycle-separator-lines 2)
  '(org-default-notes-file "~/org/journal/inbox.org")
