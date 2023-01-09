@@ -110,6 +110,8 @@
  '(org-directory "~/org")
  '(org-edit-src-content-indentation 0)
  '(org-ellipsis " ¶")
+ '(org-fontify-done-headline nil)
+ '(org-goto-interface 'outline-path-completion)
  '(org-hide-block-startup nil)
  '(org-image-actual-width 640)
  '(org-indirect-buffer-display 'current-window)
