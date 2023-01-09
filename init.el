@@ -90,20 +90,20 @@
  '(org-capture-templates
    '(("t" "Todo" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* TODO %?\12" :empty-lines 1 :clock-in t :clock-resume t :tree-type week)
+      "* TODO %?\12" :clock-in t :clock-resume t :tree-type week)
      ("j" "Journal" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* %? %^G\12" :empty-lines 1 :clock-in t :clock-keep t :tree-type week)
+      "* %? %^G\12" :clock-in t :clock-keep t :tree-type week)
      ("d" "Daily Review" entry
       (file+olp+datetree "~/org/journal/journal.org")
       (file "~/.emacs.d/org-templates/daily-review.org")
-      :immediate-finish t :empty-lines 1 :clock-in t :clock-keep t :tree-type week)
+      :immediate-finish t :clock-in t :clock-keep t :tree-type week)
      ("i" "Check In" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check in %T\12#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :immediate-finish t :empty-lines 1 :tree-type week)
+      "* Check in %T  :process:\12#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :immediate-finish t :tree-type week)
      ("m" "Meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :empty-lines 1 :clock-in t :clock-keep t :tree-type week)))
+      "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
  '(org-clock-clocktable-default-properties '(:maxlevel 4))
  '(org-cycle-separator-lines 2)
  '(org-default-notes-file "~/org/journal/inbox.org")
