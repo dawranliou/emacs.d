@@ -79,6 +79,8 @@
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
  '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
  '(make-backup-files t)
+ '(mouse-wheel-flip-direction t)
+ '(mouse-wheel-tilt-scroll t)
  '(next-error-message-highlight t)
  '(ns-use-proxy-icon nil t)
  '(org-adapt-indentation nil)
