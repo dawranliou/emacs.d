@@ -128,6 +128,7 @@
  '(org-src-tab-acts-natively t)
  '(org-src-window-setup 'current-window)
  '(org-startup-folded 'content)
+ '(org-tags-column -80)
  '(org-todo-keyword-faces '(("NEXT" . "Blue") ("HOLD" . "Purple")))
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n!)" "HOLD(h!)" "|" "DONE(d!)" "DECLINED(D!)")))
