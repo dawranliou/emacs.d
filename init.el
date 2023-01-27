@@ -102,7 +102,7 @@
       :immediate-finish t :clock-in t :clock-keep t :tree-type week)
      ("i" "Check In" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check in %T  :process:\12#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :tstart \"%T\" :tend <now> \12#+END:" :immediate-finish t :tree-type week)
+      "* Check in %T  :process:\12#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :block %<%Y-%m-%d> \12#+END:" :immediate-finish t :tree-type week)
      ("m" "Meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
@@ -124,7 +124,7 @@
  '(org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
  '(org-refile-use-outline-path 'file)
  '(org-roam-directory "~/org/roam/")
- '(org-special-ctrl-a/e t)
+ '(org-special-ctrl-a/e 'reversed)
  '(org-src-fontify-natively t)
  '(org-src-preserve-indentation nil)
  '(org-src-tab-acts-natively t)
@@ -139,6 +139,7 @@
  '(org-todo-keywords
    '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
      (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+ '(org-use-speed-commands t)
  '(package-archive-priorities '(("melpa" . 30) ("gnu" . 20) ("nongnu" . 10)))
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
