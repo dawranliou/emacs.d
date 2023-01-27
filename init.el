@@ -674,6 +674,8 @@ reuse it's window, otherwise create new one."
 
 (with-eval-after-package-install 'eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
+  (add-hook 'go-mode 'eglot-ensure)
+
   ;; Debug clojure-lsp
   ;; (with-eval-after-load 'eglot
   ;;   (add-to-list 'eglot-server-programs
@@ -707,6 +709,10 @@ reuse it's window, otherwise create new one."
 (with-eval-after-package-install 'markdown-mode
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (setq markdown-command "marked"))
+
+(with-eval-after-package-install 'go-mode
+  (with-eval-after-load 'go-mode
+    (add-hook 'before-save-hook #'gofmt-before-save)))
 
 (with-eval-after-package-install 'flyspell
   (with-eval-after-load 'flyspell
