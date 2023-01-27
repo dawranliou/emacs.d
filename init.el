@@ -90,6 +90,7 @@
  '(org-agenda-start-with-log-mode t)
  '(org-agenda-window-setup 'current-window)
  '(org-attach-auto-tag "attachment")
+ '(org-babel-load-languages '((emacs-lisp . t) (sql . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
       (file+olp+datetree "~/org/journal/journal.org")
