@@ -196,7 +196,12 @@
  tab-always-indent t
  line-spacing 3
  indent-tabs-mode nil
- truncate-lines t)
+ truncate-lines t
+ frame-title-format '("%n "              ; narrowed?
+                      (:eval
+                       (if (buffer-file-name)
+                           (abbreviate-file-name (buffer-file-name))
+                         "%b"))))
 
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
