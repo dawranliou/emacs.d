@@ -11,14 +11,13 @@
 
 ;;; Package Management
 
-(defmacro with-eval-after-package-install (package &rest body)
+(defmacro external-package (package &rest body)
   "Eval BODY only if PACKAGE is installed."
   (declare (indent defun))
-  `(if (package-installed-p ,package)
+  `(if (package-installed-p ',package)
        (progn ,@body)
-     (message (concat "Package \'"
-                      (symbol-name ,package)
-                      "\' is not installed... skipping config."))))
+     (warn "External package \"%s\" is not installed... skipping config."
+           (symbol-name ',package))))
 
 ;;; Settings
 
@@ -542,10 +541,10 @@ Use the filename relative to the current VC root directory."
 
 ;;; 3rd Party Packages
 
-(with-eval-after-package-install 'orderless
+(external-package orderless
   (setq completion-category-defaults nil))
 
-(with-eval-after-package-install 'vertico
+(external-package vertico
   (vertico-mode)
 
   ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
@@ -583,7 +582,7 @@ Use the filename relative to the current VC root directory."
 
 (keymap-global-set "C-c C-f" #'completion-at-point-filename)
 
-(with-eval-after-package-install 'embark
+(external-package embark
   (keymap-global-set "C-." #'embark-act)
   (keymap-global-set "C-h B" #'embark-bindings)
   (keymap-global-set "M-n" #'embark-next-symbol)
@@ -594,10 +593,10 @@ Use the filename relative to the current VC root directory."
   (autoload #'embark-previous-symbol "embark" nil t)
   (setq prefix-help-command #'embark-prefix-help-command))
 
-(with-eval-after-package-install 'avy
+(external-package avy
   (keymap-global-set "M-j" 'avy-goto-char-timer))
 
-(with-eval-after-package-install 'helpful
+(external-package helpful
   ;; Remap standard commands.
   (keymap-substitute global-map #'describe-function #'helpful-callable)
   (keymap-substitute global-map #'describe-variable #'helpful-variable)
@@ -617,13 +616,13 @@ reuse it's window, otherwise create new one."
         (switch-to-buffer buffer-or-name)
       (pop-to-buffer buffer-or-name))))
 
-(with-eval-after-package-install 'ws-butler
+(external-package ws-butler
   (add-hook 'prog-mode-hook 'ws-butler-mode)
   (add-hook 'text-mode-hook 'ws-butler-mode)
   (custom-set-variables
    '(ws-butler-keep-whitespace-before-point nil)))
 
-(with-eval-after-package-install 'iedit
+(external-package iedit
   (keymap-global-set "C-;" 'iedit-mode))
 
 ;; Org mode
@@ -658,7 +657,7 @@ reuse it's window, otherwise create new one."
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
-(with-eval-after-package-install 'org-roam
+(external-package org-roam
   (setq org-roam-v2-ack t)
   (autoload #'org-roam-node-find "org-roam" nil t)
   (autoload #'org-roam-capture "org-roam" nil t)
@@ -672,16 +671,16 @@ reuse it's window, otherwise create new one."
     (keymap-global-set "C-c n g" #'org-roam-graph)
     (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
 
-(with-eval-after-package-install 'with-editor
+(external-package with-editor
   (keymap-substitute global-map #'async-shell-command #'with-editor-async-shell-command)
   (keymap-substitute global-map #'shell-command #'with-editor-shell-command))
 
-(with-eval-after-package-install 'rg
+(external-package rg
   (keymap-global-set "C-c s" #'rg)
   (with-eval-after-load 'rg
     (rg-enable-default-bindings)))
 
-(with-eval-after-package-install 'eglot
+(external-package eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
   (add-hook 'go-mode 'eglot-ensure)
 
@@ -693,7 +692,7 @@ reuse it's window, otherwise create new one."
 
 ;;; Language major modes
 
-(with-eval-after-package-install 'clojure-mode
+(external-package clojure-mode
   (with-eval-after-load 'clojure-mode
     (defun clojure-copy-ns ()
       "Save the current clojure ns to the kill ring."
@@ -709,32 +708,32 @@ reuse it's window, otherwise create new one."
     (keymap-set clojure-mode-map "C-c w" #'clojure-copy-ns-var)
     (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)))
 
-(with-eval-after-package-install 'cider
+(external-package cider
   (with-eval-after-load 'cider
     (add-to-list 'mode-line-misc-info
                  `(cider-mode (" [" (:eval (cider--modeline-info)) "]")))
     (keymap-set cider-mode-map "C-c M-." 'cider-find-var)))
 
-(with-eval-after-package-install 'markdown-mode
+(external-package markdown-mode
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (setq markdown-command "marked"))
 
-(with-eval-after-package-install 'go-mode
+(external-package go-mode
   (with-eval-after-load 'go-mode
     (add-hook 'before-save-hook #'gofmt-before-save)))
 
-(with-eval-after-package-install 'flyspell
+(external-package flyspell
   (with-eval-after-load 'flyspell
     (keymap-set flyspell-mode-map "C-M-i" nil) ; Reserved for completion-at-point
     (keymap-set flyspell-mode-map "C-." nil)  ; Reserved for embark-act
     (keymap-set flyspell-mode-map "C-;" nil)) ; Reserved for iedit
   (add-hook 'text-mode-hook 'flyspell-mode))
 
-(with-eval-after-package-install 'emmet-mode
+(external-package emmet-mode
   (add-hook 'html-mode 'emmet-mode)
   (add-hook 'css-mode 'emmet-mode))
 
-(with-eval-after-package-install 'sly
+(external-package sly
   (setq inferior-lisp-program "sbcl")
   (with-eval-after-load 'sly
     (defun sly-eval-last-expression-in-repl ()
@@ -763,7 +762,7 @@ reuse it's window, otherwise create new one."
             (yank)))))
     (keymap-set sly-mode-map "C-c C-j" 'sly-eval-last-expression-in-repl)))
 
-(with-eval-after-package-install 'sqlformat
+(external-package sqlformat
   (with-eval-after-load 'sql
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
 
