@@ -108,6 +108,7 @@
      ("m" "Meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
+ '(org-clock-clocked-in-display nil)
  '(org-clock-clocktable-default-properties '(:maxlevel 4))
  '(org-cycle-separator-lines 2)
  '(org-default-notes-file "~/org/journal/inbox.org")
