@@ -483,7 +483,15 @@ Use the filename relative to the current VC root directory."
 
 (with-eval-after-load 'project
   ;; Setup the `project-switch-commands'
-  (require 'magit-extras))
+  (require 'magit-extras)
+
+  (defun project-find-regexp-with-unique-buffer (orig-fun &rest args)
+    "An advice function that gives project-find-regexp a unique buffer name"
+    (let ((xref-buffer-name (format "%s %s" xref-buffer-name (car args))))
+      (apply orig-fun args)))
+
+  (advice-add 'project-find-regexp :around
+              #'project-find-regexp-with-unique-buffer))
 
 (with-eval-after-load 'compile
   (require 'ansi-color)
