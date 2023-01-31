@@ -671,13 +671,7 @@ reuse it's window, otherwise create new one."
 
 (external-package eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
-  (add-hook 'go-mode 'eglot-ensure)
-
-  ;; Debug clojure-lsp
-  ;; (with-eval-after-load 'eglot
-  ;;   (add-to-list 'eglot-server-programs
-  ;;                '(clojure-mode "~/projects/clojure-lsp/clojure-lsp")))
-  )
+  (add-hook 'go-mode 'eglot-ensure))
 
 ;;; Language major modes
 
