@@ -160,6 +160,7 @@
  '(savehist-mode t)
  '(savehist-save-minibuffer-history t)
  '(scroll-conservatively 101)
+ '(scroll-preserve-screen-position 1)
  '(search-whitespace-regexp ".*?")
  '(show-paren-context-when-offscreen t)
  '(show-paren-mode t)
