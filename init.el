@@ -767,6 +767,27 @@ reuse it's window, otherwise create new one."
   (with-eval-after-load 'sql
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
 
+(define-minor-mode cz-mode
+  "Toggle my personal C-z mode for navigation."
+  :init-value nil
+  :global t
+  :lighter " CZ"
+  :keymap
+  '(("n" . next-line)
+    ("p" . previous-line)
+    ("f" . forward-char)
+    ("b" . backward-char)
+    ("q" . cz-mode)                     ; Quit
+    ([up] . scroll-down)
+    ([down] . scroll-up)
+    ;; A pinch of evil for one-handed navigation
+    ("h" . backward-char)
+    ("j" . next-line)
+    ("k" . previous-line)
+    ("l" . forward-char)))
+
+(keymap-global-set "C-z" #'cz-mode)
+
 (provide 'init)
 
 ;;; init.el ends here
