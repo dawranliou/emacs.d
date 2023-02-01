@@ -104,7 +104,8 @@
       :immediate-finish t :clock-in t :clock-keep t :tree-type week)
      ("i" "Check In" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* Check in %T  :process:\12#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :block %<%Y-%m-%d> \12#+END:" :immediate-finish t :tree-type week)
+      (file "~/.emacs.d/org-templates/check-in.org")
+      :immediate-finish t :tree-type week)
      ("m" "Meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
