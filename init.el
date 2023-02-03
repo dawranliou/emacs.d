@@ -664,11 +664,6 @@ reuse it's window, otherwise create new one."
   (keymap-substitute global-map #'async-shell-command #'with-editor-async-shell-command)
   (keymap-substitute global-map #'shell-command #'with-editor-shell-command))
 
-(external-package rg
-  (keymap-global-set "C-c s" #'rg)
-  (with-eval-after-load 'rg
-    (rg-enable-default-bindings)))
-
 (external-package eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
   (add-hook 'go-mode 'eglot-ensure))
