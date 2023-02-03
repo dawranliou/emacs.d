@@ -1,5 +1,5 @@
 * Check in %T  :process:
-#+BEGIN: clocktable :maxlevel 4 :tcolumns 1 :block %<%Y-%m-%d>
+#+BEGIN: clocktable :maxlevel 4 :block %<%Y-%m-%d>
 #+END:
 
 - [ ] Check calendar for today
