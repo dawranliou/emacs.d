@@ -487,6 +487,7 @@ Use the filename relative to the current VC root directory."
 
   (defun project-find-regexp-with-unique-buffer (orig-fun &rest args)
     "An advice function that gives project-find-regexp a unique buffer name"
+    (require 'xref)
     (let ((xref-buffer-name (format "%s %s" xref-buffer-name (car args))))
       (apply orig-fun args)))
 
