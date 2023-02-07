@@ -136,12 +136,12 @@
  '(org-tags-column -80)
  '(org-todo-keyword-faces
    '(("NEXT" . "blue")
-     ("WAITING" . "dark orange")
+     ("REVIEW" . "dark orange")
      ("HOLD" . "purple")
      ("CANCELLED" . "teal")))
  '(org-todo-keywords
-   '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!)")
-     (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+   '((sequence "TODO(t@/)" "NEXT(n)" "REVIEW(w@/!)" "|" "DONE(d!)")
+     (sequence "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
  '(org-use-speed-commands t)
  '(package-archive-priorities '(("melpa" . 30) ("gnu" . 20) ("nongnu" . 10)))
  '(package-archives
