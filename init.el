@@ -667,7 +667,21 @@ reuse it's window, otherwise create new one."
 
 (external-package eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
-  (add-hook 'go-mode 'eglot-ensure))
+  (add-hook 'go-mode 'eglot-ensure)
+
+  (with-eval-after-load 'eglot
+    (defun xref-find-references-with-eglot (orig-fun &rest args)
+      "An advice function that gives xref-find-definitions a unique
+buffer name when eglot is enabled."
+      (if (bound-and-true-p eglot--managed-mode)
+          (let ((xref-buffer-name (format "%s %s"
+                                          xref-buffer-name
+                                          (symbol-at-point))))
+            (apply orig-fun args))
+        (apply orig-fun args)))
+
+    (advice-add 'xref-find-references :around
+                #'xref-find-references-with-eglot)))
 
 ;;; Language major modes
 
