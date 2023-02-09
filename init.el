@@ -104,7 +104,7 @@
      ("i" "Check In" entry
       (file+olp+datetree "~/org/journal/journal.org")
       (file "~/.emacs.d/org-templates/check-in.org")
-      :immediate-finish t :tree-type week)
+      :immediate-finish t :clock-in t :clock-keep t :tree-type week)
      ("m" "Meeting" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
@@ -140,7 +140,7 @@
      ("HOLD" . "purple")
      ("CANCELLED" . "teal")))
  '(org-todo-keywords
-   '((sequence "TODO(t@/)" "NEXT(n)" "REVIEW(w@/!)" "|" "DONE(d!)")
+   '((sequence "TODO(t@/)" "NEXT(n)" "REVIEW(r@/!)" "|" "DONE(d!)")
      (sequence "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
  '(org-use-speed-commands t)
  '(package-archive-priorities '(("melpa" . 30) ("gnu" . 20) ("nongnu" . 10)))

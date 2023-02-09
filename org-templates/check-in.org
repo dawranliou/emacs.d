@@ -1,4 +1,4 @@
-* Check in %T  :process:
+* Check in %U  :process:
 #+BEGIN: clocktable :maxlevel 4 :block %<%Y-%m-%d>
 #+END:
 
