@@ -240,7 +240,6 @@
 (global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+) ; C-a
 (keymap-global-set "C-x C-r" #'recentf-open-files+)
 (keymap-global-set "C-w" #'backward-kill-word-or-region)
-(keymap-global-set "M-Q" #'unfill-paragraph)
 (global-set-key (kbd "M-q") #'fill-or-unfill) ; M-q
 (keymap-set ctl-x-4-map "s" #'toggle-window-split)
 (keymap-set ctl-x-4-map "t" #'transpose-windows)
@@ -375,14 +374,6 @@ transpositions to execute in sequence."
                     (point-max))
            fill-column)))
     (call-interactively #'fill-paragraph)))
-
-(defun unfill-paragraph (&optional region)
-  "Takes a multi-line paragraph and makes it into a single line of text."
-  (interactive (progn (barf-if-buffer-read-only) '(t)))
-  (let ((fill-column (point-max))
-        ;; This would override `fill-column' if it's an integer.
-        (emacs-lisp-docstring-fill-column t))
-    (fill-paragraph nil region)))
 
 (defun -kill-and-echo (X)
   "Copy `X' into the `kill-ring' and echo to the minibuffer."
