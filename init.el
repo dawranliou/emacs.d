@@ -193,7 +193,6 @@
  fill-column 80
  x-stretch-cursor t
  tab-width 8
- tab-always-indent t
  line-spacing 3
  indent-tabs-mode nil
  truncate-lines t
@@ -280,13 +279,6 @@ This function is designed to be called from `kill-buffer-query-functions'."
                                 (mapcar 'symbol-name
                                         (custom-available-themes)))))
     (load-one-theme-action theme)))
-
-(defun set-font ()
-  "Select xfont."
-  (interactive)
-  (set-frame-font (completing-read
-                   "Choose font:"
-                   (cl-remove-duplicates (x-list-fonts "*") :test #'equal))))
 
 (defun recentf-open-files+ ()
   "Use `completing-read' to open a recent file."
