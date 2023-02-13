@@ -433,7 +433,7 @@ Use the filename relative to the current VC root directory."
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
 
 (add-hook 'after-init-hook
-          (lambda () (load-theme 'sketch-white t)))
+          (lambda () (load-theme 'sketch-paper t)))
 
 ;;; Built-in Packages
 
