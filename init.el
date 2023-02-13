@@ -291,8 +291,7 @@ This function is designed to be called from `kill-buffer-query-functions'."
 (defun recentf-open-files+ ()
   "Use `completing-read' to open a recent file."
   (interactive)
-  (unless recentf-mode
-    (recentf-mode +1))
+  (require 'recentf)
   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
     (find-file (completing-read "Find recent file: " files nil t))))
 
@@ -509,8 +508,9 @@ Use the filename relative to the current VC root directory."
 
   ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
   (advice-add #'vertico--format-candidate :around
-              (lambda (orig cand prefix suffix index _start)
-                (setq cand (funcall orig cand prefix suffix index _start))
+              (lambda (orig cand prefix suffix index start)
+                (ignore start)
+                (setq cand (funcall orig cand prefix suffix index start))
                 (concat
                  (if (= vertico--index index)
                      (propertize "» " 'face 'vertico-current)
@@ -627,7 +627,7 @@ reuse it's window, otherwise create new one."
   (keymap-global-set "C-c n c" #'org-roam-capture)
 
   (with-eval-after-load 'org-roam
-    (org-roam-setup)
+    (org-roam-db-autosync-enable)
     (keymap-global-set "C-c n g" #'org-roam-graph)
     (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
 
@@ -732,6 +732,7 @@ buffer name when eglot is enabled."
   :init-value nil
   :global t
   :lighter " CZ"
+  :group 'cz
   :keymap
   '(("n" . next-line)
     ("p" . previous-line)
