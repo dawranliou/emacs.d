@@ -451,36 +451,6 @@ Use the filename relative to the current VC root directory."
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
-(defun eshell-history ()
-  "Browse eshell history."
-  (interactive)
-  (let ((candidates (cl-remove-duplicates
-                     (ring-elements eshell-history-ring)
-                     :test #'equal :from-end t))
-        (input (let ((input-start (save-excursion (eshell-bol)))
-                     (input-end (save-excursion (end-of-line) (point))))
-                 (buffer-substring-no-properties input-start input-end))))
-    (let ((selected (completing-read "Eshell history:"
-                                     candidates nil nil input)))
-      (end-of-line)
-      (eshell-kill-input)
-      (insert (string-trim selected)))))
-
-(with-eval-after-load 'esh-mode
-  ;; Save command history when commands are entered
-  (add-hook 'eshell-pre-command-hook 'eshell-save-some-history)
-  ;; Truncate buffer for performance
-  (add-to-list 'eshell-output-filter-functions 'eshell-truncate-buffer)
-  ;; Use Ivy to provide completions in eshell
-  (keymap-set eshell-mode-map "C-r" #'eshell-history)
-  (keymap-set eshell-mode-map "C-a" #'eshell-bol)
-  (setq eshell-history-size          10000
-        eshell-buffer-maximum-lines  10000
-        eshell-hist-ignoredups           t
-        eshell-highlight-prompt          t
-        eshell-scroll-to-bottom-on-input t
-        eshell-destroy-buffer-when-process-dies t))
-
 (with-eval-after-load 'project
   ;; Setup the `project-switch-commands'
   (require 'magit-extras)
