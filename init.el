@@ -446,10 +446,7 @@ Use the filename relative to the current VC root directory."
 
 (with-eval-after-load 'compile
   (require 'ansi-color)
-  (defun colorize-compilation-buffer ()
-    (let ((inhibit-read-only t))
-      (ansi-color-apply-on-region (point-min) (point-max))))
-  (add-hook 'compilation-filter-hook 'colorize-compilation-buffer))
+  (ansi-color-for-comint-mode-filter))
 
 (add-to-list 'auto-mode-alist
              '("\\.log\\'" . auto-revert-tail-mode))
