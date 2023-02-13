@@ -217,6 +217,7 @@
 (keymap-global-set "C-M-r" #'raise-sexp)
 (keymap-global-set "C-M-d" #'down-list)
 (keymap-global-set "C-M-w" #'backward-kill-sexp)
+(keymap-global-set "C-M-<return>" #'newline-at-end-of-line)
 (keymap-global-set "M-o" #'other-window)
 (keymap-global-set "M-i" #'delete-other-windows)
 (keymap-global-set "M-SPC" #'cycle-spacing)
