@@ -267,19 +267,14 @@ This function is designed to be called from `kill-buffer-query-functions'."
   (interactive)
   (find-file (expand-file-name user-init-file)))
 
-(defun load-one-theme-action (theme)
-  "Disable current themes and load theme THEME."
-  (progn
-    (mapc #'disable-theme custom-enabled-themes)
-    (load-theme (intern theme) t)))
-
 (defun load-one-theme ()
   "Disable current themes and load theme from the completion list."
   (interactive)
   (let ((theme (completing-read "Load custom theme: "
                                 (mapcar 'symbol-name
                                         (custom-available-themes)))))
-    (load-one-theme-action theme)))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme (intern theme) t)))
 
 (defun recentf-open-files+ ()
   "Use `completing-read' to open a recent file."
