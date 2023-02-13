@@ -174,6 +174,7 @@
  '(shr-width 72)
  '(sqlformat-args '("-s2" "-g"))
  '(sqlformat-command 'pgformatter)
+ '(tab-always-indent 'complete)
  '(tramp-default-method "ssh")
  '(version-control t)
  '(visible-bell nil)
@@ -527,14 +528,6 @@ Use the filename relative to the current VC root directory."
         :company-kind (lambda (s) (if (string-suffix-p "/" s) 'folder 'file))))))
 
 (add-to-list 'completion-at-point-functions #'capf-complete-filename)
-
-(defun completion-at-point-filename ()
-  "Interactive command to complete filename at point"
-  (interactive)
-  (let ((completion-at-point-functions '(capf-complete-filename)))
-    (completion-at-point)))
-
-(keymap-global-set "C-c C-f" #'completion-at-point-filename)
 
 (external-package embark
   (keymap-global-set "C-." #'embark-act)
