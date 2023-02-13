@@ -13,7 +13,7 @@
 
 (defmacro external-package (package &rest body)
   "Eval BODY only if PACKAGE is installed."
-  (declare (indent defun))
+  (declare (indent 1) (debug (form def-body)))
   `(if (package-installed-p ',package)
        (progn ,@body)
      (warn "External package \"%s\" is not installed... skipping config."
