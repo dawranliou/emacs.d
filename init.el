@@ -325,9 +325,10 @@ This function is designed to be called from `kill-buffer-query-functions'."
   (newline-and-indent))
 
 (defun uuid ()
-  "Generate a new UUID and insert."
+  "Generate a new UUID and add it to the kill ring."
   (interactive)
-  (insert (downcase (string-trim (shell-command-to-string "uuidgen")))))
+  (require 'org-id)
+  (-kill-and-echo (org-id-uuid)))
 
 (defun backward-kill-word-or-region (&optional arg)
   "Kill word backwards unless region is active,
