@@ -5,7 +5,7 @@
 
 ;;; Commentary:
 
-;; This config targets Emacs 29
+;; This config targets Emacs 30
 
 ;;; Code:
 
