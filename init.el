@@ -152,6 +152,7 @@
    '(markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org org-roam rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(pixel-scroll-precision-mode t)
  '(recentf-max-saved-items 200)
+ '(recentf-mode t)
  '(repeat-mode t)
  '(ring-bell-function 'ignore)
  '(save-place-mode t)
@@ -279,7 +280,6 @@ This function is designed to be called from `kill-buffer-query-functions'."
 (defun recentf-open-files+ ()
   "Use `completing-read' to open a recent file."
   (interactive)
-  (require 'recentf)
   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
     (find-file (completing-read "Find recent file: " files nil t))))
 
