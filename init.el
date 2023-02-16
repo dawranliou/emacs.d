@@ -244,7 +244,7 @@
 (global-set-key (kbd "M-q") #'fill-or-unfill) ; M-q
 (keymap-set window-prefix-map "S" #'window-toggle-side-windows) ; Was "s" but rarely used
 (keymap-set window-prefix-map "s" #'toggle-window-split)
-(keymap-set window-prefix-map "t" #'transpose-windows)
+(keymap-set window-prefix-map "t" #'window-swap-states) ; aka transpose windows
 
 ;;; Functions
 
@@ -346,18 +346,6 @@ kill region instead"
         (split-window-horizontally)
       (split-window-vertically))
     (switch-to-buffer nil))) ; restore the original window in this part of the frame
-
-(defun transpose-windows (arg)
-  "Transpose the buffers shown in two windows.
-Prefix ARG determines if the current windows buffer is swapped
-with the next or previous window, and the number of
-transpositions to execute in sequence."
-  (interactive "p")
-  (let ((this-buffer (window-buffer))
-        (this-window (selected-window)))
-    (other-window arg)
-    (set-window-buffer this-window (current-buffer))
-    (set-window-buffer (selected-window) this-buffer)))
 
 (defun fill-or-unfill ()
   "Like `fill-paragraph', but unfill if used twice."
