@@ -242,8 +242,9 @@
 (keymap-global-set "C-x C-r" #'recentf-open-files+)
 (keymap-global-set "C-w" #'backward-kill-word-or-region)
 (global-set-key (kbd "M-q") #'fill-or-unfill) ; M-q
-(keymap-set ctl-x-4-map "s" #'toggle-window-split)
-(keymap-set ctl-x-4-map "t" #'transpose-windows)
+(keymap-set window-prefix-map "S" #'window-toggle-side-windows) ; Was "s" but rarely used
+(keymap-set window-prefix-map "s" #'toggle-window-split)
+(keymap-set window-prefix-map "t" #'transpose-windows)
 
 ;;; Functions
 
@@ -337,16 +338,14 @@ kill region instead"
 (defun toggle-window-split ()
   "Toggle window split from vertical to horizontal."
   (interactive)
-  (if (> (length (window-list)) 2)
-      (error "Can't toggle with more than 2 windows.")
-    (let ((was-full-height (window-full-height-p)))
-      (delete-other-windows)
-      (if was-full-height
-          (split-window-vertically)
-        (split-window-horizontally))
-      (save-selected-window
-        (other-window 1)
-        (switch-to-buffer (other-buffer))))))
+  (unless (= (length (window-list)) 2)
+    (error "Can only toggle a frame split in two"))
+  (let ((split-vertically-p (window-combined-p)))
+    (delete-window) ; closes current window
+    (if split-vertically-p
+        (split-window-horizontally)
+      (split-window-vertically))
+    (switch-to-buffer nil))) ; restore the original window in this part of the frame
 
 (defun transpose-windows (arg)
   "Transpose the buffers shown in two windows.
