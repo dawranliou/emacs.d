@@ -638,6 +638,15 @@ buffer name when eglot is enabled."
 
 (external-package go-mode
   (with-eval-after-load 'go-mode
+    (defun project-find-go-module (dir)
+      (when-let ((root (locate-dominating-file dir "go.mod")))
+        (cons 'go-module root)))
+
+    (cl-defmethod project-root ((project (head go-module)))
+      (cdr project))
+
+    (add-hook 'project-find-functions #'project-find-go-module)
+
     (add-hook 'before-save-hook #'gofmt-before-save)))
 
 (external-package flyspell
