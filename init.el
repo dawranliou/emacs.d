@@ -697,7 +697,7 @@ buffer name when eglot is enabled."
   "Toggle my personal C-z mode for navigation."
   :init-value nil
   :global t
-  :lighter " CZ"
+  :lighter " 🥨"
   :group 'cz
   :keymap
   '(("n" . next-line)
