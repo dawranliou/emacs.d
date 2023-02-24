@@ -34,10 +34,10 @@
       (fg "#212121")
       (bg "#eee1c4")
       (weak "#A19274")
-      (weaker "#FFF9EB")
-      ;; (highlight "#C2D2ED")
-      (highlight "#F0CC7D")
-      ;; (highlight "#C0B7ED")
+      (highlight-1 "#F0CC7D")
+      (highlight-2 "#FFF9EB")
+      (highlight-3 "#C0B7ED")
+      (highlight-4 "#C2D2ED")
       (success "#87a985")
       (warning "#c87e7e"))
   (custom-theme-set-faces
@@ -46,13 +46,13 @@
    `(default ((,class (:background ,bg :foreground ,fg))))
    `(fringe ((,class (:background ,bg :foreground ,weak))))
    `(shadow ((,class (:inherit fixed-pitch))))
-   `(highlight ((,class (:foreground ,fg :background ,highlight))))
-   `(region ((,class (:foreground ,fg :background ,highlight))))
-   `(show-paren-match ((,class (:background ,highlight :bold t))))
-   `(show-paren-mismatch ((,class (:background ,warning :bold t))))
+   `(highlight ((,class (:background ,highlight-4))))
+   `(region ((,class (:foreground ,fg :background ,highlight-1))))
+   `(show-paren-match ((,class (:background ,highlight-1))))
+   `(show-paren-mismatch ((,class (:background ,warning))))
    `(minibuffer-prompt ((,class (:bold t :foreground ,fg))))
-   `(isearch ((,class (:bold t :foreground ,fg :background ,highlight :bold t))))
-   `(lazy-highlight ((,class (:foreground ,fg :background ,weaker))))
+   `(isearch ((,class (:bold t :foreground ,fg :background ,highlight-1 :bold t))))
+   `(lazy-highlight ((,class (:foreground ,fg :background ,highlight-2))))
    `(link ((,class (:underline t))))
    `(parenthesis ((,class (:foreground ,weak))))
    `(trailing-whitespace ((,class (:foreground nil :background ,warning))))
@@ -81,14 +81,11 @@
    `(font-lock-warning-face ((,class (:underline (:color ,warning :style wave)))))
    `(fill-column-indicator ((,class (:foreground ,weak))))
 
-   ;; clojure mode
-   `(clojure-keyword-face ((,class (:foreground ,fg))))
-
    ;; hl line
-   `(hl-line ((,class (:background ,weaker))))
+   `(hl-line ((,class (:background ,highlight-2))))
 
    ;; Alternative background
-   `(magit-section-highlight ((,class (:background ,weaker))))))
+   `(magit-section-highlight ((,class (:background ,highlight-2))))))
 
 (provide 'sketch-paper-theme)
 ;;; sketch-paper-theme.el ends here
