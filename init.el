@@ -93,7 +93,7 @@
  '(org-capture-templates
    '(("t" "Todo" entry
       (file+olp+datetree "~/org/journal/journal.org")
-      "* TODO %?\12" :clock-in t :clock-resume t :tree-type week)
+      "* TODO %?\12SCHEDULED: %t\12" :clock-in t :clock-resume t :tree-type week)
      ("j" "Journal" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* %? %^G\12" :clock-in t :clock-keep t :tree-type week)
