@@ -177,6 +177,7 @@
  '(sqlformat-command 'pgformatter)
  '(tab-always-indent 'complete)
  '(tramp-default-method "ssh")
+ '(uniquify-buffer-name-style 'forward nil (uniquify))
  '(version-control t)
  '(visible-bell nil)
  '(winner-mode t)
