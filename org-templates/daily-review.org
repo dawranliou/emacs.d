@@ -3,4 +3,4 @@
 - [ ] Check calendar for tomorrow
 - [ ] Reschedule unfinished TODO
 - [ ] Day summary
-- [ ] Clock out and update clock report
+- Clock out and update clock report
