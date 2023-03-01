@@ -561,7 +561,6 @@ reuse it's window, otherwise create new one."
 (keymap-global-set "C-c l" #'org-store-link)
 (keymap-global-set "C-c a" #'org-agenda)
 (keymap-global-set "C-c b" #'org-switchb)
-(keymap-global-set "C-c ." #'org-clock-goto) ; C-c . is taken by org-time-stamp
 (keymap-global-set "C-c g" #'org-clock-goto) ; in org mode. C-c g is a backup.
 (global-set-key (kbd "C-c c") #'org-capture)
 
