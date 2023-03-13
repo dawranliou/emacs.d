@@ -70,6 +70,7 @@
  '(isearch-allow-scroll t)
  '(isearch-lazy-count t)
  '(isearch-wrap-pause 'no)
+ '(isearch-yank-on-move t)
  '(kept-new-versions 6)
  '(kept-old-versions 2)
  '(lazy-count-prefix-format nil)
