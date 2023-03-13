@@ -181,7 +181,6 @@
  '(uniquify-buffer-name-style 'forward nil (uniquify))
  '(version-control t)
  '(visible-bell nil)
- '(winner-mode t)
  '(ws-butler-keep-whitespace-before-point nil)
  '(xref-search-program 'ripgrep))
 (custom-set-faces
