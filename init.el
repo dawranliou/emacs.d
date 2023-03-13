@@ -42,6 +42,8 @@
  '(completion-category-overrides '((file (styles basic orderless))))
  '(completion-styles '(orderless))
  '(context-menu-mode t)
+ '(custom-safe-themes
+   '("14436a10b0cb5b7b6e6f6d490a08c1a751ad0384e9b124b9b8d5d554129f5571" default))
  '(delete-by-moving-to-trash t)
  '(delete-old-versions t)
  '(dired-auto-revert-buffer t)
