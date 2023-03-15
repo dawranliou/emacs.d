@@ -151,7 +151,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(pixel-scroll-precision-mode t)
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
