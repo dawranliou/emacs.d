@@ -129,7 +129,6 @@
  '(org-refile-allow-creating-parent-nodes 'confirm)
  '(org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
  '(org-refile-use-outline-path 'file)
- '(org-roam-directory "~/org/roam/")
  '(org-special-ctrl-a/e 'reversed)
  '(org-src-fontify-natively t)
  '(org-src-preserve-indentation nil)
@@ -152,7 +151,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org org-roam rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(pixel-scroll-precision-mode t)
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
@@ -590,20 +589,6 @@ reuse it's window, otherwise create new one."
   (require 'org-habit)
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
-
-(external-package org-roam
-  (setq org-roam-v2-ack t)
-  (autoload #'org-roam-node-find "org-roam" nil t)
-  (autoload #'org-roam-capture "org-roam" nil t)
-  (autoload #'org-roam-node-insert "org-roam" nil t)
-  (keymap-global-set "C-c n f" #'org-roam-node-find)
-  (keymap-global-set "C-c n i" #'org-roam-node-insert)
-  (keymap-global-set "C-c n c" #'org-roam-capture)
-
-  (with-eval-after-load 'org-roam
-    (org-roam-db-autosync-enable)
-    (keymap-global-set "C-c n g" #'org-roam-graph)
-    (keymap-global-set "C-c n l" #'org-roam-buffer-toggle)))
 
 (external-package with-editor
   (keymap-substitute global-map #'async-shell-command #'with-editor-async-shell-command)
