@@ -19,6 +19,23 @@
      (warn "External package \"%s\" is not installed... skipping config."
            (symbol-name ',package))))
 
+;;; Treesitter
+
+(setq treesit-language-source-alist
+      `((yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (css "https://github.com/tree-sitter/tree-sitter-css")
+        (clojure "https://github.com/sogaiu/tree-sitter-clojure.git")))
+
+(defun install-latest-known-treesitter-grammars ()
+  "Install/upgrade all latest Tree-sitter grammars."
+  (interactive)
+  (dolist (grammar treesit-language-source-alist)
+    (message "Downloading %s treesitter grammar from %s" (car grammar) (cadr grammar))
+    (treesit-install-language-grammar (car grammar))))
+
 ;;; Settings
 
 (custom-set-variables
@@ -80,6 +97,15 @@
  '(magit-diff-refine-hunk 'all)
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
  '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
+ '(major-mode-remap-alist
+   '((clojurec-mode . clojure-ts-mode)
+     (clojurescript-mode . clojure-ts-mode)
+     (clojure-mode . clojure-ts-mode)
+     (python-mode . python-ts-mode)
+     (css-mode . css-ts-mode)
+     (js-mode . js-ts-mode)
+     (js-json-mode . json-ts-mode)
+     (yaml-mode . yaml-ts-mode)))
  '(make-backup-files t)
  '(mode-line-compact 'long)
  '(mouse-wheel-flip-direction t)

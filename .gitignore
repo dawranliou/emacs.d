@@ -25,3 +25,4 @@
 *.elc
 /package-quickstart.el
 /multisession/
+/tree-sitter/
