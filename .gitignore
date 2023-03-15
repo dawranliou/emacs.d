@@ -24,3 +24,4 @@
 /projects
 *.elc
 /package-quickstart.el
+/multisession/
