@@ -1,3 +1,6 @@
 [submodule "themes/sketch-themes"]
 	path = themes/sketch-themes
 	url = https://github.com/dawranliou/sketch-themes.git
+[submodule "elpa/clojure-ts-mode"]
+	path = elpa/clojure-ts-mode
+	url = https://github.com/clojure-emacs/clojure-ts-mode
