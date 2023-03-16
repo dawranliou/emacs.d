@@ -26,8 +26,23 @@
         (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
         (python "https://github.com/tree-sitter/tree-sitter-python")
         (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        ;; (json "https://github.com/tree-sitter/tree-sitter-json" "master" "src")
         (css "https://github.com/tree-sitter/tree-sitter-css")
         (clojure "https://github.com/sogaiu/tree-sitter-clojure.git")))
+
+(setq major-mode-remap-alist
+      '(
+        ;; Cider still requires the conventional clojure-mode to manage the
+        ;; REPL.  Make the clojure-ts-mode an opt-in major mode.
+
+        ;; (clojurec-mode . clojure-ts-mode)
+        ;; (clojurescript-mode . clojure-ts-mode)
+        ;; (clojure-mode . clojure-ts-mode)
+
+        (python-mode . python-ts-mode)
+        (css-mode . css-ts-mode)
+        (js-mode . js-ts-mode)
+        (yaml-mode . yaml-ts-mode)))
 
 (defun install-latest-known-treesitter-grammars ()
   "Install/upgrade all latest Tree-sitter grammars."
@@ -97,15 +112,6 @@
  '(magit-diff-refine-hunk 'all)
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
  '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
- '(major-mode-remap-alist
-   '((clojurec-mode . clojure-ts-mode)
-     (clojurescript-mode . clojure-ts-mode)
-     (clojure-mode . clojure-ts-mode)
-     (python-mode . python-ts-mode)
-     (css-mode . css-ts-mode)
-     (js-mode . js-ts-mode)
-     (js-json-mode . json-ts-mode)
-     (yaml-mode . yaml-ts-mode)))
  '(make-backup-files t)
  '(mode-line-compact 'long)
  '(mouse-wheel-flip-direction t)
