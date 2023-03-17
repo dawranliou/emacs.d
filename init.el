@@ -92,11 +92,13 @@
  '(erc-fill-static-center 20)
  '(erc-prompt (lambda nil (concat "[" (buffer-name) "]")))
  '(erc-server "irc.libera.chat" t)
+ '(fill-column 80)
  '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
  '(global-so-long-mode t)
  '(grep-find-command '("rg -n -H --no-heading --glob='' -e ''" . 37))
  '(helpful-switch-buffer-function #'helpful-switch-to-buffer)
  '(history-length 20000)
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(initial-major-mode 'fundamental-mode)
  '(initial-scratch-message nil)
@@ -109,6 +111,7 @@
  '(kept-old-versions 2)
  '(lazy-count-prefix-format nil)
  '(lazy-count-suffix-format " [%s/%s]")
+ '(line-spacing 3)
  '(magit-diff-refine-hunk 'all)
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
  '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
@@ -210,11 +213,14 @@
  '(sqlformat-args '("-s2" "-g"))
  '(sqlformat-command 'pgformatter)
  '(tab-always-indent 'complete)
+ '(tab-width 8)
  '(tramp-default-method "ssh")
+ '(truncate-lines t)
  '(uniquify-buffer-name-style 'forward nil (uniquify))
  '(version-control t)
  '(visible-bell nil)
  '(ws-butler-keep-whitespace-before-point nil)
+ '(x-stretch-cursor t)
  '(xref-search-program 'ripgrep))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -226,12 +232,6 @@
  '(variable-pitch ((t (:family "Sans Serif" :height 170)))))
 
 (setq-default
- fill-column 80
- x-stretch-cursor t
- tab-width 8
- line-spacing 3
- indent-tabs-mode nil
- truncate-lines t
  frame-title-format '("%n "              ; narrowed?
                       (:eval
                        (if (buffer-file-name)
