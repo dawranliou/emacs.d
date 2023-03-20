@@ -661,9 +661,8 @@ buffer name when eglot is enabled."
     (defun clojure-copy-ns-var ()
       "Save the current clojure var to the kill ring."
       (interactive)
-      (let ((ns (funcall clojure-expected-ns-function))
-            (def (clojure-find-def)))
-        (-kill-and-echo (format "%s/%s" ns (cadr def)))))
+      (-kill-and-echo
+       (format "%s/%s" (clojure-find-ns) (clojure-current-defun-name))))
     (keymap-set clojure-mode-map "C-c w" #'clojure-copy-ns-var)
     (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)))
 
