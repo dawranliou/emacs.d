@@ -186,7 +186,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(pixel-scroll-precision-mode t)
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
@@ -643,6 +643,11 @@ buffer name when eglot is enabled."
 
     (advice-add 'xref-find-references :around
                 #'xref-find-references-with-eglot)))
+
+(external-package dumb-jump
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (with-eval-after-load 'xref
+    (setq xref-show-definitions-function #'xref-show-definitions-completing-read)))
 
 ;;; Language major modes
 
