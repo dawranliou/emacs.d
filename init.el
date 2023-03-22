@@ -666,6 +666,20 @@ buffer name when eglot is enabled."
     (keymap-set clojure-mode-map "C-c w" #'clojure-copy-ns-var)
     (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)))
 
+(external-package clojure-ts-mode
+  (with-eval-after-load 'clojure-ts-mode
+    (require 'clojure-mode)
+    (setq clojure-ts-mode-syntax-table clojure-mode-syntax-table))
+
+  (add-hook 'clojure-ts-mode-hook #'cider-mode)
+
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs '((clojure-mode
+                                           clojurescript-mode
+                                           clojurec-mode
+                                           clojure-ts-mode)
+                                          . ("clojure-lsp")))))
+
 (external-package cider
   (with-eval-after-load 'cider
     (keymap-set cider-mode-map "C-c M-." 'cider-find-var)))
