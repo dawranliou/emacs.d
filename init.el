@@ -21,27 +21,52 @@
 
 ;;; Treesitter
 
+;; https://robbmann.io/posts/emacs-treesit-auto/
 (setq treesit-language-source-alist
-      `((yaml "https://github.com/ikatyang/tree-sitter-yaml")
-        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-        (python "https://github.com/tree-sitter/tree-sitter-python")
-        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-        ;; (json "https://github.com/tree-sitter/tree-sitter-json" "master" "src")
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (c "https://github.com/tree-sitter/tree-sitter-c")
+        (clojure "https://github.com/sogaiu/tree-sitter-clojure.git")
+        (cmake "https://github.com/uyha/tree-sitter-cmake")
+        (commonlisp "https://github.com/thehamsta/tree-sitter-commonlisp")
+        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
         (css "https://github.com/tree-sitter/tree-sitter-css")
-        (clojure "https://github.com/sogaiu/tree-sitter-clojure.git")))
+        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
+        (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
+        (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (java "https://github.com/tree-sitter/tree-sitter-java")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (latex "https://github.com/latex-lsp/tree-sitter-latex")
+        (lua "https://github.com/Azganoth/tree-sitter-lua")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (r "https://github.com/r-lib/tree-sitter-r")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        (toml "https://github.com/tree-sitter/tree-sitter-toml")
+        (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
+        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+        (zig "https://github.com/GrayJack/tree-sitter-zig")))
 
 (setq major-mode-remap-alist
-      '(
-        ;; Cider still requires the conventional clojure-mode to manage the
-        ;; REPL.  Make the clojure-ts-mode an opt-in major mode.
-
-        ;; (clojurec-mode . clojure-ts-mode)
-        ;; (clojurescript-mode . clojure-ts-mode)
-        ;; (clojure-mode . clojure-ts-mode)
-
-        (python-mode . python-ts-mode)
+      '((sh-mode . bash-ts-mode)
+        (clojurec-mode . clojure-ts-mode)
+        (clojurescript-mode . clojure-ts-mode)
+        (clojure-mode . clojure-ts-mode)
         (css-mode . css-ts-mode)
+        (go-mode . go-ts-mode)
+        (go-dot-mod-mode . go-mod-ts-mode)
+        (mhtml-mode . html-ts-mode)
+        (sgml-mode . html-ts-mode)
+        (java-mode . java-ts-mode)
         (js-mode . js-ts-mode)
+        (javascript-mode . js-ts-mode)
+        (js-json-mode . json-ts-mode)
+        (python-mode . python-ts-mode)
         (yaml-mode . yaml-ts-mode)))
 
 (defun install-latest-known-treesitter-grammars ()
