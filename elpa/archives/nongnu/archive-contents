@@ -199,7 +199,7 @@
 	    (:url . "https://elpa.nongnu.org/nongnu/cdlatex.html")
 	    (:commit . "6f734db8ab87f11dffb77c33a445140baeb723c4"))])
  (cider .
-	[(1 6 0)
+	[(1 7 0)
 	 ((emacs
 	   (26))
 	  (clojure-mode
@@ -225,7 +225,7 @@
 	   ("Artur Malabarba" . "bruce.connor.am@gmail.com")
 	   ("Hugo Duncan" . "hugo@hugoduncan.org")
 	   ("Steve Purcell" . "steve@sanityinc.com"))
-	  (:commit . "80408364f8e6870d8f5a33e0e096b86f1a7ef144"))])
+	  (:commit . "f39e0b52014913f5acc1dc28ad94c68385c0834e"))])
  (clojure-mode .
 	       [(5 16 0)
 		((emacs
@@ -946,7 +946,7 @@
 	       ("Bozhidar Batsov"))
 	      (:keywords "convenience"))])
  (haml-mode .
-	    [(3 1 10)
+	    [(3 2 1)
 	     ((emacs
 	       (24))
 	      (cl-lib
@@ -956,7 +956,8 @@
 	      (:keywords "markup" "languages" "html")
 	      (:maintainer "Natalie Weizenbaum")
 	      (:authors
-	       ("Natalie Weizenbaum")))])
+	       ("Natalie Weizenbaum"))
+	      (:commit . "45a0b23db0b8f827c78f7749457f3427263e6ffd"))])
  (haskell-mode .
 	       [(17 2)
 		nil "A Haskell editing mode" tar
@@ -1650,7 +1651,7 @@
 	       ("David Christiansen" . "david@davidchristiansen.dk"))
 	      (:keywords "convenience"))])
  (racket-mode .
-	      [(1 0 20230209 92406)
+	      [(1 0 20230321 113335)
 	       ((emacs
 		 (25 1)))
 	       "Racket editing, REPL, and more" tar
@@ -1885,7 +1886,7 @@
 		     ("John Olsson" . "john@cryon.se"))
 		    (:commit . "2d5acd143a153e16372d59000e57d76291ab81dd"))])
  (subed .
-	[(1 2 0)
+	[(1 2 1)
 	 ((emacs
 	   (25 1)))
 	 "A major mode for editing subtitles" tar
@@ -1894,7 +1895,7 @@
 	  (:maintainer "Sacha Chua" . "sacha@sachachua.com")
 	  (:authors
 	   ("Random User"))
-	  (:commit . "089d9f33db9e34512352b1344627cdb20b967409"))])
+	  (:commit . "0519eb16ad618880fbc9cfd272ebb13e2ceab619"))])
  (sweeprolog .
 	     [(0 17 0)
 	      ((emacs
@@ -2215,7 +2216,7 @@
 	      (:authors
 	       ("Le Wang")))])
  (xah-fly-keys .
-	       [(23 1 20230318191051)
+	       [(23 4 20230322111913)
 		((emacs
 		  (24 1)))
 		"ergonomic modal keybinding minor mode." tar
@@ -2224,7 +2225,7 @@
 		 (:maintainer "Xah Lee" . "xah@xahlee.org")
 		 (:authors
 		  ("Xah Lee ( http://xahlee.info/ )"))
-		 (:commit . "7e0d33170c05ed3fe364430df7e8cdb4a36bfd70"))])
+		 (:commit . "e7408e5b607d9214e83b2d408fe0833a01914ba2"))])
  (xkcd .
        [(1 1)
 	((json
