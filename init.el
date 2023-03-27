@@ -652,6 +652,7 @@ reuse it's window, otherwise create new one."
 
 (external-package eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
+  (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
   (add-hook 'go-mode 'eglot-ensure)
 
   (with-eval-after-load 'eglot
@@ -691,14 +692,23 @@ buffer name when eglot is enabled."
     (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)))
 
 (external-package clojure-ts-mode
-  (with-eval-after-load 'clojure-mode
-    (require 'clojure-ts-mode)
-    (keymap-set clojure-ts-mode-map "C-c w" #'clojure-copy-ns-var)
-    (keymap-set clojure-ts-mode-map "C-c W" #'clojure-copy-ns))
-
   (with-eval-after-load 'clojure-ts-mode
     (require 'clojure-mode)
-    (setq clojure-ts-mode-syntax-table clojure-mode-syntax-table))
+    (setq clojure-ts-mode-syntax-table clojure-mode-syntax-table)
+
+    (keymap-set clojure-ts-mode-map "C-c M-x" #'cider)
+    (keymap-set clojure-ts-mode-map "C-c M-j" #'cider-jack-in-clj)
+    (keymap-set clojure-ts-mode-map "C-c M-J" #'cider-jack-in-cljs)
+    (keymap-set clojure-ts-mode-map "C-c M-c" #'cider-connect-clj)
+    (keymap-set clojure-ts-mode-map "C-c M-C" #'cider-connect-cljs)
+    (keymap-set clojure-ts-mode-map "C-c C-x" 'cider-start-map)
+    (keymap-set clojure-ts-mode-map "C-c C-s" 'sesman-map)
+    (require 'sesman)
+    (sesman-install-menu clojure-ts-mode-map)
+    (add-hook 'clojure-ts-mode-hook (lambda () (setq-local sesman-system 'CIDER)))
+
+    (keymap-set clojure-ts-mode-map "C-c w" #'clojure-copy-ns-var)
+    (keymap-set clojure-ts-mode-map "C-c W" #'clojure-copy-ns))
 
   (add-hook 'clojure-ts-mode-hook #'cider-mode)
 
