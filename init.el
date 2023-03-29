@@ -149,6 +149,10 @@
  '(org-agenda-files '("~/org/journal/journal.org"))
  '(org-agenda-span 'day)
  '(org-agenda-start-with-log-mode t)
+ '(org-agenda-time-grid
+   '((daily today require-timed)
+     (600 1600)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
  '(org-agenda-window-setup 'current-window)
  '(org-attach-auto-tag "attachment")
  '(org-babel-load-languages '((emacs-lisp . t) (sql . t)))
