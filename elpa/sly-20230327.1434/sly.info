@@ -16,7 +16,7 @@ SLY
 ***
 
 SLY is a Common Lisp IDE for Emacs.  This is the manual for version
-1.0.42.  (Last updated March 15, 2023)
+1.0.42.  (Last updated March 29, 2023)
 
    Written for SLIME Luke Gorrie and others, rewritten by João Távora
 for SLY.

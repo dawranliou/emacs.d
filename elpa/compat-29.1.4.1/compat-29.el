@@ -306,6 +306,7 @@ to other portions of the buffer, use `without-restriction' with the
 same LABEL argument.
 
 \(fn START END [:label LABEL] BODY)"
+  (declare (indent 0) (debug t))
   `(save-restriction
      (narrow-to-region ,start ,end)
      ;; Locking is ignored
@@ -321,6 +322,7 @@ restrictions set by `with-restriction' with the same LABEL argument
 are lifted.
 
 \(fn [:label LABEL] BODY)"
+  (declare (indent 0) (debug t))
   `(save-restriction
      (widen)
      ;; Locking is ignored
@@ -620,6 +622,31 @@ The variable list SPEC is the same as in `if-let*'."
            (throw ',done nil))))))
 
 ;;;; Defined in files.el
+
+(compat-defun directory-abbrev-make-regexp (directory) ;; <compat-tests:directory-abbrev-make-regexp>
+  "Create a regexp to match DIRECTORY for `directory-abbrev-alist'."
+  (let ((regexp
+         ;; We include a slash at the end, to avoid spurious
+         ;; matches such as `/usr/foobar' when the home dir is
+         ;; `/usr/foo'.
+         (concat "\\`" (regexp-quote directory) "\\(/\\|\\'\\)")))
+    ;; The value of regexp could be multibyte or unibyte.  In the
+    ;; latter case, we need to decode it.
+    (if (multibyte-string-p regexp)
+        regexp
+      (decode-coding-string regexp
+                            (if (eq system-type 'windows-nt)
+                                'utf-8
+                              locale-coding-system)))))
+
+(compat-defun directory-abbrev-apply (filename) ;; <compat-tests:directory-abbrev-apply>
+  "Apply the abbreviations in `directory-abbrev-alist' to FILENAME.
+Note that when calling this, you should set `case-fold-search' as
+appropriate for the filesystem used for FILENAME."
+  (dolist (dir-abbrev directory-abbrev-alist filename)
+    (when (string-match (car dir-abbrev) filename)
+         (setq filename (concat (cdr dir-abbrev)
+                                (substring filename (match-end 0)))))))
 
 (compat-defun file-name-split (filename) ;; <compat-tests:file-name-split>
   "Return a list of all the components of FILENAME.
@@ -1182,14 +1209,17 @@ value can also be a property list with properties `:enter' and
      :repeat (:enter (commands ...) :exit (commands ...))
 
 `:enter' specifies the list of additional commands that only
-enter `repeat-mode'.  When the list is empty, then by default all
-commands in the map enter `repeat-mode'.  This is useful when
-there is a command that has the `repeat-map' symbol property, but
-doesn't exist in this specific map.  `:exit' is a list of
-commands that exit `repeat-mode'.  When the list is empty, no
-commands in the map exit `repeat-mode'.  This is useful when a
-command exists in this specific map, but it doesn't have the
-`repeat-map' symbol property on its symbol.
+enter `repeat-mode'.  When the list is empty, then only the
+commands defined in the map enter `repeat-mode'.  Specifying a
+list of commands is useful when there are commands that have the
+`repeat-map' symbol property, but don't exist in this specific
+map.
+
+`:exit' is a list of commands that exit `repeat-mode'.  When the
+list is empty, no commands in the map exit `repeat-mode'.
+Specifying a list of commands is useful when those commands exist
+in this specific map, but should not have the `repeat-map' symbol
+property.
 
 \(fn VARIABLE-NAME &key DOC FULL PARENT SUPPRESS NAME PREFIX KEYMAP REPEAT &rest [KEY DEFINITION]...)"
   (declare (indent 1))

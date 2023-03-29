@@ -113,7 +113,7 @@ The target of the action is chosen by `embark-target-finders'.
 
 If the target comes from minibuffer completion, then the default
 action is the command that opened the minibuffer in the first
-place, unless overidden by `embark-default-action-overrides'.
+place, unless overridden by `embark-default-action-overrides'.
 
 For targets that do not come from minibuffer completion
 (typically some thing at point in a regular buffer) and whose

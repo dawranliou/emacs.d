@@ -1,6 +1,6 @@
-(define-package "sly" "20230224.911" "Sylvester the Cat's Common Lisp IDE"
+(define-package "sly" "20230327.1434" "Sylvester the Cat's Common Lisp IDE"
   '((emacs "24.3"))
-  :commit "f34c22289a2b3ab10e607f9f8822d62bb5c98cf5" :keywords
+  :commit "82b20a9a83209b4dbfbfb62a1536896aed5f85f7" :keywords
   '("languages" "lisp" "sly")
   :url "https://github.com/joaotavora/sly")
 ;; Local Variables:
