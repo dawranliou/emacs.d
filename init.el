@@ -659,6 +659,7 @@ reuse it's window, otherwise create new one."
   (add-hook 'clojure-mode-hook 'eglot-ensure)
   (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
   (add-hook 'go-mode 'eglot-ensure)
+  (add-hook 'go-ts-mode 'eglot-ensure)
 
   (with-eval-after-load 'eglot
     (defun xref-find-references-with-eglot (orig-fun &rest args)
@@ -733,14 +734,15 @@ buffer name when eglot is enabled."
   (setq markdown-command "marked"))
 
 (external-package go-mode
-  (defun project-find-go-module (dir)
-    (when-let ((root (locate-dominating-file dir "go.mod")))
-      (cons 'go-module root)))
+  (with-eval-after-load 'project
+    (defun project-find-go-module (dir)
+      (when-let ((root (locate-dominating-file dir "go.mod")))
+        (cons 'go-module root)))
 
-  (cl-defmethod project-root ((project (head go-module)))
-    (cdr project))
+    (cl-defmethod project-root ((project (head go-module)))
+      (cdr project))
 
-  (add-hook 'project-find-functions #'project-find-go-module)
+    (add-hook 'project-find-functions #'project-find-go-module))
 
   (add-hook 'before-save-hook #'gofmt-before-save))
 
