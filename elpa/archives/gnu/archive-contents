@@ -771,17 +771,17 @@
 	    ("Protesilaos Stavrou" . "info@protesilaos.com"))
 	   (:commit . "7c425a2d0988f3fae603434c1f8044be8293d517"))])
  (denote-menu .
-	      [(1 0 0)
+	      [(1 1 1)
 	       ((emacs
 		 (28 1))
 		(denote
 		 (1 2 0)))
 	       "View denote files in a tabulated list." tar
-	       ((:maintainer "Mohamed Suliman" . "sulimanm@tcd.ie")
+	       ((:url . "https://github.com/namilus/denote-menu")
+		(:maintainer "Mohamed Suliman" . "sulimanm@tcd.ie")
 		(:authors
 		 ("Mohamed Suliman" . "sulimanm@tcd.ie"))
-		(:url . "https://elpa.gnu.org/packages/denote-menu.html")
-		(:commit . "3bd7cf7d126d4493df17715aec3e7a9046efdc8c"))])
+		(:commit . "8e67c1a326bda7b824252548a1e5e46c7f840c49"))])
  (detached .
 	   [(0 10 1)
 	    ((emacs
@@ -1021,7 +1021,7 @@
 	       ("Protesilaos Stavrou" . "info@protesilaos.com"))
 	      (:commit . "1d7e6e78df914e8829e6511a935616b0895403ae"))])
  (eglot .
-	[(1 13)
+	[(1 14)
 	 ((emacs
 	   (26 3))
 	  (jsonrpc
@@ -1033,7 +1033,7 @@
 	  (xref
 	   (1 6 2))
 	  (eldoc
-	   (1 11 0))
+	   (1 14 0))
 	  (seq
 	   (2 23))
 	  (external-completion
@@ -1044,7 +1044,7 @@
 	  (:maintainer "João Távora" . "joaotavora@gmail.com")
 	  (:authors
 	   ("João Távora" . "joaotavora@gmail.com"))
-	  (:commit . "0fdc953edf7cfd0fe236b6b6e5726e4e58d9a94f"))])
+	  (:commit . "8125d4cfc5605ead9102b7d823c4241029eb76cc"))])
  (el-search .
 	    [(1 12 6 1)
 	     ((emacs
@@ -1060,7 +1060,7 @@
 	      (:keywords "lisp")
 	      (:url . "http://elpa.gnu.org/packages/el-search.html"))])
  (eldoc .
-	[(1 13 0)
+	[(1 14 0)
 	 ((emacs
 	   (26 3)))
 	 "Show function arglist or variable docstring in echo area" tar
@@ -1069,7 +1069,7 @@
 	  (:authors
 	   ("Noah Friedman" . "friedman@splode.com"))
 	  (:url . "https://elpa.gnu.org/packages/eldoc.html")
-	  (:commit . "5f64ba0efbfcbb6dc44add191427aca504b4c3cd"))])
+	  (:commit . "f2357df91f0262949618bd4da571d3267c1b1dfa"))])
  (eldoc-eval .
 	     [(0 2)
 	      nil "Enable eldoc support when minibuffer is in use." tar
@@ -1123,11 +1123,13 @@
 		    ("Omar Antolín Camarena" . "omar@matem.unam.mx"))
 		   (:commit . "127492fac048cecfdba145d496a902022a68d1d5"))])
  (ement .
-	[(0 7)
+	[(0 8 1)
 	 ((emacs
 	   (27 1))
 	  (map
 	   (2 1))
+	  (persist
+	   (0 5))
 	  (plz
 	   (0 2))
 	  (taxy
@@ -1144,7 +1146,7 @@
 	  (:maintainer "Adam Porter" . "adam@alphapapa.net")
 	  (:authors
 	   ("Adam Porter" . "adam@alphapapa.net"))
-	  (:commit . "5bb6c930ff29f22263018b5dff7b45669b8357f5"))])
+	  (:commit . "41a5a6b589b3016e2f9fbc9746a1bf482e69cfb5"))])
  (emms .
        [(14)
 	((cl-lib
@@ -1811,7 +1813,7 @@
 	  ("Daniel Mendler" . "mail@daniel-mendler.de"))
 	 (:commit . "68b579d715c4be5a255852130b9009151fb0c41e"))])
  (jit-spell .
-	    [(0 2)
+	    [(0 3)
 	     ((emacs
 	       (27 1))
 	      (compat
@@ -1822,7 +1824,7 @@
 	      (:maintainer "Augusto Stoffel" . "arstoffel@gmail.com")
 	      (:authors
 	       ("Augusto Stoffel" . "arstoffel@gmail.com"))
-	      (:commit . "c0340baa13ec381f88191bfa9f95d6f4199503fc"))])
+	      (:commit . "365003e6e3c25c5e6210a2a4ce0654fa28063a23"))])
  (js2-mode .
 	   [(20220710)
 	    ((emacs
@@ -2392,7 +2394,7 @@
 	       ("Omar Antolín Camarena" . "omar@matem.unam.mx"))
 	      (:commit . "847694e78c12d903d5e3f6cb365a5d3b984db537"))])
  (org .
-      [(9 6 2)
+      [(9 6 3)
        ((emacs
 	 (26 1)))
        "Outline-based notes management and organizer" tar
@@ -2401,7 +2403,7 @@
 	(:maintainer "Bastien Guerry" . "bzg@gnu.org")
 	(:authors
 	 ("Carsten Dominik" . "carsten.dominik@gmail.com"))
-	(:commit . "c1e8e2ffc7e26591d89fb06beaa5309863f4eb96"))])
+	(:commit . "f9bbc79d627299c627cbfdacb565afd05acb0af9"))])
  (org-contacts .
 	       [(1 1)
 		((emacs
@@ -3543,7 +3545,7 @@
 	      ("Trevor Edwin Pogue" . "trevor.pogue@gmail.com"))
 	     (:commit . "33c2a6f0a11d1d88cdb2065c5a897e33507f4c86"))])
  (tramp .
-	[(2 6 0 2)
+	[(2 6 0 3)
 	 ((emacs
 	   (26 1)))
 	 "Transparent Remote Access, Multiple Protocol" tar
@@ -3552,7 +3554,7 @@
 	  (:maintainer "Michael Albinus" . "michael.albinus@gmx.de")
 	  (:authors
 	   ("Kai Großjohann" . "kai.grossjohann@gmx.net"))
-	  (:commit . "34d1f57ed0ac8a13a33ebd3f058f8e00f5b81346"))])
+	  (:commit . "1e5bbe5eca67973c26f4e4e62d42ba30ba01584b"))])
  (tramp-nspawn .
 	       [(1 0 1)
 		((emacs
