@@ -560,7 +560,7 @@ prompt is confusing."
    (let ((branches (magit-region-values 'branch t))
          (force current-prefix-arg))
      (if (length> branches 1)
-         (magit-confirm t nil "Delete %i branches" nil branches)
+         (magit-confirm t nil "Delete %d branches" nil branches)
        (setq branches
              (list (magit-read-branch-prefer-other
                     (if force "Force delete branch" "Delete branch")))))
@@ -568,7 +568,7 @@ prompt is confusing."
        (when-let ((unmerged (-remove #'magit-branch-merged-p branches)))
          (if (magit-confirm 'delete-unmerged-branch
                "Delete unmerged branch %s"
-               "Delete %i unmerged branches"
+               "Delete %d unmerged branches"
                'noabort unmerged)
              (setq force branches)
            (or (setq branches (-difference branches unmerged))
@@ -596,8 +596,10 @@ prompt is confusing."
             (format "Deleting local %s.  Also delete on %s"
                     (magit-ref-fullname (car branches))
                     remote)
-            "Delete %i branches on the remote (not just locally)"
-            'noabort branches)
+            (format "Deleting %d local refs.  Also delete on %s"
+                    (length refs)
+                    remote)
+            'noabort refs)
           ;; The ref may actually point at another rev on the remote,
           ;; but this is better than nothing.
           (dolist (ref refs)

@@ -91,6 +91,60 @@ Major mode for Fennel REPL.
 (register-definition-prefixes "fennel-mode" '("fennel-"))
 
 
+;;; Generated autoloads from fennel-proto-repl.el
+
+(autoload 'fennel-proto-repl "fennel-proto-repl" "\
+Start a new Fennel Proto REPL.
+
+If invoked interactively with a prefix argument, asks for COMMAND
+to start the REPL.  If optional REPL-BUFFER is supplied it is
+used as the buffer to start the REPL in.
+
+The command is persisted as a buffer-local variable, the REPL
+buffer remembers the command that was used to start it.
+Resetting the command to another value can be done by invoking it
+by using a prefix argument.
+
+Multiple REPLs are possible and new sessions can be created by
+simply calling this function.  Once the new REPL is created, the
+current buffer is linked with it, and all in-buffer commands
+start working in terms of the new REPL process.  To change what
+REPL is used for the current buffer using the
+`fennel-proto-repl-link-buffer' function.
+
+Return the REPL buffer.
+
+(fn COMMAND &optional REPL-BUFFER)" t)
+(autoload 'fennel-proto-repl-mode "fennel-proto-repl" "\
+Major mode for Fennel Proto REPL.
+
+\\{fennel-proto-repl-mode-map}
+
+(fn)" t)
+(autoload 'fennel-proto-repl-minor-mode "fennel-proto-repl" "\
+Fennel Proto REPL interaction mode.
+
+\\{fennel-proto-repl-minor-mode-map}
+
+This is a minor mode.  If called interactively, toggle the
+`Fennel-Proto-Repl minor mode' mode.  If the prefix argument is
+positive, enable the mode, and if it is zero or negative, disable
+the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable
+the mode if ARG is nil, omitted, or is a positive number.
+Disable the mode if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `fennel-proto-repl-minor-mode'.
+
+The mode's hook is called both when the mode is enabled and when
+it is disabled.
+
+(fn &optional ARG)" t)
+(register-definition-prefixes "fennel-proto-repl" '("fennel-proto-repl-"))
+
+
 ;;; Generated autoloads from fennel-scratch.el
 
 (autoload 'fennel-scratch "fennel-scratch" "\

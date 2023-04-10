@@ -1,6 +1,6 @@
-(define-package "fennel-mode" "20230215.1641" "A major-mode for editing Fennel code"
+(define-package "fennel-mode" "20230408.1312" "A major-mode for editing Fennel code"
   '((emacs "26.1"))
-  :commit "52da9715b0d046597cb322d3a98cb27ae6e5719e" :authors
+  :commit "d4e7226c34365101f02d9783d6d4b16c5014d279" :authors
   '(("Phil Hagelberg"))
   :maintainer
   '("Phil Hagelberg")
