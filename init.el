@@ -741,6 +741,20 @@ buffer name when eglot is enabled."
     (add-hook 'clojure-ts-mode-hook (lambda () (setq-local sesman-system 'CIDER)))
     (add-hook 'clojure-ts-mode-hook #'clojure-mode-variables)
 
+    (defun cider-repl-type-for-buffer-in-clojure-ts-mode (&optional buffer)
+      "Determine repl type for clojure-ts-mode buffers."
+      (with-current-buffer (or buffer (current-buffer))
+        (when (derived-mode-p 'clojure-ts-mode)
+          (pcase (file-name-extension buffer-file-name)
+            ("cljs" 'cljs)
+            ("cljc" 'multi)
+            ("clj" 'clj)))))
+
+    (advice-add #'cider-repl-type-for-buffer
+                ;; Fallback to the advice when cider fails to find it
+                :after-until
+                #'cider-repl-type-for-buffer-in-clojure-ts-mode)
+
     (keymap-set clojure-ts-mode-map "C-c w" #'clojure-copy-ns-var)
     (keymap-set clojure-ts-mode-map "C-c W" #'clojure-copy-ns))
 
