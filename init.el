@@ -447,6 +447,13 @@ Use the filename relative to the current VC root directory."
 	 (location (format "%s:%s" file-name line-number)))
     (-kill-and-echo location)))
 
+(defun align-repeat (start end regexp)
+  "Repeat alignment with respect to the given regular expression.
+https://www.emacswiki.org/emacs/AlignCommands"
+  (interactive "r\nsAlign regexp: ")
+  (align-regexp start end
+                (concat "\\(\\s-*\\)" regexp) 1 1 t))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
