@@ -739,6 +739,7 @@ buffer name when eglot is enabled."
     (require 'sesman)
     (sesman-install-menu clojure-ts-mode-map)
     (add-hook 'clojure-ts-mode-hook (lambda () (setq-local sesman-system 'CIDER)))
+    (add-hook 'clojure-ts-mode-hook #'clojure-mode-variables)
 
     (keymap-set clojure-ts-mode-map "C-c w" #'clojure-copy-ns-var)
     (keymap-set clojure-ts-mode-map "C-c W" #'clojure-copy-ns))
