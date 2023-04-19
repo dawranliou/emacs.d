@@ -2117,7 +2117,8 @@ PATH has to be relative to the super-repository."
   (let ((remote (file-remote-p default-directory))
         worktrees worktree)
     (dolist (line (let ((magit-git-global-arguments
-                         ;; KLUDGE At least in v2.8.3 this triggers a segfault.
+                         ;; KLUDGE At least in Git v2.8.3 this argument
+                         ;; would trigger a segfault.
                          (remove "--no-pager" magit-git-global-arguments)))
                     (magit-git-lines "worktree" "list" "--porcelain")))
       (cond ((string-prefix-p "worktree" line)
@@ -2145,8 +2146,7 @@ PATH has to be relative to the super-repository."
             ((string-prefix-p "HEAD" line)
              (setf (nth 2 worktree) (substring line 5)))
             ((string-prefix-p "branch" line)
-             (setf (nth 3 worktree) (substring line 18)))
-            ((string-equal line "detached"))))
+             (setf (nth 3 worktree) (substring line 18)))))
     (nreverse worktrees)))
 
 (defun magit-symbolic-ref-p (name)

@@ -57,6 +57,8 @@ evaluate `sly-mode'.
 The mode's hook is called both when the mode is enabled and when
 it is disabled.
 
+\\{sly-mode-map}
+
 (fn &optional ARG)" t)
 (autoload 'sly-editing-mode "sly" "\
 Minor mode for editing `lisp-mode' buffers.
@@ -74,6 +76,8 @@ evaluate `sly-editing-mode'.
 
 The mode's hook is called both when the mode is enabled and when
 it is disabled.
+
+\\{sly-editing-mode-map}
 
 (fn &optional ARG)" t)
 (autoload 'sly "sly" "\

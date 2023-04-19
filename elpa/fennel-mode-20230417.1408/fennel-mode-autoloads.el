@@ -38,11 +38,6 @@ Compile the region of the current buffer's file from Lua to Fennel.
 (register-definition-prefixes "antifennel" '("antifennel-"))
 
 
-;;; Generated autoloads from fennel-eldoc.el
-
-(register-definition-prefixes "fennel-eldoc" '("fennel-eldoc-"))
-
-
 ;;; Generated autoloads from fennel-mode.el
 
 (autoload 'fennel-mode "fennel-mode" "\
@@ -93,6 +88,7 @@ Major mode for Fennel REPL.
 
 ;;; Generated autoloads from fennel-proto-repl.el
 
+(defvaralias 'fennel-eldoc-fontify-markdown 'fennel-proto-repl-eldoc-fontify-markdown)
 (autoload 'fennel-proto-repl "fennel-proto-repl" "\
 Start a new Fennel Proto REPL.
 

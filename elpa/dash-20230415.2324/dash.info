@@ -2384,8 +2384,8 @@ Functions pretending lists are trees.
      structure but all cons are replaced with new ones.  This is useful
      when you need to clone a structure such as plist or alist.
 
-          (let* ((a '(1 2 3)) (b (-clone a))) (nreverse a) b)
-              ⇒ (1 2 3)
+          (let* ((a (list (list 1))) (b (-clone a))) (setcar (car a) 2) b)
+              ⇒ ((1))
 
 
 File: dash.info,  Node: Threading macros,  Next: Binding,  Prev: Tree operations,  Up: Functions
@@ -4888,57 +4888,57 @@ Ref: -tree-reduce-from81356
 Ref: -tree-mapreduce81956
 Ref: -tree-mapreduce-from82815
 Ref: -clone84100
-Node: Threading macros84427
-Ref: ->84652
-Ref: ->>85140
-Ref: -->85643
-Ref: -as->86199
-Ref: -some->86653
-Ref: -some->>87038
-Ref: -some-->87485
-Ref: -doto88052
-Node: Binding88605
-Ref: -when-let88812
-Ref: -when-let*89273
-Ref: -if-let89802
-Ref: -if-let*90168
-Ref: -let90791
-Ref: -let*96881
-Ref: -lambda97818
-Ref: -setq98624
-Node: Side effects99425
-Ref: -each99619
-Ref: -each-while100146
-Ref: -each-indexed100766
-Ref: -each-r101358
-Ref: -each-r-while101800
-Ref: -dotimes102444
-Node: Destructive operations102997
-Ref: !cons103215
-Ref: !cdr103419
-Node: Function combinators103612
-Ref: -partial103816
-Ref: -rpartial104334
-Ref: -juxt104982
-Ref: -compose105434
-Ref: -applify106041
-Ref: -on106471
-Ref: -flip107243
-Ref: -rotate-args107767
-Ref: -const108396
-Ref: -cut108738
-Ref: -not109218
-Ref: -orfn109762
-Ref: -andfn110555
-Ref: -iteratefn111342
-Ref: -fixfn112044
-Ref: -prodfn113618
-Node: Development114769
-Node: Contribute115058
-Node: Contributors116070
-Node: FDL118163
-Node: GPL143483
-Node: Index181232
+Node: Threading macros84438
+Ref: ->84663
+Ref: ->>85151
+Ref: -->85654
+Ref: -as->86210
+Ref: -some->86664
+Ref: -some->>87049
+Ref: -some-->87496
+Ref: -doto88063
+Node: Binding88616
+Ref: -when-let88823
+Ref: -when-let*89284
+Ref: -if-let89813
+Ref: -if-let*90179
+Ref: -let90802
+Ref: -let*96892
+Ref: -lambda97829
+Ref: -setq98635
+Node: Side effects99436
+Ref: -each99630
+Ref: -each-while100157
+Ref: -each-indexed100777
+Ref: -each-r101369
+Ref: -each-r-while101811
+Ref: -dotimes102455
+Node: Destructive operations103008
+Ref: !cons103226
+Ref: !cdr103430
+Node: Function combinators103623
+Ref: -partial103827
+Ref: -rpartial104345
+Ref: -juxt104993
+Ref: -compose105445
+Ref: -applify106052
+Ref: -on106482
+Ref: -flip107254
+Ref: -rotate-args107778
+Ref: -const108407
+Ref: -cut108749
+Ref: -not109229
+Ref: -orfn109773
+Ref: -andfn110566
+Ref: -iteratefn111353
+Ref: -fixfn112055
+Ref: -prodfn113629
+Node: Development114780
+Node: Contribute115069
+Node: Contributors116081
+Node: FDL118174
+Node: GPL143494
+Node: Index181243
 
 End Tag Table
 

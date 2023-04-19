@@ -7,8 +7,8 @@
 ;; Maintainer: Jason R. Blevins <jblevins@xbeta.org>
 ;; Created: May 24, 2007
 ;; Version: 2.6-alpha
-;; Package-Version: 20230331.913
-;; Package-Commit: ad3a816f7be97deb83fc0a7fa41305c79009bac5
+;; Package-Version: 20230412.126
+;; Package-Commit: 5d98592fe516748034d8baf92d7c0ba045e1f87a
 ;; Package-Requires: ((emacs "26.1"))
 ;; Keywords: Markdown, GitHub Flavored Markdown, itex
 ;; URL: https://jblevins.org/projects/markdown-mode/
@@ -7447,6 +7447,12 @@ Standalone XHTML output is identified by an occurrence of
               stylesheet-path)
           "\"  />"))
 
+(defun markdown-escape-title (title)
+  "Escape a minimum set of characters in TITLE so they don't clash with html."
+  (replace-regexp-in-string ">" "&gt;"
+    (replace-regexp-in-string "<" "&lt;"
+      (replace-regexp-in-string "&" "&amp;" title))))
+
 (defun markdown-add-xhtml-header-and-footer (title)
   "Wrap XHTML header and footer with given TITLE around current buffer."
   (goto-char (point-min))
@@ -7455,7 +7461,7 @@ Standalone XHTML output is identified by an occurrence of
           "\t\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\n"
           "<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\n"
           "<head>\n<title>")
-  (insert title)
+  (insert (markdown-escape-title title))
   (insert "</title>\n")
   (unless (= (length markdown-content-type) 0)
     (insert
