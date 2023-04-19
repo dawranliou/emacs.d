@@ -744,7 +744,7 @@ buffer name when eglot is enabled."
     (defun cider-repl-type-for-buffer-in-clojure-ts-mode (&optional buffer)
       "Determine repl type for clojure-ts-mode buffers."
       (with-current-buffer (or buffer (current-buffer))
-        (when (derived-mode-p 'clojure-ts-mode)
+        (when (and buffer-file-name (derived-mode-p 'clojure-ts-mode))
           (pcase (file-name-extension buffer-file-name)
             ("cljs" 'cljs)
             ("cljc" 'multi)
