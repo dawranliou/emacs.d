@@ -27,3 +27,4 @@
 /multisession/
 /tree-sitter/
 /elpa/archives/
+*.signed
