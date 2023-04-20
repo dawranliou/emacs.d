@@ -220,7 +220,7 @@
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
  '(repeat-mode t)
- '(ring-bell-function 'ignore)
+ '(ring-bell-function 'flash-mode-line)
  '(save-place-mode t)
  '(savehist-additional-variables
    '(kill-ring mark-ring global-mark-ring search-ring regexp-search-ring))
@@ -268,6 +268,12 @@
                          "%b")))
  mode-line-format
  (remove '(vc-mode vc-mode) mode-line-format))
+
+(defun flash-mode-line ()
+  "Flash the modeline on error or warning.
+https://macowners.club/posts/custom-functions-4-ui/"
+  (invert-face 'mode-line)
+  (run-with-timer 0.1 nil #'invert-face 'mode-line))
 
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
