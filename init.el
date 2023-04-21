@@ -107,6 +107,7 @@
  '(dired-dwim-target t)
  '(dired-recursive-copies 'always)
  '(dired-recursive-deletes 'always)
+ '(echo-keystrokes 0.2)
  '(ediff-split-window-function #'split-window-horizontally)
  '(ediff-window-setup-function #'ediff-setup-windows-plain)
  '(eglot-connect-timeout 600)
