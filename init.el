@@ -137,6 +137,7 @@
  '(isearch-yank-on-move t)
  '(kept-new-versions 6)
  '(kept-old-versions 2)
+ '(kill-do-not-save-duplicates t)
  '(lazy-count-prefix-format nil)
  '(lazy-count-suffix-format " [%s/%s]")
  '(line-spacing 3)
