@@ -128,6 +128,7 @@
  '(hscroll-margin 2)
  '(hscroll-step 1)
  '(indent-tabs-mode nil)
+ '(indicate-empty-lines t)
  '(inhibit-startup-screen t)
  '(initial-major-mode 'fundamental-mode)
  '(initial-scratch-message nil)
