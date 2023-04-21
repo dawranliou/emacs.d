@@ -653,26 +653,6 @@ reuse it's window, otherwise create new one."
 (external-package iedit
   (keymap-global-set "C-;" 'iedit-mode))
 
-(external-package magit
-  (defvar magit-quick-status nil)
-
-  (defun magit-quick-status-toggle ()
-    (interactive)
-    (if magit-quick-status
-        (progn
-          (setq magit-quick-status nil)
-          (custom-reevaluate-setting 'magit-status-headers-hook)
-          (custom-reevaluate-setting 'magit-status-sections-hook)
-          (message "magit quick status: off"))
-      (setq magit-quick-status t)
-      (remove-hook 'magit-status-headers-hook #'magit-insert-tags-header)
-      (remove-hook 'magit-status-sections-hook #'magit-insert-status-headers)
-      (message "magit quick status: on"))
-    (magit-refresh-all))
-
-  (with-eval-after-load 'magit
-    (keymap-set magit-status-mode-map "C-c t" #'magit-quick-status-toggle)))
-
 ;; Org mode
 
 (defun org-mode-setup ()
