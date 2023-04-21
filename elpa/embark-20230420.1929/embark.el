@@ -5,7 +5,7 @@
 ;; Author: Omar Antolín Camarena <omar@matem.unam.mx>
 ;; Maintainer: Omar Antolín Camarena <omar@matem.unam.mx>
 ;; Keywords: convenience
-;; Version: 0.21.1
+;; Version: 0.22.1
 ;; Homepage: https://github.com/oantolin/embark
 ;; Package-Requires: ((emacs "27.1") (compat "29.1.4.0"))
 
@@ -409,7 +409,9 @@ the key :always are executed always."
     (mark embark--mark-target)
     ;; shells in new buffers
     (shell embark--universal-argument)
-    (eshell embark--universal-argument))
+    (eshell embark--universal-argument)
+    ;; do the actual work of selecting & deselecting targets
+    (embark-select embark--select))
   "Alist associating commands with pre-action hooks.
 The hooks are run right before an action is embarked upon.  See
 `embark-target-injection-hooks' for information about the hook
@@ -630,10 +632,13 @@ Meant to be be added to `completion-setup-hook'."
   ;; when completion-setup-hook hook runs, the *Completions* buffer is
   ;; available in the variable standard-output
   (embark--cache-info standard-output)
-  (when (minibufferp completion-reference-buffer)
-    (with-current-buffer standard-output
+  (with-current-buffer standard-output
+    (when (minibufferp completion-reference-buffer)
       (setq embark--type
-            (completion-metadata-get (embark--metadata) 'category)))))
+            (completion-metadata-get
+             (with-current-buffer completion-reference-buffer
+               (embark--metadata))
+             'category)))))
 
 ;; We have to add this *after* completion-setup-function because that's
 ;; when the buffer is put in completion-list-mode and turning the mode
@@ -1895,6 +1900,7 @@ minibuffer before executing the action."
                      embark-collect      ; the current buffer, not the
                      embark-live         ; target buffer
                      embark-export
+                     embark-select
                      embark-act-all))
       (progn
         (embark--run-action-hooks embark-pre-action-hooks action target quit)
@@ -2215,8 +2221,11 @@ target."
   "Collect candidates and see if they all transform to the same type.
 Return a plist with keys `:type', `:orig-type', `:candidates', and
 `:orig-candidates'."
-  (pcase-let ((`(,type . ,candidates)
-               (run-hook-with-args-until-success 'embark-candidate-collectors)))
+  (pcase-let* ((`(,type . ,candidates)
+                (run-hook-with-args-until-success 'embark-candidate-collectors))
+               (bounds (mapcar #'cdr-safe candidates)))
+    (setq candidates
+          (mapcar (lambda (x) (if (consp x) (car x) x)) candidates))
     (when (eq type 'file)
       (let ((dir (embark--default-directory)))
         (setq candidates
@@ -2224,7 +2233,7 @@ Return a plist with keys `:type', `:orig-type', `:candidates', and
                         (abbreviate-file-name (expand-file-name cand dir)))
                       candidates))))
     (append
-     (list :orig-type type :orig-candidates candidates)
+     (list :orig-type type :orig-candidates candidates :bounds bounds)
      (or (when candidates
            (when-let ((transformer (alist-get type embark-transformer-alist)))
              (pcase-let* ((`(,new-type . ,first-cand)
@@ -2264,11 +2273,15 @@ ARG is the prefix argument."
          (orig-type (plist-get transformed :orig-type))
          (candidates
           (or (cl-mapcar
-               (lambda (cand orig-cand)
+               (lambda (cand orig-cand bounds)
                  (list :type type :target cand
+                       :bounds (when bounds
+                                 (cons (copy-marker (car bounds))
+                                       (copy-marker (cdr bounds))))
                        :orig-type orig-type :orig-target orig-cand))
                (plist-get transformed :candidates)
-               (plist-get transformed :orig-candidates))
+               (plist-get transformed :orig-candidates)
+               (plist-get transformed :bounds))
               (user-error "No candidates to act on")))
          (indicators (mapcar #'funcall embark-indicators)))
     (when arg (embark-toggle-quit))
@@ -2302,6 +2315,10 @@ ARG is the prefix argument."
                 (when (memq 'embark--restart
                             (alist-get action embark-post-action-hooks))
                   (embark--restart))))))
+      (dolist (cand candidates)
+        (when-let ((bounds (plist-get cand :bounds)))
+          (set-marker (car bounds) nil) ; yay, manual memory management!
+          (set-marker (cdr bounds) nil)))
       (setq prefix-arg nil)
       (mapc #'funcall indicators))))
 
@@ -2464,7 +2481,8 @@ Remember to make `embark-general-map' the parent if appropriate"))
   :group 'embark)
 
 (defcustom embark-candidate-collectors
-  '(embark-minibuffer-candidates
+  '(embark-selected-candidates
+    embark-minibuffer-candidates
     embark-completions-buffer-candidates
     embark-dired-candidates
     embark-ibuffer-candidates
@@ -2475,7 +2493,9 @@ These are used to fill an Embark Collect buffer.  Each function
 should return either nil (to indicate it found no candidates) or
 a list whose first element is a symbol indicating the type of
 candidates and whose `cdr' is the list of candidates, each of
-which should be a string."
+which should be either a string or a dotted list of the
+form (TARGET START . END), where START and END are the buffer
+positions bounding the TARGET string."
   :type 'hook)
 
 (defcustom embark-exporters-alist
@@ -2529,9 +2549,6 @@ default is `embark-collect'"
   "Face for annotations in Embark Collect.
 This is only used for annotation that are not already fontified.")
 
-(defface embark-collect-marked '((t (:inherit warning)))
-  "Face for marked candidates in an Embark Collect buffer.")
-
 (defvar-local embark--rerun-function nil
   "Function to rerun the collect or export that made the current buffer.")
 
@@ -2578,6 +2595,8 @@ list `embark-candidate-collectors'."
      (nconc (cl-copy-list (completion-all-sorted-completions)) nil))))
 
 (declare-function dired-get-marked-files "dired")
+(declare-function dired-move-to-filename "dired")
+(declare-function dired-move-to-end-of-filename "dired")
 
 (defun embark-dired-candidates ()
   "Return marked or all files shown in Dired buffer.
@@ -2599,7 +2618,10 @@ all buffers."
              (let (files)
                (while (not (eobp))
                  (when-let (file (dired-get-filename t t))
-                   (push file files))
+                   (push `(,file
+                           ,(progn (dired-move-to-filename) (point))
+                           . ,(progn (dired-move-to-end-of-filename t) (point)))
+                         files))
                  (forward-line))
                (nreverse files)))))))
 
@@ -2624,16 +2646,13 @@ all buffers."
 This makes `embark-export' work in Embark Collect buffers."
   (when (derived-mode-p 'embark-collect-mode)
     (cons embark--type
-          (or (save-excursion
-                (mapcar (lambda (ov)
-                          (goto-char (overlay-start ov))
-                          (cadr (embark-target-collect-candidate)))
-                        (nreverse
-                         (seq-filter
-                          (lambda (ov)
-                            (eq (overlay-get ov 'face) 'embark-collect-marked))
-                          (overlays-in (point-min) (point-max))))))
-              (delq nil (mapcar #'car tabulated-list-entries))))))
+          (save-excursion
+            (goto-char (point-min))
+            (let (all)
+              (push (cdr (embark-target-collect-candidate)) all)
+              (while (forward-button 1 nil nil t)
+                (push (cdr (embark-target-collect-candidate)) all))
+              (nreverse all))))))
 
 (defun embark-completions-buffer-candidates ()
   "Return all candidates in a completions buffer."
@@ -2645,7 +2664,7 @@ This makes `embark-export' work in Embark Collect buffers."
        (next-completion 1)
        (let (all)
          (while (not (eobp))
-           (push (cadr (embark-target-completion-at-point)) all)
+           (push (cdr (embark-target-completion-at-point)) all)
            (next-completion 1))
          (nreverse all))))))
 
@@ -2660,8 +2679,13 @@ This makes `embark-export' work in Embark Collect buffers."
                 (when-let (widget (widget-at (point)))
                   (when (eq (car widget) 'custom-visibility)
                     (push
-                     (symbol-name
-                      (plist-get (cdr (plist-get (cdr widget) :parent)) :value))
+                     `(,(symbol-name
+                         (plist-get (cdr (plist-get (cdr widget) :parent))
+                                    :value))
+                       ,(point)
+                       . ,(progn
+                            (re-search-forward ":" (line-end-position) 'noerror)
+                            (point)))
                      symbols)))
                 (forward-line))
               (nreverse symbols))))))
@@ -2775,10 +2799,6 @@ If NESTED is non-nil subkeymaps are not flattened."
   "A" #'embark-act-all
   "M-a" #'embark-collect-direct-action-minor-mode
   "E" #'embark-export
-  "t" #'embark-collect-toggle-marks
-  "m" #'embark-collect-mark
-  "u" #'embark-collect-unmark
-  "U" #'embark-collect-unmark-all
   "s" #'isearch-forward
   "n" #'forward-button
   "p" #'backward-button
@@ -2832,52 +2852,6 @@ For non-minibuffers, assume candidates are of given TYPE."
           (mapcar (lambda (c)
                     (if-let (a (funcall annotator c)) (list c "" a) c))
                   candidates)))))
-
-(defun embark-collect--marked-p (&optional location)
-  "Is the candidate at LOCATION marked?
-LOCATION defaults to point."
-  (seq-find (lambda (ov) (eq (overlay-get ov 'face) 'embark-collect-marked))
-            (overlays-at (or location (point)))))
-
-(defun embark-collect-mark (&optional unmark)
-  "Mark the candidate at point in an Embark collect buffer.
-If called from Lisp with a non-nil UNMARK, instead unmark the
-candidate."
-  (interactive)
-  (unless (derived-mode-p 'embark-collect-mode)
-    (user-error "Not in an Embark Collect mode buffer"))
-  (pcase (embark-target-collect-candidate)
-    (`(,_type ,_cand ,start . ,end)
-     (if-let ((ov (embark-collect--marked-p)))
-         (when unmark (delete-overlay ov))
-       (unless unmark
-         (overlay-put (make-overlay start end)
-                      'face 'embark-collect-marked)))
-     (forward-button 1 nil nil t))
-    ('nil (user-error "No candidate at point"))))
-
-(defun embark-collect-unmark ()
-  "Unmark the candidate at point in an Embark collect buffer."
-  (interactive)
-  (embark-collect-mark t))
-
-(defun embark-collect-unmark-all ()
-  "Unmark all marked candidates in an Embark Collect buffer."
-  (interactive)
-  (unless (derived-mode-p 'embark-collect-mode)
-    (user-error "Not in an Embark Collect mode buffer"))
-  (dolist (ov (overlays-in (point-min) (point-max)))
-    (when (eq (overlay-get ov 'face) 'embark-collect-marked)
-      (delete-overlay ov))))
-
-(defun embark-collect-toggle-marks ()
-  "Toggle each mark: marked candidates become unmarked, and vice versa."
-  (interactive)
-  (unless (derived-mode-p 'embark-collect-mode)
-    (user-error "Not in an Embark Collect mode buffer"))
-  (save-excursion
-    (goto-char (point-min))
-    (while (embark-collect-mark (embark-collect--marked-p)))))
 
 (defun embark--for-display (string)
   "Return visibly equivalent STRING without display and invisible properties."
@@ -3251,6 +3225,70 @@ PRED is a predicate function used to filter the items."
             bookmark-alist)))
       (bookmark-bmenu-list))))
 
+;;; Multiple target selection
+
+(defface embark-selected '((t (:inherit match)))
+  "Face for selected candidates.")
+
+(defvar-local embark--selection nil
+  "Buffer local list of selected targets.
+Add or remove elements to this list using the `embark-select'
+action.")
+
+(cl-defun embark--select
+    (&key orig-target orig-type bounds &allow-other-keys)
+  "Add or remove ORIG-TARGET of given ORIG-TYPE to the selection.
+If BOUNDS are given, also highlight the target when selecting it."
+  (cl-flet ((multi-type (x) (car (get-text-property 0 'multi-category x))))
+    (if-let* ((existing (seq-find
+                         (pcase-lambda (`(,cand . ,ov))
+                           (and
+                            (equal cand orig-target)
+                            (if (and bounds ov)
+                                (and (= (car bounds) (overlay-start ov))
+                                     (= (cdr bounds) (overlay-end ov)))
+                              (let ((cand-type (multi-type cand)))
+                                (or (eq cand-type orig-type)
+                                    (eq cand-type (multi-type orig-target)))))))
+                         embark--selection)))
+        (progn
+          (when (cdr existing) (delete-overlay (cdr existing)))
+          (setq embark--selection (delq existing embark--selection)))
+      (let ((target (copy-sequence orig-target)) overlay)
+        (when bounds
+          (setq overlay (make-overlay (car bounds) (cdr bounds)))
+          (overlay-put overlay 'face 'embark-selected)
+          (overlay-put overlay 'priority 1001))
+        (add-text-properties 0 (length orig-target)
+                             `(multi-category ,(cons orig-type orig-target))
+                             target)
+        (push (cons target overlay) embark--selection)))))
+
+(defalias 'embark-select #'ignore
+  "Add or remove the target from the current buffer's selection.
+You can act on all selected targets at once with `embark-act-all'.")
+
+(defun embark-selected-candidates ()
+  "Return currently selected candidates in the buffer."
+  (when embark--selection
+    (cl-flet ((unwrap (x) (get-text-property 0 'multi-category x)))
+      (let* ((first-type (car (unwrap (caar embark--selection))))
+             (same (cl-every (lambda (item)
+                               (eq (car (unwrap (car item))) first-type))
+                             embark--selection))
+             (extract (if same
+                          (pcase-lambda (`(,cand . ,overlay))
+                            (cons (cdr (unwrap cand)) overlay))
+                        #'identity)))
+        (cons
+         (if same first-type 'multi-category)
+         (nreverse
+          (mapcar
+           (lambda (item)
+             (pcase-let ((`(,cand . ,ov) (funcall extract item)))
+               (if ov `(,cand ,(overlay-start ov) . ,(overlay-end ov)) cand)))
+           embark--selection)))))))
+
 ;;; Integration with external packages, mostly completion UIs
 
 ;; marginalia
@@ -3264,8 +3302,10 @@ PRED is a predicate function used to filter the items."
 
 (declare-function vertico--candidate "ext:vertico")
 (declare-function vertico--update "ext:vertico")
+(declare-function vertico--remove-face "ext:vertico")
 (defvar vertico--input)
 (defvar vertico--candidates)
+(defvar vertico--base)
 
 (defun embark--vertico-selected ()
   "Target the currently selected item in Vertico.
@@ -3296,9 +3336,19 @@ Return the category metadatum as the type of the candidates."
                       fr))))))
 
 (with-eval-after-load 'vertico
+  (cl-defmethod vertico--format-candidate
+    :around (cand prefix suffix index start &context (embark--selection cons))
+    (when (cl-find (concat vertico--base (nth index vertico--candidates))
+                   embark--selection
+                   :test #'equal :key #'car)
+      (setq cand (copy-sequence cand))
+      (add-face-text-property 0 (length cand) 'embark-selected t cand))
+    (cl-call-next-method cand prefix suffix index start))
   (add-hook 'embark-indicators #'embark--vertico-indicator)
   (add-hook 'embark-target-finders #'embark--vertico-selected)
-  (add-hook 'embark-candidate-collectors #'embark--vertico-candidates))
+  (add-hook 'embark-candidate-collectors #'embark--vertico-candidates)
+  (remove-hook 'embark-candidate-collectors #'embark-selected-candidates)
+  (add-hook 'embark-candidate-collectors #'embark-selected-candidates))
 
 ;; ivy
 
@@ -3335,7 +3385,9 @@ Return the category metadatum as the type of the target."
 
 (with-eval-after-load 'ivy
   (add-hook 'embark-target-finders #'embark--ivy-selected)
-  (add-hook 'embark-candidate-collectors #'embark--ivy-candidates))
+  (add-hook 'embark-candidate-collectors #'embark--ivy-candidates)
+  (remove-hook 'embark-candidate-collectors #'embark-selected-candidates)
+  (add-hook 'embark-candidate-collectors #'embark-selected-candidates))
 
 ;;; Custom actions
 
@@ -3765,12 +3817,12 @@ and leaves the point to the left of it."
 
 (cl-defun embark--beginning-of-target (&key bounds &allow-other-keys)
   "Go to beginning of the target BOUNDS."
-  (when bounds
+  (when (number-or-marker-p bounds)
     (goto-char (car bounds))))
 
 (cl-defun embark--end-of-target (&key bounds &allow-other-keys)
   "Go to end of the target BOUNDS."
-  (when bounds
+  (when (number-or-marker-p bounds)
     (goto-char (cdr bounds))))
 
 (cl-defun embark--mark-target (&rest rest &key run bounds &allow-other-keys)
@@ -3890,8 +3942,9 @@ This simply calls RUN with the REST of its arguments inside
   "B" #'embark-become
   "A" #'embark-act-all
   "C-s" #'embark-isearch
-  "SPC" #'mark
-  "DEL" #'delete-region)
+  "C-SPC" #'mark
+  "DEL" #'delete-region
+  "SPC" #'embark-select)
 
 (defvar-keymap embark-encode-map
   :doc "Keymap for Embark region encoding actions."
@@ -3954,7 +4007,7 @@ This simply calls RUN with the REST of its arguments inside
   "p" #'fill-region-as-paragraph
   "$" #'ispell-region
   "=" #'count-words-region
-  "SPC" #'whitespace-cleanup-region
+  "F" #'whitespace-cleanup-region
   "t" #'transpose-regions
   "o" #'org-table-convert-region
   ";" #'comment-or-uncomment-region
@@ -4114,7 +4167,7 @@ This simply calls RUN with the REST of its arguments inside
   :parent embark-general-map
   "RET" 'outline-show-subtree
   "TAB" 'outline-cycle ;; New in Emacs 28!
-  "SPC" 'outline-mark-subtree
+  "C-SPC" 'outline-mark-subtree
   "n" 'outline-next-visible-heading
   "p" 'outline-previous-visible-heading
   "f" 'outline-forward-same-level
@@ -4230,7 +4283,7 @@ This simply calls RUN with the REST of its arguments inside
   "u" #'upcase-region
   "l" #'downcase-region
   "c" #'capitalize-region
-  "s" #'whitespace-cleanup-region
+  "F" #'whitespace-cleanup-region
   "=" #'count-words-region)
 
 (defvar-keymap embark-sentence-map
