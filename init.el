@@ -488,6 +488,8 @@ https://www.emacswiki.org/emacs/AlignCommands"
 
 (ffap-bindings)
 
+(add-hook 'text-mode-hook 'visual-line-mode)
+
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (add-hook 'dired-mode-hook 'hl-line-mode)
@@ -664,7 +666,6 @@ reuse it's window, otherwise create new one."
                    (,electric-pair-inhibit-predicate c)))))
 
 (add-hook 'org-mode-hook 'org-mode-setup)
-(add-hook 'org-mode-hook 'visual-line-mode)
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
 (autoload #'org-store-link "org" nil t)
