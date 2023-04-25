@@ -231,7 +231,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(racket-mode groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(jinx racket-mode groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(pixel-scroll-precision-mode t)
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
@@ -843,6 +843,10 @@ buffer name when eglot is enabled."
 (external-package sqlformat
   (with-eval-after-load 'sql
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
+
+(external-package jinx
+  (add-hook 'emacs-startup-hook #'global-jinx-mode)
+  (keymap-global-set "<remap> <ispell-word>" #'jinx-correct))
 
 (define-minor-mode cz-mode
   "Toggle my personal C-z mode for navigation."
