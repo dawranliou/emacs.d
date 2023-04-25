@@ -690,8 +690,8 @@ reuse it's window, otherwise create new one."
 (external-package eglot
   (add-hook 'clojure-mode-hook 'eglot-ensure)
   (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
-  (add-hook 'go-mode 'eglot-ensure)
-  (add-hook 'go-ts-mode 'eglot-ensure)
+  (add-hook 'go-mode-hook 'eglot-ensure)
+  (add-hook 'go-ts-mode-hook 'eglot-ensure)
 
   (with-eval-after-load 'eglot
     (defun xref-find-references-with-eglot (orig-fun &rest args)
@@ -808,8 +808,8 @@ buffer name when eglot is enabled."
     ))
 
 (external-package emmet-mode
-  (add-hook 'html-mode 'emmet-mode)
-  (add-hook 'css-mode 'emmet-mode))
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  (add-hook 'css-mode-hook 'emmet-mode))
 
 (external-package sly
   (setq inferior-lisp-program "sbcl")
