@@ -137,6 +137,7 @@
  '(isearch-lazy-count t)
  '(isearch-wrap-pause 'no)
  '(isearch-yank-on-move t)
+ '(jinx-languages "en_CA en_US")
  '(kept-new-versions 6)
  '(kept-old-versions 2)
  '(kill-do-not-save-duplicates t)
