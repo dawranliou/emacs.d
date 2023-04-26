@@ -178,6 +178,10 @@
    '(("t" "Todo" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* TODO %?\12SCHEDULED: %t\12" :clock-in t :clock-resume t :tree-type week)
+     ("p" "Project" entry
+      (file+olp "~/org/journal/journal.org" "Projects")
+      (file "~/.emacs.d/org-templates/project.org")
+      :clock-in t :clock-resume t)
      ("j" "Journal" entry
       (file+olp+datetree "~/org/journal/journal.org")
       "* %? %^G\12" :clock-in t :clock-keep t :tree-type week)
