@@ -137,7 +137,7 @@
  '(isearch-lazy-count t)
  '(isearch-wrap-pause 'no)
  '(isearch-yank-on-move t)
- '(jinx-languages "en_CA en_US")
+ '(jinx-languages "en_US en_CA")
  '(kept-new-versions 6)
  '(kept-old-versions 2)
  '(kill-do-not-save-duplicates t)
@@ -220,7 +220,6 @@
  '(org-src-tab-acts-natively t)
  '(org-src-window-setup 'current-window)
  '(org-startup-folded 'content)
- '(org-tags-column -80)
  '(org-todo-keyword-faces
    '(("NEXT" . "blue")
      ("REVIEW" . "dark orange")
@@ -850,8 +849,7 @@ buffer name when eglot is enabled."
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
 
 (external-package jinx
-  (add-hook 'emacs-startup-hook #'global-jinx-mode)
-  (keymap-global-set "<remap> <ispell-word>" #'jinx-correct))
+  )
 
 (define-minor-mode cz-mode
   "Toggle my personal C-z mode for navigation."
