@@ -855,6 +855,11 @@ buffer name when eglot is enabled."
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
 
 (external-package jinx
+  ;; (add-hook 'emacs-startup-hook #'global-jinx-mode)
+  ;; (with-eval-after-load 'jinx
+  ;;   (keymap-global-set "<remap> <ispell-word>" #'jinx-correct))
+  ;; (add-to-list 'vertico-multiform-categories
+  ;;              '(jinx grid (vertico-grid-annotate . 25)))
   )
 
 (define-minor-mode cz-mode
