@@ -482,6 +482,9 @@ https://www.emacswiki.org/emacs/AlignCommands"
   (align-regexp start end
                 (concat "\\(\\s-*\\)" regexp) 1 1 t))
 
+(defun goto-other-window (&rest r)
+  (other-window 1))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
@@ -501,6 +504,9 @@ https://www.emacswiki.org/emacs/AlignCommands"
           (lambda () (load-theme 'alabaster t)))
 
 ;;; Built-in Packages
+
+(advice-add 'split-window-below :after #'goto-other-window)
+(advice-add 'split-window-right :after #'goto-other-window)
 
 (with-eval-after-load 'tab-bar
   (add-hook 'tab-bar-tab-post-open-functions
