@@ -489,6 +489,14 @@ https://www.emacswiki.org/emacs/AlignCommands"
 (defun goto-other-window (&rest r)
   (other-window 1))
 
+(defun simple-http-server ()
+  "Starts a simple http server."
+  (interactive)
+  (async-shell-command "python3 -m http.server"
+                       (format "*simple http server* [%s]"
+                               default-directory))
+  (browse-url "http://localhost:8000"))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
