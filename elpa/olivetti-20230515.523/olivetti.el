@@ -4,8 +4,8 @@
 
 ;; Author: Paul W. Rankin <pwr@bydasein.com>
 ;; Keywords: wp, text
-;; Package-Version: 20220330.635
-;; Package-Commit: 8d287a80c5e3d72ac01b56c8afe60b01f18500b4
+;; Package-Version: 20230515.523
+;; Package-Commit: fbac9e530967cddc7be846c849e2742a64f4f6d3
 ;; Version: 2.0.4
 ;; Package-Requires: ((emacs "24.4"))
 ;; URL: https://github.com/rnkn/olivetti
@@ -430,10 +430,10 @@ If prefixed with ARG, incrementally increase."
     (define-key map [right-fringe mouse-1] #'mouse-set-point)
     ;; This code is taken from https://github.com/joostkremers/visual-fill-column
     (when (bound-and-true-p mouse-wheel-mode)
-      (define-key map (vector 'left-margin mouse-wheel-down-event) 'mwheel-scroll)
-      (define-key map (vector 'left-margin mouse-wheel-up-event) 'mwheel-scroll)
-      (define-key map (vector 'right-margin mouse-wheel-down-event) 'mwheel-scroll)
-      (define-key map (vector 'right-margin mouse-wheel-up-event) 'mwheel-scroll))
+      (define-key map (vector 'left-margin 'mouse-wheel-down-event) 'mwheel-scroll)
+      (define-key map (vector 'left-margin 'mouse-wheel-up-event) 'mwheel-scroll)
+      (define-key map (vector 'right-margin 'mouse-wheel-down-event) 'mwheel-scroll)
+      (define-key map (vector 'right-margin 'mouse-wheel-up-event) 'mwheel-scroll))
     map)
   "Mode map for `olivetti-mode'.")
 

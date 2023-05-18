@@ -336,7 +336,12 @@ selected and you are in a minibuffer completion session, running
 ‘embark-select’ from ‘embark-act-all’ will select all the current
 completion candidates.
 
-   This functionality is supported everywhere:
+   By default, whenever some targets are selected in the current buffer,
+a count of selected targets appears in the mode line.  This can be
+turned off or customized through the ‘embark-selection-indicator’ user
+option.
+
+   The selection functionality is supported in every buffer:
 
    • In the minibuffer this gives a convenient way to act on several
      completion candidates that don’t follow any simple pattern: just go
@@ -963,23 +968,23 @@ and configure Embark so it knows that’s the keymap you want.
 
        1. You can keep using the ‘tab-bar-close-tab-by-name’ command,
           but have Embark ask you for confirmation:
-               (push #'embark--confirm
-                     (alist-get 'tab-bar-close-tab-by-name
-                                embark-pre-action-hooks))
+          (push #'embark--confirm
+                (alist-get 'tab-bar-close-tab-by-name
+                           embark-pre-action-hooks))
 
-       2. You can write your own command that prompts for confirmation
+       1. You can write your own command that prompts for confirmation
           and use that instead of ‘tab-bar-close-tab-by-name’ in the
           above keymap:
-               (defun my-confirm-close-tab-by-name (tab)
-                 (interactive "sTab to close: ")
-                 (when (y-or-n-p (format "Close tab '%s'? " tab))
-                   (tab-bar-close-tab-by-name tab)))
+          (defun my-confirm-close-tab-by-name (tab)
+            (interactive "sTab to close: ")
+            (when (y-or-n-p (format "Close tab '%s'? " tab))
+              (tab-bar-close-tab-by-name tab)))
 
-          Notice that this is a command you can also use directly from
-          ‘M-x’ independently of Embark.  Using it from ‘M-x’ leaves
-          something to be desired, though, since you don’t get
-          completion for the tab names.  You can fix this if you wish as
-          described in the previous section.
+     Notice that this is a command you can also use directly from ‘M-x’
+     independently of Embark.  Using it from ‘M-x’ leaves something to
+     be desired, though, since you don’t get completion for the tab
+     names.  You can fix this if you wish as described in the previous
+     section.
 
 
 File: embark.info,  Node: New target example in regular buffers - short Wikipedia links,  Prev: New minibuffer target example - tab-bar tabs,  Up: Defining actions for new categories of targets
@@ -1373,29 +1378,29 @@ Node: Acting on targets3010
 Node: The default action on a target8552
 Node: Working with sets of possible targets10459
 Node: Selecting some targets to make an ad hoc candidate set14544
-Node: embark-live a live-updating variant of embark-collect17641
-Node: Switching to a different command without losing what you've typed19336
-Node: Quick start21910
-Node: Advanced configuration26646
-Node: Showing information about available targets and actions27228
-Node: Selecting commands via completions instead of key bindings29837
-Node: Quitting the minibuffer after an action31441
-Node: Running some setup after injecting the target33894
-Node: Running hooks before after or around an action37507
-Node: Creating your own keymaps42383
-Node: Defining actions for new categories of targets43287
-Node: New minibuffer target example - tab-bar tabs44056
-Ref: Telling Embark about commands that prompt for tabs by name44959
-Ref: Defining and configuring a keymap for tab actions47822
-Node: New target example in regular buffers - short Wikipedia links49613
-Node: How does Embark call the actions?51873
-Node: Non-interactive functions as actions56213
-Node: Embark Marginalia and Consult57567
-Node: Marginalia58288
-Node: Consult59792
-Node: Resources63970
-Node: Contributions65114
-Node: Acknowledgments65824
+Node: embark-live a live-updating variant of embark-collect17879
+Node: Switching to a different command without losing what you've typed19574
+Node: Quick start22148
+Node: Advanced configuration26884
+Node: Showing information about available targets and actions27466
+Node: Selecting commands via completions instead of key bindings30075
+Node: Quitting the minibuffer after an action31679
+Node: Running some setup after injecting the target34132
+Node: Running hooks before after or around an action37745
+Node: Creating your own keymaps42621
+Node: Defining actions for new categories of targets43525
+Node: New minibuffer target example - tab-bar tabs44294
+Ref: Telling Embark about commands that prompt for tabs by name45197
+Ref: Defining and configuring a keymap for tab actions48060
+Node: New target example in regular buffers - short Wikipedia links49791
+Node: How does Embark call the actions?52051
+Node: Non-interactive functions as actions56391
+Node: Embark Marginalia and Consult57745
+Node: Marginalia58466
+Node: Consult59970
+Node: Resources64148
+Node: Contributions65292
+Node: Acknowledgments66002
 
 End Tag Table
 

@@ -55,6 +55,8 @@ evaluate `(default-value \\='dumb-jump-mode)'.
 The mode's hook is called both when the mode is enabled and when
 it is disabled.
 
+\\{dumb-jump-mode-map}
+
 (fn &optional ARG)" t)
 (autoload 'dumb-jump-xref-activate "dumb-jump" "\
 Function to activate xref backend.

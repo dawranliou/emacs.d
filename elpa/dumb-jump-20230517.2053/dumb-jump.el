@@ -2,8 +2,8 @@
 ;; Copyright (C) 2015-2021 jack angers
 ;; Author: jack angers and contributors
 ;; Url: https://github.com/jacktasia/dumb-jump
-;; Package-Version: 20220620.2325
-;; Package-Commit: ba4127336d897f5656032694bbe22c490ecbb000
+;; Package-Version: 20230517.2053
+;; Package-Commit: 90130b85fec948acb7c6f623d2c3982533955bf6
 ;; Version: 0.5.4
 ;; Package-Requires: ((emacs "24.3") (s "1.11.0") (dash "2.9.0") (popup "0.5.3"))
 ;; Keywords: programming
@@ -379,6 +379,24 @@ or most optimal searcher."
            :regex "\\\(define\\s+\\\([^\(\)]+\\s*JJJ\\j\\s*\\\)?"
            :tests ("(define (foo test)" "(define (foo test bar)")
            :not ("(define foo test" "(define (test foo" "(define (test)"))
+
+    ;; janet
+    (:type "variable" :supports ("ag" "grep" "rg" "git-grep") :language "janet"
+           :regex "\\(\(de\)?f\\s+JJJ\\j"
+           :tests ("(def test (foo)"))
+
+    (:type "variable" :supports ("ag" "grep" "rg" "git-grep") :language "janet"
+           :regex "\\(var\\s+JJJ\\j"
+           :tests ("(var test (foo)"))
+
+    (:type "function" :supports ("ag" "grep" "rg" "git-grep") :language "janet"
+           :regex "\\(\(de\)fn-?\\s+JJJ\\j"
+           :tests ("(defn test [foo]" "(defn- test [foo]")
+           :not ("(defn test? [foo]" "(defn- test? [foo]"))
+
+    (:type "function" :supports ("ag" "grep" "rg" "git-grep") :language "janet"
+           :regex "\\(defmacro\\s+JJJ\\j"
+           :tests ("(defmacro test [foo]"))
 
     ;; c++
     (:type "function" :supports ("ag" "rg" "git-grep") :language "c++"
@@ -1658,6 +1676,7 @@ or most optimal searcher."
     (:language "scheme" :ext "scm" :agtype "scheme" :rgtype "lisp")
     (:language "scheme" :ext "ss" :agtype "scheme" :rgtype "lisp")
     (:language "scheme" :ext "sld" :agtype "scheme" :rgtype "lisp")
+    (:language "janet" :ext "janet" :agtype "janet" :rgtype "lisp")
     (:language "shell" :ext "sh" :agtype nil :rgtype nil)
     (:language "shell" :ext "bash" :agtype nil :rgtype nil)
     (:language "shell" :ext "csh" :agtype nil :rgtype nil)
@@ -2358,6 +2377,7 @@ current file."
     (:comment "#" :language "nix")
     (:comment "//" :language "scala")
     (:comment ";" :language "scheme")
+    (:comment "#" :language "janet")
     (:comment "#" :language "shell")
     (:comment "//" :language "solidity")
     (:comment "//" :language "swift")
