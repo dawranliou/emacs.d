@@ -807,8 +807,7 @@ buffer name when eglot is enabled."
     (keymap-set cider-mode-map "C-c C-j C-j" #'cider-eval-print-last-sexp)))
 
 (external-package markdown-mode
-  (add-hook 'markdown-mode-hook 'auto-fill-mode)
-  (setq markdown-command "marked"))
+  (add-hook 'markdown-mode-hook 'auto-fill-mode))
 
 (external-package go-mode
   (with-eval-after-load 'project
