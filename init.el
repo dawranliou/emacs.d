@@ -340,6 +340,8 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-set window-prefix-map "S" #'window-toggle-side-windows) ; Was "s" but rarely used
 (keymap-set window-prefix-map "s" #'toggle-window-split)
 (keymap-set window-prefix-map "t" #'window-swap-states) ; aka transpose windows
+(keymap-set ctl-x-map "2" #'split-and-goto-window-below)
+(keymap-set ctl-x-map "3" #'split-and-goto-window-right)
 
 ;;; Functions
 
@@ -486,7 +488,14 @@ https://www.emacswiki.org/emacs/AlignCommands"
   (align-regexp start end
                 (concat "\\(\\s-*\\)" regexp) 1 1 t))
 
-(defun goto-other-window (&rest r)
+(defun split-and-goto-window-below ()
+  (interactive)
+  (call-interactively #'split-window-below)
+  (other-window 1))
+
+(defun split-and-goto-window-right ()
+  (interactive)
+  (call-interactively #'split-window-right)
   (other-window 1))
 
 (defun simple-http-server ()
@@ -516,9 +525,6 @@ https://www.emacswiki.org/emacs/AlignCommands"
           (lambda () (load-theme 'alabaster t)))
 
 ;;; Built-in Packages
-
-(advice-add 'split-window-below :after #'goto-other-window)
-(advice-add 'split-window-right :after #'goto-other-window)
 
 (with-eval-after-load 'tab-bar
   (add-hook 'tab-bar-tab-post-open-functions
