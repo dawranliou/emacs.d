@@ -55,7 +55,14 @@ available) and the matching REPL buffer."
   :package-version '(cider . "0.17.0"))
 
 (defcustom cider-auto-mode t
-  "When non-nil, automatically enable cider mode for all Clojure buffers."
+  "When non-nil, automatically enable and disable CIDER in all Clojure buffers.
+
+After an initial connection, `cider-mode' is added to `clojure-mode-hook' and
+automatically enabled on all existing Clojure buffers.  After the last
+connection has been closed, `cider-mode' is disabled in all Clojure buffers, and
+has to be manually re-enabled via \\[cider-mode].
+
+Useful for switching between alternative minor modes like `inf-clojure-mode'."
   :type 'boolean
   :group 'cider
   :safe #'booleanp
@@ -289,6 +296,7 @@ message in the REPL area."
   (cider-nrepl-send-request '("op" "out-subscribe")
                             (cider-interactive-eval-handler (current-buffer))))
 
+(defvar cider-mode)
 (declare-function cider-mode "cider-mode")
 (defun cider-enable-on-existing-clojure-buffers ()
   "Enable CIDER's minor mode on existing Clojure buffers.
@@ -297,18 +305,19 @@ See command `cider-mode'."
   (add-hook 'clojure-mode-hook #'cider-mode)
   (dolist (buffer (cider-util--clojure-buffers))
     (with-current-buffer buffer
-      (cider-mode +1)
-      ;; In global-eldoc-mode, a new file-visiting buffer calls
-      ;; `turn-on-eldoc-mode' which enables eldoc-mode if it's supported in that
-      ;; buffer as determined by `eldoc--supported-p'.  Cider's eldoc support
-      ;; allows new buffers in cider-mode to enable eldoc-mode.  As of 2021-04,
-      ;; however, clojure-mode itself has no eldoc support, so old clojure
-      ;; buffers opened before cider started aren't necessarily in eldoc-mode.
-      ;; Here, we've enabled cider-mode for this old clojure buffer, and now, if
-      ;; global-eldoc-mode is enabled, try to enable eldoc-mode as if the buffer
-      ;; had just been created with cider-mode.
-      (when global-eldoc-mode
-        (turn-on-eldoc-mode)))))
+      (unless cider-mode
+        (cider-mode +1)
+        ;; In global-eldoc-mode, a new file-visiting buffer calls
+        ;; `turn-on-eldoc-mode' which enables eldoc-mode if it's supported in that
+        ;; buffer as determined by `eldoc--supported-p'.  Cider's eldoc support
+        ;; allows new buffers in cider-mode to enable eldoc-mode.  As of 2021-04,
+        ;; however, clojure-mode itself has no eldoc support, so old clojure
+        ;; buffers opened before cider started aren't necessarily in eldoc-mode.
+        ;; Here, we've enabled cider-mode for this old clojure buffer, and now, if
+        ;; global-eldoc-mode is enabled, try to enable eldoc-mode as if the buffer
+        ;; had just been created with cider-mode.
+        (when global-eldoc-mode
+          (turn-on-eldoc-mode))))))
 
 (declare-function cider--debug-mode "cider-debug")
 (defun cider-disable-on-existing-clojure-buffers ()
@@ -395,7 +404,8 @@ buffer."
 This function is appended to `nrepl-disconnected-hook' in the client
 process buffer."
   ;; `nrepl-connected-hook' is run in the connection buffer
-  (cider-possibly-disable-on-existing-clojure-buffers)
+  (when cider-auto-mode
+    (cider-possibly-disable-on-existing-clojure-buffers))
   (run-hooks 'cider-disconnected-hook))
 
 
@@ -843,7 +853,7 @@ PARAMS is a plist as received by `cider-repl-create'."
            (type (plist-get params :repl-type))
            (scored-repls
             (mapcar (lambda (b)
-                      (let ((bparams (cider--gather-connect-params nil b)))
+                      (let ((bparams (ignore-errors (cider--gather-connect-params nil b))))
                         (when (eq type (plist-get bparams :repl-type))
                           (cons b (+
                                    (if (equal proj-dir (plist-get bparams :project-dir)) 8 0)
@@ -851,16 +861,24 @@ PARAMS is a plist as received by `cider-repl-create'."
                                    (if (equal port (plist-get bparams :port)) 2 0))))))
                     repls))
            (sorted-repls (mapcar #'car (seq-sort-by #'cdr #'> (delq nil scored-repls)))))
-      (when sorted-repls
-        (cond ((eq 'any cider-reuse-dead-repls)
-               (car sorted-repls))
-              ((= 1 (length sorted-repls))
-               (when (or (eq 'auto cider-reuse-dead-repls)
-                         (y-or-n-p (format "A dead REPL %s exists.  Reuse buffer? " (car sorted-repls))))
-                 (car sorted-repls)))
-              ((y-or-n-p "Dead REPL buffers exist.  Select one to reuse? ")
-               (get-buffer (completing-read "REPL buffer to reuse: " (mapcar #'buffer-name sorted-repls)
-                                            nil t nil nil (car sorted-repls)))))))))
+      (cond ((null sorted-repls) nil)
+            ((and (= 1 (length sorted-repls))
+                  (eq cider-reuse-dead-repls 'prompt))
+             (if (y-or-n-p (format "A dead REPL %s exists.  Reuse buffer? " (car sorted-repls)))
+                 (car sorted-repls)
+               (and (y-or-n-p "Kill dead REPL buffer?")
+                    (kill-buffer (car sorted-repls))
+                    nil)))
+            ((and (< 1 (length sorted-repls))
+                  (memq cider-reuse-dead-repls '(prompt auto)))
+             (if (y-or-n-p "Dead REPL buffers exist.  Select one to reuse? ")
+                 (get-buffer (completing-read "REPL buffer to reuse: " (mapcar #'buffer-name sorted-repls)
+                                              nil t nil nil (car sorted-repls)))
+               (and (y-or-n-p "Kill all dead REPL buffers?")
+                    (mapc #'kill-buffer sorted-repls)
+                    nil)))
+            (cider-reuse-dead-repls ;; fallthrough for 'auto / 'any / other non-nil values
+             (car sorted-repls))))))
 
 (declare-function cider-default-err-handler "cider-eval")
 (declare-function cider-repl-mode "cider-repl")

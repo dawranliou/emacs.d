@@ -4,8 +4,6 @@
 
 ;; Author: Paul W. Rankin <pwr@bydasein.com>
 ;; Keywords: wp, text
-;; Package-Version: 20230515.523
-;; Package-Commit: fbac9e530967cddc7be846c849e2742a64f4f6d3
 ;; Version: 2.0.4
 ;; Package-Requires: ((emacs "24.4"))
 ;; URL: https://github.com/rnkn/olivetti
@@ -429,7 +427,9 @@ If prefixed with ARG, incrementally increase."
     (define-key map [left-fringe mouse-1] #'mouse-set-point)
     (define-key map [right-fringe mouse-1] #'mouse-set-point)
     ;; This code is taken from https://github.com/joostkremers/visual-fill-column
-    (when (bound-and-true-p mouse-wheel-mode)
+    (when (and (bound-and-true-p mouse-wheel-mode)
+               (boundp 'mouse-wheel-down-event)
+               (boundp 'mouse-wheel-up-event))
       (define-key map (vector 'left-margin 'mouse-wheel-down-event) 'mwheel-scroll)
       (define-key map (vector 'left-margin 'mouse-wheel-up-event) 'mwheel-scroll)
       (define-key map (vector 'right-margin 'mouse-wheel-down-event) 'mwheel-scroll)
