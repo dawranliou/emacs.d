@@ -769,6 +769,7 @@ buffer name when eglot is enabled."
     (keymap-set clojure-ts-mode-map "C-c M-C" #'cider-connect-cljs)
     (keymap-set clojure-ts-mode-map "C-c C-x" 'cider-start-map)
     (keymap-set clojure-ts-mode-map "C-c C-s" 'sesman-map)
+    (keymap-set clojure-ts-mode-map "C-c C-r" clojure-refactor-map)
     (require 'sesman)
     (sesman-install-menu clojure-ts-mode-map)
     (add-hook 'clojure-ts-mode-hook
