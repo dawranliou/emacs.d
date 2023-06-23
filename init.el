@@ -76,6 +76,14 @@
     (message "Downloading %s treesitter grammar from %s" (car grammar) (cadr grammar))
     (treesit-install-language-grammar (car grammar))))
 
+(defun remove-treesit-sexp-changes ()
+  (when (eq forward-sexp-function #'treesit-forward-sexp)
+    (setq forward-sexp-function nil))
+  (when (eq transpose-sexps-function #'treesit-transpose-sexps)
+    (setq transpose-sexps-function #'transpose-sexps-default-function))
+  (when (eq forward-sentence-function #'treesit-forward-sentence)
+    (setq forward-sentence-function #'forward-sentence-default-function)))
+
 ;;; Settings
 
 (custom-set-variables
@@ -774,12 +782,8 @@ buffer name when eglot is enabled."
     (sesman-install-menu clojure-ts-mode-map)
     (add-hook 'clojure-ts-mode-hook
               (lambda ()
-                (setq-local sesman-system 'CIDER)
-
-                ;; Fix C-M-t transpose-sexps b/c today treesit-transpose-sexps
-                ;; doesn't do the job.
-                (setq-local transpose-sexps-function
-                            #'transpose-sexps-default-function)))
+                (setq-local sesman-system 'CIDER)))
+    (add-hook 'clojure-ts-mode-hook #'remove-treesit-sexp-changes)
     (add-hook 'clojure-ts-mode-hook #'clojure-mode-variables)
 
     (defun cider-repl-type-for-buffer-in-clojure-ts-mode (&optional buffer)
