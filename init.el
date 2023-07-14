@@ -128,7 +128,6 @@
  '(erc-server "irc.libera.chat" t)
  '(fill-column 80)
  '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
- '(global-goto-address-mode t)
  '(global-so-long-mode t)
  '(grep-find-command '("rg -n -H --no-heading --glob='' -e ''" . 37))
  '(helpful-switch-buffer-function #'helpful-switch-to-buffer)
