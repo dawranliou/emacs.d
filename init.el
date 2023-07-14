@@ -805,11 +805,25 @@ buffer name when eglot is enabled."
   (add-hook 'clojure-ts-mode-hook #'cider-mode)
 
   (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs '((clojure-mode
+    (add-to-list 'eglot-server-programs `((clojure-mode
                                            clojurescript-mode
                                            clojurec-mode
                                            clojure-ts-mode)
-                                          . ("clojure-lsp")))))
+                                          .
+                                          ,(eglot-alternatives
+                                            '(("clojure-lsp")
+                                              ("clojure-lsp-dev")))))
+    (defun eglot-clojure-lsp-server-info ()
+      (if-let ((server (eglot-current-server)))
+          (eglot--request server :clojure/serverInfo/raw nil)
+        (error "No clojure-lsp server running")))
+
+    (defun eglot-clojure-lsp-dev-nrepl-port ()
+      (interactive)
+      (let* ((server-info (eglot-clojure-lsp-server-info))
+             (nrepl-port (plist-get server-info :port)))
+        (progn (kill-new (format "%s" nrepl-port))
+               (message "clojure-lsp nrepl port: %s" nrepl-port))))))
 
 (external-package cider
   (with-eval-after-load 'cider
