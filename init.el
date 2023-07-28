@@ -513,6 +513,16 @@ https://www.emacswiki.org/emacs/AlignCommands"
                                default-directory))
   (browse-url "http://localhost:8000"))
 
+(defun shuffle (seq)
+  (cl-loop for i from (length seq) downto 2
+           do (cl-rotatef (elt seq (random i))
+                          (elt seq (1- i))))
+  seq)
+
+(defun shuffle-lines-in-region (beg end)
+  (interactive "r")
+  (shell-command-on-region beg end "shuf" t t))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
