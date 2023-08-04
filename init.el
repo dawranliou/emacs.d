@@ -317,6 +317,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 (keymap-global-set "C-x C-b" #'ibuffer)
 (keymap-global-set "C-x k" #'kill-this-buffer)
+(keymap-global-set "C-x j" #'duplicate-dwim)
 (keymap-global-set "C-M-r" #'raise-sexp)
 (keymap-global-set "C-M-d" #'down-list)
 (keymap-global-set "C-M-w" #'backward-kill-sexp)
