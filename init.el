@@ -271,7 +271,7 @@
  '(shr-width 72)
  '(sqlformat-args '("-s2" "-g"))
  '(sqlformat-command 'pgformatter)
- '(tab-always-indent 'complete)
+ '(tab-always-indent t)
  '(tab-width 8)
  '(tramp-default-method "ssh")
  '(truncate-lines t)
