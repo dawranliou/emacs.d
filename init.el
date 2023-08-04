@@ -259,7 +259,7 @@
  '(scroll-conservatively 101)
  '(scroll-preserve-screen-position t)
  '(search-whitespace-regexp ".*?")
- '(show-paren-context-when-offscreen t)
+ '(show-paren-context-when-offscreen 'overlay)
  '(show-paren-mode t)
  '(shr-cookie-policy nil)
  '(shr-discard-aria-hidden t)
