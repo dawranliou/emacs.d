@@ -322,7 +322,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-global-set "C-M-d" #'down-list)
 (keymap-global-set "C-M-w" #'backward-kill-sexp)
 (keymap-global-set "C-M-<return>" #'newline-at-end-of-line)
-(keymap-global-set "M-o" #'other-window)
+(keymap-global-set "M-o" #'another-window)
 (keymap-global-set "M-i" #'delete-other-windows)
 (keymap-global-set "M-SPC" #'cycle-spacing)
 (keymap-global-set "M-Z" #'zap-to-char)
@@ -352,6 +352,13 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-set ctl-x-map "3" #'split-and-goto-window-right)
 
 ;;; Functions
+
+(defun another-window ()
+  "Switch to another window.  If no other window exists create one."
+  (interactive)
+  (when (one-window-p)
+    (split-window-sensibly))
+  (other-window 1))
 
 ;; Confirm killing modified buffers
 ;; https://www.olivertaylor.net/emacs/buffer-confirm-kill.html
