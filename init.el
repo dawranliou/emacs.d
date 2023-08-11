@@ -351,6 +351,11 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-set ctl-x-map "2" #'split-and-goto-window-below)
 (keymap-set ctl-x-map "3" #'split-and-goto-window-right)
 
+;;; Aliases
+
+(defalias 'save-as-file #'write-file
+  "I can never remember the name of the function")
+
 ;;; Functions
 
 (defun another-window ()
