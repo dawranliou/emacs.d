@@ -1,0 +1,244 @@
+#+TITLE: Change log of pulsar.el
+#+AUTHOR: Protesilaos Stavrou
+#+EMAIL: info@protesilaos.com
+#+OPTIONS: ':nil toc:nil num:nil author:nil email:nil
+
+The newest release is at the top.  For further details, please consult
+the manual: <https://protesilaos.com/emacs/pulsar>.
+
+* Version 1.0.0 on 2023-08-12
+:PROPERTIES:
+:CUSTOM_ID: h:0d09da86-29be-461e-8ef6-1e93a07b756b
+:END:
+
+- The ~next-buffer~ and ~previous-buffer~ commands are added to the
+  default value of the user option ~pulsar-pulse-functions~.  They
+  will now trigger a pulse effect after they are called (if
+  ~pulsar-mode~ is enabled in the current buffer or
+  ~pulsar-global-mode~ is in use).
+
+- The command ~pulsar-recenter-middle~ is now an alias for
+  ~pulsar-recenter-center~, instead of being the original name.  Users
+  do not need to change anything on their end: this is just an
+  internal arrangement to use a name that corresponds to the one of
+  the underlying "recenter" mechanism.
+
+- The Lisp macro that was used to derive the Pulsar "recenter"
+  commands has been removed.  The commands are ~pulsar-recenter-top~
+  and ~pulsar-recenter-center~.  I originally thought the macro would
+  be useful in more places, but I ended up relying on it only twice.
+
+  Thanks to Ryan Kaskel for pointing out an intermediate typo/error I
+  made while redefining the macro and before I decided to remove it
+  altogether.  This was done as a comment on the GitHub mirror:
+  <https://github.com/protesilaos/pulsar/commit/c5086de779a0226d72eca4d5cba8c7689bc278b2#r123397272>.
+
+- The Lisp macro ~pulsar-pulse-with-face~ is renamed to
+  ~pulsar-define-pulse-with-face~.  Its definition is updated to
+  simplify how a Pulsar function is defined with a given face.
+  Examples of such functions are ~pulsar-pulse-line-red~,
+  ~pulsar-pulse-line-blue~.
+
+- Pulsar now retrieves the absolute beginning of the minibuffer
+  prompt.  This means that a pulse in the minibuffer will cover the
+  text of the prompt, as opposed to only affecting the input area.  As
+  such, the pulse is visible even if the minibuffer is empty
+  (e.g. what happens with the default completion setup when calling
+  =M-x=).
+
+- The manual provides instructions on how to set up Pulsar to produce
+  a pulse when the minibuffer is activated.  It cannot be done with
+  the ~pulsar-pulse-functions~, though the setup is not too involved.
+  In short:
+
+  #+begin_src emacs-lisp
+  (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
+
+  ;; OR something like this, replacing "blue" with one among red,
+  ;; green, yellow, magenta, cyan:
+  (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line-blue)
+  #+end_src
+
+* Version 0.5.0 on 2022-08-19
+:PROPERTIES:
+:CUSTOM_ID: h:20bf677d-bcef-4606-8cc2-ebd49bfc057b
+:END:
+
++ Added convenience functions/commands to pulse a line using one of the
+  provided faces.  These can be used interactively or via Lisp (e.g. be
+  assigned to a hook).  They are:
+
+  - ~pulsar-pulse-line-red~
+  - ~pulsar-pulse-line-green~
+  - ~pulsar-pulse-line-yellow~
+  - ~pulsar-pulse-line-blue~
+  - ~pulsar-pulse-line-magenta~
+  - ~pulsar-pulse-line-cyan~
+
++ Deprecated ~pulsar-pulse-on-window-change~ due to complications it
+  created in some edge cases.  Part of this effort was to fix a bug that
+  pertained to a duplicate pulse when the pulsar commands were invoked
+  via =M-x=.  The duplication had the effect of potentially overriding
+  the color of the pulse such as if, say, ~pulsar-pulse-line-red~ was
+  invoked while the ~pulsar-face~ was blue.
+
++ Restored several command symbols to the default value of
+  ~pulsar-pulse-functions~.  Those were disabled to support the use
+  option ~pulsar-pulse-on-window-change~, but as that is now removed we
+  revert to the old and more predictable way of handling things.
+
++ Introduced conditionality that checks for ~real-this-command~.  This
+  is necessary for commands that have to fudge ~this-command~ to provide
+  their functionality.  Such is the case with the ~evil-scroll-up~ and
+  ~evil-scroll-down~ commands which are internally reported as
+  ~previous-line~ and ~next-line~, respectively.  I discovered this
+  problem while trying to support Duy Nguyen attempts that making
+  =pulsar= work with =evil=.
+
+  Thanks to Duy Nguyen for reporting the issue on the mailing list and
+  then to Tom Dalziel who explained why =evil= does things the way it
+  does (it is a good reason):
+
+  - <https://lists.sr.ht/~protesilaos/pulsar/%3C89566F5C-25AD-4281-94CB-031FE8878119%40gmail.com%3E>
+  - <https://lists.sr.ht/~protesilaos/pulsar/%3C87pmgy3vzq.fsf%40protesilaos.com%3E>
+  - <https://github.com/emacs-evil/evil/issues/1659>
+
++ Documented how to use pulsar with the =next-error-hook=.  By default,
+  the =n= and =p= keys in Emacs' compilation buffers (e.g. the results
+  of a ~grep~ search) produce a highlight for the locus of the given
+  match.  Due to how the code is implemented, we cannot use Pulsar's
+  standard mechanism to trigger a pulse after the match is highlighted
+  (i.e. by adding the commands to ~pulsar-pulse-functions~.  Instead,
+  the user must add this to their configuration:
+
+  #+begin_src emacs-lisp
+  (add-hook 'next-error-hook #'pulsar-pulse-line)
+  #+end_src
+
++ Made other miscellaneous changes to tweak the code base and the
+  manual.
+
+* Version 0.4.0 on 2022-07-19
+:PROPERTIES:
+:CUSTOM_ID: h:762631cc-f60c-42b1-977b-00fd71c1a37e
+:END:
+
++ Added the user option ~pulsar-pulse-on-window-change~.  This covers
+  all commands or functions that affect the current window, so there is
+  no need to include them individually in the ~pulsar-pulse-functions~.
+  Users who prefer to trigger a pulse only after select functions
+  (e.g. only after ~other-window~) are advised to set this user option
+  to nil and update the ~pulsar-pulse-functions~ accordingly.  Thanks to
+  Ivan Popovych for the patch (commit =b1a78dd=).
+
++ Changed the default value of ~pulsar-pulse-functions~ to omit all
+  those commands which are already covered by the aforementioned.  In
+  the interest of continuity, the old value is kept in the source code,
+  with the relevant symbols commented out.
+
++ Named the mailing list email address as the =Maintainer:= of Pulsar.
+  The package headers help the user find our primary sources and/or
+  communication channels.  This change conforms with work being done
+  upstream in package.el by Philip Kaludercic.  I was informed about it
+  here:
+  <https://lists.sr.ht/~protesilaos/general-issues/%3C875ykl84yi.fsf%40posteo.net%3E>.
+
++ Updated the documentation, where necessary and made other minor tweaks
+  to the code.
+
+* Version 0.3.0 on 2022-04-08
+:PROPERTIES:
+:CUSTOM_ID: h:e0cd59e1-7a0b-47b5-b9fe-a20e1fa196f0
+:END:
+
++ Changed the source repository from GitLab to SourceHut:
+  <https://git.sr.ht/~protesilaos/pulsar>.  Use the mailing list to
+  start a discussion, report a bug, send a patch, etc.:
+  <https://lists.sr.ht/~protesilaos/pulsar>.  The GitLab URL will serve
+  as a mirror from now on (a GitHub mirror is still available and will
+  remain that way).
+
++ Refined how Pulsar behaves in the case of the last line.  Basically,
+  when the last line cannot be highlighted we want to pulse the one
+  right above.  Thanks to JD Smith for fine-tuning this behaviour in
+  merge request 1 over at the GitLab mirror:
+  <https://gitlab.com/protesilaos/pulsar/-/merge_requests/1> (exempt
+  from the requirement to assign copyright to the Free Software
+  Foundation as it is below the threshold).
+
++ Ensured that the Pulsar effect are limited to the current window when
+  the buffer is displayed in multiple windows.  This avoids the common
+  problem of simultaneous highlights in multiple locations, which
+  confuse rather than inform the user of where the point is.  Thanks to
+  Aymeric Agon-Rambosson for the contribution in merge request 2 over at
+  the GitLab mirror:
+  <https://gitlab.com/protesilaos/pulsar/-/merge_requests/2>.  Aymeric
+  has assigned copyright to the Free Software Foundation.
+
++ Wrote a buffer-local and a global minor mode that sets up Pulsar.
+  This supersedes the old design which had a built-in assumption that
+  the "pulse line" effect should always be global.  Now the user has
+  more flexibility.  They may also disable Pulsar on demand.  Note that
+  pulsar still only triggers its effect for entries in the user option
+  ~pulsar-pulse-functions~.  Thanks to Rudolf Adamkovič for the feedback
+  in issue 9 over at the GitLab mirror:
+  <https://gitlab.com/protesilaos/pulsar/-/issues/9>.
+
++ Implement the ~pulsar-highlight-dwim~ command.  It is like the
+  ~pulsar-highlight-line~ except it also understands regions, be they
+  regular or rectangular.  Thanks to Mark Barton for the feedback in
+  issue 13 over at the GitLab mirror:
+  <https://gitlab.com/protesilaos/pulsar/-/issues/13>.
+
++ Clarified some technical points in various doc strings and the manual,
+  such as what is the ~pulsar-delay~ and the ~pulsar-iterations~.
+  Thanks to Rudolf Adamkovič for the feedback in issue 12 over at the
+  GitLab mirror: <https://gitlab.com/protesilaos/pulsar/-/issues/12>.
+
+* Version 0.2.0 on 2022-03-16
+:PROPERTIES:
+:CUSTOM_ID: h:27d0bdb0-7099-41f3-8a08-b2e3d01aa36c
+:END:
+
++ Fixed an inconsistency that was present when Emacs was running in a
+  server-client model where the highlight would never pulse but instead
+  remain fixed in place until another command was invoked.  By default,
+  the pulse effect should now work for that use-case.  Thanks to Mark
+  Barton, Petter Storvik, and user kb for their feedback in issue 1:
+  <https://gitlab.com/protesilaos/pulsar/-/issues/1>.
+
++ Implemented the ~pulsar-highlight-line~ command and abstracted the
+  relevant code.  Unlike ~pulsar-pulse-line~, it never pulses the
+  current line.  Instead it keeps the highlight in place until another
+  command is invoked.  Thanks to Mark Barton for proposing this in
+  issue 1.
+
++ Introduced the user option ~pulsar-pulse~ which determines whether
+  pulsar should use a pulse effect (notwithstanding the aforementioned
+  new command).  When its value is non-nil (the default) pulsing takes
+  place.  Thanks to Petter Storvik for suggesting this approach in
+  issue 1.
+
++ Added the user option ~pulsar-iterations~ which controls how smooth or
+  abrupt the pulse effect is.  This complements the existing variable
+  ~pulsar-delay~.  Both apply only when ~pulsar-pulse~ is non-nil.
+
++ Wrote the ~pulsar-generic~ face and made it the default value of the
+  ~pulsar-face~ user option.  This is consistent with the original
+  design of a theme-agnostic presentation, though now it ensures that
+  the =:extend= attribute is used to stretch the highlight to the edge
+  of the window (without it and depending on the theme, the highlight
+  would only reach the last character on the line).
+
++ Updated the manual to reflect those changes.
+
+* Version 0.1.0 on 2022-03-14
+:PROPERTIES:
+:CUSTOM_ID: h:92a23377-d4d9-43ea-a2d4-00a23ec37f57
+:END:
+
+Initial release of the package.  Please read the manual.
+
+The core idea for this package was implemented in the =prot-pulse.el=
+file that is part of [[https://gitlab.com/protesilaos/dotfiles][my dotfiles]] (now deprecated).  I was using it at
+least since December 2020.
