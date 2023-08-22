@@ -325,6 +325,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-global-set "C-M-d" #'down-list)
 (keymap-global-set "C-M-w" #'backward-kill-sexp)
 (keymap-global-set "C-M-<return>" #'newline-at-end-of-line)
+(keymap-global-set "C-S-t" #'scratch-buffer)
 (keymap-global-set "M-o" #'another-window)
 (keymap-global-set "M-i" #'delete-other-windows)
 (keymap-global-set "M-SPC" #'cycle-spacing)
