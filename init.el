@@ -43,6 +43,9 @@
         (lua "https://github.com/Azganoth/tree-sitter-lua")
         (make "https://github.com/alemuller/tree-sitter-make")
         (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+        (markdown_inline "https://github.com/MDeiml/tree-sitter-markdown"
+                         "v0.1.6"
+                         "tree-sitter-markdown-inline/src")
         (python "https://github.com/tree-sitter/tree-sitter-python")
         (r "https://github.com/r-lib/tree-sitter-r")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
@@ -794,8 +797,6 @@ buffer name when eglot is enabled."
 (external-package clojure-ts-mode
   (with-eval-after-load 'clojure-ts-mode
     (require 'clojure-mode)
-    (setq clojure-ts-mode-syntax-table clojure-mode-syntax-table)
-
     (keymap-set clojure-ts-mode-map "C-c M-x" #'cider)
     (keymap-set clojure-ts-mode-map "C-c M-j" #'cider-jack-in-clj)
     (keymap-set clojure-ts-mode-map "C-c M-J" #'cider-jack-in-cljs)
@@ -810,7 +811,30 @@ buffer name when eglot is enabled."
               (lambda ()
                 (setq-local sesman-system 'CIDER)))
     (add-hook 'clojure-ts-mode-hook #'remove-treesit-sexp-changes)
-    (add-hook 'clojure-ts-mode-hook #'clojure-mode-variables)
+    (defun clojure-ts-mode-variables-from-clojure-mode ()
+      "Set up buffer-local variables that I need"
+      (setq-local paragraph-ignore-fill-prefix t)
+      (setq-local outline-regexp ";;;;* ")
+      (setq-local outline-level 'lisp-outline-level)
+      ;; (setq-local comment-start ";")
+      (setq-local comment-start-skip ";+ *")
+      (setq-local comment-add 1) ; default to `;;' in comment-region
+      (setq-local comment-column 40)
+      (setq-local comment-use-syntax t)
+      (setq-local multibyte-syntax-as-symbol t)
+      (setq-local electric-pair-skip-whitespace 'chomp)
+      (setq-local electric-pair-open-newline-between-pairs nil)
+      (setq-local fill-paragraph-function #'clojure-fill-paragraph)
+      (setq-local adaptive-fill-function #'clojure-adaptive-fill-function)
+      (setq-local normal-auto-fill-function #'clojure-auto-fill-function)
+      (setq-local comment-start-skip
+                  "\\(\\(^\\|[^\\\\\n]\\)\\(\\\\\\\\\\)*\\)\\(;+\\|#|\\) *")
+      (setq-local clojure-expected-ns-function #'clojure-expected-ns)
+      (setq-local parse-sexp-ignore-comments t)
+      (setq-local open-paren-in-column-0-is-defun-start nil)
+      (setq-local add-log-current-defun-function #'clojure-current-defun-name)
+      (setq-local beginning-of-defun-function #'clojure-beginning-of-defun-function))
+    (add-hook 'clojure-ts-mode-hook #'clojure-ts-mode-variables-from-clojure-mode)
 
     (defun cider-repl-type-for-buffer-in-clojure-ts-mode (&optional buffer)
       "Determine repl type for clojure-ts-mode buffers."
