@@ -112,7 +112,7 @@
 (cl-defmethod vertico--resize-window (_height &context (vertico-buffer-mode (eql t))))
 
 (cl-defmethod vertico--setup :after (&context (vertico-buffer-mode (eql t)))
-  (add-hook 'pre-redisplay-functions 'vertico-buffer--redisplay nil 'local)
+  (add-hook 'pre-redisplay-functions #'vertico-buffer--redisplay nil 'local)
   (let* ((action vertico-buffer-display-action) tmp win old-buf
          (_ (unwind-protect
                 (progn
@@ -134,12 +134,14 @@
     (fset sym (lambda ()
                 (when (= depth (recursion-depth))
                   (with-selected-window (active-minibuffer-window)
-                    (if (not (and (window-live-p win) (buffer-live-p old-buf)))
-                        (delete-window win)
+                    (cond
+                     ((and (window-live-p win) (buffer-live-p old-buf))
                       (set-window-parameter win 'no-other-window now)
                       (set-window-parameter win 'no-delete-other-windows ndow)
                       (set-window-dedicated-p win nil)
                       (set-window-buffer win old-buf))
+                     ((window-live-p win)
+                      (delete-window win)))
                     (when vertico-buffer-hide-prompt
                       (set-window-vscroll nil 0))
                     (remove-hook 'minibuffer-exit-hook sym)))))

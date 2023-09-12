@@ -318,12 +318,10 @@ Removing modules:
 
 Various:
 
-  `stash-apply-3way'  When a stash cannot be applied using
-  \"git stash apply\", then Magit uses \"git apply\" instead.
-  If doing so is safe, then it uses \"--3way\", when it is not
-  because doing so requires that some files are first staged,
-  then by default it prompts the user whether to use \"--3way\"
-  or \"--reject\".  Add this symbol to always use \"--3way\".
+  `stash-apply-3way' When a stash cannot be applied using \"git
+  stash apply\", then Magit uses \"git apply\" instead, possibly
+  using the \"--3way\" argument, which isn't always perfectly
+  safe.  See also `magit-stash-apply'.
 
   `kill-process' There seldom is a reason to kill a process.
 
@@ -821,7 +819,7 @@ ACTION is a member of option `magit-slow-confirm'."
     (unless prompt
       (setq prompt (magit-confirm-make-prompt action)))
     (magit-confirm action
-      (concat prompt " %S")
+      (concat prompt " \"%s\"")
       (concat prompt " %d files")
       noabort files prompt-suffix)))
 
