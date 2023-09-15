@@ -6,7 +6,7 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 0.4.1
+;; Package-Version: 0.4.3
 ;; Package-Requires: ((emacs "25.1") (compat "29.1.4.1"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -237,7 +237,7 @@ of this variable use \"C-x t\" when a transient is active."
 This only affects infix arguments that represent command-line
 arguments.  When this option is non-nil, then the key binding
 for infix argument are highlighted when only a long argument
-\(e.g. \"--verbose\") is specified but no shor-thand (e.g \"-v\").
+\(e.g., \"--verbose\") is specified but no shor-thand (e.g \"-v\").
 In the rare case that a short-hand is specified but does not
 match the key binding, then it is highlighted differently.
 
@@ -1088,7 +1088,10 @@ example, sets a variable, use `transient-define-infix' instead.
                       `(prog1 ',sym
                          (put ',sym 'interactive-only t)
                          (put ',sym 'command-modes (list 'not-a-mode))
-                         (defalias ',sym ,(macroexp-quote cmd)))))))
+                         (defalias ',sym
+                           ,(if (eq (car-safe cmd) 'lambda)
+                                cmd
+                              (macroexp-quote cmd))))))))
        ((or (stringp car)
             (and car (listp car)))
         (let ((arg pop)
@@ -1622,9 +1625,9 @@ of the corresponding object."
   "<transient-show>"              #'transient--do-stay
   "<transient-update>"            #'transient--do-stay
   "<transient-toggle-common>"     #'transient--do-stay
-  "<transient-set>"               #'transient--do-call
-  "<transient-save>"              #'transient--do-call
-  "<transient-reset>"             #'transient--do-call
+  "<transient-set>"               #'transient--do-stay
+  "<transient-save>"              #'transient--do-stay
+  "<transient-reset>"             #'transient--do-stay
   "<describe-key-briefly>"        #'transient--do-stay
   "<describe-key>"                #'transient--do-stay
   "<transient-scroll-up>"         #'transient--do-stay
@@ -2163,6 +2166,37 @@ value.  Otherwise return CHILDREN as is."
        ,@body)))
 
 (defun transient--wrap-command ()
+  (if (>= emacs-major-version 30)
+      (transient--wrap-command-30)
+    (transient--wrap-command-29)))
+
+(defun transient--wrap-command-30 ()
+  (letrec
+      ((prefix transient--prefix)
+       (suffix this-command)
+       (advice (lambda (fn &rest args)
+                 (interactive
+                  (lambda (spec)
+                    (let ((abort t))
+                      (unwind-protect
+                          (prog1 (advice-eval-interactive-spec spec)
+                            (setq abort nil))
+                        (when abort
+                          (when-let ((unwind (oref prefix unwind-suffix)))
+                            (transient--debug 'unwind-interactive)
+                            (funcall unwind suffix))
+                          (advice-remove suffix advice)
+                          (oset prefix unwind-suffix nil))))))
+                 (unwind-protect
+                     (apply fn args)
+                   (when-let ((unwind (oref prefix unwind-suffix)))
+                     (transient--debug 'unwind-command)
+                     (funcall unwind suffix))
+                   (advice-remove suffix advice)
+                   (oset prefix unwind-suffix nil)))))
+    (advice-add suffix :around advice '((depth . -99)))))
+
+(defun transient--wrap-command-29 ()
   (let* ((prefix transient--prefix)
          (suffix this-command)
          (advice nil)
@@ -2170,9 +2204,9 @@ value.  Otherwise return CHILDREN as is."
           (lambda (spec)
             (let ((abort t))
               (unwind-protect
-	          (prog1 (advice-eval-interactive-spec spec)
-	            (setq abort nil))
-	        (when abort
+                  (prog1 (advice-eval-interactive-spec spec)
+                    (setq abort nil))
+                (when abort
                   (when-let ((unwind (oref prefix unwind-suffix)))
                     (transient--debug 'unwind-interactive)
                     (funcall unwind suffix))
@@ -2211,7 +2245,19 @@ value.  Otherwise return CHILDREN as is."
     (transient--debug 'post-command)
     (transient--with-emergency-exit
       (cond (transient--exitp (transient--post-exit))
-            ((eq this-command (oref transient--prefix command)))
+            ;; If `this-command' is the current transient prefix, then we
+            ;; have already taken care of updating the transient buffer...
+            ((and (eq this-command (oref transient--prefix command))
+                  ;; ... but if `prefix-arg' is non-nil, then the values
+                  ;; of `this-command' and `real-this-command' are untrue
+                  ;; because `prefix-command-preserve-state' changes them.
+                  ;; We cannot use `current-prefix-arg' because it is set
+                  ;; too late (in `command-execute'), and if it were set
+                  ;; earlier, then we likely still would not be able to
+                  ;; rely on it and `prefix-command-preserve-state-hook'
+                  ;; would have to be used record that a universal
+                  ;; argument is in effect.
+                  (not prefix-arg)))
             ((let ((old transient--redisplay-map)
                    (new (transient--make-redisplay-map)))
                (unless (equal old new)
@@ -2326,7 +2372,7 @@ value.  Otherwise return CHILDREN as is."
 
 (defun transient--emergency-exit ()
   "Exit the current transient command after an error occurred.
-When no transient is active (i.e. when `transient--prefix' is
+When no transient is active (i.e., when `transient--prefix' is
 nil) then do nothing."
   (transient--debug 'emergency-exit)
   (when transient--prefix
@@ -2429,6 +2475,8 @@ If there is no parent prefix, then just call the command."
         (transient--editp
          (setq transient--editp nil)
          (transient-setup)
+         transient--stay)
+        (prefix-arg
          transient--stay)
         (t transient--exit)))
 
@@ -2537,8 +2585,7 @@ transient is active."
 (defun transient-update ()
   "Redraw the transient's state in the popup buffer."
   (interactive)
-  (when (equal this-original-command 'negative-argument)
-    (setq prefix-arg current-prefix-arg)))
+  (setq prefix-arg current-prefix-arg))
 
 (defun transient-show ()
   "Show the transient's state in the popup buffer."
@@ -2790,7 +2837,7 @@ user using the reader specified by the `reader' slot (using the
 `transient-infix' method described below).
 
 For some infix classes the value is changed without reading
-anything in the minibuffer, i.e. the mere act of invoking the
+anything in the minibuffer, i.e., the mere act of invoking the
 infix command determines what the new value should be, based
 on the previous value.")
 
@@ -2829,7 +2876,7 @@ the lack of history, for example.
 
 Only for very simple classes that toggle or cycle through a very
 limited number of possible values should you replace this with a
-simple method that does not handle history.  (E.g. for a command
+simple method that does not handle history.  (E.g., for a command
 line switch the only possible values are \"use it\" and \"don't use
 it\", in which case it is pointless to preserve history.)"
   (with-slots (value multi-value always-read allow-empty choices) obj
@@ -3127,8 +3174,8 @@ does nothing." nil)
   "Return nil, which means \"no value\".
 
 Setting the value of a variable is done by, well, setting the
-value of the variable.  I.e. this is a side-effect and does not
-contribute to the value of the transient."
+value of the variable.  I.e., this is a side-effect and does
+not contribute to the value of the transient."
   nil)
 
 ;;;; Utilities
@@ -3471,7 +3518,7 @@ Optional support for popup buttons is also implemented here."
               (setq pre (string-replace "TAB" "C-i" pre))
               (setq suf (string-replace "RET" "C-m" suf))
               (setq suf (string-replace "TAB" "C-i" suf))
-              ;; We use e.g. "-k" instead of the more correct "- k",
+              ;; We use e.g., "-k" instead of the more correct "- k",
               ;; because the former is prettier.  If we did that in
               ;; the definition, then we want to drop the space that
               ;; is reinserted above.  False-positives are possible

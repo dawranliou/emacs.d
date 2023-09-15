@@ -382,6 +382,7 @@ bound to i."
   "<right>" #'org-do-demote
   "^" #'org-sort
   "r" #'org-refile
+  "R" #'embark-org-refile-here
   "I" #'org-clock-in
   "O" #'org-clock-out
   "a" #'org-archive-subtree-default-with-confirmation
@@ -554,7 +555,11 @@ REST are the remaining arguments."
 
 (keymap-set embark-encode-map "o" 'embark-org-export-in-place-map)
 
-;;; Org remote headings, such as agenda items
+;;; References to Org headings, such as agenda items
+
+;; These are targets that represent an org heading but not in the
+;; current buffer, instead they have a text property named
+;; `org-marker' that points to the actual heading.
 
 (defun embark-org-target-agenda-item ()
   "Target Org agenda item at point."
@@ -562,16 +567,14 @@ REST are the remaining arguments."
              (get-text-property (line-beginning-position) 'org-marker))
     (let ((start (+ (line-beginning-position) (current-indentation)))
           (end (line-end-position)))
-      `(org-remote-heading ,(buffer-substring start end) ,start . ,end))))
+      `(org-heading ,(buffer-substring start end) ,start . ,end))))
 
 (let ((tail (memq 'embark-org-target-element-context embark-target-finders)))
   (cl-pushnew 'embark-org-target-agenda-item (cdr tail)))
 
-(add-to-list 'embark-keymap-alist '(org-remote-heading embark-org-heading-map))
-
-(cl-defun embark-org--at-remote-heading
+(cl-defun embark-org--at-heading
     (&rest rest &key run target &allow-other-keys)
-  "RUN the action at the location of the remote heading.
+  "RUN the action at the location of the heading TARGET refers to.
 The location is given by the `org-marker' text property of
 target.  Applies RUN to the REST of the arguments."
   (if-let ((marker (get-text-property 0 'org-marker target)))
@@ -579,39 +582,74 @@ target.  Applies RUN to the REST of the arguments."
         (apply run :target target rest))
     (apply run :target target rest)))
 
-(defun embark-org-goto-remote-heading (&rest args)
-  "Jump to org remote heading TARGET."
-  (when-let ((target (if (cdr args) (plist-get args :target) (car args)))
-             (marker (get-text-property 0 'org-marker target)))
+(cl-defun embark-org-goto-heading (&key target &allow-other-keys)
+  "Jump to the org heading TARGET refers to."
+  (when-let ((marker (get-text-property 0 'org-marker target)))
     (pop-to-buffer (marker-buffer marker))
     (widen)
     (goto-char marker)
     (org-fold-reveal)
     (pulse-momentary-highlight-one-line)))
 
-(defconst embark-org--invisible-jump-to-remote-heading
+(defun embark-org-heading-default-action (target)
+  "Default action for Org headings.
+There are two types of heading targets: the heading at point in a
+normal org buffer, and references to org headings in some other
+buffer (for example, org agenda items). For references the
+default action is to jump to the reference, and for the heading
+at point, the default action is whatever is bound to RET in
+`embark-org-heading-map' or `org-todo' if RET is unbound."
+  (if (get-text-property 0 'org-marker target)
+      (embark-org-goto-heading :target target)
+    (command-execute
+     (or (keymap-lookup embark-org-heading-map "RET") #'org-todo))))
+
+(defconst embark-org--invisible-jump-to-heading
   '(org-tree-to-indirect-buffer
     org-refile
     org-clock-in
     org-clock-out
     org-archive-subtree-default-with-confirmation
     org-store-link)
-  "Org remote heading actions for which we don't display the heading's buffer.")
+  "Org heading actions which won't display the heading's buffer.")
 
-(setf (alist-get 'org-remote-heading embark-default-action-overrides)
-      #'embark-org-goto-remote-heading)
+(setf (alist-get 'org-heading embark-default-action-overrides)
+      #'embark-org-heading-default-action)
 
 (map-keymap
  (lambda (_key cmd)
    (unless (or (where-is-internal cmd (list embark-general-map))
-               (memq cmd embark-org--invisible-jump-to-remote-heading))
-     (cl-pushnew 'embark-org-goto-remote-heading
+               (memq cmd embark-org--invisible-jump-to-heading))
+     (cl-pushnew 'embark-org-goto-heading
                  (alist-get cmd embark-pre-action-hooks))))
  embark-org-heading-map)
 
-(dolist (cmd embark-org--invisible-jump-to-remote-heading)
-  (cl-pushnew 'embark-org--at-remote-heading
+(dolist (cmd embark-org--invisible-jump-to-heading)
+  (cl-pushnew 'embark-org--at-heading
               (alist-get cmd embark-around-action-hooks)))
+
+(defun embark-org-refile-here (target)
+  "Refile the heading at point to TARGET."
+  (if-let ((marker (get-text-property 0 'org-marker target)))
+      (with-selected-window
+          (or (and (derived-mode-p 'org-agenda-mode)
+                   (let ((window (ignore-errors (other-window-for-scrolling))))
+                     (with-current-buffer (window-buffer window)
+                       (when (derived-mode-p 'org-mode) window))))
+              (selected-window))
+        (org-refile nil nil
+                    ;; The RFLOC argument:
+                    (list
+                     ;; Name
+                     (org-with-point-at marker
+                       (nth 4 (org-heading-components)))
+                     ;; File
+                     (buffer-file-name (marker-buffer marker))
+                     ;; nil
+                     nil
+                     ;; Position
+                     marker)))
+    (user-error "The target is an org heading rather than a reference to one")))
 
 (provide 'embark-org)
 ;;; embark-org.el ends here
