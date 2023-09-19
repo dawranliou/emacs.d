@@ -245,7 +245,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(dockerfile-mode docker pulsar janet-mode breadcrumb clojure-ts-mode breadcrumb jinx racket-mode groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(jarchive dockerfile-mode docker pulsar janet-mode breadcrumb clojure-ts-mode breadcrumb jinx racket-mode groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(package-vc-selected-packages
    '((breadcrumb :vc-backend Git :url "https://github.com/joaotavora/breadcrumb")
      (clojure-ts-mode :vc-backend Git :url "https://github.com/clojure-emacs/clojure-ts-mode")))
@@ -771,6 +771,10 @@ buffer name when eglot is enabled."
 
     (advice-add 'xref-find-references :around
                 #'xref-find-references-with-eglot)))
+
+(external-package jarchive
+  (add-hook 'clojure-mode-hook #'jarchive-setup)
+  (add-hook 'clojure-ts-mode-hook #'jarchive-setup))
 
 (external-package dumb-jump
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
