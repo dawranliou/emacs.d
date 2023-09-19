@@ -246,7 +246,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(jarchive dockerfile-mode docker pulsar janet-mode breadcrumb clojure-ts-mode breadcrumb jinx racket-mode groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(breadcrumb jarchive dockerfile-mode docker pulsar janet-mode clojure-ts-mode jinx racket-mode groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit magit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(package-vc-selected-packages
    '((breadcrumb :vc-backend Git :url "https://github.com/joaotavora/breadcrumb")
      (clojure-ts-mode :vc-backend Git :url "https://github.com/clojure-emacs/clojure-ts-mode")))
@@ -956,6 +956,8 @@ buffer name when eglot is enabled."
   ;;              '(jinx grid (vertico-grid-annotate . 25)))
   )
 
+(external-package breadcrumb
+  (add-hook 'prog-mode-hook #'breadcrumb-local-mode))
 
 (provide 'init)
 
