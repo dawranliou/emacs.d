@@ -101,6 +101,7 @@
     (cons "."
           (expand-file-name "var/backup/" user-emacs-directory))))
  '(calendar-mark-holidays-flag t)
+ '(cider-eldoc-display-for-symbol-at-point nil)
  '(cider-repl-display-help-banner nil)
  '(cider-repl-display-in-current-window nil)
  '(cider-repl-pop-to-buffer-on-connect 'display-only)
