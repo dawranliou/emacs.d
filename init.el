@@ -958,6 +958,7 @@ buffer name when eglot is enabled."
   )
 
 (external-package breadcrumb
+  (keymap-global-set "M-g j" #'breadcrumb-jump)
   (add-hook 'prog-mode-hook #'breadcrumb-local-mode))
 
 (provide 'init)
