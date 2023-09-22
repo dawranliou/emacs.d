@@ -760,9 +760,8 @@ reuse it's window, otherwise create new one."
   (add-hook 'go-mode-hook 'eglot-ensure)
   (add-hook 'go-ts-mode-hook 'eglot-ensure)
 
-  (keymap-unset eglot-mode-map "C-c e" #'eglot-code-actions)
-
   (with-eval-after-load 'eglot
+    (keymap-set eglot-mode-map "C-c e" #'eglot-code-actions)
     (defun xref-find-references-with-eglot (orig-fun &rest args)
       "An advice function that gives xref-find-definitions a unique
 buffer name when eglot is enabled."
