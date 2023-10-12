@@ -25,6 +25,8 @@
       frame-inhibit-implied-resize t
       native-comp-async-report-warnings-errors nil)
 
+(add-hook 'focus-out-hook #'garbage-collect)
+
 (add-hook
  'emacs-startup-hook
  (lambda ()
