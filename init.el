@@ -121,6 +121,7 @@
  '(ediff-split-window-function #'split-window-horizontally)
  '(ediff-window-setup-function #'ediff-setup-windows-plain)
  '(eglot-connect-timeout 600)
+ '(eglot-events-buffer-size 0)
  '(electric-pair-mode t)
  '(enable-recursive-minibuffers t)
  '(erc-auto-query 'bury)
