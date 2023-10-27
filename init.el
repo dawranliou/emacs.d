@@ -910,8 +910,7 @@ buffer name when eglot is enabled."
     ))
 
 (external-package emmet-mode
-  (add-hook 'sgml-mode-hook 'emmet-mode)
-  (add-hook 'css-mode-hook 'emmet-mode))
+  (add-hook 'sgml-mode-hook 'emmet-mode))
 
 (external-package sly
   (setq inferior-lisp-program "sbcl")
