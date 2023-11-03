@@ -57,9 +57,9 @@
 
 (setq major-mode-remap-alist
       '((sh-mode . bash-ts-mode)
-        (clojurec-mode . clojure-ts-mode)
-        (clojurescript-mode . clojure-ts-mode)
-        (clojure-mode . clojure-ts-mode)
+        ;; (clojurec-mode . clojure-ts-mode)
+        ;; (clojurescript-mode . clojure-ts-mode)
+        ;; (clojure-mode . clojure-ts-mode)
         (css-mode . css-ts-mode)
         (go-mode . go-ts-mode)
         (go-dot-mod-mode . go-mod-ts-mode)
