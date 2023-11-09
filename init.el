@@ -246,7 +246,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(magit hide-mode-line cape breadcrumb jarchive dockerfile-mode docker pulsar janet-mode clojure-ts-mode jinx racket-mode groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode olivetti avy cider clojure-mode eglot embark emmet-mode flyspell go-mode helpful iedit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(magit hide-mode-line cape breadcrumb jarchive dockerfile-mode docker pulsar clojure-ts-mode jinx groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode avy cider clojure-mode eglot embark flyspell go-mode helpful iedit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(package-vc-selected-packages
    '((breadcrumb :vc-backend Git :url "https://github.com/joaotavora/breadcrumb")
      (clojure-ts-mode :vc-backend Git :url "https://github.com/clojure-emacs/clojure-ts-mode")))
@@ -923,9 +923,6 @@ buffer name when eglot is enabled."
     ;; (keymap-set flyspell-mode-map "C-." nil)  ; Reserved for embark-act
     ;; (keymap-set flyspell-mode-map "C-;" nil) ; Reserved for iedit
     ))
-
-(external-package emmet-mode
-  (add-hook 'sgml-mode-hook 'emmet-mode))
 
 (external-package sly
   (setq inferior-lisp-program "sbcl")
