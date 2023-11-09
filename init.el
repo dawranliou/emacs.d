@@ -799,7 +799,20 @@ buffer name when eglot is enabled."
       (-kill-and-echo
        (format "%s/%s" (clojure-find-ns) (clojure-current-defun-name))))
     (keymap-set clojure-mode-map "C-c w" #'clojure-copy-ns-var)
-    (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)))
+    (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)
+
+    (with-eval-after-load 'project
+      (defun project-find-clojure-project (dir)
+        (when-let ((root (or (locate-dominating-file dir "project.clj")
+                             (locate-dominating-file dir "deps.edn"))))
+          (cons 'clojure-project root)))
+
+      (cl-defmethod project-root ((project (head clojure-project)))
+        (cdr project))
+
+      ;; (add-hook 'project-find-functions #'project-find-clojure-project)
+      ;; (remove-hook 'project-find-functions #'project-find-clojure-project)
+      )))
 
 (external-package clojure-ts-mode
   (with-eval-after-load 'clojure-ts-mode
