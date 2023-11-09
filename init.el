@@ -120,6 +120,7 @@
  '(echo-keystrokes 0.2)
  '(ediff-split-window-function #'split-window-horizontally)
  '(ediff-window-setup-function #'ediff-setup-windows-plain)
+ '(eglot-autoshutdown t)
  '(eglot-connect-timeout 600)
  '(eglot-events-buffer-size 0)
  '(electric-pair-mode t)
