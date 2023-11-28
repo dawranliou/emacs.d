@@ -246,7 +246,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(magit hide-mode-line cape breadcrumb jarchive dockerfile-mode docker pulsar clojure-ts-mode jinx groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode avy cider clojure-mode eglot embark flyspell go-mode helpful iedit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(dap-mode lsp-mode magit hide-mode-line cape breadcrumb jarchive dockerfile-mode docker pulsar clojure-ts-mode jinx groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode avy cider clojure-mode eglot embark flyspell go-mode helpful iedit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
  '(package-vc-selected-packages
    '((breadcrumb :vc-backend Git :url "https://github.com/joaotavora/breadcrumb")
      (clojure-ts-mode :vc-backend Git :url "https://github.com/clojure-emacs/clojure-ts-mode")))
