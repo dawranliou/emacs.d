@@ -963,6 +963,7 @@ buffer name when eglot is enabled."
   ;;   (keymap-global-set "<remap> <ispell-word>" #'jinx-correct))
   ;; (add-to-list 'vertico-multiform-categories
   ;;              '(jinx grid (vertico-grid-annotate . 25)))
+  (add-hook 'git-commit-setup-hook #'jinx-mode)
   )
 
 (external-package breadcrumb
