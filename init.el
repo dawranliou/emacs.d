@@ -162,14 +162,8 @@
  '(mode-line-compact 'long)
  '(mouse-wheel-flip-direction t)
  '(mouse-wheel-scroll-amount
-   '(2
-     ((shift)
-      . hscroll)
-     ((meta))
-     ((control meta)
-      . global-text-scale)
-     ((control)
-      . text-scale)))
+   '(2 ((shift) . hscroll) ((meta)) ((control meta) . global-text-scale)
+       ((control) . text-scale)))
  '(mouse-wheel-scroll-amount-horizontal 2)
  '(mouse-wheel-tilt-scroll t)
  '(next-error-message-highlight t)
@@ -179,34 +173,26 @@
  '(org-agenda-span 'day)
  '(org-agenda-start-with-log-mode t)
  '(org-agenda-time-grid
-   '((daily today require-timed)
-     (600 1600)
-     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+   '((daily today require-timed) (600 1600) " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
  '(org-agenda-window-setup 'current-window)
  '(org-attach-auto-tag "attachment")
  '(org-babel-load-languages '((emacs-lisp . t) (sql . t)))
  '(org-capture-templates
-   '(("t" "Todo" entry
-      (file+olp+datetree "~/org/journal/journal.org")
+   '(("t" "Todo" entry (file+olp+datetree "~/org/journal/journal.org")
       "* TODO %?\12SCHEDULED: %t\12" :clock-in t :clock-resume t :tree-type week)
-     ("p" "Project" entry
-      (file+olp "~/org/journal/journal.org" "Projects")
-      (file "~/.emacs.d/org-templates/project.org")
-      :clock-in t :clock-resume t)
-     ("j" "Journal" entry
-      (file+olp+datetree "~/org/journal/journal.org")
+     ("p" "Project" entry (file+olp "~/org/journal/journal.org" "Projects")
+      (file "~/.emacs.d/org-templates/project.org") :clock-in t :clock-resume t)
+     ("j" "Journal" entry (file+olp+datetree "~/org/journal/journal.org")
       "* %? %^G\12" :clock-in t :clock-keep t :tree-type week)
-     ("d" "Daily Review" entry
-      (file+olp+datetree "~/org/journal/journal.org")
-      (file "~/.emacs.d/org-templates/daily-review.org")
-      :immediate-finish t :clock-in t :clock-keep t :tree-type week)
-     ("i" "Check In" entry
-      (file+olp+datetree "~/org/journal/journal.org")
-      (file "~/.emacs.d/org-templates/check-in.org")
-      :immediate-finish t :clock-in t :clock-keep t :tree-type week)
-     ("m" "Meeting" entry
-      (file+olp+datetree "~/org/journal/journal.org")
-      "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
+     ("d" "Daily Review" entry (file+olp+datetree "~/org/journal/journal.org")
+      (file "~/.emacs.d/org-templates/daily-review.org") :immediate-finish t
+      :clock-in t :clock-keep t :tree-type week)
+     ("i" "Check In" entry (file+olp+datetree "~/org/journal/journal.org")
+      (file "~/.emacs.d/org-templates/check-in.org") :immediate-finish t
+      :clock-in t :clock-keep t :tree-type week)
+     ("m" "Meeting" entry (file+olp+datetree "~/org/journal/journal.org")
+      "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t
+      :clock-keep t :tree-type week)))
  '(org-clock-clocked-in-display nil)
  '(org-clock-clocktable-default-properties '(:maxlevel 4))
  '(org-cycle-separator-lines 2)
@@ -232,9 +218,7 @@
  '(org-src-window-setup 'current-window)
  '(org-startup-folded 'content)
  '(org-todo-keyword-faces
-   '(("NEXT" . "blue")
-     ("REVIEW" . "dark orange")
-     ("HOLD" . "purple")
+   '(("NEXT" . "blue") ("REVIEW" . "dark orange") ("HOLD" . "purple")
      ("CANCELLED" . "teal")))
  '(org-todo-keywords
    '((sequence "TODO(t@/)" "NEXT(n)" "REVIEW(r@/!)" "|" "DONE(d!)")
@@ -246,14 +230,34 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(dap-mode lsp-mode magit hide-mode-line cape breadcrumb jarchive dockerfile-mode docker pulsar clojure-ts-mode jinx groovy-mode dumb-jump clojure-ts-mode csv-mode which-key markdown-toc zig-mode lua-mode fennel-mode avy cider clojure-mode eglot embark flyspell go-mode helpful iedit markdown-mode orderless org rainbow-mode rg sly sqlformat vertico ws-butler yaml-mode))
+   '(avy breadcrumb cape cider clojure-mode clojure-ts-mode clojure-ts-mode
+         csv-mode dap-mode docker dockerfile-mode dumb-jump edit-indirect eglot
+         embark fennel-mode flyspell go-mode groovy-mode helpful hide-mode-line
+         iedit jarchive jinx lsp-mode lua-mode magit markdown-mode markdown-toc
+         orderless org pulsar rainbow-mode rg sly sqlformat vertico which-key
+         ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((breadcrumb :vc-backend Git :url "https://github.com/joaotavora/breadcrumb")
-     (clojure-ts-mode :vc-backend Git :url "https://github.com/clojure-emacs/clojure-ts-mode")))
+     (clojure-ts-mode :vc-backend Git :url
+                      "https://github.com/clojure-emacs/clojure-ts-mode")))
  '(pixel-scroll-precision-mode t)
  '(pulsar-face 'pulsar-blue)
  '(pulsar-pulse-functions
-   '(recenter-top-bottom move-to-window-line-top-bottom reposition-window bookmark-jump other-window delete-window delete-other-windows forward-page backward-page scroll-up-command scroll-down-command next-buffer previous-buffer windmove-right windmove-left windmove-up windmove-down windmove-swap-states-right windmove-swap-states-left windmove-swap-states-up windmove-swap-states-down tab-new tab-close tab-next org-next-visible-heading org-previous-visible-heading org-forward-heading-same-level org-backward-heading-same-level outline-backward-same-level outline-forward-same-level outline-next-visible-heading outline-previous-visible-heading outline-up-heading another-window))
+   '(recenter-top-bottom move-to-window-line-top-bottom reposition-window
+                         bookmark-jump other-window delete-window
+                         delete-other-windows forward-page backward-page
+                         scroll-up-command scroll-down-command next-buffer
+                         previous-buffer windmove-right windmove-left
+                         windmove-up windmove-down windmove-swap-states-right
+                         windmove-swap-states-left windmove-swap-states-up
+                         windmove-swap-states-down tab-new tab-close tab-next
+                         org-next-visible-heading org-previous-visible-heading
+                         org-forward-heading-same-level
+                         org-backward-heading-same-level
+                         outline-backward-same-level outline-forward-same-level
+                         outline-next-visible-heading
+                         outline-previous-visible-heading outline-up-heading
+                         another-window))
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
  '(repeat-mode t)
