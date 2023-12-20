@@ -759,8 +759,8 @@ reuse it's window, otherwise create new one."
   (keymap-substitute global-map #'shell-command #'with-editor-shell-command))
 
 (external-package eglot
-  (add-hook 'clojure-mode-hook 'eglot-ensure)
-  (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
+  ;; (add-hook 'clojure-mode-hook 'eglot-ensure)
+  ;; (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
   (add-hook 'go-mode-hook 'eglot-ensure)
   (add-hook 'go-ts-mode-hook 'eglot-ensure)
 
