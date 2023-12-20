@@ -780,8 +780,8 @@ buffer name when eglot is enabled."
                 #'xref-find-references-with-eglot)))
 
 (external-package jarchive
-  (add-hook 'clojure-mode-hook #'jarchive-setup)
-  (add-hook 'clojure-ts-mode-hook #'jarchive-setup))
+  (add-hook 'clojure-mode-hook #'jarchive-mode)
+  (add-hook 'clojure-ts-mode-hook #'jarchive-mode))
 
 (external-package dumb-jump
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
