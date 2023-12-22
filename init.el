@@ -155,6 +155,9 @@
  '(lazy-count-prefix-format nil)
  '(lazy-count-suffix-format " [%s/%s]")
  '(line-spacing 3)
+ '(lsp-headerline-breadcrumb-enable nil)
+ '(lsp-keymap-prefix "C-c l")
+ '(lsp-lens-enable nil)
  '(magit-diff-refine-hunk 'all)
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
  '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
@@ -233,9 +236,9 @@
    '(avy breadcrumb cape cider clojure-mode clojure-ts-mode clojure-ts-mode
          csv-mode dap-mode docker dockerfile-mode dumb-jump edit-indirect eglot
          embark fennel-mode flyspell go-mode groovy-mode helpful hide-mode-line
-         iedit jarchive jinx lsp-mode lua-mode magit markdown-mode markdown-toc
-         orderless org pulsar rainbow-mode rg sly sqlformat vertico which-key
-         ws-butler yaml-mode zig-mode))
+         iedit jarchive jinx lua-mode magit markdown-mode markdown-toc orderless
+         org pulsar rainbow-mode rg sly sqlformat vertico which-key ws-butler
+         yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((breadcrumb :vc-backend Git :url "https://github.com/joaotavora/breadcrumb")
      (clojure-ts-mode :vc-backend Git :url
@@ -978,6 +981,7 @@ buffer name when eglot is enabled."
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
+
 (provide 'init)
 
 ;;; init.el ends here
