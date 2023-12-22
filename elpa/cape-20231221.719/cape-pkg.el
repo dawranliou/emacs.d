@@ -1,7 +1,7 @@
-(define-package "cape" "20231215.1504" "Completion At Point Extensions"
+(define-package "cape" "20231221.719" "Completion At Point Extensions"
   '((emacs "27.1")
     (compat "29.1.4.2"))
-  :commit "28980853746d1a3215d73438031ddb3a692ba51a" :authors
+  :commit "c6fb8ca1ab6be0e42b396a7bbda9ba00fdd75a79" :authors
   '(("Daniel Mendler" . "mail@daniel-mendler.de"))
   :maintainers
   '(("Daniel Mendler" . "mail@daniel-mendler.de"))
