@@ -98,6 +98,8 @@
  '(auto-save-list-file-prefix "~/.emacs.d/var/auto-save/")
  '(backup-by-copying t)
  '(backup-directory-alist '(("." . "~/.emacs.d/var/backup/")))
+ '(browse-url-chrome-program
+   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
  '(calendar-mark-holidays-flag t)
  '(cider-eldoc-display-for-symbol-at-point nil)
  '(cider-repl-display-help-banner nil)
