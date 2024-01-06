@@ -337,7 +337,6 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-global-set "C-x j" #'duplicate-dwim)
 (keymap-global-set "C-M-r" #'raise-sexp)
 (keymap-global-set "C-M-d" #'down-list)
-(keymap-global-set "C-M-w" #'backward-kill-sexp)
 (keymap-global-set "C-M-<return>" #'newline-at-end-of-line)
 (keymap-global-set "C-S-t" #'scratch-buffer)
 (keymap-global-set "M-o" #'another-window)
