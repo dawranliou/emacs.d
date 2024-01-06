@@ -553,6 +553,15 @@ https://www.emacswiki.org/emacs/AlignCommands"
   (interactive "r")
   (shell-command-on-region beg end "shuf" t t))
 
+(defun display-ansi-colors (&optional beg end)
+  "Interpret ANSI color esacape sequence by colorifying cotent.
+Operate on selected region or whole buffer."
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end))
+     (list (point-min) (point-max))))
+  (ansi-color-apply-on-region beg end))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
