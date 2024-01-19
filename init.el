@@ -165,6 +165,7 @@
  '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
  '(make-backup-files t)
  '(mode-line-compact 'long)
+ '(modus-themes-mixed-fonts t)
  '(mouse-wheel-flip-direction t)
  '(mouse-wheel-scroll-amount
    '(2 ((shift) . hscroll) ((meta)) ((control meta) . global-text-scale)
