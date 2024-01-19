@@ -212,6 +212,9 @@
  '(org-indirect-buffer-display 'current-window)
  '(org-log-done 'time)
  '(org-log-into-drawer t)
+ '(org-modules
+   '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc
+             ol-mhe ol-rmail ol-w3m))
  '(org-outline-path-complete-in-steps nil)
  '(org-refile-allow-creating-parent-nodes 'confirm)
  '(org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
