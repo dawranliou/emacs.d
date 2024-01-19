@@ -49,6 +49,10 @@
                 (vertical-scroll-bars . nil)
                 (font           . "Iosevka-15")))
 
+(set-face-attribute 'default nil :family "Iosevka" :height 150)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 150 :weight 'semibold)
+(set-face-attribute 'variable-pitch nil :family "Go" :height 150 :weight 'regular)
+
 ;;; - UTF-8 everything
 
 (prefer-coding-system 'utf-8)

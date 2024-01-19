@@ -310,8 +310,9 @@
  ;; If there is more than one, they won't work right.
  '(eglot-highlight-symbol-face ((t (:inherit lazy-highlight))))
  '(elisp-shorthand-font-lock-face ((t (:inherit font-lock-keyword-face :weight bold))))
- '(fixed-pitch ((t (:family "Iosevka" :height 150))))
- '(variable-pitch ((t (:family "Sans Serif" :height 170)))))
+ '(org-block ((t (:inherit fixed-pitch :extend t))))
+ '(org-table ((t (:inherit fixed-pitch))))
+ '(org-verbatim ((t (:inherit fixed-pitch)))))
 
 (setq-default
  frame-title-format '("%n "              ; narrowed?
@@ -594,6 +595,7 @@ Operate on selected region or whole buffer."
 (ffap-bindings)
 
 (add-hook 'text-mode-hook 'visual-line-mode)
+(add-hook 'text-mode-hook #'variable-pitch-mode)
 
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
