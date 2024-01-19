@@ -311,6 +311,11 @@
  '(eglot-highlight-symbol-face ((t (:inherit lazy-highlight))))
  '(elisp-shorthand-font-lock-face ((t (:inherit font-lock-keyword-face :weight bold))))
  '(org-block ((t (:inherit fixed-pitch :extend t))))
+ '(org-checkbox ((t (:inherit (bold fixed-pitch)))))
+ '(org-date ((t (:inherit fixed-pitch :foreground "Purple" :underline t))))
+ '(org-drawer ((t (:inherit fixed-pitch :foreground "Blue1"))))
+ '(org-property-value ((t (:inherit fixed-pitch))))
+ '(org-special-keyword ((t (:inherit (font-lock-keyword-face fixed-pitch)))))
  '(org-table ((t (:inherit fixed-pitch))))
  '(org-verbatim ((t (:inherit fixed-pitch)))))
 
