@@ -600,7 +600,6 @@ Operate on selected region or whole buffer."
 (ffap-bindings)
 
 (add-hook 'text-mode-hook 'visual-line-mode)
-(add-hook 'text-mode-hook #'variable-pitch-mode)
 
 (with-eval-after-load 'dired
   ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
@@ -758,6 +757,8 @@ reuse it's window, otherwise create new one."
                    (,electric-pair-inhibit-predicate c)))))
 
 (add-hook 'org-mode-hook #'org-mode-setup)
+(add-hook 'org-mode-hook #'org-indent-mode)
+(add-hook 'org-mode-hook #'variable-pitch-mode)
 (add-hook 'org-mode-hook #'auto-fill-mode)
 (add-hook 'org-mode-hook #'toggle-truncate-lines)
 
@@ -931,7 +932,8 @@ buffer name when eglot is enabled."
     (keymap-set cider-mode-map "C-c C-j C-j" #'cider-eval-print-last-sexp)))
 
 (external-package markdown-mode
-  (add-hook 'markdown-mode-hook 'auto-fill-mode))
+  (add-hook 'markdown-mode-hook 'auto-fill-mode)
+  (add-hook 'markdown-mode-hook #'variable-pitch-mode))
 
 (external-package go-mode
   (with-eval-after-load 'project
