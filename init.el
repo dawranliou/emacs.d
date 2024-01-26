@@ -760,7 +760,6 @@ reuse it's window, otherwise create new one."
                    (,electric-pair-inhibit-predicate c)))))
 
 (add-hook 'org-mode-hook #'org-mode-setup)
-(add-hook 'org-mode-hook #'org-indent-mode)
 (add-hook 'org-mode-hook #'variable-pitch-mode)
 (add-hook 'org-mode-hook #'auto-fill-mode)
 (add-hook 'org-mode-hook #'toggle-truncate-lines)
