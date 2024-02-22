@@ -626,7 +626,9 @@ Operate on selected region or whole buffer."
 
 (with-eval-after-load 'compile
   (require 'ansi-color)
-  (ansi-color-for-comint-mode-filter))
+  (ansi-color-for-comint-mode-filter)
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
+  )
 
 (add-to-list 'auto-mode-alist
              '("\\.log\\'" . auto-revert-tail-mode))
