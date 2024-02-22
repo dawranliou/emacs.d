@@ -246,9 +246,8 @@
          orderless org pulsar rainbow-mode rg sly sqlformat vertico which-key
          ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
-   '((breadcrumb :vc-backend Git :url "https://github.com/joaotavora/breadcrumb")
-     (clojure-ts-mode :vc-backend Git :url
-                      "https://github.com/clojure-emacs/clojure-ts-mode")))
+   '((clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode"
+                      :vc-backend Git)))
  '(pixel-scroll-precision-mode t)
  '(pulsar-face 'pulsar-blue)
  '(pulsar-pulse-functions
