@@ -527,8 +527,8 @@ kill region instead"
 Use the filename relative to the current VC root directory."
   (interactive)
   (let* ((file-name (file-relative-name buffer-file-name (vc-root-dir)))
-	 (line-number (line-number-at-pos nil t))
-	 (location (format "%s:%s" file-name line-number)))
+         (line-number (line-number-at-pos nil t))
+         (location (format "%s:%s" file-name line-number)))
     (-kill-and-echo location)))
 
 (defun align-repeat (start end regexp)
@@ -657,17 +657,17 @@ Operate on selected region or whole buffer."
 (with-eval-after-load 'rect
   ;; https://gist.github.com/jdtsmith/bfa2d692c4fbbffe06b558e4bcf9abec
   (cl-loop for (key def) in
-	   '(("k" kill-rectangle)   	("t" string-rectangle)
-	     ("o" open-rectangle)   	("w" copy-rectangle-as-kill)
-	     ("y" yank-rectangle)   	("c" clear-rectangle)
-	     ("d" delete-rectangle) 	("N" rectangle-number-lines)
-	     (" " delete-whitespace-rectangle)
-	     ("=" calc-grab-sum-across) ("+" calc-grab-sum-down)
-	     ("#" calc-grab-rectangle)  ("n" set-mark-command)
-	     ("q" (lambda () (interactive) (deactivate-mark)))
-	     ("?" (lambda () (interactive)
+           '(("k" kill-rectangle)       ("t" string-rectangle)
+             ("o" open-rectangle)       ("w" copy-rectangle-as-kill)
+             ("y" yank-rectangle)       ("c" clear-rectangle)
+             ("d" delete-rectangle)     ("N" rectangle-number-lines)
+             (" " delete-whitespace-rectangle)
+             ("=" calc-grab-sum-across) ("+" calc-grab-sum-down)
+             ("#" calc-grab-rectangle)  ("n" set-mark-command)
+             ("q" (lambda () (interactive) (deactivate-mark)))
+             ("?" (lambda () (interactive)
                     (embark-bindings-in-keymap rectangle-mark-mode-map))))
-	   do (define-key rectangle-mark-mode-map key def)))
+           do (define-key rectangle-mark-mode-map key def)))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
