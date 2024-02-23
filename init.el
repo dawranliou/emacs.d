@@ -578,10 +578,10 @@ Operate on selected region or whole buffer."
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta
-        mac-option-modifier 'meta       ; Backup meta key
+        mac-option-modifier 'super
         trash-directory "~/.Trash"
         insert-directory-program "/usr/local/bin/gls"
-        dired-listing-switches "-aFGhlv --group-directories-first"))
+        dired-listing-switches "-aFghl"))
 
 ;;; Theme
 
