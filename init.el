@@ -679,18 +679,7 @@ Operate on selected region or whole buffer."
   (setq completion-category-defaults nil))
 
 (external-package vertico
-  (vertico-mode)
-
-  ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
-  (advice-add #'vertico--format-candidate :around
-              (lambda (orig cand prefix suffix index start)
-                (ignore start)
-                (setq cand (funcall orig cand prefix suffix index start))
-                (concat
-                 (if (= vertico--index index)
-                     (propertize "» " 'face 'vertico-current)
-                   "  ")
-                 cand))))
+  (vertico-mode))
 
 ;; https://github.com/minad/cape
 (defun capf-complete-filename ()
