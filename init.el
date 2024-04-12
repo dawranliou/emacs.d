@@ -299,7 +299,7 @@
  '(tramp-default-method "ssh")
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)
- '(uniquify-buffer-name-style 'forward nil (uniquify))
+ '(uniquify-buffer-name-style 'post-forward-angle-brackets nil (uniquify))
  '(version-control t)
  '(visible-bell nil)
  '(word-wrap t)
