@@ -105,6 +105,7 @@
  '(cider-repl-display-help-banner nil)
  '(cider-repl-display-in-current-window nil)
  '(cider-repl-pop-to-buffer-on-connect 'display-only)
+ '(cider-test-fail-fast nil)
  '(cider-xref-fn-depth 90)
  '(clojure-toplevel-inside-comment-form t)
  '(column-number-mode t)
