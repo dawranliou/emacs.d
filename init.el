@@ -108,8 +108,8 @@
  '(cider-xref-fn-depth 90)
  '(clojure-toplevel-inside-comment-form t)
  '(column-number-mode t)
- '(completion-category-overrides '((file (styles basic orderless))))
- '(completion-styles '(orderless))
+ '(completion-category-overrides '((file (styles partial-completion))))
+ '(completion-styles '(orderless basic))
  '(context-menu-mode t)
  '(custom-safe-themes
    '("14436a10b0cb5b7b6e6f6d490a08c1a751ad0384e9b124b9b8d5d554129f5571" default))
@@ -157,6 +157,7 @@
  '(lazy-count-prefix-format nil)
  '(lazy-count-suffix-format " [%s/%s]")
  '(line-spacing 3)
+ '(lsp-completion-provider :none)
  '(lsp-headerline-breadcrumb-enable nil)
  '(lsp-keymap-prefix "C-c l")
  '(lsp-lens-enable nil)
@@ -240,7 +241,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(avy breadcrumb cape cider clojure-mode clojure-ts-mode clojure-ts-mode
+   '(avy breadcrumb cape cider clojure-mode clojure-ts-mode clojure-ts-mode corfu
          csv-mode dap-mode docker dockerfile-mode dumb-jump edit-indirect eglot
          embark fennel-mode flyspell go-mode groovy-mode helpful hide-mode-line
          iedit jarchive jinx lsp-mode lua-mode magit markdown-mode markdown-toc
@@ -431,23 +432,25 @@ This function is designed to be called from `kill-buffer-query-functions'."
   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
     (find-file (completing-read "Find recent file: " files nil t))))
 
-(defun completing-read-at-point (start end col &optional pred)
-  "Inspired by https://github.com/katspaugh/ido-at-point"
-  (if (minibufferp) (completion--in-region start end col pred)
-    (let* ((init (buffer-substring-no-properties start end))
-           (all (completion-all-completions init col pred (length init)))
-           (completion (cond
-                        ((atom all) nil)
-                        ((and (consp all) (atom (cdr all))) (car all))
-                        (t (completing-read "Completions: " col pred t init)))))
-      (if completion
-          (progn
-            (delete-region start end)
-            (insert completion)
-            t)
-        (message "No completions") nil))))
-
-(setq completion-in-region-function #'completing-read-at-point)
+;; This is replaced by corfu.  It's not working with lsp-mode ATM.
+;;
+;; (defun completing-read-at-point (start end col &optional pred)
+;;   "Inspired by https://github.com/katspaugh/ido-at-point"
+;;   (if (minibufferp) (completion--in-region start end col pred)
+;;     (let* ((init (buffer-substring-no-properties start end))
+;;            (all (completion-all-completions init col pred (length init)))
+;;            (completion (cond
+;;                         ((atom all) nil)
+;;                         ((and (consp all) (atom (cdr all))) (car all))
+;;                         (t (completing-read "Completions: " col pred t init)))))
+;;       (if completion
+;;           (progn
+;;             (delete-region start end)
+;;             (insert completion)
+;;             t)
+;;         (message "No completions") nil))))
+;;
+;; (setq completion-in-region-function #'completing-read-at-point)
 
 (defun move-beginning-of-line+ (arg)
   "Move point to beginning of current line or the first non whitespace char."
@@ -780,8 +783,8 @@ reuse it's window, otherwise create new one."
 (external-package eglot
   ;; (add-hook 'clojure-mode-hook 'eglot-ensure)
   ;; (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
-  (add-hook 'go-mode-hook 'eglot-ensure)
-  (add-hook 'go-ts-mode-hook 'eglot-ensure)
+  ;; (add-hook 'go-mode-hook 'eglot-ensure)
+  ;; (add-hook 'go-ts-mode-hook 'eglot-ensure)
 
   (with-eval-after-load 'eglot
     (keymap-set eglot-mode-map "C-c e" #'eglot-code-actions)
@@ -928,6 +931,8 @@ buffer name when eglot is enabled."
   (add-hook 'markdown-mode-hook 'auto-fill-mode)
   (add-hook 'markdown-mode-hook #'variable-pitch-mode))
 
+;; Go lang
+;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
 (external-package go-mode
   (with-eval-after-load 'project
     (defun project-find-go-module (dir)
@@ -939,7 +944,65 @@ buffer name when eglot is enabled."
 
     (add-hook 'project-find-functions #'project-find-go-module))
 
-  (add-hook 'before-save-hook #'gofmt-before-save))
+  (defun before-save-go-mode ()
+    (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
+
+  (remove-hook 'go-mode-hook #'before-save-go-mode)
+  (remove-hook 'go-ts-mode-hook #'before-save-go-mode))
+
+(external-package lsp-mode
+  (defun corfu-lsp-setup ()
+    "For issue https://github.com/emacs-lsp/lsp-mode/issues/2970"
+    (setq-local completion-category-defaults nil))
+  (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
+  (add-hook 'go-mode-hook #'lsp)
+  (add-hook 'go-ts-mode-hook #'lsp)
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer -10 t)
+    (add-hook 'before-save-hook #'lsp-organize-imports -10 t))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  (add-hook 'go-ts-mode-hook #'lsp-go-install-save-hooks)
+
+  (external-package dap-mode
+    (add-hook 'dap-stopped-hook
+              (lambda (arg) (call-interactively #'dap-hydra)))
+    (with-eval-after-load 'dap-mode
+      (require 'dap-dlv-go)))
+
+  ;; https://github.com/minad/corfu/wiki#advanced-example-configuration-with-orderless
+  (defun orderless-dispatch-flex-first (_pattern index _total)
+    (and (eq index 0) 'orderless-flex))
+
+  (defun lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless))
+    (add-hook 'orderless-style-dispatchers #'orderless-dispatch-flex-first nil 'local)
+    (setq-local completion-at-point-functions
+                (list (cape-capf-buster #'lsp-completion-at-point))))
+
+  (add-hook 'lsp-completion-mode-hook #'lsp-mode-setup-completion))
+
+(external-package corfu
+  (global-corfu-mode)
+  (keymap-set corfu-map "SPC" #'corfu-insert-separator)
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer."
+    (when (local-variable-p 'completion-at-point-functions)
+      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                  corfu-popupinfo-delay nil)
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+  ;; (defun corfu-move-to-minibuffer ()
+  ;;   (interactive)
+  ;;   (pcase completion-in-region--data
+  ;;     (`(,beg ,end ,table ,pred ,extras)
+  ;;      (let ((completion-extra-properties extras)
+  ;;            completion-cycle-threshold completion-cycling)
+  ;;        (completing-read-at-point beg end table pred)))))
+  ;; (keymap-unset corfu-map "M-m")
+  ;; (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer)
+  )
 
 (external-package flyspell
   (with-eval-after-load 'flyspell
