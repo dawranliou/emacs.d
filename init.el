@@ -740,9 +740,7 @@ reuse it's window, otherwise create new one."
 
 (external-package ws-butler
   (add-hook 'prog-mode-hook 'ws-butler-mode)
-  (add-hook 'text-mode-hook 'ws-butler-mode)
-  (custom-set-variables
-   '(ws-butler-keep-whitespace-before-point nil)))
+  (add-hook 'text-mode-hook 'ws-butler-mode))
 
 (external-package iedit
   (keymap-global-set "C-;" 'iedit-mode))
