@@ -111,6 +111,7 @@
  '(column-number-mode t)
  '(completion-category-overrides '((file (styles partial-completion))))
  '(completion-styles '(orderless basic))
+ '(confirm-kill-emacs 'yes-or-no-p)
  '(context-menu-mode t)
  '(custom-safe-themes
    '("14436a10b0cb5b7b6e6f6d490a08c1a751ad0384e9b124b9b8d5d554129f5571" default))
