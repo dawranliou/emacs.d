@@ -254,6 +254,7 @@
    '((clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode"
                       :vc-backend Git)))
  '(pixel-scroll-precision-mode t)
+ '(project-vc-extra-root-markers '(".project"))
  '(pulsar-face 'pulsar-blue)
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
