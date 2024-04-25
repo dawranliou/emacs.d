@@ -255,22 +255,6 @@
                       :vc-backend Git)))
  '(pixel-scroll-precision-mode t)
  '(pulsar-face 'pulsar-blue)
- '(pulsar-pulse-functions
-   '(recenter-top-bottom move-to-window-line-top-bottom reposition-window
-                         bookmark-jump other-window delete-window
-                         delete-other-windows forward-page backward-page
-                         scroll-up-command scroll-down-command next-buffer
-                         previous-buffer windmove-right windmove-left
-                         windmove-up windmove-down windmove-swap-states-right
-                         windmove-swap-states-left windmove-swap-states-up
-                         windmove-swap-states-down tab-new tab-close tab-next
-                         org-next-visible-heading org-previous-visible-heading
-                         org-forward-heading-same-level
-                         org-backward-heading-same-level
-                         outline-backward-same-level outline-forward-same-level
-                         outline-next-visible-heading
-                         outline-previous-visible-heading outline-up-heading
-                         another-window))
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
  '(repeat-mode t)
@@ -1062,6 +1046,9 @@ buffer name when eglot is enabled."
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
+
+(external-package pulsar
+  (pulsar-global-mode))
 
 (provide 'init)
 
