@@ -573,7 +573,7 @@ Operate on selected region or whole buffer."
         mac-option-modifier 'super
         trash-directory "~/.Trash"
         insert-directory-program "/usr/local/bin/gls"
-        dired-listing-switches "-aFghl"))
+        dired-listing-switches "-aFghlv --group-directories-first"))
 
 ;;; Theme
 
