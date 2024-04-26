@@ -673,23 +673,6 @@ Operate on selected region or whole buffer."
 (external-package vertico
   (vertico-mode))
 
-;; https://github.com/minad/cape
-(defun capf-complete-filename ()
-  "Complete filename at point"
-  (let* ((bounds (or (bounds-of-thing-at-point 'filename)
-                     (cons (point) (point))))
-         (file (buffer-substring (car bounds) (cdr bounds))))
-    (when (and (string-match-p "/" file)
-               (file-exists-p (file-name-directory file)))
-      `(,(car bounds) ,(cdr bounds) ,#'read-file-name-internal
-        ,@(and (not (equal file "/")) (string-suffix-p "/" file)
-               '(:company-prefix-length t))
-        :exclusive no
-        :annotation-function (lambda (s) (if (string-suffix-p "/" s) " Folder" " File"))
-        :company-kind (lambda (s) (if (string-suffix-p "/" s) 'folder 'file))))))
-
-(add-to-list 'completion-at-point-functions #'capf-complete-filename)
-
 (external-package embark
   (keymap-global-set "C-." #'embark-act)
   (keymap-global-set "C-h B" #'embark-bindings)
