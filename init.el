@@ -368,8 +368,6 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-set window-prefix-map "S" #'window-toggle-side-windows) ; Was "s" but rarely used
 (keymap-set window-prefix-map "s" #'toggle-window-split)
 (keymap-set window-prefix-map "t" #'window-swap-states) ; aka transpose windows
-(keymap-set ctl-x-map "2" #'split-and-goto-window-below)
-(keymap-set ctl-x-map "3" #'split-and-goto-window-right)
 
 ;;; Aliases
 
@@ -529,16 +527,6 @@ https://www.emacswiki.org/emacs/AlignCommands"
   (interactive "r\nsAlign regexp: ")
   (align-regexp start end
                 (concat "\\(\\s-*\\)" regexp) 1 1 t))
-
-(defun split-and-goto-window-below ()
-  (interactive)
-  (call-interactively #'split-window-below)
-  (other-window 1))
-
-(defun split-and-goto-window-right ()
-  (interactive)
-  (call-interactively #'split-window-right)
-  (other-window 1))
 
 (defun simple-http-server ()
   "Starts a simple http server."
