@@ -249,8 +249,8 @@
          csv-mode dap-mode docker dockerfile-mode dumb-jump edit-indirect eglot
          embark fennel-mode flyspell go-mode groovy-mode helpful hide-mode-line
          iedit jarchive jinx lsp-mode lua-mode magit markdown-mode markdown-toc
-         orderless org pulsar rainbow-mode rg sly sqlformat vertico which-key
-         ws-butler yaml-mode zig-mode))
+         ob-restclient orderless org pulsar rainbow-mode restclient rg sly
+         sqlformat verb vertico which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode"
                       :vc-backend Git)))
