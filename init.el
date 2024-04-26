@@ -757,7 +757,9 @@ buffer name when eglot is enabled."
         (apply orig-fun args)))
 
     (advice-add 'xref-find-references :around
-                #'xref-find-references-with-eglot)))
+                #'xref-find-references-with-eglot)
+
+    (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)))
 
 (external-package jarchive
   (add-hook 'clojure-mode-hook #'jarchive-mode)
@@ -1016,9 +1018,11 @@ buffer name when eglot is enabled."
   (add-hook 'prog-mode-hook #'breadcrumb-local-mode))
 
 (external-package cape
-  (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-keyword))
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+
+  (keymap-global-set "C-c e" #'cape-emoji))
 
 (external-package pulsar
   (pulsar-global-mode))
