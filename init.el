@@ -245,12 +245,13 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(avy breadcrumb cape cider clojure-mode clojure-ts-mode clojure-ts-mode corfu
-         csv-mode dap-mode docker dockerfile-mode dumb-jump edit-indirect eglot
-         embark fennel-mode flyspell go-mode groovy-mode helpful hide-mode-line
-         iedit jarchive jinx lsp-mode lua-mode magit markdown-mode markdown-toc
-         ob-restclient orderless org pulsar rainbow-mode restclient rg sly
-         sqlformat verb vertico which-key ws-butler yaml-mode zig-mode))
+   '(avy breadcrumb cape casual-dired cider clojure-mode clojure-ts-mode
+         clojure-ts-mode corfu csv-mode dap-mode docker dockerfile-mode
+         dumb-jump edit-indirect eglot embark fennel-mode flyspell go-mode
+         groovy-mode helpful hide-mode-line iedit jarchive jinx lsp-mode
+         lua-mode magit markdown-mode markdown-toc ob-restclient orderless org
+         pulsar rainbow-mode restclient rg sly sqlformat verb vertico which-key
+         ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode"
                       :vc-backend Git)))
@@ -1026,6 +1027,9 @@ buffer name when eglot is enabled."
 
 (external-package pulsar
   (pulsar-global-mode))
+
+(external-package casual-dired
+  (keymap-set dired-mode-map "C-o" #'casual-dired-tmenu))
 
 (provide 'init)
 
