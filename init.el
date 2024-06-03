@@ -127,6 +127,7 @@
  '(eglot-autoshutdown t)
  '(eglot-connect-timeout 600)
  '(eglot-events-buffer-size 0)
+ '(eglot-extend-to-xref t)
  '(electric-pair-mode t)
  '(enable-recursive-minibuffers t)
  '(erc-auto-query 'bury)
@@ -748,6 +749,8 @@ reuse it's window, otherwise create new one."
   ;; (add-hook 'go-ts-mode-hook 'eglot-ensure)
 
   (with-eval-after-load 'eglot
+    (fset #'jsonrpc--log-event #'ignored) ; massive perf boost---don't log every event
+
     (keymap-set eglot-mode-map "C-c e" #'eglot-code-actions)
     (defun xref-find-references-with-eglot (orig-fun &rest args)
       "An advice function that gives xref-find-definitions a unique
@@ -762,7 +765,18 @@ buffer name when eglot is enabled."
     (advice-add 'xref-find-references :around
                 #'xref-find-references-with-eglot)
 
-    (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)))
+    (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+
+    (defun eglot-disable-in-cider ()
+      (when (eglot-managed-p)
+        (if (bound-and-true-p cider-mode)
+            (progn
+              (remove-hook 'completion-at-point-functions 'eglot-completion-at-point)
+              (remove-hook 'xref-backend-functions 'eglot-xref-backend))
+          (add-hook 'completion-at-point-functions 'eglot-completion-at-point nil t)
+          (add-hook 'xref-backend-functions 'eglot-xref-backend))))
+    (add-hook 'cider-mode-hook #'eglot-disable-in-cider)
+    (add-hook 'eglot-managed-mode-hook #'eglot-disable-in-cider)))
 
 (external-package jarchive
   (add-hook 'clojure-mode-hook #'jarchive-mode)
