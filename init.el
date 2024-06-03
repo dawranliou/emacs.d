@@ -983,6 +983,7 @@ buffer name when eglot is enabled."
 
 (external-package corfu
   (global-corfu-mode)
+  (add-hook 'corfu-mode-hook #'corfu-popupinfo-mode)
   (keymap-set corfu-map "SPC" #'corfu-insert-separator)
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer."
