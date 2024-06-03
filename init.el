@@ -363,6 +363,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-global-set "M-Z" #'zap-to-char)
 (keymap-global-set "<remap> <dabbrev-expand>" #'hippie-expand) ; M-/
 (keymap-global-set "M-z" #'zap-up-to-char)
+(keymap-global-set "C-c C" #'compile)
 (keymap-global-set "C-c d" #'find-config)
 (keymap-global-set "C-c t t" #'load-one-theme)
 (keymap-global-set "C-c t w" #'whitespace-mode)
