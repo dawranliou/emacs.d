@@ -702,18 +702,18 @@ Operate on selected region or whole buffer."
 (external-package avy
   (keymap-global-set "M-j" 'avy-goto-char-timer)
 
-  ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
-  ;; candidate you select. https://github.com/ebittleman/emacs-bedrock
   (with-eval-after-load 'avy
-    (setf (alist-get ?. avy-dispatch-alist)
-          (defun avy-action-embark (pt)
-            (unwind-protect
-                (save-excursion
-                  (goto-char pt)
-                  (embark-act))
-              (select-window
-               (cdr (ring-ref avy-ring 0)))
-              t)))))
+    ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
+    ;; candidate you select. https://github.com/ebittleman/emacs-bedrock
+    (defun avy-action-embark (pt)
+      (unwind-protect
+          (save-excursion
+            (goto-char pt)
+            (embark-act))
+        (select-window
+         (cdr (ring-ref avy-ring 0)))
+        t))
+    (setf (alist-get ?. avy-dispatch-alist) #'avy-action-embark)))
 
 (external-package helpful
   ;; Remap standard commands.
