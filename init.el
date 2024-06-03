@@ -292,6 +292,7 @@
  '(uniquify-buffer-name-style 'post-forward-angle-brackets nil (uniquify))
  '(version-control t)
  '(visible-bell nil)
+ '(wgrep-auto-save-buffer t)
  '(word-wrap t)
  '(ws-butler-keep-whitespace-before-point nil)
  '(x-stretch-cursor t)
