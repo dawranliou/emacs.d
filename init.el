@@ -303,6 +303,7 @@
  '(version-control t)
  '(visible-bell nil)
  '(wgrep-auto-save-buffer t)
+ '(which-key-mode t)
  '(word-wrap t)
  '(ws-butler-keep-whitespace-before-point nil)
  '(x-stretch-cursor t)
