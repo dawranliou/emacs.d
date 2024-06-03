@@ -138,6 +138,7 @@
  '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
  '(global-so-long-mode t)
  '(grep-find-command '("rg -n -H --no-heading -e ''" . 27))
+ '(groovy-indent-offset 2)
  '(helpful-switch-buffer-function #'helpful-switch-to-buffer)
  '(history-length 20000)
  '(hscroll-margin 2)
