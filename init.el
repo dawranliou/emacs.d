@@ -713,7 +713,15 @@ Operate on selected region or whole buffer."
         (select-window
          (cdr (ring-ref avy-ring 0)))
         t))
-    (setf (alist-get ?. avy-dispatch-alist) #'avy-action-embark)))
+
+    (defun avy-action-exchange (pt)
+      "Exchange sexp at PT with the one at point."
+      (set-mark pt)
+      (transpose-sexps 0)
+      (pulsar-pulse-line))
+
+    (setf (alist-get ?. avy-dispatch-alist) #'avy-action-embark)
+    (setf (alist-get ?e avy-dispatch-alist) #'avy-action-exchange)))
 
 (external-package helpful
   ;; Remap standard commands.
