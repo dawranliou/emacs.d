@@ -94,6 +94,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-revert-avoid-polling t)
+ '(auto-revert-check-vc-info t)
  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/var/auto-save" t)))
  '(auto-save-list-file-prefix "~/.emacs.d/var/auto-save/")
  '(backup-by-copying t)
