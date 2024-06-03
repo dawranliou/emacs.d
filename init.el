@@ -378,10 +378,10 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-substitute global-map #'eval-expression #'pp-eval-expression) ; M-:
 (keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
 (keymap-set emacs-lisp-mode-map "C-c C-j" #'eval-print-last-sexp)
-(global-set-key [remap move-beginning-of-line] 'move-beginning-of-line+) ; C-a
+(keymap-global-set "<remap> <move-beginning-of-line>" 'move-beginning-of-line+) ; C-a
 (keymap-global-set "C-c r" #'recentf-open-files+)
 (keymap-global-set "C-w" #'backward-kill-word-or-region)
-(global-set-key (kbd "M-q") #'fill-or-unfill) ; M-q
+(keymap-global-set "M-q" #'fill-or-unfill) ; M-q
 (keymap-set window-prefix-map "S" #'window-toggle-side-windows) ; Was "s" but rarely used
 (keymap-set window-prefix-map "s" #'toggle-window-split)
 (keymap-set window-prefix-map "t" #'window-swap-states) ; aka transpose windows
@@ -762,7 +762,7 @@ reuse it's window, otherwise create new one."
 (keymap-global-set "C-c a" #'org-agenda)
 (keymap-global-set "C-c b" #'org-switchb)
 (keymap-global-set "C-c g" #'org-clock-goto)
-(global-set-key (kbd "C-c c") #'org-capture)
+(keymap-global-set "C-c c" #'org-capture)
 
 (with-eval-after-load 'org
   (keymap-set org-mode-map "C-," nil)
