@@ -250,7 +250,7 @@
  '(package-selected-packages
    '(avy breadcrumb cape casual-dired cider clojure-mode clojure-ts-mode
          clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode
-         dumb-jump edit-indirect eglot embark embark-consult fennel-mode
+         dumb-jump eat edit-indirect eglot embark embark-consult fennel-mode
          flyspell go-mode groovy-mode helpful hide-mode-line iedit jarchive jinx
          lsp-mode lua-mode magit marginalia markdown-mode markdown-toc
          ob-restclient orderless org pulsar rainbow-mode restclient rg sly
@@ -810,6 +810,11 @@ buffer name when eglot is enabled."
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (with-eval-after-load 'xref
     (setq xref-show-definitions-function #'xref-show-definitions-completing-read)))
+
+(external-package eat
+  (with-eval-after-load 'eshell
+    (add-hook 'eshell-first-time-mode-hook #'eat-eshell-visual-command-mode)
+    (add-hook 'eshell-first-time-mode-hook #'eat-eshell-mode)))
 
 ;;; Language major modes
 
