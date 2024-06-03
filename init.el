@@ -169,6 +169,7 @@
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
  '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
  '(make-backup-files t)
+ '(marginalia-mode t)
  '(mode-line-compact 'long)
  '(modus-themes-mixed-fonts t)
  '(mouse-wheel-flip-direction t)
@@ -251,9 +252,9 @@
          clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode
          dumb-jump edit-indirect eglot embark embark-consult fennel-mode
          flyspell go-mode groovy-mode helpful hide-mode-line iedit jarchive jinx
-         lsp-mode lua-mode magit markdown-mode markdown-toc ob-restclient
-         orderless org pulsar rainbow-mode restclient rg sly sqlformat verb
-         vertico which-key ws-butler yaml-mode zig-mode))
+         lsp-mode lua-mode magit marginalia markdown-mode markdown-toc
+         ob-restclient orderless org pulsar rainbow-mode restclient rg sly
+         sqlformat verb vertico which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode"
                       :vc-backend Git)))
