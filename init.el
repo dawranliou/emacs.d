@@ -161,7 +161,7 @@
  '(line-spacing 3)
  '(lsp-completion-provider :none)
  '(lsp-headerline-breadcrumb-enable nil)
- '(lsp-keymap-prefix "C-c l")
+ '(lsp-keymap-prefix "C-c C-l")
  '(lsp-lens-enable nil)
  '(magit-diff-refine-hunk 'all)
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
