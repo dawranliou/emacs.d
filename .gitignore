@@ -30,3 +30,5 @@
 *.signed
 /elpa/gnupg/
 *.dylib
+/.dap-breakpoints
+/dap-ui-repl-go-history
