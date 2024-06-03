@@ -1031,7 +1031,8 @@ buffer name when eglot is enabled."
   (pulsar-global-mode))
 
 (external-package casual-dired
-  (keymap-set dired-mode-map "C-o" #'casual-dired-tmenu))
+  (with-eval-after-load 'dired
+    (keymap-set dired-mode-map "C-o" #'casual-dired-tmenu)))
 
 (provide 'init)
 
