@@ -248,7 +248,7 @@
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
    '(avy breadcrumb cape casual-dired cider clojure-mode clojure-ts-mode
-         clojure-ts-mode corfu csv-mode dap-mode docker dockerfile-mode
+         clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode
          dumb-jump edit-indirect eglot embark fennel-mode flyspell go-mode
          groovy-mode helpful hide-mode-line iedit jarchive jinx lsp-mode
          lua-mode magit markdown-mode markdown-toc ob-restclient orderless org
@@ -675,6 +675,16 @@ Operate on selected region or whole buffer."
   (autoload #'embark-next-symbol "embark" nil t)
   (autoload #'embark-previous-symbol "embark" nil t)
   (setq prefix-help-command #'embark-prefix-help-command))
+
+(external-package consult
+  (keymap-global-set "C-x b" #'consult-buffer) ; was #'switch-to-buffer
+  (keymap-global-set "M-y" #'consult-yank-pop) ; was #'yank-pop
+  (keymap-global-set "M-s r" #'consult-ripgrep)
+  (keymap-global-set "M-s l" #'consult-line)
+  (keymap-global-set "M-s L" #'consult-line-multi)
+  (keymap-global-set "M-s o" #'consult-outline) ; was #'occur
+  ;; (keymap-set isearch-mode-map "M-E" #'consult-isearch-history)
+  )
 
 (external-package avy
   (keymap-global-set "M-j" 'avy-goto-char-timer)
