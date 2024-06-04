@@ -50,10 +50,9 @@
 
 (setq-default default-frame-alist
               '((tool-bar-lines . 0)
-                ;; (width          . 100)
-                ;; (width . 130)
+                (width . 85)
                 (vertical-scroll-bars . nil)
-                (font           . "Iosevka-14")))
+                (font . "Iosevka-14")))
 
 (set-face-attribute 'default nil :family "Iosevka" :height 140)
 (set-face-attribute 'fixed-pitch nil :family "Iosevka" :height 140 :weight 'semibold)
