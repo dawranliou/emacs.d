@@ -121,6 +121,7 @@
  '(completions-group t)
  '(completions-max-height 20)
  '(confirm-kill-emacs 'yes-or-no-p)
+ '(consult-narrow-key "<")
  '(context-menu-mode t)
  '(custom-safe-themes
    '("14436a10b0cb5b7b6e6f6d490a08c1a751ad0384e9b124b9b8d5d554129f5571" default))
@@ -307,7 +308,9 @@
  '(word-wrap t)
  '(ws-butler-keep-whitespace-before-point nil)
  '(x-stretch-cursor t)
- '(xref-search-program 'ripgrep))
+ '(xref-search-program 'ripgrep)
+ '(xref-show-definitions-function 'consult-xref)
+ '(xref-show-xrefs-function 'consult-xref))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -690,13 +693,67 @@ Operate on selected region or whole buffer."
   (setq prefix-help-command #'embark-prefix-help-command))
 
 (external-package consult
+  ;; mode specific
+  (keymap-global-set "C-c M-x" #'consult-mode-command)
+  (keymap-global-set "C-c h" #'consult-history)
+  (keymap-global-set "C-c k" #'consult-kmacro)
+  (keymap-global-set "C-c m" #'consult-man)
+  (keymap-global-set "C-c i" #'consult-info)
+  (keymap-global-set "<remap> <Info-search>" #'consult-info)
+
+  ;; ctl-x-map
+  (keymap-global-set "C-x M-:" #'consult-complex-command)
   (keymap-global-set "C-x b" #'consult-buffer) ; was #'switch-to-buffer
+  (keymap-global-set "C-x 4 b" #'consult-buffer-other-window) ; was switch-to-buffer-other-window
+  (keymap-global-set "C-x 5 b" #'consult-buffer-other-frame)  ; was switch-to-buffer-other-frame
+  (keymap-global-set "C-x t b" #'consult-buffer-other-tab)    ; was switch-to-buffer-other-tab
+  (keymap-global-set "C-x r b" #'consult-bookmark) ; was #'bookmark-jump
+  (keymap-global-set "C-x p b" #'consult-project-buffer) ; was #'project-switch-to-buffer
+
+  ;; other
   (keymap-global-set "M-y" #'consult-yank-pop) ; was #'yank-pop
+
+  ;; goto-map
+  (keymap-global-set "M-g e" #'consult-compile-error)
+  (keymap-global-set "M-g f" #'consult-flymake)
+  (keymap-global-set "M-g g" #'consult-goto-line) ; was goto-line
+  (keymap-global-set "M-g M-g" #'consult-goto-line) ; was goto-line
+  (keymap-global-set "M-g o" #'consult-outline)     ; Alternative: consult-org-heading
+  (keymap-global-set "M-g m" #'consult-mark)
+  (keymap-global-set "M-g k" #'consult-global-mark)
+  (keymap-global-set "M-g i" #'consult-imenu) ; was imenu
+  (keymap-global-set "M-g I" #'consult-imenu-multi) ; was imenu
+
+  ;; search-map
+  (keymap-global-set "M-s d" #'consult-find) ; Alternative: consult-fd
+  (keymap-global-set "M-s c" #'consult-locate)
+  (keymap-global-set "M-s g" #'consult-grep)
+  (keymap-global-set "M-s G" #'consult-git-grep)
   (keymap-global-set "M-s r" #'consult-ripgrep)
   (keymap-global-set "M-s l" #'consult-line)
   (keymap-global-set "M-s L" #'consult-line-multi)
-  (keymap-global-set "M-s o" #'consult-outline) ; was #'occur
-  ;; (keymap-set isearch-mode-map "M-E" #'consult-isearch-history)
+  (keymap-global-set "M-s k" #'consult-keep-lines)
+  (keymap-global-set "M-s u" #'consult-focus-lines)
+  (keymap-global-set "M-s e" #'consult-isearch-history)
+
+  ;; isearch integration
+  (keymap-set isearch-mode-map "M-e" #'consult-isearch-history) ; was isearch-edit-string
+  (keymap-set isearch-mode-map "M-s e" #'consult-isearch-history) ; was isearch-edit-string
+  (keymap-set isearch-mode-map "M-s l" #'consult-line) ; needed by consult-line to detect isearch
+  (keymap-set isearch-mode-map "M-s L" #'consult-line-multi) ; needed by consult-line to detect isearh
+
+  ;; minibuffer history
+  (keymap-set minibuffer-local-map "M-s" #'consult-history) ; was #'next-matching-history-element
+  (keymap-set minibuffer-local-map "M-r" #'consult-history) ; was #'previous-matching-history-element
+
+  (with-eval-after-load 'consult
+    (consult-customize
+     consult-theme :preview-key '(:debounce 0.2 any)
+     consult-ripgrep consult-git-grep consult-grep
+     consult-bookmark consult-recent-file consult-xref
+     consult--source-bookmark consult--source-file-register
+     consult--source-recent-file consult--source-project-recent-file
+     :preview-key '(:debounce 0.4 any)))
   )
 
 (external-package avy
