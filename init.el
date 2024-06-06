@@ -309,8 +309,7 @@
  '(ws-butler-keep-whitespace-before-point nil)
  '(x-stretch-cursor t)
  '(xref-search-program 'ripgrep)
- '(xref-show-definitions-function 'consult-xref)
- '(xref-show-xrefs-function 'consult-xref))
+ '(xref-show-definitions-function 'consult-xref))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
