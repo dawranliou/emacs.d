@@ -850,7 +850,7 @@ reuse it's window, otherwise create new one."
   ;; (add-hook 'go-ts-mode-hook 'eglot-ensure)
 
   (with-eval-after-load 'eglot
-    (fset #'jsonrpc--log-event #'ignored) ; massive perf boost---don't log every event
+    (fset #'jsonrpc--log-event #'ignore) ; massive perf boost---don't log every event
 
     (keymap-set eglot-mode-map "C-c e" #'eglot-code-actions)
     (defun xref-find-references-with-eglot (orig-fun &rest args)
