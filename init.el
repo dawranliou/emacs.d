@@ -258,14 +258,14 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(avy breadcrumb cape casual-dired cider clojure-mode clojure-ts-mode
-         clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode
-         dumb-jump eat edit-indirect eglot eglot-booster embark embark-consult
-         fennel-mode flyspell go-mode groovy-mode helpful hide-mode-line iedit
-         jarchive jinx lsp-mode lua-mode magit marginalia markdown-mode
-         markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient
-         rg sly sqlformat standard-themes verb vertico which-key ws-butler
-         yaml-mode zig-mode))
+   '(avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode
+         consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat
+         edit-indirect eglot eglot-booster embark embark-consult fennel-mode
+         flyspell go-mode groovy-mode helpful hide-mode-line iedit jarchive jinx
+         lsp-mode lua-mode magit marginalia markdown-mode markdown-toc
+         ob-restclient orderless org pulsar rainbow-mode restclient rg sly
+         sqlformat standard-themes verb vertico which-key ws-butler yaml-mode
+         zig-mode))
  '(package-vc-selected-packages
    '((eglot-booster :vc-backend Git :url
                     "https://github.com/jdtsmith/eglot-booster")
@@ -1138,10 +1138,6 @@ buffer name when eglot is enabled."
   ;;              '(jinx grid (vertico-grid-annotate . 25)))
   (add-hook 'git-commit-setup-hook #'jinx-mode)
   )
-
-(external-package breadcrumb
-  (keymap-global-set "M-g j" #'breadcrumb-jump)
-  (add-hook 'prog-mode-hook #'breadcrumb-local-mode))
 
 (external-package cape
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
