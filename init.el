@@ -1131,13 +1131,10 @@ buffer name when eglot is enabled."
     (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
 
 (external-package jinx
-  ;; (add-hook 'emacs-startup-hook #'global-jinx-mode)
-  ;; (with-eval-after-load 'jinx
-  ;;   (keymap-global-set "<remap> <ispell-word>" #'jinx-correct))
-  ;; (add-to-list 'vertico-multiform-categories
-  ;;              '(jinx grid (vertico-grid-annotate . 25)))
-  (add-hook 'git-commit-setup-hook #'jinx-mode)
-  )
+  (add-hook 'emacs-startup-hook #'global-jinx-mode)
+  (keymap-global-set "s-;" #'jinx-correct)
+  (add-to-list 'vertico-multiform-categories
+               '(jinx grid (vertico-grid-annotate . 25))))
 
 (external-package cape
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
