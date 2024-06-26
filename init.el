@@ -390,6 +390,8 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-set window-prefix-map "S" #'window-toggle-side-windows) ; Was "s" but rarely used
 (keymap-set window-prefix-map "s" #'toggle-window-split)
 (keymap-set window-prefix-map "t" #'window-swap-states) ; aka transpose windows
+(keymap-global-set "s-{" #'tab-previous)
+(keymap-global-set "s-}" #'tab-next)
 
 ;;; Aliases
 
