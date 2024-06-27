@@ -336,7 +336,9 @@
  '(org-property-value ((t (:inherit fixed-pitch))))
  '(org-special-keyword ((t (:inherit (font-lock-keyword-face fixed-pitch)))))
  '(org-table ((t (:inherit fixed-pitch))))
- '(org-verbatim ((t (:inherit fixed-pitch)))))
+ '(org-verbatim ((t (:inherit fixed-pitch))))
+ '(tab-bar-tab ((t (:inherit tab-bar :background "White" :box (:line-width (2 . 2) :color "White")))))
+ '(tab-bar-tab-inactive ((t (:inherit tab-bar-tab :background "grey75" :box (:line-width (2 . -2) :color "grey75"))))))
 
 (setq-default
  frame-title-format '("%n "              ; narrowed?
