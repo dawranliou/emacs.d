@@ -566,6 +566,14 @@ https://www.emacswiki.org/emacs/AlignCommands"
                                default-directory))
   (browse-url "http://localhost:8000"))
 
+(defun miniserve ()
+  "Starts a miniserve server at `default-directory'."
+  (interactive)
+  (async-shell-command "miniserve --port 8000 ."
+                       (format "*miniserve* [%s]"
+                               default-directory))
+  (browse-url "http://localhost:8000"))
+
 (defun shuffle (seq)
   (cl-loop for i from (length seq) downto 2
            do (cl-rotatef (elt seq (random i))
