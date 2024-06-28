@@ -703,7 +703,8 @@ Operate on selected region or whole buffer."
   (setq completion-category-defaults nil))
 
 (external-package vertico
-  (vertico-mode))
+  (vertico-mode)
+  (vertico-multiform-mode 1))
 
 (external-package embark
   (keymap-global-set "C-." #'embark-act)
@@ -1155,8 +1156,9 @@ buffer name when eglot is enabled."
 (external-package jinx
   (add-hook 'emacs-startup-hook #'global-jinx-mode)
   (keymap-global-set "s-;" #'jinx-correct)
-  (add-to-list 'vertico-multiform-categories
-               '(jinx grid (vertico-grid-annotate . 25))))
+  (with-eval-after-load 'vertico-multiform
+    (add-to-list 'vertico-multiform-categories
+                 '(jinx grid (vertico-grid-annotate . 20)))))
 
 (external-package cape
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
