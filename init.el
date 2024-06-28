@@ -263,10 +263,11 @@
          flyspell go-mode groovy-mode helpful hide-mode-line iedit jarchive jinx
          lsp-mode lua-mode magit marginalia markdown-mode markdown-toc
          ob-restclient orderless org pulsar rainbow-mode restclient rg sly
-         sqlformat standard-themes verb vertico which-key ws-butler yaml-mode
-         zig-mode))
+         sqlformat standard-themes tb-keycast verb vertico which-key ws-butler
+         yaml-mode zig-mode))
  '(package-vc-selected-packages
-   '((eglot-booster :vc-backend Git :url
+   '((tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
+     (eglot-booster :vc-backend Git :url
                     "https://github.com/jdtsmith/eglot-booster")
      (clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode"
                       :vc-backend Git)))
@@ -305,6 +306,9 @@
  '(tab-bar-select-tab-modifiers '(super))
  '(tab-bar-tab-hints t)
  '(tab-width 8)
+ '(tb-keycast-align-right-p nil)
+ '(tb-keycast-min-width 0)
+ '(tb-keycast-mode nil)
  '(tramp-default-method "ssh")
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)

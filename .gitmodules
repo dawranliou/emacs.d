@@ -10,3 +10,6 @@
 [submodule "elpa/eglot-booster"]
 	path = elpa/eglot-booster
 	url = https://github.com/jdtsmith/eglot-booster
+[submodule "elpa/tb-keycast"]
+	path = elpa/tb-keycast
+	url = https://github.com/ir33k/tb-keycast.git
