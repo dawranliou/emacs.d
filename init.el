@@ -599,6 +599,14 @@ Operate on selected region or whole buffer."
      (list (point-min) (point-max))))
   (ansi-color-apply-on-region beg end))
 
+(defun tab-create-or-select (name)
+  "Create the NAME tab if it doesn't exist already."
+  (if (-first (lambda (tab) (equal name (alist-get 'name tab)))
+              (tab-bar-tabs))
+      (tab-bar-select-tab-by-name name)
+    (tab-new)
+    (tab-bar-rename-tab name)))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
@@ -618,11 +626,6 @@ Operate on selected region or whole buffer."
           (lambda () (load-theme 'alabaster t)))
 
 ;;; Built-in Packages
-
-(with-eval-after-load 'tab-bar
-  (add-hook 'tab-bar-tab-post-open-functions
-            (lambda (&rest _)
-              (call-interactively #'tab-bar-rename-tab))))
 
 (ffap-bindings)
 
