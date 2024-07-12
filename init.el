@@ -227,7 +227,7 @@
  '(org-goto-interface 'outline-path-completion)
  '(org-hide-block-startup nil)
  '(org-hide-emphasis-markers t)
- '(org-image-actual-width 640)
+ '(org-image-actual-width '(640))
  '(org-indirect-buffer-display 'current-window)
  '(org-log-done 'time)
  '(org-log-into-drawer t)
