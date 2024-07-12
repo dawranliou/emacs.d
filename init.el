@@ -164,6 +164,7 @@
  '(isearch-lazy-count t)
  '(isearch-wrap-pause 'no)
  '(isearch-yank-on-move t)
+ '(jdecomp-decompiler-paths '((cfr . "~/bin/cfr-0.152.jar")))
  '(jinx-languages "en_US en_CA")
  '(kept-new-versions 6)
  '(kept-old-versions 2)
@@ -260,11 +261,11 @@
    '(avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode
          consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat
          edit-indirect eglot eglot-booster embark embark-consult fennel-mode
-         flyspell go-mode groovy-mode helpful hide-mode-line iedit jarchive jinx
-         lsp-mode lua-mode magit marginalia markdown-mode markdown-toc
-         ob-restclient orderless org pulsar rainbow-mode restclient rg sly
-         sqlformat standard-themes tb-keycast verb vertico which-key ws-butler
-         yaml-mode zig-mode))
+         flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit
+         jarchive jdecomp jinx lsp-mode lua-mode magit marginalia markdown-mode
+         markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient
+         rg sly sqlformat standard-themes tb-keycast verb vertico which-key
+         ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
      (eglot-booster :vc-backend Git :url
