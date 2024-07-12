@@ -912,6 +912,9 @@ buffer name when eglot is enabled."
   (add-hook 'clojure-mode-hook #'jarchive-mode)
   (add-hook 'clojure-ts-mode-hook #'jarchive-mode))
 
+(external-package jdecomp
+  (jdecomp-mode 1))
+
 (external-package dumb-jump
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (with-eval-after-load 'xref
