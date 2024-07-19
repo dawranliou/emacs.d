@@ -32,3 +32,4 @@
 *.dylib
 /.dap-breakpoints
 /dap-ui-repl-go-history
+/.emacs.desktop
