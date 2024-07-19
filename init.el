@@ -177,7 +177,7 @@
  '(lsp-lens-enable nil)
  '(magit-diff-refine-hunk 'all)
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
- '(magit-log-margin '(t age-abbreviated magit-log-margin-width t 15))
+ '(magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 15))
  '(make-backup-files t)
  '(marginalia-mode t)
  '(mode-line-compact 'long)
