@@ -299,7 +299,7 @@
  '(sqlformat-args '("-s2" "-g"))
  '(sqlformat-command 'pgformatter)
  '(tab-always-indent t)
- '(tab-bar-auto-width-max '(100 20))
+ '(tab-bar-auto-width-max '(120 20))
  '(tab-bar-close-button-show nil)
  '(tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
  '(tab-bar-new-tab-choice "*scratch*")
