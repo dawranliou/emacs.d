@@ -145,7 +145,7 @@
  '(erc-prompt (lambda nil (concat "[" (buffer-name) "]")))
  '(erc-server "irc.libera.chat" t)
  '(fill-column 80)
- '(find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+ '(find-ls-option '("-print0 | xargs -0 gls -alhd" . "-ld"))
  '(global-so-long-mode t)
  '(grep-find-command '("rg -n -H --no-heading -e ''" . 27))
  '(groovy-indent-offset 2)
