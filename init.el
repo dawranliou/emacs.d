@@ -198,7 +198,7 @@
    '((daily today require-timed) (600 1600) " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
  '(org-agenda-window-setup 'current-window)
  '(org-attach-auto-tag "attachment")
- '(org-babel-load-languages '((emacs-lisp . t) (sql . t)))
+ '(org-babel-load-languages '((emacs-lisp . t) (sql . t) (awk . t) (shell . t)))
  '(org-capture-templates
    '(("t" "Todo" entry (file+olp+datetree "~/org/journal/journal.org")
       "* TODO %?\12SCHEDULED: %t\12" :clock-in t :clock-resume t :tree-type week)
@@ -217,6 +217,7 @@
       :clock-keep t :tree-type week)))
  '(org-clock-clocked-in-display nil)
  '(org-clock-clocktable-default-properties '(:maxlevel 4))
+ '(org-confirm-babel-evaluate nil)
  '(org-cycle-hide-block-startup nil)
  '(org-cycle-separator-lines 2)
  '(org-default-notes-file "~/org/journal/inbox.org")
@@ -341,6 +342,7 @@
  '(org-special-keyword ((t (:inherit (font-lock-keyword-face fixed-pitch)))))
  '(org-table ((t (:inherit fixed-pitch))))
  '(org-verbatim ((t (:inherit fixed-pitch))))
+ '(tab-bar ((t (:inherit fixed-pitch :background "grey85" :foreground "black"))))
  '(tab-bar-tab ((t (:inherit tab-bar :background "White" :box (:line-width (2 . 2) :color "White")))))
  '(tab-bar-tab-inactive ((t (:inherit tab-bar-tab :background "grey75" :box (:line-width (2 . -2) :color "grey75"))))))
 

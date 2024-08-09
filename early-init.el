@@ -55,7 +55,7 @@
                 (font . "Iosevka Fixed-14")))
 
 (set-face-attribute 'default nil :family "Iosevka Fixed" :height 140)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 140 :weight 'semibold)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 130 :weight 'semi-light :width 'expanded)
 (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 130 :weight 'regular)
 
 ;;; - UTF-8 everything
