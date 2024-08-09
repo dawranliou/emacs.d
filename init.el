@@ -604,6 +604,7 @@ Operate on selected region or whole buffer."
 
 (defun tab-create-or-select (name)
   "Create the NAME tab if it doesn't exist already."
+  (require 'dash)
   (if (-first (lambda (tab) (equal name (alist-get 'name tab)))
               (tab-bar-tabs))
       (tab-bar-select-tab-by-name name)
