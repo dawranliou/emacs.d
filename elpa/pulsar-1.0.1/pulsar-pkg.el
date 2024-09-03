@@ -1,2 +1,0 @@
-;; Generated package description from pulsar.el  -*- no-byte-compile: t -*-
-(define-package "pulsar" "1.0.1" "Pulse highlight on demand or after select functions" '((emacs "27.1")) :commit "f9d09afc97d08f90a6a462b9da86900e6b555a74" :authors '(("Protesilaos Stavrou" . "info@protesilaos.com")) :maintainer '("Pulsar Development" . "~protesilaos/pulsar@lists.sr.ht") :keywords '("convenience" "pulse" "highlight") :url "https://git.sr.ht/~protesilaos/pulsar")
