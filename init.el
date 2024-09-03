@@ -265,7 +265,7 @@
          jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia
          markdown-mode markdown-toc ob-restclient orderless org pulsar
          rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast
-         vertico which-key ws-butler yaml-mode zig-mode))
+         verb vertico websocket which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
      (eglot-booster :vc-backend Git :url
