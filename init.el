@@ -277,6 +277,7 @@
  '(pulsar-face 'pulsar-blue)
  '(recentf-max-saved-items 200)
  '(recentf-mode t)
+ '(register-preview-delay 0.5)
  '(repeat-mode t)
  '(ring-bell-function 'flash-mode-line)
  '(save-place-mode t)
@@ -759,6 +760,13 @@ With a prefix argument, exit eshell before restoring previous config."
 
   ;; other
   (keymap-global-set "M-y" #'consult-yank-pop) ; was #'yank-pop
+
+  ;; register
+  (keymap-global-set "M-#" #'consult-register-load)
+  (keymap-global-set "M-'" #'consult-register-store) ; was #'abbrev-prefix-mark
+  (keymap-global-set "C-M-#" #'consult-register)
+  (setq register-preview-function #'consult-register-format)
+  (advice-add #'register-preview :override #'consult-register-window)
 
   ;; goto-map
   (keymap-global-set "M-g e" #'consult-compile-error)
