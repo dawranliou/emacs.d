@@ -369,6 +369,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 ;;; Keybindings
 
+(keymap-global-set "<f5>" #'eshell-toggle)
 (keymap-global-set "C-x C-b" #'ibuffer)
 (keymap-global-set "C-x k" #'kill-this-buffer)
 (keymap-global-set "C-x j" #'duplicate-dwim)
@@ -610,6 +611,20 @@ Operate on selected region or whole buffer."
       (tab-bar-select-tab-by-name name)
     (tab-new)
     (tab-bar-rename-tab name)))
+
+(defun eshell-toggle (exit)
+  "Bring up a full-screen eshell or restore previous config.
+With a prefix argument, exit eshell before restoring previous config."
+  (interactive "P")
+  (if (string= "eshell-mode" major-mode)
+      (progn
+        (when exit
+          (insert "exit")
+          (eshell-send-input))
+        (jump-to-register ?!))
+    (window-configuration-to-register ?!)
+    (eshell)
+    (delete-other-windows)))
 
 ;;; Mac
 
