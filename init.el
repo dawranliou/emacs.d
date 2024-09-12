@@ -94,6 +94,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auth-sources '("~/.authinfo.gpg"))
  '(auto-revert-avoid-polling t)
  '(auto-revert-check-vc-info t)
  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/var/auto-save" t)))
@@ -261,7 +262,7 @@
    '(avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode
          consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat
          edit-indirect eglot eglot-booster embark embark-consult fennel-mode
-         flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit
+         flyspell forge gnuplot go-mode groovy-mode helpful hide-mode-line iedit
          jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia
          markdown-mode markdown-toc ob-restclient orderless org pulsar
          rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast
@@ -721,6 +722,9 @@ With a prefix argument, exit eshell before restoring previous config."
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
 ;;; 3rd Party Packages
+(external-package forge
+  (with-eval-after-load 'magit
+    (require 'forge)))
 
 (external-package orderless
   (setq completion-category-defaults nil))

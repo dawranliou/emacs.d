@@ -33,3 +33,4 @@
 /.dap-breakpoints
 /dap-ui-repl-go-history
 /.emacs.desktop
+/forge-database.sqlite
