@@ -399,7 +399,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-global-set "C-h L" #'find-library)
 (keymap-global-set "C-z" nil)
 (keymap-substitute global-map #'eval-expression #'pp-eval-expression) ; M-:
-(keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
+;; (keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
 (keymap-set emacs-lisp-mode-map "C-c C-j" #'eval-print-last-sexp)
 (keymap-global-set "<remap> <move-beginning-of-line>" 'move-beginning-of-line+) ; C-a
 (keymap-global-set "C-c r" #'recentf-open-files+)
