@@ -388,6 +388,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-global-set "M-z" #'zap-up-to-char)
 (keymap-global-set "C-c C" #'compile)
 (keymap-global-set "C-c d" #'find-config)
+(keymap-global-set "C-c t f" #'display-fill-column-indicator-mode)
 (keymap-global-set "C-c t t" #'load-one-theme)
 (keymap-global-set "C-c t w" #'whitespace-mode)
 (keymap-global-set "C-c t m" #'toggle-frame-maximized)
