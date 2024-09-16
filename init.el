@@ -1048,14 +1048,14 @@ buffer name when eglot is enabled."
   (add-hook 'clojure-ts-mode-hook #'cider-mode)
 
   (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs `((clojure-mode
-                                           clojurescript-mode
-                                           clojurec-mode
-                                           clojure-ts-mode)
-                                          .
-                                          ,(eglot-alternatives
-                                            '(("clojure-lsp")
-                                              ("clojure-lsp-dev")))))
+    ;; (add-to-list 'eglot-server-programs `((clojure-mode
+    ;;                                        clojurescript-mode
+    ;;                                        clojurec-mode
+    ;;                                        clojure-ts-mode)
+    ;;                                       .
+    ;;                                       ,(eglot-alternatives
+    ;;                                         '(("clojure-lsp")
+    ;;                                           ("clojure-lsp-dev")))))
     (defun eglot-clojure-lsp-server-info ()
       (if-let ((server (eglot-current-server)))
           (eglot--request server :clojure/serverInfo/raw nil)
