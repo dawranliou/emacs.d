@@ -185,8 +185,14 @@
  '(modus-themes-mixed-fonts t)
  '(mouse-wheel-flip-direction t)
  '(mouse-wheel-scroll-amount
-   '(2 ((shift) . hscroll) ((meta)) ((control meta) . global-text-scale)
-       ((control) . text-scale)))
+   '(2
+     ((shift)
+      . hscroll)
+     ((meta))
+     ((control meta)
+      . global-text-scale)
+     ((control)
+      . text-scale)))
  '(mouse-wheel-scroll-amount-horizontal 2)
  '(mouse-wheel-tilt-scroll t)
  '(next-error-message-highlight t)
@@ -196,26 +202,34 @@
  '(org-agenda-span 'day)
  '(org-agenda-start-with-log-mode t)
  '(org-agenda-time-grid
-   '((daily today require-timed) (600 1600) " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+   '((daily today require-timed)
+     (600 1600)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
  '(org-agenda-window-setup 'current-window)
  '(org-attach-auto-tag "attachment")
  '(org-babel-load-languages '((emacs-lisp . t) (sql . t) (awk . t) (shell . t)))
  '(org-capture-templates
-   '(("t" "Todo" entry (file+olp+datetree "~/org/journal/journal.org")
+   '(("t" "Todo" entry
+      (file+olp+datetree "~/org/journal/journal.org")
       "* TODO %?\12SCHEDULED: %t\12" :clock-in t :clock-resume t :tree-type week)
-     ("p" "Project" entry (file+olp "~/org/journal/journal.org" "Projects")
-      (file "~/.emacs.d/org-templates/project.org") :clock-in t :clock-resume t)
-     ("j" "Journal" entry (file+olp+datetree "~/org/journal/journal.org")
+     ("p" "Project" entry
+      (file+olp "~/org/journal/journal.org" "Projects")
+      (file "~/.emacs.d/org-templates/project.org")
+      :clock-in t :clock-resume t)
+     ("j" "Journal" entry
+      (file+olp+datetree "~/org/journal/journal.org")
       "* %? %^G\12" :clock-in t :clock-keep t :tree-type week)
-     ("d" "Daily Review" entry (file+olp+datetree "~/org/journal/journal.org")
-      (file "~/.emacs.d/org-templates/daily-review.org") :immediate-finish t
-      :clock-in t :clock-keep t :tree-type week)
-     ("i" "Check In" entry (file+olp+datetree "~/org/journal/journal.org")
-      (file "~/.emacs.d/org-templates/check-in.org") :immediate-finish t
-      :clock-in t :clock-keep t :tree-type week)
-     ("m" "Meeting" entry (file+olp+datetree "~/org/journal/journal.org")
-      "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t
-      :clock-keep t :tree-type week)))
+     ("d" "Daily Review" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      (file "~/.emacs.d/org-templates/daily-review.org")
+      :immediate-finish t :clock-in t :clock-keep t :tree-type week)
+     ("i" "Check In" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      (file "~/.emacs.d/org-templates/check-in.org")
+      :immediate-finish t :clock-in t :clock-keep t :tree-type week)
+     ("m" "Meeting" entry
+      (file+olp+datetree "~/org/journal/journal.org")
+      "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
  '(org-clock-clocked-in-display nil)
  '(org-clock-clocktable-default-properties '(:maxlevel 4))
  '(org-confirm-babel-evaluate nil)
@@ -234,8 +248,7 @@
  '(org-log-done 'time)
  '(org-log-into-drawer t)
  '(org-modules
-   '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc
-             ol-mhe ol-rmail ol-w3m))
+   '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
  '(org-outline-path-complete-in-steps nil)
  '(org-refile-allow-creating-parent-nodes 'confirm)
  '(org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
@@ -247,7 +260,9 @@
  '(org-src-window-setup 'current-window)
  '(org-startup-folded 'content)
  '(org-todo-keyword-faces
-   '(("NEXT" . "blue") ("REVIEW" . "dark orange") ("HOLD" . "purple")
+   '(("NEXT" . "blue")
+     ("REVIEW" . "dark orange")
+     ("HOLD" . "purple")
      ("CANCELLED" . "teal")))
  '(org-todo-keywords
    '((sequence "TODO(t@/)" "NEXT(n)" "REVIEW(r@/!)" "|" "DONE(d!)")
