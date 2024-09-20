@@ -274,14 +274,7 @@
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode
-         consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat
-         edit-indirect eglot eglot-booster embark embark-consult fennel-mode
-         flyspell forge gnuplot go-mode groovy-mode helpful hide-mode-line iedit
-         jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia
-         markdown-mode markdown-toc ob-restclient orderless org pulsar
-         rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast
-         verb vertico websocket which-key ws-butler yaml-mode zig-mode))
+   '(ox-gfm avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot eglot-booster embark embark-consult fennel-mode flyspell forge gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast verb vertico websocket which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
      (eglot-booster :vc-backend Git :url
