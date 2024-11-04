@@ -52,13 +52,12 @@
               '((tool-bar-lines . 0)
                 (width . 85)
                 (vertical-scroll-bars . nil)
-                (font . "Iosevka Fixed-14")))
-
-(set-face-attribute 'default nil :family "Iosevka Fixed" :height 140)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 130 :weight 'semi-light :width 'expanded)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 130 :weight 'regular)
+                (font . "Iosevka Fixed-12")))
 
 ;;; - UTF-8 everything
+(set-face-attribute 'default nil :family "Iosevka Fixed" :height 120)
+(set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 110 :weight 'semi-light :width 'expanded)
+(set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 110 :weight 'regular)
 
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
