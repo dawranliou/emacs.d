@@ -227,7 +227,12 @@
      " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
  '(org-agenda-window-setup 'current-window)
  '(org-attach-auto-tag "attachment")
- '(org-babel-load-languages '((emacs-lisp . t) (sql . t) (awk . t) (shell . t)))
+ '(org-babel-load-languages
+   '((emacs-lisp . t)
+     (sql . t)
+     (awk . t)
+     (shell . t)
+     (clojure . t)))
  '(org-capture-templates
    '(("t" "Todo" entry
       (file+olp+datetree "~/org/journal/journal.org")
