@@ -1,4 +1,4 @@
-;;; early-init.el --- -*- lexical-binding: t; -*-
+;;; early-init.el --- Early init -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;;; Commentary:
 
@@ -14,6 +14,12 @@
   (add-to-list 'exec-path "/Users/daw-ranliou/bin")
   (setenv "PATH" (concat "/Users/daw-ranliou/bin:/usr/local/bin:/usr/local/MacGPG2/bin:/usr/local/go/bin:/Library/TeX/texbin:"
                          (getenv "PATH"))))
+;;; Misc
+
+(set-language-environment "UTF-8")
+
+;; Set-language-environment sets default-input-method, which is unwanted.
+(setq default-input-method nil)
 
 ;;; - Startup performance
 
@@ -52,17 +58,13 @@
               '((tool-bar-lines . 0)
                 (width . 85)
                 (vertical-scroll-bars . nil)
+                (horizontal-bar . nil)
                 (font . "Iosevka Fixed-12")))
 
-;;; - UTF-8 everything
 (set-face-attribute 'default nil :family "Iosevka Fixed" :height 120)
 (set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 110 :weight 'semi-light :width 'expanded)
 (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 110 :weight 'regular)
 
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
 
 (provide 'early-init)
 

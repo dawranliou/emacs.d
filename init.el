@@ -1,4 +1,4 @@
-;;; init.el --- Daw-Ran Liou's emacs configuration -*- lexical-binding: t; -*-
+;;; init.el --- Daw-Ran Liou's emacs configuration -*- lexical-binding: t; no-byte-compile: t; -*-
 
 ;; Author: Daw-Ran Liou <hi@dawranliou.com>
 ;; URL: https://github.com/dawranliou/emacs.d
