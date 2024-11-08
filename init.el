@@ -150,6 +150,9 @@
  '(eglot-connect-timeout 600)
  '(eglot-events-buffer-size 0)
  '(eglot-extend-to-xref t)
+ '(eglot-ignored-server-capabilities
+   '(:hoverProvider :documentHighlightProvider :documentFormattingProvider :documentRangeFormattingProvider :documentOnTypeFormattingProvider :colorProvider :foldingRangeProvider))
+ '(eglot-report-progress nil)
  '(eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
  '(enable-recursive-minibuffers t)
  '(erc-auto-query 'bury)
