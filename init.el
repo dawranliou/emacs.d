@@ -1271,7 +1271,7 @@ buffer name when eglot is enabled."
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-keyword)
 
-  (keymap-global-set "C-c e" #'cape-emoji))
+  (keymap-global-set "C-c p" #'cape-prefix-map))
 
 (external-package pulsar
   (pulsar-global-mode))
