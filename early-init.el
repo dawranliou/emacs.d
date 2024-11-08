@@ -23,22 +23,25 @@
 
 ;;; - Startup performance
 
+;; Prefer loading newer compiled files
+(setq load-prefer-newer t)
+
+;; Font compacting can be very resource-intensive, especially when rendering
+;; icon fonts on Windows. This will increase memory usage.
+(setq inhibit-compacting-font-caches t)
+
 (defvar doom--file-name-handler-alist file-name-handler-alist)
 
 (setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
       ;; package-quickstart t
       file-name-handler-alist nil
       frame-inhibit-implied-resize t
       native-comp-async-report-warnings-errors nil)
 
-(add-hook 'focus-out-hook #'garbage-collect)
-
 (add-hook
  'emacs-startup-hook
  (lambda ()
-   (setq gc-cons-threshold (* 256 1024 1024) ; 256mb
-         gc-cons-percentage 0.3
+   (setq gc-cons-threshold (* 100 1024 1024) ; 100mb
          file-name-handler-alist doom--file-name-handler-alist)
    (message "*** Emacs loaded in %.2f seconds with %d garbage collections."
             (float-time (time-subtract after-init-time before-init-time))
@@ -65,6 +68,9 @@
 (set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 110 :weight 'semi-light :width 'expanded)
 (set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 110 :weight 'regular)
 
+;;; package.el
+(setq package-enable-at-startup nil)
+(setq package-quickstart nil)
 
 (provide 'early-init)
 

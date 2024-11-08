@@ -10,6 +10,7 @@
 ;;; Code:
 
 ;;; Package Management
+(package-initialize)
 
 (defmacro external-package (package &rest body)
   "Eval BODY only if PACKAGE is installed."
@@ -123,7 +124,6 @@
  '(completions-max-height 20)
  '(confirm-kill-emacs 'yes-or-no-p)
  '(consult-narrow-key "<")
- '(context-menu-mode t)
  '(custom-safe-themes
    '("14436a10b0cb5b7b6e6f6d490a08c1a751ad0384e9b124b9b8d5d554129f5571" default))
  '(delete-by-moving-to-trash t)
@@ -138,7 +138,6 @@
  '(eglot-connect-timeout 600)
  '(eglot-events-buffer-size 0)
  '(eglot-extend-to-xref t)
- '(electric-pair-mode t)
  '(enable-recursive-minibuffers t)
  '(erc-auto-query 'bury)
  '(erc-fill-function 'erc-fill-static)
@@ -147,14 +146,12 @@
  '(erc-server "irc.libera.chat" t)
  '(fill-column 80)
  '(find-ls-option '("-print0 | xargs -0 gls -alhd" . "-ld"))
- '(global-so-long-mode t)
  '(grep-find-command '("rg -n -H --no-heading -e ''" . 27))
  '(groovy-indent-offset 2)
  '(helpful-switch-buffer-function #'helpful-switch-to-buffer)
  '(history-length 20000)
  '(hscroll-margin 2)
  '(hscroll-step 1)
- '(indent-tabs-mode nil)
  '(indicate-empty-lines t)
  '(inhibit-startup-screen t)
  '(initial-major-mode 'fundamental-mode)
@@ -180,7 +177,6 @@
  '(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
  '(magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 15))
  '(make-backup-files t)
- '(marginalia-mode t)
  '(mode-line-compact 'long)
  '(modus-themes-mixed-fonts t)
  '(mouse-wheel-flip-direction t)
@@ -273,30 +269,25 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")
      ("melpa" . "https://melpa.org/packages/")))
+ '(package-native-compile t)
  '(package-selected-packages
    '(ox-gfm avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot eglot-booster embark embark-consult fennel-mode flyspell forge gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast verb vertico websocket which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
      (eglot-booster :vc-backend Git :url "https://github.com/jdtsmith/eglot-booster")
      (clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode" :vc-backend Git)))
- '(pixel-scroll-precision-mode t)
  '(project-vc-extra-root-markers '(".project"))
  '(pulsar-face 'pulsar-blue)
  '(recentf-max-saved-items 200)
- '(recentf-mode t)
  '(register-preview-delay 0.5)
- '(repeat-mode t)
  '(ring-bell-function 'flash-mode-line)
- '(save-place-mode t)
  '(savehist-additional-variables
    '(kill-ring mark-ring global-mark-ring search-ring regexp-search-ring))
- '(savehist-mode t)
  '(savehist-save-minibuffer-history t)
  '(scroll-conservatively 101)
  '(scroll-preserve-screen-position t)
  '(search-whitespace-regexp ".*?")
  '(show-paren-context-when-offscreen 'overlay)
- '(show-paren-mode t)
  '(shr-cookie-policy nil)
  '(shr-discard-aria-hidden t)
  '(shr-image-animate nil)
@@ -317,7 +308,6 @@
  '(tab-width 8)
  '(tb-keycast-align-right-p nil)
  '(tb-keycast-min-width 0)
- '(tb-keycast-mode nil)
  '(tramp-default-method "ssh")
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)
@@ -325,7 +315,6 @@
  '(version-control t)
  '(visible-bell nil)
  '(wgrep-auto-save-buffer t)
- '(which-key-mode t)
  '(word-wrap t)
  '(ws-butler-keep-whitespace-before-point nil)
  '(x-stretch-cursor t)
@@ -653,7 +642,29 @@ With a prefix argument, exit eshell before restoring previous config."
 (add-hook 'after-init-hook
           (lambda () (load-theme 'alabaster t)))
 
+;;; UI
+
+;; Reduce cursor lag by :
+;; 1. Prevent automatic adjustments to `window-vscroll' for long lines.
+;; 2. Resolve the issue of random half-screen jumps during scrolling.
+(setq auto-window-vscroll nil)
+
+;;; Indentation and formatting
+
+(setq-default indent-tabs-mode nil)
+
 ;;; Built-in Packages
+
+(add-hook 'after-init-hook #'context-menu-mode)
+(add-hook 'after-init-hook #'electric-pair-mode)
+(add-hook 'after-init-hook #'global-so-long-mode)
+(add-hook 'after-init-hook #'pixel-scroll-precision-mode)
+(add-hook 'after-init-hook #'recentf-mode)
+(add-hook 'after-init-hook #'repeat-mode)
+(add-hook 'after-init-hook #'save-place-mode)
+(add-hook 'after-init-hook #'savehist-mode)
+(add-hook 'after-init-hook #'window-divider-mode)
+(add-hook 'after-init-hook #'winner-mode)
 
 (ffap-bindings)
 
@@ -729,6 +740,9 @@ With a prefix argument, exit eshell before restoring previous config."
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
 ;;; 3rd Party Packages
+(external-package which-key
+  (add-hook 'after-init-hook #'which-key-mode))
+
 (external-package forge
   (with-eval-after-load 'magit
     (require 'forge)))
@@ -737,8 +751,10 @@ With a prefix argument, exit eshell before restoring previous config."
   (setq completion-category-defaults nil))
 
 (external-package vertico
-  (vertico-mode)
-  (vertico-multiform-mode 1))
+  (add-hook 'after-init-hook #'vertico-mode))
+
+(external-package marginalia
+  (add-hook 'after-init-hook #'marginalia-mode))
 
 (external-package embark
   (keymap-global-set "C-." #'embark-act)
