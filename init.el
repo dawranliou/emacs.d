@@ -797,10 +797,6 @@ With a prefix argument, exit eshell before restoring previous config."
 (external-package which-key
   (add-hook 'after-init-hook #'which-key-mode))
 
-(external-package forge
-  (with-eval-after-load 'magit
-    (require 'forge)))
-
 (external-package orderless
   (setq completion-category-defaults nil))
 
