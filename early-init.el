@@ -64,9 +64,11 @@
                 (horizontal-bar . nil)
                 (font . "Iosevka Fixed-12")))
 
-(set-face-attribute 'default nil :family "Iosevka Fixed" :height 120)
-(set-face-attribute 'fixed-pitch nil :family "Iosevka Fixed" :height 110 :weight 'semi-light :width 'expanded)
-(set-face-attribute 'variable-pitch nil :family "Iosevka Etoile" :height 110 :weight 'regular)
+(let ((mono-spaced-font "Iosevka Fixed")
+      (proportionately-spaced-font "Iosevka Etoile"))
+  (set-face-attribute 'default nil :family mono-spaced-font :height 120)
+  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0 :weight 'semi-light :width 'expanded)
+  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0 :weight 'regular))
 
 ;;; package.el
 (setq package-enable-at-startup nil)
