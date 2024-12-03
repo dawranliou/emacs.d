@@ -150,8 +150,6 @@
  '(eglot-connect-timeout 600)
  '(eglot-events-buffer-size 0)
  '(eglot-extend-to-xref t)
- '(eglot-ignored-server-capabilities
-   '(:hoverProvider :documentHighlightProvider :documentFormattingProvider :documentRangeFormattingProvider :documentOnTypeFormattingProvider :colorProvider :foldingRangeProvider))
  '(eglot-report-progress nil)
  '(eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)
  '(enable-recursive-minibuffers t)
@@ -300,7 +298,7 @@
      ("melpa" . "https://melpa.org/packages/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(nerd-icons-dired nerd-icons-completion nerd-icons-corfu nerd-icons dired-subtree multiple-cursors ox-gfm avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot eglot-booster embark embark-consult fennel-mode flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast verb vertico websocket which-key ws-butler yaml-mode zig-mode))
+   '(eglot gotest dape nerd-icons-dired nerd-icons-completion nerd-icons-corfu nerd-icons dired-subtree multiple-cursors ox-gfm avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode consult corfu csv-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot-booster embark embark-consult fennel-mode flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast verb vertico websocket which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
      (eglot-booster :vc-backend Git :url "https://github.com/jdtsmith/eglot-booster")
@@ -525,26 +523,6 @@ This function is designed to be called from `kill-buffer-query-functions'."
   (interactive)
   (let ((files (mapcar 'abbreviate-file-name recentf-list)))
     (find-file (completing-read "Find recent file: " files nil t))))
-
-;; This is replaced by corfu.  It's not working with lsp-mode ATM.
-;;
-;; (defun completing-read-at-point (start end col &optional pred)
-;;   "Inspired by https://github.com/katspaugh/ido-at-point"
-;;   (if (minibufferp) (completion--in-region start end col pred)
-;;     (let* ((init (buffer-substring-no-properties start end))
-;;            (all (completion-all-completions init col pred (length init)))
-;;            (completion (cond
-;;                         ((atom all) nil)
-;;                         ((and (consp all) (atom (cdr all))) (car all))
-;;                         (t (completing-read "Completions: " col pred t init)))))
-;;       (if completion
-;;           (progn
-;;             (delete-region start end)
-;;             (insert completion)
-;;             t)
-;;         (message "No completions") nil))))
-;;
-;; (setq completion-in-region-function #'completing-read-at-point)
 
 (defun move-beginning-of-line+ (arg)
   "Move point to beginning of current line or the first non whitespace char."
@@ -1028,8 +1006,8 @@ reuse it's window, otherwise create new one."
 (external-package eglot
   ;; (add-hook 'clojure-mode-hook 'eglot-ensure)
   ;; (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
-  ;; (add-hook 'go-mode-hook 'eglot-ensure)
-  ;; (add-hook 'go-ts-mode-hook 'eglot-ensure)
+  (add-hook 'go-mode-hook 'eglot-ensure)
+  (add-hook 'go-ts-mode-hook 'eglot-ensure)
 
   (with-eval-after-load 'eglot
     (fset #'jsonrpc--log-event #'ignore) ; massive perf boost---don't log every event
@@ -1215,40 +1193,43 @@ buffer name when eglot is enabled."
   (defun before-save-go-mode ()
     (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 
-  (remove-hook 'go-mode-hook #'before-save-go-mode)
-  (remove-hook 'go-ts-mode-hook #'before-save-go-mode))
+  (add-hook 'go-mode-hook #'before-save-go-mode)
+  (add-hook 'go-ts-mode-hook #'before-save-go-mode)
 
-(external-package lsp-mode
-  (defun corfu-lsp-setup ()
-    "For issue https://github.com/emacs-lsp/lsp-mode/issues/2970"
-    (setq-local completion-category-defaults nil))
-  (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
-  (add-hook 'go-mode-hook #'lsp)
-  (add-hook 'go-ts-mode-hook #'lsp)
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer -10 t)
-    (add-hook 'before-save-hook #'lsp-organize-imports -10 t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-  (add-hook 'go-ts-mode-hook #'lsp-go-install-save-hooks)
+  (with-eval-after-load 'go-mode
+    (keymap-set go-mode-map "C-c m r" #'go-run)))
 
-  (external-package dap-mode
-    (add-hook 'dap-stopped-hook
-              (lambda (arg) (call-interactively #'dap-hydra)))
-    (with-eval-after-load 'dap-mode
-      (require 'dap-dlv-go)))
+(external-package gotest
+  (with-eval-after-load 'go-mode
+    (keymap-set go-mode-map "C-c t f" #'go-test-current-file)
+    (keymap-set go-mode-map "C-c t t" #'go-test-current-test)
+    (keymap-set go-mode-map "C-c t j" #'go-test-current-project)
+    (keymap-set go-mode-map "C-c t b" #'go-test-current-benchmark)
+    (keymap-set go-mode-map "C-c t c" #'go-test-current-coverage)
+    (keymap-set go-mode-map "C-c t x" #'go-run)))
 
-  ;; https://github.com/minad/corfu/wiki#advanced-example-configuration-with-orderless
-  (defun orderless-dispatch-flex-first (_pattern index _total)
-    (and (eq index 0) 'orderless-flex))
+(external-package dape
+  ;; (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
 
-  (defun lsp-mode-setup-completion ()
-    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
-          '(orderless))
-    (add-hook 'orderless-style-dispatchers #'orderless-dispatch-flex-first nil 'local)
-    (setq-local completion-at-point-functions
-                (list (cape-capf-buster #'lsp-completion-at-point))))
+  ;; To not display info and/or buffers on startup
+  ;; (remove-hook 'dape-start-hook 'dape-info)
+  (remove-hook 'dape-start-hook 'dape-repl)
 
-  (add-hook 'lsp-completion-mode-hook #'lsp-mode-setup-completion))
+  (with-eval-after-load 'dape
+    ;; Add Go debug configuration
+    (add-to-list 'dape-configs
+                 `(go-debug-main
+                   modes (go-mode go-ts-mode)
+                   command "dlv"
+                   command-args ("dap" "--listen" "127.0.0.1::autoport")
+                   command-cwd dape-command-cwd
+                   port :autoport
+                   :type "debug"
+                   :request "launch"
+                   :name "Debug Go Program"
+                   :cwd "."
+                   :program "."
+                   :args []))))
 
 (external-package corfu
   (global-corfu-mode)
