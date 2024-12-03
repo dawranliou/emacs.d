@@ -300,7 +300,7 @@
      ("melpa" . "https://melpa.org/packages/")))
  '(package-native-compile t)
  '(package-selected-packages
-   '(multiple-cursors ox-gfm avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot eglot-booster embark embark-consult fennel-mode flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast verb vertico websocket which-key ws-butler yaml-mode zig-mode))
+   '(nerd-icons-dired nerd-icons-completion nerd-icons-corfu nerd-icons dired-subtree multiple-cursors ox-gfm avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode consult corfu csv-mode dap-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot eglot-booster embark embark-consult fennel-mode flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lsp-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast verb vertico websocket which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
    '((tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
      (eglot-booster :vc-backend Git :url "https://github.com/jdtsmith/eglot-booster")
@@ -751,7 +751,7 @@ With a prefix argument, exit eshell before restoring previous config."
 (add-hook 'text-mode-hook 'visual-line-mode)
 
 (with-eval-after-load 'dired
-  ;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
   (add-hook 'dired-mode-hook 'hl-line-mode)
   (keymap-set global-map "C-x C-j" #'dired-jump)
   (require 'dired-x)
@@ -937,6 +937,23 @@ With a prefix argument, exit eshell before restoring previous config."
 
     (setf (alist-get ?. avy-dispatch-alist) #'avy-action-embark)
     (setf (alist-get ?e avy-dispatch-alist) #'avy-action-exchange)))
+
+(external-package dired-subtree
+  (with-eval-after-load 'dired
+    (keymap-set dired-mode-map "<tab>" #'dired-subtree-toggle)
+    (keymap-set dired-mode-map "<backtab>" #'dired-subtree-remove))
+  (setq dired-subtree-use-backgrounds nil))
+
+(external-package nerd-icons-completion
+  (with-eval-after-load 'marginalia
+    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)))
+
+(external-package nerd-icons-corfu
+  (with-eval-after-load 'corfu
+    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)))
+
+(external-package nerd-icons-dired
+  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
 
 (external-package multiple-cursors
   (keymap-global-set "C-S-c C-S-c" #'mc/edit-lines)
