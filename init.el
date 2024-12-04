@@ -11,10 +11,11 @@
 
 ;; Opt out customization interface
 (setq custom-file (locate-user-emacs-file "custom.el"))
-(load custom-file :no-error-if-file-is-missing)
+;; (load custom-file :no-error-if-file-is-missing)
 
 ;;; Package Management
 (package-initialize)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;;; Treesitter
 
@@ -417,30 +418,32 @@ With a prefix argument, exit eshell before restoring previous config."
 (add-hook 'after-init-hook #'electric-pair-mode)
 (add-hook 'after-init-hook #'global-so-long-mode)
 (add-hook 'after-init-hook #'pixel-scroll-precision-mode)
-(add-hook 'after-init-hook #'recentf-mode)
-(add-hook 'after-init-hook #'repeat-mode)
+;; (add-hook 'after-init-hook #'recentf-mode)
+;; (add-hook 'after-init-hook #'repeat-mode)
 (add-hook 'after-init-hook #'save-place-mode)
 (add-hook 'after-init-hook #'savehist-mode)
 (add-hook 'after-init-hook #'window-divider-mode)
 (add-hook 'after-init-hook #'winner-mode)
 
-(ffap-bindings)
+(add-hook 'after-init-hook #'ffap-bindings)
 
 (add-hook 'text-mode-hook 'visual-line-mode)
 
 (use-package dired
+  :defer t
   :hook ((dired-mode . dired-hide-details-mode)
          (dired-mode . hl-line-mode))
+  :custom ((dired-auto-revert-buffer t)
+           (dired-dwim-target t)
+           (dired-recursive-copies 'always)
+           (dired-recursive-deletes 'always))
   :bind (("C-x C-j" . dired-jump))
   :config
-  (setq dired-auto-revert-buffer t)
-  (setq dired-dwim-target t)
-  (setq dired-recursive-copies 'always)
-  (setq dired-recursive-deletes 'always)
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
 (use-package project
+  :defer t
   :config
   ;; Setup the `project-switch-commands'
   (require 'magit-extras)
@@ -455,7 +458,11 @@ With a prefix argument, exit eshell before restoring previous config."
               #'project-find-regexp-with-unique-buffer))
 
 (use-package compile
+  :defer t
   :hook (compilation-filter . ansi-color-compilation-filter)
+  :custom ((compilation-always-kill t)
+           (compilation-ask-about-save nil)
+           (compilation-scroll-output 'first-error))
   :config
   (require 'ansi-color)
   (ansi-color-for-comint-mode-filter))
@@ -464,12 +471,21 @@ With a prefix argument, exit eshell before restoring previous config."
              '("\\.log\\'" . auto-revert-tail-mode))
 
 (use-package isearch
+  :defer t
   :bind (:map isearch-mode-map
               ("C-o" . isearch-occur)
               ("C-<backspace>" . isearch-delete-wrong)
               ;; DEL during isearch should edit the search string, not jump back
               ;; to the previous result
               ([remap isearch-delete-char] . isearch-del-char))
+  :custom ((isearch-allow-motion t)
+           (isearch-allow-scroll t)
+           (isearch-lazy-count t)
+           (isearch-wrap-pause 'no)
+           (isearch-yank-on-move t)
+           (search-whitespace-regexp ".*?")
+           (lazy-count-prefix-format nil)
+           (lazy-count-suffix-format " [%s/%s]"))
   :config
   ;; https://www.emacswiki.org/emacs/IncrementalSearch#h5o-4
   (defun isearch-exit-at-start ()
@@ -488,6 +504,7 @@ With a prefix argument, exit eshell before restoring previous config."
   (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
 (use-package rect
+  :defer t
   :config
   ;; https://gist.github.com/jdtsmith/bfa2d692c4fbbffe06b558e4bcf9abec
   (cl-loop for (key def) in
@@ -506,27 +523,46 @@ With a prefix argument, exit eshell before restoring previous config."
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
 ;;; 3rd Party Packages
+(use-package magit
+  :ensure t
+  :defer t
+  :custom ((magit-diff-refine-hunk 'all)
+           (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+           (magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 15))))
+
 (use-package which-key
   :ensure t
+  :defer t
   :hook (after-init . which-key-mode))
 
 (use-package orderless
   :ensure t
+  :defer t
+  :custom ((completion-auto-help 'always)
+           (completion-auto-select 'second-tab)
+           (completion-category-overrides '((file (styles partial-completion))))
+           (completion-cycle-threshold 1)
+           (completion-styles '(orderless basic))
+           (completions-detailed t)
+           (completions-format 'one-column)
+           (completions-group t)
+           (completions-max-height 20))
   :config
-  (setq completion-styles '(orderless basic))
-  (setq completion-category-defaults nil)
-  (setq completion-category-overrides '((file (styles partial-completion)))))
+  (setq completion-category-defaults nil))
 
 (use-package vertico
   :ensure t
+  :defer t
   :hook (after-init . vertico-mode))
 
 (use-package marginalia
   :ensure t
+  :defer t
   :hook (after-init . marginalia-mode))
 
 (use-package embark
   :ensure t
+  :defer t
   :commands (embark-next-symbol embark-previous-symbol)
   :bind (("C-." . embark-act)
          ("C-h B" . embark-bindings)
@@ -539,6 +575,8 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (use-package consult
   :ensure t
+  :defer t
+  :custom ((consult-narrow-key "<"))
   :bind (
          ;; Mode specific
          ("C-c M-x" . consult-mode-command)
@@ -608,6 +646,7 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (use-package avy
   :ensure t
+  :defer t
   :bind (("M-j" . avy-goto-char-timer))
   :config
   ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
@@ -632,6 +671,7 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (use-package dired-subtree
   :ensure t
+  :defer t
   :after dired
   :bind (:map dired-mode-map
               ("<tab>" . dired-subtree-toggle)
@@ -642,21 +682,25 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (use-package nerd-icons-completion
   :ensure t
+  :defer t
   :after marginalia
   :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
 (use-package nerd-icons-corfu
   :ensure t
+  :defer t
   :after corfu
   :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 (use-package nerd-icons-dired
   :ensure t
+  :defer t
   :hook (dired-mode . nerd-icons-dired-mode))
 
 (use-package multiple-cursors
   :ensure t
+  :defer t
   :bind (("C-S-c C-S-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
@@ -665,6 +709,7 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (use-package helpful
   :ensure t
+  :defer t
   :bind (([remap describe-function] . helpful-callable)
          ([remap describe-variable] . helpful-variable)
          ([remap describe-key]      . helpful-key)
@@ -685,11 +730,14 @@ reuse it's window, otherwise create new one."
 
 (use-package ws-butler
   :ensure t
+  :defer t
+  :custom ((ws-butler-keep-whitespace-before-point nil))
   :hook ((prog-mode . ws-butler-mode)
          (text-mode . ws-butler-mode)))
 
 (use-package iedit
   :ensure t
+  :defer t
   :bind (("C-;" . iedit-mode)))
 
 ;; Org mode
@@ -716,6 +764,7 @@ reuse it's window, otherwise create new one."
 (keymap-global-set "C-c c" #'org-capture)
 
 (use-package org
+  :defer t
   :bind (:map org-mode-map
               ("C-," . nil))
   :config
@@ -727,14 +776,21 @@ reuse it's window, otherwise create new one."
 
 (use-package with-editor
   :ensure t
+  :defer t
   :bind (([remap async-shell-command] . with-editor-async-shell-command)
          ([remap shell-command] . with-editor-shell-command)))
 
 (use-package eglot
+  :defer t
   :hook (;; (clojure-mode . eglot-ensure)
          ;; (clojure-ts-mode . eglot-ensure)
          (go-mode . eglot-ensure)
          (go-ts-mode . eglot-ensure))
+  :custom ((eglot-autoshutdown t)
+           (eglot-connect-timeout 600)
+           (eglot-events-buffer-size 0)
+           (eglot-extend-to-xref t)
+           (eglot-report-progress nil))
   :bind (:map eglot-mode-map
               ("C-c e" . eglot-code-actions))
   :config
@@ -768,22 +824,27 @@ buffer name when eglot is enabled."
 
 (use-package jarchive
   :ensure t
+  :defer t
   :hook ((clojure-mode . jarchive-mode)
          (clojure-ts-mode . jarchive-mode)))
 
 (use-package jdecomp
   :ensure t
+  :defer t
+  :custom ((jdecomp-decompiler-paths '((cfr . "~/bin/cfr-0.152.jar"))))
   :config
   (jdecomp-mode 1))
 
 (use-package dumb-jump
   :ensure t
+  :defer t
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
 
 (use-package eat
   :ensure t
+  :defer t
   :after eshell
   :hook ((eshell-first-time-mode . eat-eshell-visual-command-mode)
          (eshell-first-time-mode . eat-eshell-mode)))
@@ -792,6 +853,8 @@ buffer name when eglot is enabled."
 
 (use-package clojure-mode
   :ensure t
+  :defer t
+  :custom ((clojure-toplevel-inside-comment-form t))
   :config
   (defun clojure-copy-ns ()
     "Save the current clojure ns to the kill ring."
@@ -821,12 +884,20 @@ buffer name when eglot is enabled."
 
 (use-package cider
   :ensure t
+  :defer t
+  :custom ((cider-eldoc-display-for-symbol-at-point nil)
+           (cider-repl-display-help-banner nil)
+           (cider-repl-display-in-current-window nil)
+           (cider-repl-pop-to-buffer-on-connect 'display-only)
+           (cider-test-fail-fast nil)
+           (cider-xref-fn-depth 90))
   :bind (:map cider-mode-map
               ("C-c M-." . cider-find-var)
               ("C-c C-j C-j" . cider-eval-print-last-sexp)))
 
 (use-package markdown-mode
   :ensure t
+  :defer t
   :hook ((markdown-mode . auto-fill-mode)
          (markdown-mode . variable-pitch-mode)))
 
@@ -834,6 +905,7 @@ buffer name when eglot is enabled."
 ;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
 (use-package go-mode
   :ensure t
+  :defer t
   :bind (:map go-mode-map
               ("C-c m r" . go-run))
   :config
@@ -855,6 +927,7 @@ buffer name when eglot is enabled."
 
 (use-package gotest
   :ensure t
+  :defer t
   :after go-mode
   :bind (:map go-mode-map
               ("C-c t f" . go-test-current-file)
@@ -866,6 +939,7 @@ buffer name when eglot is enabled."
 
 (use-package dape
   :ensure t
+  :defer t
   :config
   ;; (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
 
@@ -897,6 +971,7 @@ buffer name when eglot is enabled."
 
 (use-package corfu
   :ensure t
+  :defer t
   :hook (corfu-mode . corfu-popupinfo-mode)
   :bind (:map corfu-map
               ("SPC" . corfu-insert-separator))
@@ -924,6 +999,7 @@ buffer name when eglot is enabled."
 
 (use-package sly
   :ensure t
+  :defer t
   :config
   (setq inferior-lisp-program "sbcl")
   (defun sly-eval-last-expression-in-repl ()
@@ -954,20 +1030,22 @@ buffer name when eglot is enabled."
 
 (use-package sqlformat
   :ensure t
+  :defer t
+  :custom ((sqlformat-args '("-s2" "-g"))
+           (sqlformat-command 'pgformatter))
   :bind (:map sql-mode-map
               ("C-c C-f" . sqlformat-buffer)))
 
 (use-package jinx
   :ensure t
+  :defer t
   :hook (after-init . global-jinx-mode)
   :bind (("s-;" . jinx-correct))
-  :config
-  (with-eval-after-load 'vertico-multiform
-    (add-to-list 'vertico-multiform-categories
-                 '(jinx grid (vertico-grid-annotate . 20)))))
+  :custom ((jinx-languages "en_US en_CA")))
 
 (use-package cape
   :ensure t
+  :defer t
   :bind (("C-c p" . cape-prefix-map))
   :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
@@ -976,16 +1054,20 @@ buffer name when eglot is enabled."
 
 (use-package pulsar
   :ensure t
+  :defer t
+  :custom ((pulsar-face 'pulsar-blue))
   :config
   (pulsar-global-mode))
 
 (use-package casual-dired
   :ensure t
+  :defer t
   :bind (:map dired-mode-map
               ("C-o" . #'casual-dired-tmenu)))
 
 (use-package eglot-booster
   :ensure t
+  :defer t
   :after eglot
   :config
   (eglot-booster-mode))
