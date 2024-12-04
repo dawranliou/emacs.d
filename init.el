@@ -16,14 +16,6 @@
 ;;; Package Management
 (package-initialize)
 
-(defmacro external-package (package &rest body)
-  "Eval BODY only if PACKAGE is installed."
-  (declare (indent 1) (debug (form def-body)))
-  `(if (package-installed-p ',package)
-       (progn ,@body)
-     (warn "External package \"%s\" is not installed... skipping config."
-           (symbol-name ',package))))
-
 ;;; Treesitter
 
 ;; https://robbmann.io/posts/emacs-treesit-auto/
@@ -506,158 +498,173 @@ With a prefix argument, exit eshell before restoring previous config."
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
 ;;; 3rd Party Packages
-(external-package which-key
-  (add-hook 'after-init-hook #'which-key-mode))
+(use-package which-key
+  :ensure t
+  :hook (after-init . which-key-mode))
 
-(external-package orderless
-  (setq completion-category-defaults nil))
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides '((file (styles partial-completion)))))
 
-(external-package vertico
-  (add-hook 'after-init-hook #'vertico-mode))
+(use-package vertico
+  :ensure t
+  :hook (after-init . vertico-mode))
 
-(external-package marginalia
-  (add-hook 'after-init-hook #'marginalia-mode))
+(use-package marginalia
+  :ensure t
+  :hook (after-init . marginalia-mode))
 
-(external-package embark
-  (keymap-global-set "C-." #'embark-act)
-  (keymap-global-set "C-h B" #'embark-bindings)
-  (keymap-global-set "M-n" #'embark-next-symbol)
-  (keymap-global-set "M-s n" #'embark-next-symbol)
-  (keymap-global-set "M-p" #'embark-previous-symbol)
-  (keymap-global-set "M-s p" #'embark-previous-symbol)
-  (autoload #'embark-next-symbol "embark" nil t)
-  (autoload #'embark-previous-symbol "embark" nil t)
+(use-package embark
+  :ensure t
+  :commands (embark-next-symbol embark-previous-symbol)
+  :bind (("C-." . embark-act)
+         ("C-h B" . embark-bindings)
+         ("M-n" . embark-next-symbol)
+         ("M-s n" . embark-next-symbol)
+         ("M-p" . embark-previous-symbol)
+         ("M-s p" . embark-previous-symbol))
+  :config
   (setq prefix-help-command #'embark-prefix-help-command))
 
-(external-package consult
-  ;; mode specific
-  (keymap-global-set "C-c M-x" #'consult-mode-command)
-  (keymap-global-set "C-c h" #'consult-history)
-  (keymap-global-set "C-c k" #'consult-kmacro)
-  (keymap-global-set "C-c m" #'consult-man)
-  (keymap-global-set "C-c i" #'consult-info)
-  (keymap-global-set "<remap> <Info-search>" #'consult-info)
-
-  ;; ctl-x-map
-  (keymap-global-set "C-x M-:" #'consult-complex-command)
-  (keymap-global-set "C-x b" #'consult-buffer) ; was #'switch-to-buffer
-  (keymap-global-set "C-x 4 b" #'consult-buffer-other-window) ; was switch-to-buffer-other-window
-  (keymap-global-set "C-x 5 b" #'consult-buffer-other-frame)  ; was switch-to-buffer-other-frame
-  (keymap-global-set "C-x t b" #'consult-buffer-other-tab)    ; was switch-to-buffer-other-tab
-  (keymap-global-set "C-x r b" #'consult-bookmark) ; was #'bookmark-jump
-  (keymap-global-set "C-x p b" #'consult-project-buffer) ; was #'project-switch-to-buffer
-
-  ;; other
-  (keymap-global-set "M-y" #'consult-yank-pop) ; was #'yank-pop
-
-  ;; register
-  (keymap-global-set "M-#" #'consult-register-load)
-  (keymap-global-set "M-'" #'consult-register-store) ; was #'abbrev-prefix-mark
-  (keymap-global-set "C-M-#" #'consult-register)
+(use-package consult
+  :ensure t
+  :bind (
+         ;; Mode specific
+         ("C-c M-x" . consult-mode-command)
+         ("C-c h" . consult-history)
+         ("C-c k" . consult-kmacro)
+         ("C-c m" . consult-man)
+         ("C-c i" . consult-info)
+         ([remap Info-search] . consult-info)
+         ;; ctl-x-map
+         ("C-x M-:" . consult-complex-command)
+         ("C-x b" . consult-buffer) ; was #'switch-to-buffer
+         ("C-x 4 b" . consult-buffer-other-window) ; was switch-to-buffer-other-window
+         ("C-x 5 b" . consult-buffer-other-frame)  ; was switch-to-buffer-other-frame
+         ("C-x t b" . consult-buffer-other-tab)    ; was switch-to-buffer-other-tab
+         ("C-x r b" . consult-bookmark) ; was #'bookmark-jump
+         ("C-x p b" . consult-project-buffer) ; was #'project-switch-to-buffer
+         ;; other
+         ("M-y" . consult-yank-pop) ; was #'yank-pop
+         ;; register
+         ("M-#" . consult-register-load)
+         ("M-'" . consult-register-store) ; was #'abbrev-prefix-mark
+         ("C-M-#" . consult-register)
+         ;; goto-map
+         ("M-g e" . consult-compile-error)
+         ("M-g f" . consult-flymake)
+         ("M-g g" . consult-goto-line) ; was goto-line
+         ("M-g M-g" . consult-goto-line) ; was goto-line
+         ("M-g o" . consult-outline)     ; Alternative: consult-org-heading
+         ("M-g m" . consult-mark)
+         ("M-g k" . consult-global-mark)
+         ("M-g i" . consult-imenu) ; was imenu
+         ("M-g I" . consult-imenu-multi) ; was imenu
+         ;; search-map
+         ("M-s d" . consult-find) ; Alternative: consult-fd
+         ("M-s c" . consult-locate)
+         ("M-s g" . consult-grep)
+         ("M-s G" . consult-git-grep)
+         ("M-s r" . consult-ripgrep)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
+         ("M-s k" . consult-keep-lines)
+         ("M-s u" . consult-focus-lines)
+         ;; isearch integration
+         ("M-s e" . consult-isearch-history)
+         :map isearch-mode-map
+         ("M-e" . consult-isearch-history) ; was isearch-edit-string
+         ("M-s e" . consult-isearch-history) ; was isearch-edit-string
+         ("M-s l" . consult-line) ; needed by consult-line to detect isearch
+         ("M-s L" . consult-line-multi) ; needed by consult-line to detect isearh
+         ;; minibuffer history
+         :map minibuffer-local-map
+         ("M-s" . consult-history) ; was #'next-matching-history-element
+         ("M-r" . consult-history) ; was #'previous-matching-history-element
+         )
+  
+  :config
   (setq register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-
-  ;; goto-map
-  (keymap-global-set "M-g e" #'consult-compile-error)
-  (keymap-global-set "M-g f" #'consult-flymake)
-  (keymap-global-set "M-g g" #'consult-goto-line) ; was goto-line
-  (keymap-global-set "M-g M-g" #'consult-goto-line) ; was goto-line
-  (keymap-global-set "M-g o" #'consult-outline)     ; Alternative: consult-org-heading
-  (keymap-global-set "M-g m" #'consult-mark)
-  (keymap-global-set "M-g k" #'consult-global-mark)
-  (keymap-global-set "M-g i" #'consult-imenu) ; was imenu
-  (keymap-global-set "M-g I" #'consult-imenu-multi) ; was imenu
-
-  ;; search-map
-  (keymap-global-set "M-s d" #'consult-find) ; Alternative: consult-fd
-  (keymap-global-set "M-s c" #'consult-locate)
-  (keymap-global-set "M-s g" #'consult-grep)
-  (keymap-global-set "M-s G" #'consult-git-grep)
-  (keymap-global-set "M-s r" #'consult-ripgrep)
-  (keymap-global-set "M-s l" #'consult-line)
-  (keymap-global-set "M-s L" #'consult-line-multi)
-  (keymap-global-set "M-s k" #'consult-keep-lines)
-  (keymap-global-set "M-s u" #'consult-focus-lines)
-  (keymap-global-set "M-s e" #'consult-isearch-history)
-
-  ;; isearch integration
-  (keymap-set isearch-mode-map "M-e" #'consult-isearch-history) ; was isearch-edit-string
-  (keymap-set isearch-mode-map "M-s e" #'consult-isearch-history) ; was isearch-edit-string
-  (keymap-set isearch-mode-map "M-s l" #'consult-line) ; needed by consult-line to detect isearch
-  (keymap-set isearch-mode-map "M-s L" #'consult-line-multi) ; needed by consult-line to detect isearh
-
-  ;; minibuffer history
-  (keymap-set minibuffer-local-map "M-s" #'consult-history) ; was #'next-matching-history-element
-  (keymap-set minibuffer-local-map "M-r" #'consult-history) ; was #'previous-matching-history-element
-
-  (with-eval-after-load 'consult
-    (consult-customize
-     consult-theme :preview-key '(:debounce 0.2 any)
-     consult-ripgrep consult-git-grep consult-grep
-     consult-bookmark consult-recent-file consult-xref
-     consult--source-bookmark consult--source-file-register
-     consult--source-recent-file consult--source-project-recent-file
-     :preview-key '(:debounce 0.4 any)))
+  (consult-customize
+   consult-theme :preview-key '(:debounce 0.2 any)
+   consult-ripgrep consult-git-grep consult-grep
+   consult-bookmark consult-recent-file consult-xref
+   consult--source-bookmark consult--source-file-register
+   consult--source-recent-file consult--source-project-recent-file
+   :preview-key '(:debounce 0.4 any))
   )
 
-(external-package avy
-  (keymap-global-set "M-j" 'avy-goto-char-timer)
+(use-package avy
+  :ensure t
+  :bind (("M-j" . avy-goto-char-timer))
+  :config
+  ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
+  ;; candidate you select. https://github.com/ebittleman/emacs-bedrock
+  (defun avy-action-embark (pt)
+    (unwind-protect
+        (save-excursion
+          (goto-char pt)
+          (embark-act))
+      (select-window
+       (cdr (ring-ref avy-ring 0)))
+      t))
 
-  (with-eval-after-load 'avy
-    ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
-    ;; candidate you select. https://github.com/ebittleman/emacs-bedrock
-    (defun avy-action-embark (pt)
-      (unwind-protect
-          (save-excursion
-            (goto-char pt)
-            (embark-act))
-        (select-window
-         (cdr (ring-ref avy-ring 0)))
-        t))
+  (defun avy-action-exchange (pt)
+    "Exchange sexp at PT with the one at point."
+    (set-mark pt)
+    (transpose-sexps 0)
+    (pulsar-pulse-line))
 
-    (defun avy-action-exchange (pt)
-      "Exchange sexp at PT with the one at point."
-      (set-mark pt)
-      (transpose-sexps 0)
-      (pulsar-pulse-line))
+  (setf (alist-get ?. avy-dispatch-alist) #'avy-action-embark)
+  (setf (alist-get ?e avy-dispatch-alist) #'avy-action-exchange))
 
-    (setf (alist-get ?. avy-dispatch-alist) #'avy-action-embark)
-    (setf (alist-get ?e avy-dispatch-alist) #'avy-action-exchange)))
+(use-package dired-subtree
+  :ensure t
+  :after dired
+  :bind (:map dired-mode-map
+              ("<tab>" . dired-subtree-toggle)
+              ("<backtab>" . dired-subtree-remove))
 
-(external-package dired-subtree
-  (with-eval-after-load 'dired
-    (keymap-set dired-mode-map "<tab>" #'dired-subtree-toggle)
-    (keymap-set dired-mode-map "<backtab>" #'dired-subtree-remove))
+  :config
   (setq dired-subtree-use-backgrounds nil))
 
-(external-package nerd-icons-completion
-  (with-eval-after-load 'marginalia
-    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup)))
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
-(external-package nerd-icons-corfu
-  (with-eval-after-load 'corfu
-    (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)))
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
-(external-package nerd-icons-dired
-  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
+(use-package nerd-icons-dired
+  :ensure t
+  :hook (dired-mode . nerd-icons-dired-mode))
 
-(external-package multiple-cursors
-  (keymap-global-set "C-S-c C-S-c" #'mc/edit-lines)
-  (keymap-global-set "C->" #'mc/mark-next-like-this)
-  (keymap-global-set "C-<" #'mc/mark-previous-like-this)
-  (keymap-global-set "C-c C-<" #'mc/mark-all-like-this)
-  (keymap-global-set "C-S-<mouse-1>" 'mc/add-cursor-on-click))
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)))
 
-(external-package helpful
-  ;; Remap standard commands.
-  (keymap-substitute global-map #'describe-function #'helpful-callable)
-  (keymap-substitute global-map #'describe-variable #'helpful-variable)
-  (keymap-substitute global-map #'describe-key      #'helpful-key)
-  (keymap-substitute global-map #'describe-symbol   #'helpful-symbol)
-  (keymap-global-set "C-c C-d" #'helpful-at-point)
-  (keymap-global-set "C-h C"   #'helpful-command)
-  (keymap-global-set "C-h F"   #'describe-face)
-
+(use-package helpful
+  :ensure t
+  :bind (([remap describe-function] . helpful-callable)
+         ([remap describe-variable] . helpful-variable)
+         ([remap describe-key]      . helpful-key)
+         ([remap describe-symbol]   . helpful-symbol)
+         ("C-c C-d"                 . helpful-at-point)
+         ("C-h C"                   . helpful-command)
+         ("C-h F"                   . describe-face))
+  :config
   ;; https://d12frosted.io/posts/2019-06-26-emacs-helpful.html
   (defun helpful-switch-to-buffer (buffer-or-name)
     "Switch to helpful BUFFER-OR-NAME.
@@ -668,12 +675,14 @@ reuse it's window, otherwise create new one."
         (switch-to-buffer buffer-or-name)
       (pop-to-buffer buffer-or-name))))
 
-(external-package ws-butler
-  (add-hook 'prog-mode-hook 'ws-butler-mode)
-  (add-hook 'text-mode-hook 'ws-butler-mode))
+(use-package ws-butler
+  :ensure t
+  :hook ((prog-mode . ws-butler-mode)
+         (text-mode . ws-butler-mode)))
 
-(external-package iedit
-  (keymap-global-set "C-;" 'iedit-mode))
+(use-package iedit
+  :ensure t
+  :bind (("C-;" . iedit-mode)))
 
 ;; Org mode
 
@@ -707,106 +716,118 @@ reuse it's window, otherwise create new one."
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
 
-(external-package with-editor
-  (keymap-substitute global-map #'async-shell-command #'with-editor-async-shell-command)
-  (keymap-substitute global-map #'shell-command #'with-editor-shell-command))
+(use-package with-editor
+  :ensure t
+  :bind (([remap async-shell-command] . with-editor-async-shell-command)
+         ([remap shell-command] . with-editor-shell-command)))
 
-(external-package eglot
-  ;; (add-hook 'clojure-mode-hook 'eglot-ensure)
-  ;; (add-hook 'clojure-ts-mode-hook 'eglot-ensure)
-  (add-hook 'go-mode-hook 'eglot-ensure)
-  (add-hook 'go-ts-mode-hook 'eglot-ensure)
+(use-package eglot
+  :hook (;; (clojure-mode . eglot-ensure)
+         ;; (clojure-ts-mode . eglot-ensure)
+         (go-mode . eglot-ensure)
+         (go-ts-mode . eglot-ensure))
+  :bind (:map eglot-mode-map
+              ("C-c e" . eglot-code-actions))
+  :config
+  (fset #'jsonrpc--log-event #'ignore) ; massive perf boost---don't log every event
 
-  (with-eval-after-load 'eglot
-    (fset #'jsonrpc--log-event #'ignore) ; massive perf boost---don't log every event
-
-    (keymap-set eglot-mode-map "C-c e" #'eglot-code-actions)
-    (defun xref-find-references-with-eglot (orig-fun &rest args)
-      "An advice function that gives xref-find-definitions a unique
+  (defun xref-find-references-with-eglot (orig-fun &rest args)
+    "An advice function that gives xref-find-definitions a unique
 buffer name when eglot is enabled."
-      (if (bound-and-true-p eglot--managed-mode)
-          (let ((xref-buffer-name (format "%s %s"
-                                          xref-buffer-name
-                                          (symbol-at-point))))
-            (apply orig-fun args))
-        (apply orig-fun args)))
+    (if (bound-and-true-p eglot--managed-mode)
+        (let ((xref-buffer-name (format "%s %s"
+                                        xref-buffer-name
+                                        (symbol-at-point))))
+          (apply orig-fun args))
+      (apply orig-fun args)))
 
-    (advice-add 'xref-find-references :around
-                #'xref-find-references-with-eglot)
+  (advice-add 'xref-find-references :around
+              #'xref-find-references-with-eglot)
 
-    (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
 
-    (defun eglot-disable-in-cider ()
-      (when (eglot-managed-p)
-        (if (bound-and-true-p cider-mode)
-            (progn
-              (remove-hook 'completion-at-point-functions 'eglot-completion-at-point)
-              (remove-hook 'xref-backend-functions 'eglot-xref-backend))
-          (add-hook 'completion-at-point-functions 'eglot-completion-at-point nil t)
-          (add-hook 'xref-backend-functions 'eglot-xref-backend))))
-    (add-hook 'cider-mode-hook #'eglot-disable-in-cider)
-    (add-hook 'eglot-managed-mode-hook #'eglot-disable-in-cider)))
+  (defun eglot-disable-in-cider ()
+    (when (eglot-managed-p)
+      (if (bound-and-true-p cider-mode)
+          (progn
+            (remove-hook 'completion-at-point-functions 'eglot-completion-at-point)
+            (remove-hook 'xref-backend-functions 'eglot-xref-backend))
+        (add-hook 'completion-at-point-functions 'eglot-completion-at-point nil t)
+        (add-hook 'xref-backend-functions 'eglot-xref-backend))))
+  (add-hook 'cider-mode-hook #'eglot-disable-in-cider)
+  (add-hook 'eglot-managed-mode-hook #'eglot-disable-in-cider))
 
-(external-package jarchive
-  (add-hook 'clojure-mode-hook #'jarchive-mode)
-  (add-hook 'clojure-ts-mode-hook #'jarchive-mode))
+(use-package jarchive
+  :ensure t
+  :hook ((clojure-mode . jarchive-mode)
+         (clojure-ts-mode . jarchive-mode)))
 
-(external-package jdecomp
+(use-package jdecomp
+  :ensure t
+  :config
   (jdecomp-mode 1))
 
-(external-package dumb-jump
+(use-package dumb-jump
+  :ensure t
+  :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (with-eval-after-load 'xref
-    (setq xref-show-definitions-function #'xref-show-definitions-completing-read)))
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
 
-(external-package eat
-  (with-eval-after-load 'eshell
-    (add-hook 'eshell-first-time-mode-hook #'eat-eshell-visual-command-mode)
-    (add-hook 'eshell-first-time-mode-hook #'eat-eshell-mode)))
+(use-package eat
+  :ensure t
+  :after eshell
+  :hook ((eshell-first-time-mode . eat-eshell-visual-command-mode)
+         (eshell-first-time-mode . eat-eshell-mode)))
 
 ;;; Language major modes
 
-(external-package clojure-mode
-  (with-eval-after-load 'clojure-mode
-    (defun clojure-copy-ns ()
-      "Save the current clojure ns to the kill ring."
-      (interactive)
-      (let ((ns (funcall clojure-expected-ns-function)))
-        (-kill-and-echo ns)))
-    (defun clojure-copy-ns-var ()
-      "Save the current clojure var to the kill ring."
-      (interactive)
-      (-kill-and-echo
-       (format "%s/%s" (clojure-find-ns) (clojure-current-defun-name))))
-    (keymap-set clojure-mode-map "C-c w" #'clojure-copy-ns-var)
-    (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)
+(use-package clojure-mode
+  :ensure t
+  :config
+  (defun clojure-copy-ns ()
+    "Save the current clojure ns to the kill ring."
+    (interactive)
+    (let ((ns (funcall clojure-expected-ns-function)))
+      (-kill-and-echo ns)))
+  (defun clojure-copy-ns-var ()
+    "Save the current clojure var to the kill ring."
+    (interactive)
+    (-kill-and-echo
+     (format "%s/%s" (clojure-find-ns) (clojure-current-defun-name))))
+  (keymap-set clojure-mode-map "C-c w" #'clojure-copy-ns-var)
+  (keymap-set clojure-mode-map "C-c W" #'clojure-copy-ns)
 
-    (with-eval-after-load 'project
-      (defun project-find-clojure-project (dir)
-        (when-let ((root (or (locate-dominating-file dir "project.clj")
-                             (locate-dominating-file dir "deps.edn"))))
-          (cons 'clojure-project root)))
+  (with-eval-after-load 'project
+    (defun project-find-clojure-project (dir)
+      (when-let ((root (or (locate-dominating-file dir "project.clj")
+                           (locate-dominating-file dir "deps.edn"))))
+        (cons 'clojure-project root)))
 
-      (cl-defmethod project-root ((project (head clojure-project)))
-        (cdr project))
+    (cl-defmethod project-root ((project (head clojure-project)))
+      (cdr project))
 
-      ;; (add-hook 'project-find-functions #'project-find-clojure-project)
-      ;; (remove-hook 'project-find-functions #'project-find-clojure-project)
-      )))
+    ;; (add-hook 'project-find-functions #'project-find-clojure-project)
+    ;; (remove-hook 'project-find-functions #'project-find-clojure-project)
+    ))
 
+(use-package cider
+  :ensure t
+  :bind (:map cider-mode-map
+              ("C-c M-." . cider-find-var)
+              ("C-c C-j C-j" . cider-eval-print-last-sexp)))
 
-(external-package cider
-  (with-eval-after-load 'cider
-    (keymap-set cider-mode-map "C-c M-." 'cider-find-var)
-    (keymap-set cider-mode-map "C-c C-j C-j" #'cider-eval-print-last-sexp)))
-
-(external-package markdown-mode
-  (add-hook 'markdown-mode-hook 'auto-fill-mode)
-  (add-hook 'markdown-mode-hook #'variable-pitch-mode))
+(use-package markdown-mode
+  :ensure t
+  :hook ((markdown-mode . auto-fill-mode)
+         (markdown-mode . variable-pitch-mode)))
 
 ;; Go lang
 ;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
-(external-package go-mode
+(use-package go-mode
+  :ensure t
+  :bind (:map go-mode-map
+              ("C-c m r" . go-run))
+  :config
   (with-eval-after-load 'project
     (defun project-find-go-module (dir)
       (when-let ((root (locate-dominating-file dir "go.mod")))
@@ -821,47 +842,58 @@ buffer name when eglot is enabled."
     (add-hook 'before-save-hook #'eglot-format-buffer -10 t))
 
   (add-hook 'go-mode-hook #'before-save-go-mode)
-  (add-hook 'go-ts-mode-hook #'before-save-go-mode)
+  (add-hook 'go-ts-mode-hook #'before-save-go-mode))
 
-  (with-eval-after-load 'go-mode
-    (keymap-set go-mode-map "C-c m r" #'go-run)))
+(use-package gotest
+  :ensure t
+  :after go-mode
+  :bind (:map go-mode-map
+              ("C-c t f" . go-test-current-file)
+              ("C-c t t" . go-test-current-test)
+              ("C-c t j" . go-test-current-project)
+              ("C-c t b" . go-test-current-benchmark)
+              ("C-c t c" . go-test-current-coverage)
+              ("C-c t x" . go-run)))
 
-(external-package gotest
-  (with-eval-after-load 'go-mode
-    (keymap-set go-mode-map "C-c t f" #'go-test-current-file)
-    (keymap-set go-mode-map "C-c t t" #'go-test-current-test)
-    (keymap-set go-mode-map "C-c t j" #'go-test-current-project)
-    (keymap-set go-mode-map "C-c t b" #'go-test-current-benchmark)
-    (keymap-set go-mode-map "C-c t c" #'go-test-current-coverage)
-    (keymap-set go-mode-map "C-c t x" #'go-run)))
-
-(external-package dape
+(use-package dape
+  :ensure t
+  :config
   ;; (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
 
   ;; To not display info and/or buffers on startup
   ;; (remove-hook 'dape-start-hook 'dape-info)
-  (remove-hook 'dape-start-hook 'dape-repl)
 
-  (with-eval-after-load 'dape
-    ;; Add Go debug configuration
-    (add-to-list 'dape-configs
-                 `(go-debug-main
-                   modes (go-mode go-ts-mode)
-                   command "dlv"
-                   command-args ("dap" "--listen" "127.0.0.1::autoport")
-                   command-cwd dape-command-cwd
-                   port :autoport
-                   :type "debug"
-                   :request "launch"
-                   :name "Debug Go Program"
-                   :cwd "."
-                   :program "."
-                   :args []))))
+  ;; Add Go debug configuration
+  (setq dape-buffer-window-arrangement 'right)
+  (setq dape-request-timeout 600)
+  (setq dape-inlay-hints t)
+  (dape-breakpoint-global-mode)
+  (add-to-list 'dape-configs
+               `(go-test
+                 modes (go-mode go-ts-mode)
+                 command "dlv"
+                 command-args ("dap" "--listen" "127.0.0.1::autoport" "--log")
+                 command-cwd default-directory ;dape-command-cwd
+                 ;; host "127.0.0.1"
+                 port :autoport
+                 :type "go"
+                 :name "debug test"
+                 :request "launch"
+                 :mode "test"
+                 ;; :cwd default-directory
+                 :showLog "true"
+                 :program "."
+                 :buildFlags ["-tags=integration"]
+                 :args ["-ginkgo.failFast" "-ginkgo.trace" "-ginkgo.noColor" "-ginkgo.focus" "trains on all documents and inserts all the training metadata when it's done"])))
 
-(external-package corfu
+(use-package corfu
+  :ensure t
+  :hook (corfu-mode . corfu-popupinfo-mode)
+  :bind (:map corfu-map
+              ("SPC" . corfu-insert-separator))
+  :config
   (global-corfu-mode)
-  (add-hook 'corfu-mode-hook #'corfu-popupinfo-mode)
-  (keymap-set corfu-map "SPC" #'corfu-insert-separator)
+
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer."
     (when (local-variable-p 'completion-at-point-functions)
@@ -881,70 +913,81 @@ buffer name when eglot is enabled."
   ;; (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer)
   )
 
-(external-package flyspell
+(use-package flyspell
+  :config
   (with-eval-after-load 'flyspell
     ;; (keymap-set flyspell-mode-map "C-M-i" nil) ; Reserved for completion-at-point
     ;; (keymap-set flyspell-mode-map "C-." nil)  ; Reserved for embark-act
     ;; (keymap-set flyspell-mode-map "C-;" nil) ; Reserved for iedit
     ))
 
-(external-package sly
+(use-package sly
+  :ensure t
+  :config
   (setq inferior-lisp-program "sbcl")
-  (with-eval-after-load 'sly
-    (defun sly-eval-last-expression-in-repl ()
-      "Evaluates last expression in the Sly mREPL."
-      (interactive)
-      (let ((expr (sly-last-expression))
-            (buffer-name (buffer-name (current-buffer)))
-            (new-package (sly-current-package))
-            (yank-back nil))
-        (with-current-buffer (sly-mrepl--find-buffer)
-          (unless (eq (current-buffer) (window-buffer))
-            (pop-to-buffer (current-buffer) t))
-          ;; Kill pending input in the REPL
-          (when (< (marker-position (sly-mrepl--mark)) (point))
-            (let ((inhibit-read-only t))
-              (kill-region (marker-position (sly-mrepl--mark)) (point)))
-            (setq yank-back t))
-          (goto-char (point-max))
-          (insert-before-markers (format "\n;;; from %s\n" buffer-name))
-          (when new-package
-            (sly-mrepl-set-package new-package))
-          (insert expr)
-          (sly-mrepl-return)
-          ;; Put pending input back
-          (when yank-back
-            (yank)))))
-    (keymap-set sly-mode-map "C-c C-j" 'sly-eval-last-expression-in-repl)))
+  (defun sly-eval-last-expression-in-repl ()
+    "Evaluates last expression in the Sly mREPL."
+    (interactive)
+    (let ((expr (sly-last-expression))
+          (buffer-name (buffer-name (current-buffer)))
+          (new-package (sly-current-package))
+          (yank-back nil))
+      (with-current-buffer (sly-mrepl--find-buffer)
+        (unless (eq (current-buffer) (window-buffer))
+          (pop-to-buffer (current-buffer) t))
+        ;; Kill pending input in the REPL
+        (when (< (marker-position (sly-mrepl--mark)) (point))
+          (let ((inhibit-read-only t))
+            (kill-region (marker-position (sly-mrepl--mark)) (point)))
+          (setq yank-back t))
+        (goto-char (point-max))
+        (insert-before-markers (format "\n;;; from %s\n" buffer-name))
+        (when new-package
+          (sly-mrepl-set-package new-package))
+        (insert expr)
+        (sly-mrepl-return)
+        ;; Put pending input back
+        (when yank-back
+          (yank)))))
+  (keymap-set sly-mode-map "C-c C-j" 'sly-eval-last-expression-in-repl))
 
-(external-package sqlformat
-  (with-eval-after-load 'sql
-    (keymap-set sql-mode-map "C-c C-f" #'sqlformat-buffer)))
+(use-package sqlformat
+  :ensure t
+  :bind (:map sql-mode-map
+              ("C-c C-f" . sqlformat-buffer)))
 
-(external-package jinx
-  (add-hook 'emacs-startup-hook #'global-jinx-mode)
-  (keymap-global-set "s-;" #'jinx-correct)
+(use-package jinx
+  :ensure t
+  :hook (after-init . global-jinx-mode)
+  :bind (("s-;" . jinx-correct))
+  :config
   (with-eval-after-load 'vertico-multiform
     (add-to-list 'vertico-multiform-categories
                  '(jinx grid (vertico-grid-annotate . 20)))))
 
-(external-package cape
+(use-package cape
+  :ensure t
+  :bind (("C-c p" . cape-prefix-map))
+  :config
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
-  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-keyword))
 
-  (keymap-global-set "C-c p" #'cape-prefix-map))
-
-(external-package pulsar
+(use-package pulsar
+  :ensure t
+  :config
   (pulsar-global-mode))
 
-(external-package casual-dired
-  (with-eval-after-load 'dired
-    (keymap-set dired-mode-map "C-o" #'casual-dired-tmenu)))
+(use-package casual-dired
+  :ensure t
+  :bind (:map dired-mode-map
+              ("C-o" . #'casual-dired-tmenu)))
 
-(external-package eglot-booster
-  (with-eval-after-load 'eglot
-    (eglot-booster-mode)))
+(use-package eglot-booster
+  :ensure t
+  :after eglot
+  :config
+  (eglot-booster-mode))
 
 (provide 'init)
 
