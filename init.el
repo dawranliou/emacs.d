@@ -428,14 +428,20 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (add-hook 'text-mode-hook 'visual-line-mode)
 
-(with-eval-after-load 'dired
-  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
-  (add-hook 'dired-mode-hook 'hl-line-mode)
-  (keymap-set global-map "C-x C-j" #'dired-jump)
+(use-package dired
+  :hook ((dired-mode . dired-hide-details-mode)
+         (dired-mode . hl-line-mode))
+  :bind (("C-x C-j" . dired-jump))
+  :config
+  (setq dired-auto-revert-buffer t)
+  (setq dired-dwim-target t)
+  (setq dired-recursive-copies 'always)
+  (setq dired-recursive-deletes 'always)
   (require 'dired-x)
   (add-to-list 'dired-omit-extensions ".DS_Store"))
 
-(with-eval-after-load 'project
+(use-package project
+  :config
   ;; Setup the `project-switch-commands'
   (require 'magit-extras)
 
@@ -448,16 +454,23 @@ With a prefix argument, exit eshell before restoring previous config."
   (advice-add 'project-find-regexp :around
               #'project-find-regexp-with-unique-buffer))
 
-(with-eval-after-load 'compile
+(use-package compile
+  :hook (compilation-filter . ansi-color-compilation-filter)
+  :config
   (require 'ansi-color)
-  (ansi-color-for-comint-mode-filter)
-  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
-  )
+  (ansi-color-for-comint-mode-filter))
 
 (add-to-list 'auto-mode-alist
              '("\\.log\\'" . auto-revert-tail-mode))
 
-(with-eval-after-load 'isearch
+(use-package isearch
+  :bind (:map isearch-mode-map
+              ("C-o" . isearch-occur)
+              ("C-<backspace>" . isearch-delete-wrong)
+              ;; DEL during isearch should edit the search string, not jump back
+              ;; to the previous result
+              ([remap isearch-delete-char] . isearch-del-char))
+  :config
   ;; https://www.emacswiki.org/emacs/IncrementalSearch#h5o-4
   (defun isearch-exit-at-start ()
     "Exit search at the beginning of the current match."
@@ -472,15 +485,10 @@ With a prefix argument, exit eshell before restoring previous config."
       (isearch-pop-state))
     (isearch-update))
 
-  (keymap-set isearch-mode-map "C-o" #'isearch-occur)
-  (keymap-set isearch-mode-map "C-<backspace>" #'isearch-delete-wrong)
-  ;; DEL during isearch should edit the search string, not jump back to the
-  ;; previous result
-  (keymap-substitute isearch-mode-map #'isearch-delete-char #'isearch-del-char)
-
   (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
-(with-eval-after-load 'rect
+(use-package rect
+  :config
   ;; https://gist.github.com/jdtsmith/bfa2d692c4fbbffe06b558e4bcf9abec
   (cl-loop for (key def) in
            '(("k" kill-rectangle)       ("t" string-rectangle)
@@ -707,9 +715,10 @@ reuse it's window, otherwise create new one."
 (keymap-global-set "C-c g" #'org-clock-goto)
 (keymap-global-set "C-c c" #'org-capture)
 
-(with-eval-after-load 'org
-  (keymap-set org-mode-map "C-," nil)
-
+(use-package org
+  :bind (:map org-mode-map
+              ("C-," . nil))
+  :config
   (require 'ox-md)
   (require 'org-tempo)
   (require 'org-habit)
@@ -912,14 +921,6 @@ buffer name when eglot is enabled."
   ;; (keymap-unset corfu-map "M-m")
   ;; (add-to-list 'corfu-continue-commands #'corfu-move-to-minibuffer)
   )
-
-(use-package flyspell
-  :config
-  (with-eval-after-load 'flyspell
-    ;; (keymap-set flyspell-mode-map "C-M-i" nil) ; Reserved for completion-at-point
-    ;; (keymap-set flyspell-mode-map "C-." nil)  ; Reserved for embark-act
-    ;; (keymap-set flyspell-mode-map "C-;" nil) ; Reserved for iedit
-    ))
 
 (use-package sly
   :ensure t
