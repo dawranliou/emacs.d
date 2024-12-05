@@ -453,10 +453,10 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (setq x-stretch-cursor t)
 
-(setq fill-column 80)
-(setq truncate-lines t)
+(setq-local fill-column 80)
+(setq-local truncate-lines t)
 (setq truncate-partial-width-windows nil)
-(setq word-wrap t)
+(setq-local word-wrap t)
 
 (setq column-number-mode t)
 
@@ -484,7 +484,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
   (run-with-timer 0.1 nil #'invert-face 'mode-line))
 
 ;;;; UI - Title
-(setq ns-use-proxy-icon nil t)
+(setq ns-use-proxy-icon t)
 (setq-default frame-title-format '("%n "              ; narrowed?
                                    (:eval
                                     (if (buffer-file-name)
@@ -599,6 +599,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 (use-package autorevert
   :defer t
+  :hook (after-init . global-auto-revert-mode)
   :custom ((auto-revert-avoid-polling t)
            (auto-revert-check-vc-info t)
            (auto-revert-stop-on-user-input nil)
@@ -620,7 +621,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 (use-package recentf
   :defer t
-  ;; :hook (after-init . recentf-mode)
+  :hook (after-init . recentf-mode)
   :custom ((recentf-max-saved-items 300)))
 
 (use-package isearch
@@ -944,10 +945,11 @@ reuse it's window, otherwise create new one."
 
 (use-package eglot
   :defer t
-  :hook (;; (clojure-mode . eglot-ensure)
-         ;; (clojure-ts-mode . eglot-ensure)
-         (go-mode . eglot-ensure)
-         (go-ts-mode . eglot-ensure))
+  ;; :hook (;; (clojure-mode . eglot-ensure)
+  ;;        ;; (clojure-ts-mode . eglot-ensure)
+  ;;        (go-mode . eglot-ensure)
+  ;;        (go-ts-mode . eglot-ensure)
+  ;;        )
   :custom ((eglot-autoshutdown t)
            (eglot-connect-timeout 600)
            (eglot-events-buffer-size 0)
@@ -957,6 +959,7 @@ reuse it's window, otherwise create new one."
               ("C-c e" . eglot-code-actions))
   :config
   (fset #'jsonrpc--log-event #'ignore) ; massive perf boost---don't log every event
+  (setq jsonrpc-event-hook nil)
 
   (defun xref-find-references-with-eglot (orig-fun &rest args)
     "An advice function that gives xref-find-definitions a unique
@@ -1107,8 +1110,8 @@ buffer name when eglot is enabled."
 (use-package dape
   :ensure t
   :defer t
+  :hook (dape-display-source . pulse-momentary-highlight-one-line)
   :config
-  ;; (add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
 
   ;; To not display info and/or buffers on startup
   ;; (remove-hook 'dape-start-hook 'dape-info)
