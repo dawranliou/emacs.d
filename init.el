@@ -11,11 +11,26 @@
 
 ;; Opt out customization interface
 (setq custom-file (locate-user-emacs-file "custom.el"))
-;; (load custom-file :no-error-if-file-is-missing)
+(load custom-file :no-error-if-file-is-missing)
 
 ;;; Package Management
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+
+;;; Auto-save and backup
+(setq auto-save-include-big-deletions t)
+(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/var/auto-save" t)))
+(setq auto-save-list-file-prefix "~/.emacs.d/var/auto-save/")
+(setq backup-by-copying t)
+(setq backup-by-copying-when-linked t)
+(setq backup-directory-alist '(("." . "~/.emacs.d/var/backup/")))
+(setq create-lockfiles nil)
+(setq delete-old-versions t)
+(setq kept-new-versions 5)
+(setq kept-old-versions 5)
+(setq kill-buffer-delete-auto-save-files t)
+(setq make-backup-files t)
+(setq version-control t)
 
 ;;; Treesitter
 
@@ -54,20 +69,21 @@
         (zig "https://github.com/GrayJack/tree-sitter-zig")))
 
 (setq major-mode-remap-alist
-      '((sh-mode . bash-ts-mode)
+      '(
+        ;; (sh-mode . bash-ts-mode)
         ;; (clojurec-mode . clojure-ts-mode)
         ;; (clojurescript-mode . clojure-ts-mode)
         ;; (clojure-mode . clojure-ts-mode)
-        (css-mode . css-ts-mode)
+        ;; (css-mode . css-ts-mode)
         (go-mode . go-ts-mode)
         (go-dot-mod-mode . go-mod-ts-mode)
-        (mhtml-mode . html-ts-mode)
-        (sgml-mode . html-ts-mode)
+        ;; (mhtml-mode . html-ts-mode)
+        ;; (sgml-mode . html-ts-mode)
         (java-mode . java-ts-mode)
-        (js-mode . js-ts-mode)
-        (javascript-mode . js-ts-mode)
+        ;; (js-mode . js-ts-mode)
+        ;; (javascript-mode . js-ts-mode)
         (js-json-mode . json-ts-mode)
-        (python-mode . python-ts-mode)
+        ;; (python-mode . python-ts-mode)
         (yaml-mode . yaml-ts-mode)))
 
 (defun install-latest-known-treesitter-grammars ()
@@ -84,21 +100,6 @@
     (setq transpose-sexps-function #'transpose-sexps-default-function))
   (when (eq forward-sentence-function #'treesit-forward-sentence)
     (setq forward-sentence-function #'forward-sentence-default-function)))
-
-(setq-default
- frame-title-format '("%n "              ; narrowed?
-                      (:eval
-                       (if (buffer-file-name)
-                           (abbreviate-file-name (buffer-file-name))
-                         "%b")))
- mode-line-format
- (remove '(vc-mode vc-mode) mode-line-format))
-
-(defun flash-mode-line ()
-  "Flash the modeline on error or warning.
-https://macowners.club/posts/custom-functions-4-ui/"
-  (invert-face 'mode-line)
-  (run-with-timer 0.1 nil #'invert-face 'mode-line))
 
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
@@ -137,7 +138,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (keymap-global-set "C-h P" #'finder-by-keyword)
 (keymap-global-set "C-h L" #'find-library)
 (keymap-global-set "C-z" nil)
-(keymap-substitute global-map #'eval-expression #'pp-eval-expression) ; M-:
+;; (keymap-substitute global-map #'eval-expression #'pp-eval-expression) ; M-:
 ;; (keymap-substitute global-map #'eval-last-sexp #'pp-eval-last-sexp)   ; C-x C-e
 (keymap-set emacs-lisp-mode-map "C-c C-j" #'eval-print-last-sexp)
 (keymap-global-set "<remap> <move-beginning-of-line>" 'move-beginning-of-line+) ; C-a
@@ -389,45 +390,146 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (add-hook 'after-init-hook
           (lambda () (load-theme 'alabaster t)))
+(setq modus-themes-mixed-fonts t)
 
 ;;; UI
+
+(add-hook 'after-init-hook #'context-menu-mode)
+
+(setq cursor-in-non-selected-windows nil)
+(setq frame-resize-pixelwise t)
+
+(setq ring-bell-function 'flash-mode-line)
+(setq visible-bell nil)
 
 ;; Reduce cursor lag by :
 ;; 1. Prevent automatic adjustments to `window-vscroll' for long lines.
 ;; 2. Resolve the issue of random half-screen jumps during scrolling.
 (setq auto-window-vscroll nil)
 
+(add-hook 'after-init-hook #'pixel-scroll-precision-mode)
+
+(setq fast-but-imprecise-scrolling t)
+(setq hscroll-margin 2)
+(setq hscroll-step 1)
+(setq mouse-wheel-flip-direction t)
+(setq mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
+                                    ((meta)) ((control meta) . global-text-scale)
+                                    ((control) . text-scale)))
+(setq mouse-wheel-scroll-amount-horizontal 2)
+(setq mouse-wheel-tilt-scroll t)
+(setq scroll-conservatively 10000)
+(setq scroll-error-top-bottom t)
+(setq scroll-preserve-screen-position t)
+(setq scroll-step 1)
+
+(setq x-stretch-cursor t)
+
+(setq fill-column 80)
+(setq truncate-lines t)
+(setq truncate-partial-width-windows nil)
+(setq word-wrap t)
+
+(setq column-number-mode t)
+
+(setq echo-keystrokes 0.2)
+(setq idle-update-delay 1.0)
+(setq indicate-empty-lines t)
+(setq register-preview-delay 0.5)
+
+;;;; UI - Windows
+(add-hook 'after-init-hook #'winner-mode)
+
+(add-hook 'after-init-hook #'window-divider-mode)
+(setq window-divider-default-bottom-width 1)
+(setq window-divider-default-places t)
+(setq window-divider-default-right-width 1)
+
+;;;; UI - Mode line
+(setq mode-line-compact 'long)
+(setq-default mode-line-format (remove '(vc-mode vc-mode) mode-line-format))
+
+(defun flash-mode-line ()
+  "Flash the modeline on error or warning.
+https://macowners.club/posts/custom-functions-4-ui/"
+  (invert-face 'mode-line)
+  (run-with-timer 0.1 nil #'invert-face 'mode-line))
+
+;;;; UI - Title
+(setq ns-use-proxy-icon nil t)
+(setq-default frame-title-format '("%n "              ; narrowed?
+                                   (:eval
+                                    (if (buffer-file-name)
+                                        (abbreviate-file-name (buffer-file-name))
+                                      "%b"))))
+
+;;;; UI - Minibuffer
+
+(setq enable-recursive-minibuffers t)
+(setq history-length 300)
+
+;;;; UI - Parenthesis
+
+(setq blink-matching-paren nil)
+(setq show-paren-context-when-offscreen 'overlay)
+(setq show-paren-when-point-in-periphery t)
+(setq show-paren-when-point-inside-paren t)
+
 ;;; Indentation and formatting
 
 (setq-default indent-tabs-mode nil)
+(setq-default tab-width 8)
+(setq tab-always-indent t)
+
+;;; File manager
+
+(setq confirm-nonexistent-file-or-buffer nil)
+(setq delete-by-moving-to-trash t)
+(setq ffap-machine-p-known 'reject)
+(setq find-file-suppress-same-file-warnings t)
+(setq find-file-visit-truename t)
+(setq find-ls-option '("-print0 | xargs -0 gls -alhd" . "-ld"))
+(setq kill-do-not-save-duplicates t)
+(setq vc-follow-symlinks t)
+(setq uniquify-buffer-name-style 'post-forward-angle-brackets)
+(setq uniquify-ignore-buffers-re "\"^\\\\*\"")
+(setq uniquify-separator "•")
+
+(add-hook 'after-init-hook #'ffap-bindings)
+(add-hook 'after-init-hook #'global-so-long-mode)
+
+;;; Grep
+
+(setq grep-find-command '("rg -n -H --no-heading -e ''" . 27))
+(setq xref-search-program 'ripgrep)
+(setq xref-show-definitions-function 'consult-xref)
+(setq wgrep-auto-save-buffer t)
+
+;;; Tramp
+
+(setq tramp-auto-save-directory "~/.emacs.d/var/tramp-auto-save/")
+(setq tramp-backup-directory-alist '(("." . "~/.emacs.d/var/backup/")))
+(setq tramp-default-method "ssh")
+
+;;; Text editing
+
+(add-hook 'text-mode-hook 'visual-line-mode)
+
+(setq comment-empty-lines t)
+(add-hook 'after-init-hook #'electric-pair-mode)
+
 
 ;;; Misc
+
+(setq auth-sources '("~/.authinfo.gpg"))
+(setq calendar-mark-holidays-flag t)
+(setq next-error-message-highlight t)
 
 ;; Increase how much is read from processes in a single chunk
 (setq read-process-output-max (* 512 1024))  ; 512kb
 
-;; Do not auto-disable auto-save after deleting large chunks of
-;; text. The purpose of auto-save is to provide a failsafe, and
-;; disabling it contradicts this objective.
-(setq auto-save-include-big-deletions t)
-
 
 ;;; Built-in Packages
-
-(add-hook 'after-init-hook #'context-menu-mode)
-(add-hook 'after-init-hook #'electric-pair-mode)
-(add-hook 'after-init-hook #'global-so-long-mode)
-(add-hook 'after-init-hook #'pixel-scroll-precision-mode)
-;; (add-hook 'after-init-hook #'recentf-mode)
-;; (add-hook 'after-init-hook #'repeat-mode)
-(add-hook 'after-init-hook #'save-place-mode)
-(add-hook 'after-init-hook #'savehist-mode)
-(add-hook 'after-init-hook #'window-divider-mode)
-(add-hook 'after-init-hook #'winner-mode)
-
-(add-hook 'after-init-hook #'ffap-bindings)
-
-(add-hook 'text-mode-hook 'visual-line-mode)
 
 (use-package dired
   :defer t
@@ -437,13 +539,11 @@ With a prefix argument, exit eshell before restoring previous config."
            (dired-dwim-target t)
            (dired-recursive-copies 'always)
            (dired-recursive-deletes 'always))
-  :bind (("C-x C-j" . dired-jump))
-  :config
-  (require 'dired-x)
-  (add-to-list 'dired-omit-extensions ".DS_Store"))
+  :bind (("C-x C-j" . dired-jump)))
 
 (use-package project
   :defer t
+  :custom ((project-vc-extra-root-markers '(".project")))
   :config
   ;; Setup the `project-switch-commands'
   (require 'magit-extras)
@@ -462,13 +562,38 @@ With a prefix argument, exit eshell before restoring previous config."
   :hook (compilation-filter . ansi-color-compilation-filter)
   :custom ((compilation-always-kill t)
            (compilation-ask-about-save nil)
-           (compilation-scroll-output 'first-error))
+           (compilation-scroll-output 'first-error)
+           (comint-buffer-maximum-size 2048)
+           (comint-prompt-read-only t))
   :config
   (require 'ansi-color)
   (ansi-color-for-comint-mode-filter))
 
-(add-to-list 'auto-mode-alist
-             '("\\.log\\'" . auto-revert-tail-mode))
+(use-package autorevert
+  :defer t
+  :custom ((auto-revert-avoid-polling t)
+           (auto-revert-check-vc-info t)
+           (auto-revert-stop-on-user-input nil)
+           (global-auto-revert-non-file-buffers t)
+           (revert-without-query '(".")))
+  :config
+  (add-to-list 'auto-mode-alist
+               '("\\.log\\'" . auto-revert-tail-mode)))
+
+(use-package saveplace
+  :hook (after-init . save-place-mode)
+  :custom ((save-place-limit 600)))
+
+(use-package savehist
+  :hook (after-init . savehist-mode)
+  :custom ((savehist-additional-variables
+            '(kill-ring mark-ring global-mark-ring search-ring regexp-search-ring))
+           (savehist-save-minibuffer-history t)))
+
+(use-package recentf
+  :defer t
+  ;; :hook (after-init . recentf-mode)
+  :custom ((recentf-max-saved-items 300)))
 
 (use-package isearch
   :defer t
@@ -519,6 +644,14 @@ With a prefix argument, exit eshell before restoring previous config."
              ("?" (lambda () (interactive)
                     (embark-bindings-in-keymap rectangle-mark-mode-map))))
            do (define-key rectangle-mark-mode-map key def)))
+
+(use-package ediff
+  :defer t
+  :custom ((ediff-split-window-function 'split-window-sensibly)))
+
+(use-package eldoc
+  :defer t
+  :custom ((eldoc-documentation-strategy 'eldoc-documentation-compose-eagerly)))
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/"))
 
@@ -710,6 +843,7 @@ With a prefix argument, exit eshell before restoring previous config."
 (use-package helpful
   :ensure t
   :defer t
+  :custom ((helpful-switch-buffer-function #'helpful-switch-to-buffer))
   :bind (([remap describe-function] . helpful-callable)
          ([remap describe-variable] . helpful-variable)
          ([remap describe-key]      . helpful-key)
@@ -901,6 +1035,11 @@ buffer name when eglot is enabled."
   :hook ((markdown-mode . auto-fill-mode)
          (markdown-mode . variable-pitch-mode)))
 
+(use-package groovy-mode
+  :ensure t
+  :defer t
+  :custom ((groovy-indent-offset 2)))
+
 ;; Go lang
 ;; https://github.com/golang/tools/blob/master/gopls/doc/emacs.md
 (use-package go-mode
@@ -972,12 +1111,11 @@ buffer name when eglot is enabled."
 (use-package corfu
   :ensure t
   :defer t
-  :hook (corfu-mode . corfu-popupinfo-mode)
+  :hook ((after-init . global-corfu-mode)
+         (corfu-mode . corfu-popupinfo-mode))
   :bind (:map corfu-map
               ("SPC" . corfu-insert-separator))
   :config
-  (global-corfu-mode)
-
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer."
     (when (local-variable-p 'completion-at-point-functions)
