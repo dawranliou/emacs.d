@@ -373,6 +373,34 @@ With a prefix argument, exit eshell before restoring previous config."
     (eshell)
     (delete-other-windows)))
 
+(defun hexify-string (strg)
+  (mapconcat (lambda (c) (format "%x" c)) strg ""))
+
+(defun decode-hex-string (hex-string)
+  (with-temp-buffer
+    (insert-char 32 (/ (length hex-string) 2))
+    (beginning-of-buffer)
+    (hexl-mode)
+    (hexl-insert-hex-string hex-string 1)
+    (hexl-mode-exit)
+    (buffer-string)))
+
+(defun +get-process-id-by-name (process-name)
+  "Return the process ID of a process specified by PROCESS-NAME. Works on Unix-like systems (Linux, MacOS)."
+  (interactive)
+  (let ((pid nil))
+    (cond
+     ((memq system-type '(gnu/linux darwin))
+      (setq pid (shell-command-to-string
+                 (format "pgrep -f %s"
+                         (shell-quote-argument process-name)))))
+     (t
+      (error "Unsupported system type: %s" system-type)))
+
+    ;; Clean up the output and return first PID
+    (when (and pid (not (string-empty-p pid)))
+      (car (split-string pid "\n" t)))))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
