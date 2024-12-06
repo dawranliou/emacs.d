@@ -16,6 +16,7 @@
 ;;; Package Management
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(setq package-native-compile t)
 
 ;;; Auto-save and backup
 (setq auto-save-include-big-deletions t)
@@ -453,10 +454,10 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (setq x-stretch-cursor t)
 
-(setq-local fill-column 80)
-(setq-local truncate-lines t)
+(setq-default fill-column 80)
+(setq-default truncate-lines t)
 (setq truncate-partial-width-windows nil)
-(setq-local word-wrap t)
+(setq-default word-wrap t)
 
 (setq column-number-mode t)
 
@@ -930,12 +931,89 @@ reuse it's window, otherwise create new one."
   :defer t
   :bind (:map org-mode-map
               ("C-," . nil))
+  :custom ((org-attach-auto-tag "attachment")
+           (org-babel-load-languages
+            '((emacs-lisp . t)
+              (sql . t)
+              (awk . t)
+              (shell . t)
+              (clojure . t)))
+           (org-clock-clocked-in-display nil)
+           (org-clock-clocktable-default-properties '(:maxlevel 4))
+           (org-confirm-babel-evaluate nil)
+           (org-cycle-hide-block-startup nil)
+           (org-cycle-separator-lines 2)
+           (org-default-notes-file "~/org/journal/inbox.org")
+           (org-directory "~/org")
+           (org-ellipsis " ⤵ ")
+           (org-export-with-sub-superscripts '{})
+           (org-fontify-done-headline nil)
+           (org-goto-interface 'outline-path-completion)
+           (org-hide-block-startup nil)
+           (org-hide-emphasis-markers t)
+           (org-image-actual-width '(640))
+           (org-indirect-buffer-display 'current-window)
+           (org-log-done 'time)
+           (org-log-into-drawer t)
+           (org-modules '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
+           (org-outline-path-complete-in-steps nil)
+           (org-refile-allow-creating-parent-nodes 'confirm)
+           (org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
+           (org-refile-use-outline-path 'file)
+           (org-special-ctrl-a/e 'reversed)
+           (org-src-fontify-natively t)
+           (org-src-preserve-indentation nil)
+           (org-src-tab-acts-natively t)
+           (org-src-window-setup 'current-window)
+           (org-startup-folded 'content)
+           (org-capture-templates
+            '(("t" "Todo" entry
+               (file+olp+datetree "~/org/journal/journal.org")
+               "* TODO %?\12SCHEDULED: %t\12" :clock-in t :clock-resume t :tree-type week)
+              ("p" "Project" entry
+               (file+olp "~/org/journal/journal.org" "Projects")
+               (file "~/.emacs.d/org-templates/project.org")
+               :clock-in t :clock-resume t)
+              ("j" "Journal" entry
+               (file+olp+datetree "~/org/journal/journal.org")
+               "* %? %^G\12" :clock-in t :clock-keep t :tree-type week)
+              ("d" "Daily Review" entry
+               (file+olp+datetree "~/org/journal/journal.org")
+               (file "~/.emacs.d/org-templates/daily-review.org")
+               :immediate-finish t :clock-in t :clock-keep t :tree-type week)
+              ("i" "Check In" entry
+               (file+olp+datetree "~/org/journal/journal.org")
+               (file "~/.emacs.d/org-templates/check-in.org")
+               :immediate-finish t :clock-in t :clock-keep t :tree-type week)
+              ("m" "Meeting" entry
+               (file+olp+datetree "~/org/journal/journal.org")
+               "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
+           (org-todo-keyword-faces
+            '(("NEXT" . "blue")
+              ("REVIEW" . "dark orange")
+              ("HOLD" . "purple")
+              ("CANCELLED" . "teal")))
+           (org-todo-keywords
+            '((sequence "TODO(t@/)" "NEXT(n)" "REVIEW(r@/!)" "|" "DONE(d!)")
+              (sequence "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+           (org-use-speed-commands t))
   :config
   (require 'ox-md)
   (require 'org-tempo)
   (require 'org-habit)
   (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp")))
+
+(use-package org-agenda
+  :defer t
+  :custom ((org-agenda-files '("~/org/journal/journal.org"))
+           (org-agenda-span 'day)
+           (org-agenda-start-with-log-mode t)
+           (org-agenda-window-setup 'current-window)
+           (org-agenda-time-grid '((daily today require-timed)
+                                   (600 1600)
+                                   " ┄┄┄┄┄ "
+                                   "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))))
 
 (use-package with-editor
   :ensure t
