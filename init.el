@@ -728,6 +728,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
   :defer t
   :commands (embark-next-symbol embark-previous-symbol)
   :bind (("C-." . embark-act)
+         ("s-." . embark-dwim)
          ("C-h B" . embark-bindings)
          ("M-n" . embark-next-symbol)
          ("M-s n" . embark-next-symbol)
