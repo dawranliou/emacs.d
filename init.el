@@ -1313,6 +1313,9 @@ buffer name when eglot is enabled."
   :bind (:map dired-mode-map
               ("C-o" . #'casual-dired-tmenu)))
 
+(unless (package-installed-p 'eglot-booster)
+  (package-vc-install "https://github.com/jdtsmith/eglot-booster"))
+
 (use-package eglot-booster
   :ensure t
   :defer t

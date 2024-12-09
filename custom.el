@@ -6,12 +6,9 @@
  '(custom-safe-themes
    '("14436a10b0cb5b7b6e6f6d490a08c1a751ad0384e9b124b9b8d5d554129f5571" default))
  '(package-selected-packages
-   '(eglot gotest dape nerd-icons-dired nerd-icons-completion nerd-icons-corfu nerd-icons dired-subtree multiple-cursors ox-gfm avy cape casual-dired cider clojure-mode clojure-ts-mode clojure-ts-mode consult corfu csv-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot-booster embark embark-consult fennel-mode flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes tb-keycast verb vertico websocket which-key ws-butler yaml-mode zig-mode))
+   '(eglot gotest dape nerd-icons-dired nerd-icons-completion nerd-icons-corfu nerd-icons dired-subtree multiple-cursors ox-gfm avy cape casual-dired cider clojure-mode consult corfu csv-mode docker dockerfile-mode dumb-jump eat edit-indirect eglot-booster embark embark-consult fennel-mode flyspell gnuplot go-mode groovy-mode helpful hide-mode-line iedit jarchive jdecomp jinx kotlin-mode lua-mode magit marginalia markdown-mode markdown-toc ob-restclient orderless org pulsar rainbow-mode restclient rg sly sqlformat standard-themes verb vertico websocket which-key ws-butler yaml-mode zig-mode))
  '(package-vc-selected-packages
-   '((go-mode :vc-backend Git :url "https://github.com/dominikh/go-mode.el")
-     (tb-keycast :vc-backend Git :url "https://github.com/ir33k/tb-keycast.git")
-     (eglot-booster :vc-backend Git :url "https://github.com/jdtsmith/eglot-booster")
-     (clojure-ts-mode :url "https://github.com/clojure-emacs/clojure-ts-mode" :vc-backend Git))))
+   '((eglot-booster :vc-backend Git :url "https://github.com/jdtsmith/eglot-booster")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
