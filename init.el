@@ -1356,6 +1356,29 @@ buffer name when eglot is enabled."
   :config
   (eglot-booster-mode))
 
+;;; Pairing
+
+(use-package keycast
+  :ensure t
+  :defer t)
+
+(define-minor-mode pair-mode
+  "Set up Emacs for pairing"
+  :global t
+  :lighter " 🍐"
+  (cond
+   (pair-mode
+    (global-display-line-numbers-mode 1)
+    (keycast-header-line-mode 1)
+    (global-text-scale-adjust 2))
+   (t
+    (global-display-line-numbers-mode -1)
+    (keycast-header-line-mode -1)
+    (global-text-scale-adjust -2))))
+
+(keymap-global-set "<f8>" #'pair-mode)
+
+
 (provide 'init)
 
 ;;; init.el ends here
