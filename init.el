@@ -494,6 +494,22 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (setq show-paren-when-point-in-periphery t)
 (setq show-paren-when-point-inside-paren t)
 
+;;; UI - paddings
+
+;; Only if I have a bigger screen...
+(use-package spacious-padding
+  :ensure t
+  :defer t
+  :custom ((spacious-padding-widths '( :internal-border-width 15
+                                       :header-line-width 4
+                                       :mode-line-width 6
+                                       :tab-width 4
+                                       :right-divider-width 30
+                                       :scroll-bar-width 8
+                                       :fringe-width 8)))
+  :bind ("<f7>" . #'spacious-padding-mode)
+  )
+
 ;;; UI - themes
 
 (use-package ef-themes
