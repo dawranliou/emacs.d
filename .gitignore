@@ -35,3 +35,4 @@
 /.emacs.desktop
 /forge-database.sqlite
 /network-security.data
+custom.el
