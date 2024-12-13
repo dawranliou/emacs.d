@@ -928,7 +928,7 @@ reuse it's window, otherwise create new one."
   :defer t
   :bind (("C-;" . iedit-mode)))
 
-;; Org mode
+;;; Org mode
 
 (defun org-mode-setup ()
   (setq-local electric-pair-inhibit-predicate
@@ -1038,6 +1038,12 @@ reuse it's window, otherwise create new one."
                                    (600 1600)
                                    " ┄┄┄┄┄ "
                                    "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))))
+
+(use-package org-modern
+  :ensure t
+  :defer t
+  :hook ((org-mode . org-modern-mode)
+         (org-agenda-mode . org-modern-agenda)))
 
 (use-package with-editor
   :ensure t
