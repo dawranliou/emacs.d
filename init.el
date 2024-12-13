@@ -1043,7 +1043,7 @@ reuse it's window, otherwise create new one."
   :ensure t
   :defer t
   :hook ((org-mode . org-modern-mode)
-         (org-agenda-mode . org-modern-agenda)))
+         (org-agenda-finalize . org-modern-agenda)))
 
 (use-package with-editor
   :ensure t
