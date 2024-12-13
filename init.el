@@ -1215,6 +1215,10 @@ buffer name when eglot is enabled."
               ("C-c t c" . go-test-current-coverage)
               ("C-c t x" . go-run)))
 
+(use-package jinja2-mode
+  :ensure t
+  :defer t)
+
 (use-package dape
   :ensure t
   :defer t
