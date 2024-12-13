@@ -11,7 +11,7 @@
 
 ;; Opt out customization interface
 (setq custom-file (locate-user-emacs-file "custom.el"))
-(load custom-file :no-error-if-file-is-missing)
+;; (load custom-file :no-error-if-file-is-missing)
 
 ;;; Package Management
 (package-initialize)
