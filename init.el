@@ -411,16 +411,6 @@ With a prefix argument, exit eshell before restoring previous config."
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aFghlv --group-directories-first"))
 
-;;; Theme
-
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
-
-(add-hook 'after-init-hook
-          (lambda () (load-theme 'alabaster t)))
-(setq modus-themes-mixed-fonts t)
-
 ;;; UI
 
 (add-hook 'after-init-hook #'context-menu-mode)
@@ -503,6 +493,23 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (setq show-paren-context-when-offscreen 'overlay)
 (setq show-paren-when-point-in-periphery t)
 (setq show-paren-when-point-inside-paren t)
+
+;;; UI - themes
+
+(use-package ef-themes
+  :ensure t
+  :custom ((ef-themes-mixed-fonts t))
+  :config
+  (load-theme 'ef-cyprus :no-confirm-loading))
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
+
+;; (add-hook 'after-init-hook
+;;           (lambda () (load-theme 'alabaster t)))
+(setq modus-themes-mixed-fonts t)
+
 
 ;;; Indentation and formatting
 
