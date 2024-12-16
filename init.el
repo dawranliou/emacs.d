@@ -514,18 +514,22 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 (use-package ef-themes
   :ensure t
-  :custom ((ef-themes-mixed-fonts t))
-  :config
-  (load-theme 'ef-cyprus :no-confirm-loading))
+  :defer t
+  :custom ((ef-themes-mixed-fonts t)
+           (ef-themes-variable-pitch-ui t)
+           (ef-themes-to-toggle '(ef-cyprus ef-bio))
+           (ef-themes-headings ; read the manual's entry or the doc string
+           '((0 variable-pitch light 1.6)
+             (1 variable-pitch light 1.5)
+             (2 variable-pitch regular 1.4)
+             (3 variable-pitch regular 1.3)
+             (4 variable-pitch regular 1.2)
+             (5 variable-pitch 1.1) ; absence of weight means `bold'
+             (6 variable-pitch 1.1)
+             (7 variable-pitch 1.1)
+             (t variable-pitch 1.1)))))
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes/sketch-themes/")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/sketch-themes/")
-
-;; (add-hook 'after-init-hook
-;;           (lambda () (load-theme 'alabaster t)))
-(setq modus-themes-mixed-fonts t)
-
+(add-hook 'after-init-hook (lambda () (load-theme 'ef-cyprus :no-confirm-loading)))
 
 ;;; Indentation and formatting
 
