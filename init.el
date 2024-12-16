@@ -594,8 +594,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
   :custom ((dired-auto-revert-buffer t)
            (dired-dwim-target t)
            (dired-recursive-copies 'always)
-           (dired-recursive-deletes 'always))
-  :bind (("C-x C-j" . dired-jump)))
+           (dired-recursive-deletes 'always)))
 
 (use-package project
   :defer t
