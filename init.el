@@ -959,13 +959,16 @@ reuse it's window, otherwise create new one."
   :defer t
   :bind (:map org-mode-map
               ("C-," . nil))
-  :custom ((org-attach-auto-tag "attachment")
+  :custom ((org-align-tags nil)
+           (org-tags-column 0)
+           (org-attach-auto-tag "attachment")
            (org-babel-load-languages
             '((emacs-lisp . t)
               (sql . t)
               (awk . t)
               (shell . t)
               (clojure . t)))
+           (org-catch-invisible-edits 'show-and-error)
            (org-clock-clocked-in-display nil)
            (org-clock-clocktable-default-properties '(:maxlevel 4))
            (org-confirm-babel-evaluate nil)
@@ -973,7 +976,7 @@ reuse it's window, otherwise create new one."
            (org-cycle-separator-lines 2)
            (org-default-notes-file "~/org/journal/inbox.org")
            (org-directory "~/org")
-           (org-ellipsis " ⤵ ")
+           (org-ellipsis "…")
            (org-export-with-sub-superscripts '{})
            (org-fontify-done-headline nil)
            (org-goto-interface 'outline-path-completion)
@@ -985,6 +988,7 @@ reuse it's window, otherwise create new one."
            (org-log-into-drawer t)
            (org-modules '(ol-bbdb ol-bibtex ol-docview ol-doi ol-eww ol-gnus org-habit ol-info ol-irc ol-mhe ol-rmail ol-w3m))
            (org-outline-path-complete-in-steps nil)
+           (org-pretty-entities t)
            (org-refile-allow-creating-parent-nodes 'confirm)
            (org-refile-targets '((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9)))
            (org-refile-use-outline-path 'file)
@@ -1037,15 +1041,18 @@ reuse it's window, otherwise create new one."
   :custom ((org-agenda-files '("~/org/journal/journal.org"))
            (org-agenda-span 'day)
            (org-agenda-start-with-log-mode t)
+           (org-agenda-tags-column 0)
            (org-agenda-window-setup 'current-window)
            (org-agenda-time-grid '((daily today require-timed)
                                    (600 1600)
-                                   " ┄┄┄┄┄ "
-                                   "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))))
+                                   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+           (org-agenda-current-time-string
+            "◀── now ─────────────────────────────────────────────────")))
 
 (use-package org-modern
   :ensure t
   :defer t
+  :custom ((org-modern-timestamp nil))
   :hook ((org-mode . org-modern-mode)
          (org-agenda-finalize . org-modern-agenda)))
 
