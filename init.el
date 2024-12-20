@@ -465,8 +465,45 @@ With a prefix argument, exit eshell before restoring previous config."
 (setq window-divider-default-right-width 1)
 
 ;;;; UI - Mode line
-(setq mode-line-compact 'long)
-(setq-default mode-line-format (remove '(vc-mode vc-mode) mode-line-format))
+
+(use-package time
+  :hook (after-init . display-time-mode)
+  :config
+  (setq display-time-format " %a %e %b, %I:%M%p ")
+  ;;;; Covered by `display-time-format'
+  ;; (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t)
+  (setq display-time-interval 60)
+  (setq display-time-default-load-average nil))
+
+(use-package prot-modeline
+  :load-path "site-lisp"
+  :config
+  (setq mode-line-compact nil) ; Emacs 28
+  (setq mode-line-right-align-edge 'right-margin) ; Emacs 30
+  (setq-default mode-line-format
+                '("%e"
+                  prot-modeline-kbd-macro
+                  prot-modeline-narrow
+                  prot-modeline-buffer-status
+                  prot-modeline-window-dedicated-status
+                  prot-modeline-input-method
+                  "  "
+                  prot-modeline-buffer-identification
+                  "  "
+                  prot-modeline-major-mode
+                  prot-modeline-process
+                  "  "
+                  prot-modeline-vc-branch
+                  "  "
+                  prot-modeline-eglot
+                  "  "
+                  prot-modeline-flymake
+                  "  "
+                  mode-line-format-right-align ; Emacs 30
+                  prot-modeline-notmuch-indicator
+                  "  "
+                  prot-modeline-misc-info)))
 
 (defun flash-mode-line ()
   "Flash the modeline on error or warning.
