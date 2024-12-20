@@ -1056,8 +1056,9 @@ reuse it's window, otherwise create new one."
   :ensure t
   :defer t
   :custom ((org-modern-timestamp nil))
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda)))
+  ;; :hook ((org-mode . org-modern-mode)
+  ;;        (org-agenda-finalize . org-modern-agenda))
+  )
 
 (use-package with-editor
   :ensure t
