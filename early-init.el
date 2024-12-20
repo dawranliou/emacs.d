@@ -60,16 +60,18 @@
 (setq-default default-frame-alist
               '((tool-bar-lines . 0)
                 (width . 85)
-                ;; (vertical-scroll-bars . nil)
+                (vertical-scroll-bars . nil)
                 ;; (horizontal-bar . nil)
                 ;; (font . "Iosevka Fixed-12")
                 ))
 
 (let ((mono-spaced-font "Iosevka Fixed")
-      (proportionately-spaced-font "Serif"))
+      (proportionately-spaced-font "EtBembo")
+      ;; (proportionately-spaced-font "Merriweather")
+      )
   (set-face-attribute 'default nil :family mono-spaced-font :height 120)
-  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0 :weight 'semi-light :width 'expanded)
-  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0 :weight 'regular))
+  (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 0.9 :weight 'semi-light :width 'expanded)
+  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.1 :weight 'regular))
 
 ;;; package.el
 (setq package-enable-at-startup nil)

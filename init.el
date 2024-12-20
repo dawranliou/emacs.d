@@ -129,7 +129,7 @@
 (keymap-global-set "C-c z" #'compile)
 (keymap-global-set "C-c d" #'find-config)
 (keymap-global-set "C-c t f" #'display-fill-column-indicator-mode)
-(keymap-global-set "C-c t t" #'load-one-theme)
+(keymap-global-set "C-c t T" #'load-one-theme)
 (keymap-global-set "C-c t w" #'whitespace-mode)
 (keymap-global-set "C-c t m" #'toggle-frame-maximized)
 (keymap-global-set "C-c t M" #'toggle-frame-fullscreen)
@@ -501,13 +501,14 @@ https://macowners.club/posts/custom-functions-4-ui/"
   :ensure t
   :defer t
   :custom ((spacious-padding-widths '( :internal-border-width 15
-                                       :header-line-width 4
+                                       ;; :header-line-width 4
                                        :mode-line-width 6
-                                       :tab-width 4
-                                       :right-divider-width 30
-                                       :scroll-bar-width 8
-                                       :fringe-width 8)))
-  :bind ("<f7>" . #'spacious-padding-mode)
+                                       ;; :tab-width 4
+                                       ;; :right-divider-width 30
+                                       ;; :scroll-bar-width 8
+                                       ;; :fringe-width 8
+                                       )))
+  ;; :bind ("<f7>" . #'spacious-padding-mode)
   )
 
 ;;; UI - themes
@@ -516,18 +517,21 @@ https://macowners.club/posts/custom-functions-4-ui/"
   :ensure t
   :defer t
   :custom ((ef-themes-mixed-fonts t)
-           (ef-themes-variable-pitch-ui t)
-           (ef-themes-to-toggle '(ef-cyprus ef-bio))
+           ;; (ef-themes-variable-pitch-ui t)
+           (ef-themes-to-toggle '(ef-cyprus ef-night))
+           ;; (ef-themes-headings nil)
            (ef-themes-headings ; read the manual's entry or the doc string
-           '((0 variable-pitch light 1.6)
-             (1 variable-pitch light 1.5)
-             (2 variable-pitch regular 1.4)
-             (3 variable-pitch regular 1.3)
+           '((0 variable-pitch light 1.2)
+             (1 variable-pitch light 1.2)
+             (2 variable-pitch regular 1.2)
+             (3 variable-pitch regular 1.2)
              (4 variable-pitch regular 1.2)
-             (5 variable-pitch 1.1) ; absence of weight means `bold'
-             (6 variable-pitch 1.1)
-             (7 variable-pitch 1.1)
-             (t variable-pitch 1.1)))))
+             (5 variable-pitch 1.2) ; absence of weight means `bold'
+             (6 variable-pitch 1.2)
+             (7 variable-pitch 1.2)
+             (t variable-pitch 1.2)))
+           )
+  :bind (("C-c t t" . #'ef-themes-toggle)))
 
 (add-hook 'after-init-hook (lambda () (load-theme 'ef-cyprus :no-confirm-loading)))
 
