@@ -1393,6 +1393,33 @@ buffer name when eglot is enabled."
 
 (keymap-global-set "<f8>" #'pair-mode)
 
+;;; Just chillin
+
+(define-minor-mode chill-mode
+  "Set up Emacs for focusing"
+  :global t
+  :lighter " Chilling"
+  (cond
+   (chill-mode
+    (setq line-spacing 0.1)
+    ;; (setq spacious-padding-subtle-mode-line `(:mode-line-active 'default :mode-line-inactive vertical-border))
+    (setq spacious-padding-subtle-mode-line nil)
+    ;; (font-lock-mode -1)
+    ;; (let ((fullscreen (frame-parameter nil 'fullscreen)))
+    ;;   (unless (memq fullscreen '(fullscreen fullboth))
+    ;;     (toggle-frame-fullscreen)))
+    (spacious-padding-mode 1))
+   (t
+    (setq line-spacing nil)
+    (setq spacious-padding-subtle-mode-line nil)
+    ;; (font-lock-mode 1)
+    ;; (let ((fullscreen (frame-parameter nil 'fullscreen)))
+    ;;   (when (memq fullscreen '(fullscreen fullboth))
+    ;;     (toggle-frame-fullscreen)))
+    (spacious-padding-mode -1))))
+
+(keymap-global-set "<f7>" #'chill-mode)
+
 
 (provide 'init)
 
