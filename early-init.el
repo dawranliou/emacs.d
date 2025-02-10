@@ -66,12 +66,10 @@
                 ))
 
 (let ((mono-spaced-font "Iosevka Fixed")
-      (proportionately-spaced-font "EtBembo")
-      ;; (proportionately-spaced-font "Merriweather")
-      )
+      (proportionately-spaced-font "Sans"))
   (set-face-attribute 'default nil :family mono-spaced-font :height 120)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 0.9 :weight 'semi-light :width 'expanded)
-  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.1 :weight 'regular))
+  (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0 :weight 'regular))
 
 ;;; package.el
 (setq package-enable-at-startup nil)
