@@ -36,3 +36,4 @@
 /forge-database.sqlite
 /network-security.data
 custom.el
+/.mc-lists.el
