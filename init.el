@@ -576,7 +576,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
-(setq tab-always-indent t)
+(setq tab-always-indent 'complete)
 
 ;;; File manager
 
