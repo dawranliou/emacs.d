@@ -67,7 +67,7 @@
 
 (let ((mono-spaced-font "Iosevka Fixed")
       (proportionately-spaced-font "Sans"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 120)
+  (set-face-attribute 'default nil :family mono-spaced-font :height 140)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 0.9 :weight 'semi-light :width 'expanded)
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 1.0 :weight 'regular))
 
