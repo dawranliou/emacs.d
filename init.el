@@ -558,7 +558,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
            )
   :bind (("C-c t t" . #'ef-themes-toggle)))
 
-(add-hook 'after-init-hook (lambda () (load-theme 'ef-cyprus :no-confirm-loading)))
+(add-hook 'after-init-hook (lambda () (load-theme 'ef-night :no-confirm-loading)))
 
 ;;; Indentation and formatting
 
