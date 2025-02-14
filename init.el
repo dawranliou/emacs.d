@@ -513,11 +513,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 ;;;; UI - Title
 (setq ns-use-proxy-icon t)
-(setq-default frame-title-format '("%n "              ; narrowed?
-                                   (:eval
-                                    (if (buffer-file-name)
-                                        (abbreviate-file-name (buffer-file-name))
-                                      "%b"))))
+(setq-default frame-title-format '("%n %b - %F"""))
 
 ;;;; UI - Minibuffer
 
