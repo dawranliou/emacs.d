@@ -749,7 +749,6 @@ https://macowners.club/posts/custom-functions-4-ui/"
            (magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 15))))
 
 (use-package which-key
-  :ensure t
   :defer t
   :hook (after-init . which-key-mode))
 
