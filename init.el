@@ -543,7 +543,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
   :defer t
   :custom ((ef-themes-mixed-fonts t)
            (ef-themes-variable-pitch-ui t)
-           (ef-themes-to-toggle '(ef-cyprus ef-night))
+           (ef-themes-to-toggle '(ef-duo-light ef-duo-dark))
            ;; (ef-themes-headings nil)
            (ef-themes-headings ; read the manual's entry or the doc string
            '((0 variable-pitch light 1.9)

@@ -61,6 +61,7 @@
               '((tool-bar-lines . 0)
                 (width . 85)
                 (vertical-scroll-bars . nil)
+                (undecorated . t)
                 ;; (horizontal-bar . nil)
                 ;; (font . "Iosevka Fixed-12")
                 ))
