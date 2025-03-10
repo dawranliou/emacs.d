@@ -548,11 +548,11 @@ https://macowners.club/posts/custom-functions-4-ui/"
            (ef-themes-headings ; read the manual's entry or the doc string
            '((0 variable-pitch light 1.9)
              (1 variable-pitch light 1.8)
-             (2 variable-pitch regular 1.7)
+             (2 variable-pitch light 1.7)
              (3 variable-pitch regular 1.6)
              (4 variable-pitch regular 1.5)
-             (5 variable-pitch 1.4) ; absence of weight means `bold'
-             (6 variable-pitch 1.3)
+             (5 variable-pitch regular 1.4)
+             (6 variable-pitch 1.3)     ; absence of weight means `bold'
              (7 variable-pitch 1.2)
              (t variable-pitch 1.1)))
            )
@@ -1021,7 +1021,7 @@ reuse it's window, otherwise create new one."
            (org-fontify-done-headline nil)
            (org-goto-interface 'outline-path-completion)
            (org-hide-block-startup nil)
-           (org-hide-emphasis-markers t)
+           (org-hide-emphasis-markers nil)
            (org-image-actual-width '(640))
            (org-indirect-buffer-display 'current-window)
            (org-log-done 'time)
