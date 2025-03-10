@@ -113,7 +113,7 @@
 (keymap-global-set "<f5>" #'eshell-toggle)
 (keymap-global-set "C-g" #'keyboard-quit-dwim)
 (keymap-global-set "C-x C-b" #'ibuffer)
-(keymap-global-set "C-x k" #'kill-this-buffer)
+(keymap-global-set "C-x k" #'kill-current-buffer)
 (keymap-global-set "C-x j" #'duplicate-dwim)
 (keymap-global-set "C-M-r" #'raise-sexp)
 (keymap-global-set "C-M-d" #'down-list)
