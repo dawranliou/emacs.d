@@ -1408,6 +1408,21 @@ buffer name when eglot is enabled."
   :config
   (eglot-booster-mode))
 
+
+;; Copilot Setup
+
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+            :rev :newest
+            :branch "main"))
+
+(use-package copilot-chat
+  :ensure t
+  :bind (:map global-map
+              ("C-c C-y" . copilot-chat-yank)
+              ("C-c M-y" . copilot-chat-yank-pop)
+              ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1)))))
+
 ;;; Pairing
 
 (use-package keycast
