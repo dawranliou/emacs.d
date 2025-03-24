@@ -573,11 +573,11 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 (add-hook 'after-init-hook (lambda () (load-theme 'ef-duo-dark :no-confirm-loading)))
 
-;;; Indentation and formatting
+;;; <TAB> behaviors
 
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 8)
-(setq tab-always-indent 'complete)
+(setq tab-always-indent t)
 
 ;;; File manager
 
