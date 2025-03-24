@@ -702,7 +702,8 @@ https://macowners.club/posts/custom-functions-4-ui/"
               ("C-<backspace>" . isearch-delete-wrong)
               ;; DEL during isearch should edit the search string, not jump back
               ;; to the previous result
-              ([remap isearch-delete-char] . isearch-del-char))
+              ([remap isearch-delete-char] . isearch-del-char)
+              ("M-w" . isearch-copy-selected-word))
   :custom ((isearch-allow-motion t)
            (isearch-allow-scroll t)
            (isearch-lazy-count t)
@@ -725,6 +726,13 @@ https://macowners.club/posts/custom-functions-4-ui/"
     (while (or (not isearch-success) isearch-error)
       (isearch-pop-state))
     (isearch-update))
+  (defun isearch-copy-selected-word ()
+    "Copy the current `isearch' selection to the kill ring."
+    (interactive)
+    (when isearch-other-end
+      (let ((selection (buffer-substring-no-properties isearch-other-end (point))))
+        (kill-new selection)
+        (isearch-exit))))
 
   (add-hook 'isearch-mode-end-hook 'isearch-exit-at-start))
 
