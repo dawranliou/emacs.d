@@ -1435,16 +1435,28 @@ buffer name when eglot is enabled."
 ;; Copilot Setup
 
 (use-package copilot
-  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-            :rev :newest
-            :branch "main"))
+  :vc ( :url "https://github.com/copilot-emacs/copilot.el"
+        :rev :newest
+        :branch "main")
+  :custom ((copilot-idle-delay nil)
+           (copilot-indent-offset-warning-disable t))
+  :bind (("C-c M-f"       . copilot-complete)
+         :map copilot-completion-map
+         ("C-g"           . copilot-clear-overlay)
+         ("<right>"       . copilot-accept-completion)
+         ("C-f"           . copilot-accept-completion)
+         ;; ("<tab>"      . copilot-accept-completion)
+         ("M-<right>"     . copilot-accept-completion-by-word)
+         ("M-f"           . copilot-accept-completion-by-word)
+         ("C-e"           . copilot-accept-completion-by-line)
+         ;; ("<end>"      . copilot-accept-completion-by-line)
+         ;; ("M-<return>" . copilot-accept-completion-by-line)
+         ("M-n"           . copilot-next-completion)
+         ("M-p"           . copilot-previous-completion)))
 
 (use-package copilot-chat
   :ensure t
-  :bind (:map global-map
-              ("C-c C-y" . copilot-chat-yank)
-              ("C-c M-y" . copilot-chat-yank-pop)
-              ("C-c C-M-y" . (lambda () (interactive) (copilot-chat-yank-pop -1)))))
+  :bind (("C-c x" . copilot-chat-transient)))
 
 ;;; Pairing
 
