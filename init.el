@@ -122,6 +122,8 @@
 (keymap-global-set "M-`" #'other-frame)
 (keymap-global-set "M-o" #'other-window)
 (keymap-global-set "M-i" #'delete-other-windows)
+(keymap-global-set "M-j" #'duplicate-dwim)
+(keymap-global-set "M-s f" #'find-name-dired)
 (keymap-global-set "M-SPC" #'cycle-spacing)
 (keymap-global-set "M-Z" #'zap-to-char)
 (keymap-global-set "<remap> <dabbrev-expand>" #'hippie-expand) ; M-/
@@ -891,7 +893,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (use-package avy
   :ensure t
   :defer t
-  :bind (("M-j" . avy-goto-char-timer))
+  :bind (("M-J" . avy-goto-char-timer))
   :config
   ;; After invoking avy-goto-char-timer, hit "." to run embark at the next
   ;; candidate you select. https://github.com/ebittleman/emacs-bedrock
