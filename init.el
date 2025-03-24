@@ -128,6 +128,7 @@
 (keymap-global-set "M-z" #'zap-up-to-char)
 (keymap-global-set "C-c z" #'compile)
 (keymap-global-set "C-c d" #'find-config)
+(keymap-global-set "C-c h" #'simple-toggle-highlight-symbol-at-point)
 (keymap-global-set "C-c t f" #'display-fill-column-indicator-mode)
 (keymap-global-set "C-c t T" #'load-one-theme)
 (keymap-global-set "C-c t w" #'whitespace-mode)
@@ -401,6 +402,18 @@ With a prefix argument, exit eshell before restoring previous config."
     ;; Clean up the output and return first PID
     (when (and pid (not (string-empty-p pid)))
       (car (split-string pid "\n" t)))))
+
+;; Courtesy of https://www.jamescherti.com/emacs-symbol-highlighting-built-in-functions/
+(require 'hi-lock)
+(defun simple-toggle-highlight-symbol-at-point ()
+  "Toggle highlighting for the symbol at point."
+  (interactive)
+  (when-let* ((regexp (find-tag-default-as-symbol-regexp)))
+    (if (member regexp (hi-lock--regexps-at-point))
+        ;; Unhighlight symbol at point
+        (hi-lock-unface-buffer regexp)
+      ;; Highlight symbol at point
+      (hi-lock-face-symbol-at-point))))
 
 ;;; Mac
 
