@@ -153,8 +153,6 @@
 (keymap-set window-prefix-map "S" #'window-toggle-side-windows) ; Was "s" but rarely used
 (keymap-set window-prefix-map "s" #'toggle-window-split)
 (keymap-set window-prefix-map "t" #'window-swap-states) ; aka transpose windows
-(keymap-global-set "s-{" #'tab-previous)
-(keymap-global-set "s-}" #'tab-next)
 
 ;;; Aliases
 
@@ -422,7 +420,8 @@ With a prefix argument, exit eshell before restoring previous config."
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta
-        mac-option-modifier 'super
+        mac-option-modifier 'none
+        ;; mac-option-modifier 'super
         trash-directory "~/.Trash"
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aFghlv --group-directories-first"))
@@ -819,7 +818,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
   :defer t
   :commands (embark-next-symbol embark-previous-symbol)
   :bind (("C-." . embark-act)
-         ("s-." . embark-dwim)
+         ("C-c e" . embark-dwim)
          ("C-h B" . embark-bindings)
          ("M-n" . embark-next-symbol)
          ("M-s n" . embark-next-symbol)
@@ -1397,7 +1396,7 @@ buffer name when eglot is enabled."
   :ensure t
   :defer t
   :hook (after-init . global-jinx-mode)
-  :bind (("s-;" . jinx-correct))
+  ;; :bind (("s-;" . jinx-correct))
   :custom ((jinx-languages "en_US en_CA")))
 
 (use-package cape
