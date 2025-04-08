@@ -781,7 +781,8 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 (use-package ediff
   :defer t
-  :custom ((ediff-split-window-function 'split-window-sensibly)))
+  :custom ((ediff-split-window-function 'split-window-sensibly)
+           (ediff-window-setup-function 'ediff-setup-windows-plain)))
 
 (use-package eldoc
   :defer t
