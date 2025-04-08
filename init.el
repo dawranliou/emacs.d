@@ -416,6 +416,32 @@ With a prefix argument, exit eshell before restoring previous config."
       ;; Highlight symbol at point
       (hi-lock-face-symbol-at-point))))
 
+(defun decode-pem-region-or-buffer (&optional beg end replace)
+  "Decode a PEM certificate in the active region or the current buffer.
+With a prefix argument, replace the current buffer/region with the
+decoded certificate info."
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end) current-prefix-arg)
+     (list (point-min) (point-max) current-prefix-arg)))
+  (shell-command-on-region beg end
+                           "openssl x509 -text -noout"
+                           (or replace (generate-new-buffer "*Certificate Info*"))
+                           replace))
+
+(defun decode-csr-region-or-buffer (&optional beg end replace)
+  "Decode a Certificate Signing Request (CSR) in the active region or current buffer.
+With a prefix argument, replace the current buffer/region with the
+decoded certificate info."
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end) current-prefix-arg)
+     (list (point-min) (point-max) current-prefix-arg)))
+  (shell-command-on-region beg end
+                           "openssl req -text -noout"
+                           (or replace (generate-new-buffer "*CSR Info*"))
+                           replace))
+
 ;;; Mac
 
 (when (eq system-type 'darwin)
