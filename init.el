@@ -426,7 +426,7 @@ decoded certificate info."
      (list (point-min) (point-max) current-prefix-arg)))
   (shell-command-on-region beg end
                            "openssl x509 -text -noout"
-                           (or replace (generate-new-buffer "*Certificate Info*"))
+                           (or replace (get-buffer-create "*Certificate Info*"))
                            replace))
 
 (defun decode-csr-region-or-buffer (&optional beg end replace)
@@ -439,7 +439,7 @@ decoded certificate info."
      (list (point-min) (point-max) current-prefix-arg)))
   (shell-command-on-region beg end
                            "openssl req -text -noout"
-                           (or replace (generate-new-buffer "*CSR Info*"))
+                           (or replace (get-buffer-create "*CSR Info*"))
                            replace))
 
 ;;; Mac
