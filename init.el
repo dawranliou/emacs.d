@@ -489,6 +489,7 @@ decoded certificate info."
 (setq-default truncate-lines t)
 (setq truncate-partial-width-windows nil)
 (setq-default word-wrap t)
+(setq-default show-trailing-whitespace t)
 
 (setq column-number-mode t)
 
