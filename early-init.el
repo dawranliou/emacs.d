@@ -57,6 +57,7 @@
 
 ;;; - UI
 
+(setq inhibit-startup-screen t)
 (setq-default default-frame-alist
               '((tool-bar-lines . 0)
                 (width . 85)
