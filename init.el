@@ -600,7 +600,7 @@ https://macowners.club/posts/custom-functions-4-ui/"
            )
   :bind (("C-c t t" . #'ef-themes-toggle)))
 
-(add-hook 'after-init-hook (lambda () (load-theme 'ef-duo-dark :no-confirm-loading)))
+(add-hook 'after-init-hook (lambda () (load-theme 'ef-duo-light :no-confirm-loading)))
 
 ;;; <TAB> behaviors
 
