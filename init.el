@@ -446,8 +446,8 @@ decoded certificate info."
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta
-        mac-option-modifier 'none
-        ;; mac-option-modifier 'super
+        ;; mac-option-modifier 'none
+        mac-option-modifier 'super
         trash-directory "~/.Trash"
         insert-directory-program "/usr/local/bin/gls"
         dired-listing-switches "-aFghlv --group-directories-first"))
