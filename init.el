@@ -120,6 +120,7 @@
 (keymap-global-set "C-M-d" #'down-list)
 (keymap-global-set "C-M-<return>" #'newline-at-end-of-line)
 (keymap-global-set "C-S-t" #'scratch-buffer)
+(keymap-global-set "M-$" #'jinx-correct)
 (keymap-global-set "M-`" #'other-frame)
 (keymap-global-set "M-o" #'other-window)
 (keymap-global-set "M-i" #'delete-other-windows)
