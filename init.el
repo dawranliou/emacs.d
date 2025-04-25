@@ -1155,6 +1155,8 @@ reuse it's window, otherwise create new one."
   :bind (([remap async-shell-command] . with-editor-async-shell-command)
          ([remap shell-command] . with-editor-shell-command)))
 
+;; LSP Client
+
 (use-package eglot
   :defer t
   ;; :hook (;; (clojure-mode . eglot-ensure)
@@ -1166,7 +1168,16 @@ reuse it's window, otherwise create new one."
            (eglot-connect-timeout 600)
            (eglot-events-buffer-size 0)
            (eglot-extend-to-xref t)
-           (eglot-report-progress nil))
+           (eglot-report-progress nil)
+           (eglot-stay-out-of '())
+           (eglot-ignored-server-capabilities
+            '(;:hoverProvider
+              ;; :documentHighlightProvider
+              :documentFormattingProvider
+              :documentRangeFormattingProvider
+              :documentOnTypeFormattingProvider
+              :colorProvider
+              :foldingRangeProvider)))
   :bind (:map eglot-mode-map
               ("C-c e" . eglot-code-actions))
   :config
