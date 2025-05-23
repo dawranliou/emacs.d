@@ -116,6 +116,7 @@
 (keymap-global-set "C-x C-b" #'ibuffer)
 (keymap-global-set "C-x k" #'kill-current-buffer)
 (keymap-global-set "C-x j" #'duplicate-dwim)
+(keymap-global-set "C-x n t" #'narrow-to-region-toggle)
 (keymap-global-set "C-M-r" #'raise-sexp)
 (keymap-global-set "C-M-d" #'down-list)
 (keymap-global-set "C-M-<return>" #'newline-at-end-of-line)
@@ -442,6 +443,20 @@ decoded certificate info."
                            "openssl req -text -noout"
                            (or replace (get-buffer-create "*CSR Info*"))
                            replace))
+
+(defvar-local narrow-to-region-toggle-markers nil
+  "A cons cell (beg . end) that is updated when using `narrow-to-region-toggle'")
+
+(defun narrow-to-region-toggle ()
+  "TODO"
+  (interactive)
+  (if (not (buffer-narrowed-p))
+      (if (not narrow-to-region-toggle-markers)
+          (call-interactively #'narrow-to-region)
+        (narrow-to-region (car narrow-to-region-toggle-markers) (cdr narrow-to-region-toggle-markers))
+        (setf narrow-to-region-toggle-markers nil))
+    (setf narrow-to-region-toggle-markers (cons (point-min) (point-max)))
+    (widen)))
 
 ;;; Mac
 
