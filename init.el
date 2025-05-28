@@ -505,7 +505,7 @@ decoded certificate info."
 (setq-default truncate-lines t)
 (setq truncate-partial-width-windows nil)
 (setq-default word-wrap t)
-(setq-default show-trailing-whitespace t)
+;; (setq-default show-trailing-whitespace t)
 
 (setq column-number-mode t)
 
@@ -1082,8 +1082,13 @@ reuse it's window, otherwise create new one."
   :ensure t
   :defer t
   :custom ((ws-butler-keep-whitespace-before-point nil))
+  :preface (defun toggle-show-trailing-whitespace ()
+             (interactive)
+             (setq show-trailing-whitespace (not show-trailing-whitespace)))
   :hook ((prog-mode . ws-butler-mode)
-         (text-mode . ws-butler-mode)))
+         (prog-mode . toggle-show-trailing-whitespace)
+         (text-mode . ws-butler-mode)
+         (text-mode . toggle-show-trailing-whitespace)))
 
 (use-package iedit
   :ensure t
