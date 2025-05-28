@@ -514,6 +514,14 @@ decoded certificate info."
 (setq indicate-empty-lines t)
 (setq register-preview-delay 0.5)
 
+;;;; UI - Frames
+;; (use-package tooltip
+;;   :config
+;;   (add-to-list 'tooltip-frame-parameters '(parent-frame . t)))
+
+;; (add-to-list 'tooltip-frame-parameters '(parent-frame . t))
+;; (tooltip-mode -1)
+
 ;;;; UI - Windows
 (add-hook 'after-init-hook #'winner-mode)
 
@@ -524,44 +532,44 @@ decoded certificate info."
 
 ;;;; UI - Mode line
 
-(use-package time
-  :hook (after-init . display-time-mode)
-  :config
-  (setq display-time-format " %a %e %b, %I:%M%p ")
-  ;;;; Covered by `display-time-format'
-  ;; (setq display-time-24hr-format t)
-  (setq display-time-day-and-date t)
-  (setq display-time-interval 60)
-  (setq display-time-default-load-average nil))
+;; (use-package time
+;;   :defer t
+;;   :config
+;;   (setq display-time-format " %a %e %b, %I:%M%p ")
+;;   ;;;; Covered by `display-time-format'
+;;   ;; (setq display-time-24hr-format t)
+;;   (setq display-time-day-and-date t)
+;;   (setq display-time-interval 60)
+;;   (setq display-time-default-load-average nil))
 
-(use-package prot-modeline
-  :load-path "site-lisp"
-  :config
-  (setq mode-line-compact nil) ; Emacs 28
-  (setq mode-line-right-align-edge 'right-margin) ; Emacs 30
-  (setq-default mode-line-format
-                '("%e"
-                  prot-modeline-kbd-macro
-                  prot-modeline-narrow
-                  prot-modeline-buffer-status
-                  prot-modeline-window-dedicated-status
-                  prot-modeline-input-method
-                  "  "
-                  prot-modeline-buffer-identification
-                  "  "
-                  prot-modeline-major-mode
-                  prot-modeline-process
-                  "  "
-                  prot-modeline-vc-branch
-                  "  "
-                  prot-modeline-eglot
-                  "  "
-                  prot-modeline-flymake
-                  "  "
-                  mode-line-format-right-align ; Emacs 30
-                  prot-modeline-notmuch-indicator
-                  "  "
-                  prot-modeline-misc-info)))
+;; (use-package prot-modeline
+;;   :load-path "site-lisp"
+;;   :config
+;;   (setq mode-line-compact nil) ; Emacs 28
+;;   (setq mode-line-right-align-edge 'right-margin) ; Emacs 30
+;;   (setq-default mode-line-format
+;;                 '("%e"
+;;                   prot-modeline-kbd-macro
+;;                   prot-modeline-narrow
+;;                   prot-modeline-buffer-status
+;;                   prot-modeline-window-dedicated-status
+;;                   prot-modeline-input-method
+;;                   "  "
+;;                   prot-modeline-buffer-identification
+;;                   "  "
+;;                   prot-modeline-major-mode
+;;                   prot-modeline-process
+;;                   "  "
+;;                   prot-modeline-vc-branch
+;;                   "  "
+;;                   prot-modeline-eglot
+;;                   "  "
+;;                   prot-modeline-flymake
+;;                   "  "
+;;                   mode-line-format-right-align ; Emacs 30
+;;                   prot-modeline-notmuch-indicator
+;;                   "  "
+;;                   prot-modeline-misc-info)))
 
 (defun flash-mode-line ()
   "Flash the modeline on error or warning.
@@ -590,33 +598,76 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (use-package spacious-padding
   :ensure t
   :defer t
-  :hook (after-init . spacious-padding-mode)
-  :custom ((spacious-padding-subtle-mode-line `( :mode-line-active 'default
-                                                 :mode-line-inactive vertical-border))))
+  ;; :hook (after-init . spacious-padding-mode)
+  :custom (
+           (spacious-padding-subtle-mode-line nil)
+           ;; (spacious-padding-subtle-mode-line `( :mode-line-active 'default
+           ;;                                       :mode-line-inactive vertical-border))
+           ))
 
 ;;; UI - themes
+
+(use-package standard-themes
+  :ensure t
+  :defer t
+  :hook (after-init . (lambda () (standard-themes-select 'standard-light)))
+  :bind (("<f6>" . standard-themes-toggle)
+         ("C-<f6>" . standard-themes-select)
+         ("M-<f6>" . standard-themes-rotate))
+  :custom ((standard-themes-bold-constructs t)
+           (standard-themes-italic-constructs t)
+           (standard-themes-disable-other-themes t)
+           (standard-themes-mixed-fonts t)
+           (standard-themes-variable-pitch-ui t)
+           (standard-themes-prompts '(extrabold italic))
+           (standard-themes-to-toggle '(standard-light standard-dark))
+           (standard-themes-to-rotate '(standard-light standard-light-tinted standard-dark standard-dark-tinted))
+
+           (standard-themes-headings
+            '((0 . (variable-pitch light 1.9))
+              (1 . (variable-pitch light 1.8))
+              (2 . (variable-pitch light 1.7))
+              (3 . (variable-pitch semilight 1.6))
+              (4 . (variable-pitch semilight 1.5))
+              (5 . (variable-pitch 1.4))
+              (6 . (variable-pitch 1.3))
+              (7 . (variable-pitch 1.2))
+              (agenda-date . (1.3))
+              (agenda-structure . (variable-pitch light 1.8))
+              (t . (variable-pitch 1.1))))))
+
+(use-package doric-themes
+  :ensure t
+  :defer t
+  ;; :bind
+  ;; (("<f6>" . doric-themes-toggle)
+  ;;  ("C-<f6>" . doric-themes-select)
+  ;;  ("M-<f6>" . doric-themes-rotate))
+  ;; :config
+  ;; (doric-themes-select 'doric-wind)
+  )
 
 (use-package ef-themes
   :ensure t
   :defer t
-  :custom ((ef-themes-mixed-fonts t)
-           (ef-themes-variable-pitch-ui t)
-           (ef-themes-to-toggle '(ef-duo-light ef-duo-dark))
-           ;; (ef-themes-headings nil)
-           (ef-themes-headings ; read the manual's entry or the doc string
-           '((0 variable-pitch light 1.9)
-             (1 variable-pitch light 1.8)
-             (2 variable-pitch light 1.7)
-             (3 variable-pitch regular 1.6)
-             (4 variable-pitch regular 1.5)
-             (5 variable-pitch regular 1.4)
-             (6 variable-pitch 1.3)     ; absence of weight means `bold'
-             (7 variable-pitch 1.2)
-             (t variable-pitch 1.1)))
-           )
-  :bind (("C-c t t" . #'ef-themes-toggle)))
-
-(add-hook 'after-init-hook (lambda () (load-theme 'ef-duo-light :no-confirm-loading)))
+  ;;   :custom ((ef-themes-mixed-fonts t)
+  ;;            (ef-themes-variable-pitch-ui t)
+  ;;            (ef-themes-to-toggle '(ef-duo-light ef-duo-dark))
+  ;;            ;; (ef-themes-headings nil)
+  ;;            (ef-themes-headings ; read the manual's entry or the doc string
+  ;;            '((0 variable-pitch light 1.9)
+  ;;              (1 variable-pitch light 1.8)
+  ;;              (2 variable-pitch light 1.7)
+  ;;              (3 variable-pitch regular 1.6)
+  ;;              (4 variable-pitch regular 1.5)
+  ;;              (5 variable-pitch regular 1.4)
+  ;;              (6 variable-pitch 1.3)     ; absence of weight means `bold'
+  ;;              (7 variable-pitch 1.2)
+  ;;              (t variable-pitch 1.1)))
+  ;;            )
+  ;; :bind (("C-c t t" . #'ef-themes-toggle))
+  )
+;; (add-hook 'after-init-hook (lambda () (load-theme 'ef-duo-light :no-confirm-loading)))
 
 ;;; <TAB> behaviors
 
@@ -1525,42 +1576,19 @@ buffer name when eglot is enabled."
   :lighter " 🍐"
   (cond
    (pair-mode
+    (spacious-padding-mode 1)
     (global-display-line-numbers-mode 1)
     (keycast-header-line-mode 1)
-    (global-text-scale-adjust 2))
+    (global-text-scale-adjust 2)
+    (set-face-attribute 'mode-line nil :height 0.9))
    (t
+    (spacious-padding-mode -1)
     (global-display-line-numbers-mode -1)
     (keycast-header-line-mode -1)
-    (global-text-scale-adjust -2))))
+    (global-text-scale-adjust -2)
+    (set-face-attribute 'mode-line nil :height 1.0))))
 
 (keymap-global-set "<f8>" #'pair-mode)
-
-;;; Just chillin
-
-(define-minor-mode chill-mode
-  "Set up Emacs for focusing"
-  :global t
-  :lighter " Chilling"
-  (cond
-   (chill-mode
-    (setq line-spacing 0.1)
-    ;; (setq spacious-padding-subtle-mode-line `(:mode-line-active 'default :mode-line-inactive vertical-border))
-    (setq spacious-padding-subtle-mode-line nil)
-    ;; (font-lock-mode -1)
-    ;; (let ((fullscreen (frame-parameter nil 'fullscreen)))
-    ;;   (unless (memq fullscreen '(fullscreen fullboth))
-    ;;     (toggle-frame-fullscreen)))
-    (spacious-padding-mode 1))
-   (t
-    (setq line-spacing nil)
-    (setq spacious-padding-subtle-mode-line nil)
-    ;; (font-lock-mode 1)
-    ;; (let ((fullscreen (frame-parameter nil 'fullscreen)))
-    ;;   (when (memq fullscreen '(fullscreen fullboth))
-    ;;     (toggle-frame-fullscreen)))
-    (spacious-padding-mode -1))))
-
-(keymap-global-set "<f7>" #'chill-mode)
 
 
 (provide 'init)
