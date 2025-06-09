@@ -1,0 +1,278 @@
+#+title: dape.el - Changelog
+#+author: Daniel Pettersson
+#+language: en
+
+* Version 0.24.1
+- Fix saving of breakpoints when target file does not already exist
+
+* Version 0.24.0
+- Add check for writing to breakpoints file if nothing has changed
+- Change move data breakpoints to top in breakpoints info
+- Change rename dape-memory command
+- Fix margin breakpoint not showing after breakpoint remove all
+- Fix adapter socket creating under tramp
+- Fix REPL completion region bounds mismatch with word
+- Fix Restart in mode line menu
+- Fix using future history for dape-info-variable-edit
+- Fix disassembly window selection when invoking from info buffers
+- Fix dape-history-add when using shell-like + default values
+- Fix respect font-lock-mode in info and repl buffers
+- Fix help echo and watch buffer displaying on hint mouse-1
+- Fix processes naming, noquery and associated buffers
+
+* Version 0.23.0
+- Add disassemble viewer
+- Add disabling/enabling of source breakpoints
+- Add improved REPL command parsing (e.g., allow p for both =dape-pause= and GDB pause)
+- Add revert-function to dape-shell
+- Add comint filters to shell echo in REPL
+- Change =dape-display-source-buffer-action= default
+- Change enable inlay hints by default
+- Fix header line flicker when switching to watch edit and back
+
+* Version 0.22.0
+- Add (=dape-info-scope-mode= INDEX) choice to info groups
+- Add =dape-restart= to mode-line menu
+- Remove limit for number on dape info groups for window arrangements
+- Remove stderr dumping on failure
+- Remove =defer-launch-attach= from gdb config as 16.1 includes fix
+- Fix UI update after =terminated= event
+- Fix "No configuration named ..." on history items not in =dape-configs=
+- Fix handling of capabilities event, adding instead of replacing
+
+* Version 0.21.0
+- Add current thread name to mode line
+- Add prefix-argument to dape-select-* commands
+- Fix "breakpoint" command faces in REPL
+- Fix bash-debug unresolved bashdb-dir symbol
+
+* Version 0.20.0
+- Add variable mappings to REPL
+- Add index to thread and stack buffer
+- Add =dape-repl-echo-shell-output= to echo runInTerminal shell to repl
+- Add nil option to =dape-buffer-window-arrangement=
+- Add cd to =dape-commands=
+- Fix remove unnecessary variable handles given to eldoc
+- Fix out of hexl region error
+- Fix invalid overlay-arrow placed on min-point
+
+* Version 0.19.0
+- Add argument support REPL and to =dape-repl-*= commands
+- Change =dape-list-*= names to be REPL specific
+- Fix bash-debug BASHDB_HOME path
+
+* Version 0.18.0
+- Add =dape-list-*= commands for improved REPL experience
+- Add custom =dape-history-add= for history customization
+- Add placeholder text for modules and sources
+- Change remove adapter output string processing
+- Remove breakpoint info header
+- Remove useless adapter thread id from thread info buffer
+- Remove eglot require
+- Fix alignment on "disconnect" DAP specification
+- Fix font-lock for breakpoint buffer when hits > 9
+- Fix missing overlay categories for dape-breakpoint, dape-source-line
+- Fix compile when dape-restart when request is used
+- Fix =dape-compile-hook= firing only on success
+- Fix restart for adapters using optional arguments
+- Fix leaking dash replacement hints on unbalanced options list
+
+* Version 0.17.0
+- Add dash form configuration options parsing see =dape-history-use-dash-form=
+- Add error face on on unsupported breakpoint type
+- Add placeholder text in scope buffer
+- Add shorthand for function evaluation in configs if car of list is not an keyword
+- Add support for adapter option argsCanBeInterpretedByShell
+- Add default expansion of variable levels based on context =dape-variable-auto-expand-alist=
+- Add let adapters create new breakpoints from breakpoint event
+- Change let hit breakpoints count as verified
+- Change slow stack trace in thread buffer workaround
+- Fix clean up find-file-hook after usage
+- Fix unnecessary buffer creation on adapter configuration
+- Fix completion of adapter name in minibuffer if options are already specified
+- Fix let string config dictate order parsed plist
+- Fix add command-insert-stderr to hint-ignore-properties
+- Fix only display key hint once
+- Fix argument order reversal in config evaluation
+- Fix follow mode-line-misc-info suffix space separator convention
+
+* Version 0.16.0
+- Add decoupling of breakpoints from buffers (killing buffer no longer kills breakpoints)
+- Add =command-insert-stderr= property to =dape-configs= (stderr in =dlv=)
+- Add =command-env= property to =dape-configs=
+- Add support for =hl-line-mode=
+- Add bash-debug
+- Add reverse zapp like parsing with "-"
+- Add future history value for for dape command
+- Change breakpoint buffer format
+- Fix precedence of inlay hint values
+- Fix empty inlay hints "  " for lines with no hints
+- Fix killing of buffers <number> suffix
+- Fix misplaced parens in define-key call
+- Fix info scope buffer naming before scope name is known
+- Fix dropped line arrow due to delayed stack frame fetching
+
+* Version 0.15.0
+- Add =defer-launch-attach= to support gdb=>15.1
+- Add OCaml support with =ocamlearlybird=
+- Set stack frame arrow at the deepest possible level
+- Remove delay of disabling =dape-active-mode=
+- Add =dape-shell-mode= to process launched with runInTerminal
+- Fix pause button in mode line menu
+- Fix source buffer being displayed in minibuffer
+- Fix "Wrong type argument: markerp, nil" on "quit" in REPL
+
+* Version 0.14.0
+- Add separator line for minibuffer hints
+- Add baseline for PHP =xdebug= config and install instructions
+- Add modeline menu for =dape-active-mode=
+- Rework display buffer actions
+- Fix relative path =command-cwd= for =cppdebug=
+- Fix unnecessary mime message
+
+* Version 0.13.0
+- Add support for new version of =lldb-vscode= which is now called =lldb-dap=
+- Rework source line with new hook =dape-display-source-hook= (performance)
+- Support watch expressions with space in =dape-info-watch-edit-mode=
+- Keep current stack frame selection through REPL usage
+- Mark =dape-command= as safe-local-variable
+- Align =defcustom= hook names with Emacs standard
+- Clarify boundary of exception message overlay with extended face
+- Replace custom fringe arrow handling with =overlay-arrow-variable-list=
+- Improve error message when failing to establish TCP connection
+- Generate new hexlish buffers on =dape-memory-read=
+- Extend =repeat-map= to improve =edebug= like workflow
+- Fix skip server-process creation for children of socket connections
+- Fix prefix-* path substation for non matching prefix
+- Fix ensure removal of dangling stack pointer overlays
+- Fix handle error when breakpoint on line where =thing-at-point= is nil
+- Fix stale modeline status on switching adapter connection
+- Fix =dape-select-stack= when delayed stack trace loading is in effect
+
+* Version 0.12.0
+- Rework breakpoint info type display
+- Add stack select up/down repl commands
+- Cache mode line format to improve performance
+- Improve error printing on startup failure
+- Fix locked running state by atomizing thread status updates
+- Fix mode-line status switches from initialized to running
+- Fix minibuffer default-directory stuck at first guess
+
+* Version 0.11.1
+- Show each breakpoint as verified when no connection active
+- Add basic support for data breakpoints
+- Fix "continued" state handling (breaking =lldb-vscode=)
+
+* Version 0.11.0
+- Experimental: Add inlay hints for variables
+- Improve state handling by only using events for state changes
+- Fix false invalidation of breakpoints
+- Add debounce to dape-info and memory viewer buffer for improved performance
+- Add source line contents to breakpoints info buffer
+- Support hit condition breakpoints with =dape-breakpoint-hits=
+- Show reason for stoppage in mode-line
+- Improve REPL completions
+- Add edit watch buffer mode =dape-info-watch-edit-mode=
+
+* Version 0.10.0
+- Remove "Selecting deleted buffer" in jsonrcp shutdown error message
+- Handle child connections of depth => 2
+- Make sure that =compile= starts a new compilation
+- Add "Hits" to breakpoint info buffer
+- Add node attach configuration
+
+* Version 0.9.0
+- Enhanced support for multi-connection adapters
+- Threads buffer shows all threads across connections
+- Thread selection works across all connections
+- Modeline indicates active child connections
+- Threads buffer displays names of non-stopped threads
+
+* Version 0.8.1
+- Revert =debugpy= connection changes, breaks process debugging
+
+* Version 0.8
+- Add new mode for memory view =dape-memory-mode= with write support
+- Enable persistent breakpoint support with =dape-breakpoint-save= and =dape-breakpoint-load=
+- Remove gdb disclaimer, gdb seams to be fully supported by =dape=
+- Add =js-debug-ts-node= batteries included configuration
+- Add =debugpy-module= batteries included configuration
+- Switch =debugpy= connection to stdio, improves tramp usage (no need for exposing ports)
+- Prefer the current file when having multiple Java main classes (=jdtls=)
+- Add module information in stack buffer with =dape-info-stack-buffer-modules=
+- Show threads information in running state
+- Add dape buffer window customization =dape-info-buffer-window-groups=
+- Improve repl shorthand, support for multi char shorthand and completion
+- Use autoport and tramp config transformations as default (=dape-default-config-functions=)
+- Add info messaging for tramp detection
+- Add =:null= as json null symbol
+- Bump jsonrpc version 1.0.25 (improved performance on large messages batches)
+- Improve =dape-configs= documentation
+- Rework core dape macros into hygienic macros
+- Improve =dape-pause= connection inferring
+- Ensure stopped buffer for watch buffer var fetching, remove flickering
+- Rework function evaluation in minibuffer hints
+- Rework dape-info to use revert-buffer
+- Rework runInTerminal to use =make-process= directly
+- Fix recursive nil to :json-false translation
+- Fix goto module with remote debugging
+- Remove dependency on undefined behaviour (defun return value)
+- Fix usage of locally defined =dape-configs=
+
+* Version 0.7
+- Add GDB as an "supported" adapter (see =dape--info-threads-all-stack-trace-disable=)
+- Change thread up/down bindings to match gud bindings
+- Skip updating non visible info buffers
+- Expose request timeout as =dape-timeout=
+- Improve performance of stack trace calls
+
+* Version 0.6
+- Harden breakpoints functions against dead breakpoint overlays
+- Small improvements in the batteries included configurations
+- Nicer variable print in repl
+- Improve current connection guesses (improves =debugpy= multi process support)
+- Bump required jsonrpc version to 1.0.24
+- Fix broken external terminal with correct =runInTerminal= response in =js-debug=
+- Normalize naming and usage of dape faces
+- Add typescript as part of js-debug modes
+- Focus emacs on stopped, controllable with =dape-on-stopped-hooks=
+
+* Version 0.5
+- Use setBreakpoints response and event =breakpoint= to validate and move breakpoints
+- Add =dape-debug= custom to disable debug printouts in =*dape-repl*=
+- Fix =startDebugging= request removing stack pointer
+
+* Version 0.4
+- Switched to jsonrpc.el for parsing DAP messages
+- Add support for modules and loaded sources
+- Added jdtls (java-debug) as a supported adapter
+- Handle subprocess creation for =debugpy= processes (fix =startDebugging= handling)
+- Add option to align variables buffer =dape-info-variable-table-aligned= (unaligned per default)
+- Add overlay for inline exception stoppage description
+- Rework dape debugging printouts (removed =*dape-debug*= buffer) in =*dape-repl*=
+- =dape-info= now toggles buffers on interactive calls
+- Add file name completion for interactive calls of =dape=
+- New global non interactive mode for =dape-active-mode= for adding bindings
+- Added hints in minibuffer controlled by =dape-minibuffer-hint=, =dape-minibuffer-hint-ignore-properties=
+- Rework of =dape-configs=; remove usage of =read-*= functions and guess default values instead.
+- Add =dape-command= as an analog to =compile-command=
+- Rework in buffer stack pointers to be able to display breakpoints and arrow at same line
+- Change defaults of =dape-display-source-buffer-action=
+- Add commands for moving up and down the stack =C-o=, =C-i=
+- Add mouse bindings for adding, changing and removing =dape-breakpoints-*=
+- Add generic =dape-config= entries for exploring adapters =launch=, =attach=
+- Improve usability of =dape-evaluate-expression=, if sends region if active
+- Rework =dape-breakpoints=*= =dape= incorrectly allowed for multiple breakpoints on same line
+- Minor bugfixes and improvements
+
+* Version 0.3
+- Add support for source by sourceReference by =dape-mime-mode-alist=
+- Support stepping granularity with =dape-stepping-granularity=
+- Improve repl completions with completionTriggerCharacters
+- Add =rdbg= as a batteries included adapter
+- Extend =fn= config keyword to take a list of functions as well
+- Cleanup breakpoints on buffer kill
+- Add basic support for debugging with tramp
+- Add new configuration keys prefix-local and prefix-remote for source mapping
+- Minor bugfixes and improvements
+
