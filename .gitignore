@@ -37,3 +37,4 @@
 /network-security.data
 custom.el
 /.mc-lists.el
+/.cache/
