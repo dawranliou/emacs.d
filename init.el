@@ -636,39 +636,6 @@ https://macowners.club/posts/custom-functions-4-ui/"
               (agenda-structure . (variable-pitch light 1.8))
               (t . (variable-pitch 1.1))))))
 
-(use-package doric-themes
-  :ensure t
-  :defer t
-  ;; :bind
-  ;; (("<f6>" . doric-themes-toggle)
-  ;;  ("C-<f6>" . doric-themes-select)
-  ;;  ("M-<f6>" . doric-themes-rotate))
-  ;; :config
-  ;; (doric-themes-select 'doric-wind)
-  )
-
-(use-package ef-themes
-  :ensure t
-  :defer t
-  ;;   :custom ((ef-themes-mixed-fonts t)
-  ;;            (ef-themes-variable-pitch-ui t)
-  ;;            (ef-themes-to-toggle '(ef-duo-light ef-duo-dark))
-  ;;            ;; (ef-themes-headings nil)
-  ;;            (ef-themes-headings ; read the manual's entry or the doc string
-  ;;            '((0 variable-pitch light 1.9)
-  ;;              (1 variable-pitch light 1.8)
-  ;;              (2 variable-pitch light 1.7)
-  ;;              (3 variable-pitch regular 1.6)
-  ;;              (4 variable-pitch regular 1.5)
-  ;;              (5 variable-pitch regular 1.4)
-  ;;              (6 variable-pitch 1.3)     ; absence of weight means `bold'
-  ;;              (7 variable-pitch 1.2)
-  ;;              (t variable-pitch 1.1)))
-  ;;            )
-  ;; :bind (("C-c t t" . #'ef-themes-toggle))
-  )
-;; (add-hook 'after-init-hook (lambda () (load-theme 'ef-duo-light :no-confirm-loading)))
-
 ;;; <TAB> behaviors
 
 (setq-default indent-tabs-mode nil)
