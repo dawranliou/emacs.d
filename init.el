@@ -1545,29 +1545,14 @@ buffer name when eglot is enabled."
 
 ;; Copilot Setup
 
-(use-package copilot
-  :vc ( :url "https://github.com/copilot-emacs/copilot.el"
-        :rev :newest
-        :branch "main")
-  :custom ((copilot-idle-delay nil)
-           (copilot-indent-offset-warning-disable t))
-  :bind (("C-c M-f"       . copilot-complete)
-         :map copilot-completion-map
-         ("C-g"           . copilot-clear-overlay)
-         ("<right>"       . copilot-accept-completion)
-         ("C-f"           . copilot-accept-completion)
-         ;; ("<tab>"      . copilot-accept-completion)
-         ("M-<right>"     . copilot-accept-completion-by-word)
-         ("M-f"           . copilot-accept-completion-by-word)
-         ("C-e"           . copilot-accept-completion-by-line)
-         ;; ("<end>"      . copilot-accept-completion-by-line)
-         ;; ("M-<return>" . copilot-accept-completion-by-line)
-         ("M-n"           . copilot-next-completion)
-         ("M-p"           . copilot-previous-completion)))
-
-(use-package copilot-chat
+(use-package gptel
   :ensure t
-  :bind (("C-c x" . copilot-chat-transient)))
+  :bind (("C-c RET" . gptel-send))
+  :config
+  (gptel-make-gh-copilot "Copilot")
+  (setq gptel-model 'claude-sonnet-4
+        gptel-default-mode 'org-mode
+        gptel-backend (gptel-make-gh-copilot "Copilot")))
 
 ;;; Pairing
 
