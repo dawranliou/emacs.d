@@ -542,6 +542,34 @@ decoded certificate info."
 ;;   (setq display-time-interval 60)
 ;;   (setq display-time-default-load-average nil))
 
+;; (setq -mode-line-format-orig mode-line-format)
+;; (setq-local mode-line-format -mode-line-format-orig)
+(setopt mode-line-format
+        '("%e"
+          mode-line-front-space
+          (:propertize
+           (""
+            mode-line-mule-info
+            mode-line-client
+            mode-line-modified
+            mode-line-remote
+            mode-line-window-dedicated)
+           display (min-width (6.0)))
+          mode-line-frame-identification
+          mode-line-buffer-identification
+          "   "
+          mode-line-position
+          mode-line-format-right-align
+          (project-mode-line project-mode-line-format)
+          (vc-mode vc-mode)
+          "  "
+          mode-line-modes
+          mode-line-misc-info
+          "  "
+          mode-line-end-spaces))
+(setopt mode-line-modes
+        (remove "(" (remove ")" mode-line-modes)))
+
 ;; (use-package prot-modeline
 ;;   :load-path "site-lisp"
 ;;   :config
