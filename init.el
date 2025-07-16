@@ -1198,7 +1198,10 @@ reuse it's window, otherwise create new one."
                :immediate-finish t :clock-in t :clock-keep t :tree-type week)
               ("m" "Meeting" entry
                (file+olp+datetree "~/org/journal/journal.org")
-               "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
+               "* %^{Meeting} :meeting:%^G\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)
+	      ("s" "Standup" entry
+               (file+olp+datetree "~/org/journal/journal.org")
+               "* Standup :meeting:supra:\12" :immediate-finish t :clock-in t :clock-keep t :tree-type week)))
            (org-todo-keyword-faces
             '(("NEXT" . "blue")
               ("REVIEW" . "dark orange")
