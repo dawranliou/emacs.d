@@ -406,6 +406,15 @@ With a prefix argument, exit eshell before restoring previous config."
     (when (and pid (not (string-empty-p pid)))
       (car (split-string pid "\n" t)))))
 
+(defun get-buffers-derived-from-mode (mode)
+  "Returns a list of buffers where their major-mode is derived from MODE"
+  (let ((buffer-mode-matches '()))
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (when (derived-mode-p mode)
+          (push buf buffer-mode-matches))))
+    buffer-mode-matches))
+
 ;; Courtesy of https://www.jamescherti.com/emacs-symbol-highlighting-built-in-functions/
 (require 'hi-lock)
 (defun simple-toggle-highlight-symbol-at-point ()
