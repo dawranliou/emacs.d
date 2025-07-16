@@ -700,6 +700,20 @@ https://macowners.club/posts/custom-functions-4-ui/"
 (setq tramp-backup-directory-alist '(("." . "~/.emacs.d/var/backup/")))
 (setq tramp-default-method "ssh")
 
+;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
+(setq remote-file-name-inhibit-locks t
+      tramp-use-scp-direct-remote-copying t
+      remote-file-name-inhibit-auto-save-visited t)
+(setq tramp-copy-size-limit (* 2 1024 1024) ; 2MB
+      tramp-verbose 2)
+(connection-local-set-profile-variables
+ 'remote-direct-async-process
+ '((tramp-direct-async-process . t)))
+
+(connection-local-set-profiles
+ '(:application tramp :protocol "scp")
+ 'remote-direct-async-process)
+
 ;;; Text editing
 
 (add-hook 'text-mode-hook 'visual-line-mode)
