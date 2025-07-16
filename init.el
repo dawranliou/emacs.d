@@ -1436,6 +1436,18 @@ buffer name when eglot is enabled."
   (setq dape-inlay-hints t)
   (dape-breakpoint-global-mode)
   (add-to-list 'dape-configs
+               `(go-attach-pid
+                 modes (go-mode go-ts-mode)
+                 command "dlv"
+                 command-args ("dap" "--listen" "127.0.0.1:55878" "--log")
+                 command-cwd default-directory
+                 port 55878
+                 :request "attach"
+                 :mode "local"      ;; Attach to a running process local to the server
+                 :type "go"
+                 :processId (+get-process-id-by-name "learn serve")
+                 :showLog "true"))
+  (add-to-list 'dape-configs
                `(go-test
                  modes (go-mode go-ts-mode)
                  command "dlv"
