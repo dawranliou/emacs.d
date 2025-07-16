@@ -6,7 +6,8 @@
 ;; Keywords: decompile, java, languages, tools
 ;; Package-Requires: ((emacs "24.5"))
 ;; URL: https://github.com/xiongtx/jdecomp
-;; Version: 0.2.0
+;; Package-Version: 20170224.2200
+;; Package-Revision: 692866abc83d
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by

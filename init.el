@@ -1550,30 +1550,6 @@ buffer name when eglot is enabled."
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-keyword))
 
-(use-package pulsar
-  :ensure t
-  :defer t
-  :custom ((pulsar-face 'pulsar-blue))
-  :config
-  (pulsar-global-mode))
-
-(use-package casual-dired
-  :ensure t
-  :defer t
-  :bind (:map dired-mode-map
-              ("C-o" . #'casual-dired-tmenu)))
-
-(unless (package-installed-p 'eglot-booster)
-  (package-vc-install "https://github.com/jdtsmith/eglot-booster"))
-
-(use-package eglot-booster
-  :ensure t
-  :defer t
-  :after eglot
-  :config
-  (eglot-booster-mode))
-
-
 ;; Copilot Setup
 
 (use-package gptel
