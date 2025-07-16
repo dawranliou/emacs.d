@@ -875,10 +875,6 @@ https://macowners.club/posts/custom-functions-4-ui/"
            (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
            (magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 15))))
 
-(use-package which-key
-  :defer t
-  :hook (after-init . which-key-mode))
-
 (use-package orderless
   :ensure t
   :defer t
@@ -929,7 +925,9 @@ https://macowners.club/posts/custom-functions-4-ui/"
          ("M-p" . embark-previous-symbol)
          ("M-s p" . embark-previous-symbol))
   :config
-  (setq prefix-help-command #'embark-prefix-help-command))
+  (setq prefix-help-command #'embark-prefix-help-command)
+  (with-eval-after-load 'vertico-multiform
+    (add-to-list 'vertico-multiform-categories '(embark-keybinding grid))))
 
 (use-package consult
   :ensure t
