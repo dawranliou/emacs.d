@@ -698,11 +698,11 @@ https://macowners.club/posts/custom-functions-4-ui/"
 
 ;;; Grep
 
-(setopt grep-command "rg -nS --no-heading ")
-(setopt grep-template "rg --no-heading -H -g '<F>' -e '<R>' <D>")
-(setopt grep-find-command '("rg -n -H --no-heading -e ''" . 27))
-(setopt grep-find-template "find -H <D> <X> -type f <F> -exec grep <C> -nH --null -e <R> \\{\\} +")
-(setopt grep-find-ignored-directories '("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".jj" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "node_modules" "build" "dist"))
+(setq grep-command "rg -nS --no-heading ")
+(setq grep-template "rg --no-heading -H -g '<F>' -e '<R>' <D>")
+(setq grep-find-command '("rg -n -H --no-heading -e ''" . 27))
+(setq grep-find-template "find -H <D> <X> -type f <F> -exec grep <C> -nH --null -e <R> \\{\\} +")
+(setq grep-find-ignored-directories '("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".jj" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "node_modules" "build" "dist"))
 (setq xref-search-program 'ripgrep)
 (setq xref-show-definitions-function 'consult-xref)
 (setq wgrep-auto-save-buffer t)
