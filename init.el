@@ -1142,8 +1142,8 @@ reuse it's window, otherwise create new one."
   :defer t
   :bind (:map org-mode-map
               ("C-," . nil))
-  :custom ((org-align-tags nil)
-           (org-tags-column 0)
+  :custom ((org-align-tags t)
+           (org-tags-column -80)
            (org-attach-auto-tag "attachment")
            (org-babel-load-languages
             '((emacs-lisp . t)
